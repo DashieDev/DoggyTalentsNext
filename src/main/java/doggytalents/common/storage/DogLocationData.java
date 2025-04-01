@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.feature.DogGender;
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.config.ConfigHandler;
@@ -126,7 +127,7 @@ public class DogLocationData implements IDogData {
     }
 
 
-    public void read(CompoundTag compound) {
+    public void read(CompoundTag_1_21_5 compound) {
         this.ownerId = NBTUtil.getUniqueId(compound, "ownerId");
         this.position = NBTUtil.getVector3d(compound);
         this.dimension = ResourceKey.create(Registries.DIMENSION, NBTUtil.getResourceLocation(compound, "dimension"));
@@ -142,7 +143,7 @@ public class DogLocationData implements IDogData {
     }
 
     public CompoundTag write(CompoundTag compound) {
-        NBTUtil.putUniqueId(compound, "ownerId", this.ownerId);
+        NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(compound), "ownerId", this.ownerId);
         NBTUtil.putVector3d(compound, this.position);
         NBTUtil.putResourceLocation(compound, "dimension", this.dimension.location());
         NBTUtil.putTextComponent(compound, "name_text_component", this.name);
@@ -151,7 +152,7 @@ public class DogLocationData implements IDogData {
         }
         compound.putBoolean("collar", this.hasRadarCollar);
         if (this.sessionUUID != null) {
-            compound.putUUID("sessionUUID", this.sessionUUID);
+            CompoundTag_1_21_5.wrap(compound).putUUID("sessionUUID", this.sessionUUID);
         }
         compound.putInt("locateOrbColor", locateColor);
         return compound;

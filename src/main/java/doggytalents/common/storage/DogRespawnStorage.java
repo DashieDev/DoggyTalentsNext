@@ -2,6 +2,8 @@ package doggytalents.common.storage;
 
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
@@ -92,14 +94,16 @@ public class DogRespawnStorage extends SavedData {
         return Collections.unmodifiableCollection(this.respawnDataMap.values());
     }
 
-    public static DogRespawnStorage load(CompoundTag nbt, HolderLookup.Provider prov) {
+    public static DogRespawnStorage load(CompoundTag compound_1_21_5, HolderLookup.Provider prov) {
+        var nbt = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
+
         DogRespawnStorage store = new DogRespawnStorage();
         store.respawnDataMap.clear();
 
-        ListTag list = nbt.getList("respawnData", Tag.TAG_COMPOUND);
+        ListTag_1_21_5 list = nbt.getList("respawnData", Tag.TAG_COMPOUND);
 
         for (int i = 0; i < list.size(); ++i) {
-            CompoundTag respawnCompound = list.getCompound(i);
+            CompoundTag_1_21_5 respawnCompound = list.getCompound(i);
 
             UUID uuid = NBTUtil.getUniqueId(respawnCompound, "uuid");
             DogRespawnData respawnData = new DogRespawnData(store, uuid);
@@ -125,7 +129,7 @@ public class DogRespawnStorage extends SavedData {
             CompoundTag respawnCompound = new CompoundTag();
 
             DogRespawnData respawnData = entry.getValue();
-            NBTUtil.putUniqueId(respawnCompound, "uuid", entry.getKey());
+            NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(respawnCompound), "uuid", entry.getKey());
             respawnData.write(respawnCompound);
 
             list.add(respawnCompound);

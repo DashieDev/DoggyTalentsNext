@@ -11,6 +11,8 @@ import com.google.common.collect.Maps;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.util.InventoryUtil;
@@ -536,7 +538,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider prov) {
         super.loadAdditional(tag, prov);
         container.deserializeNBT(tag, prov);
-        this.grindingTime = tag.getInt("grindingTime");
+        this.grindingTime = CompoundTag_1_21_5.wrap(tag).getInt("grindingTime");
     }
 
     @Override
@@ -640,15 +642,17 @@ public class RiceMillBlockEntity extends BlockEntity {
             compound.put("MillItems", itemsList);
         }
 
-        public void deserializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
+        public void deserializeNBT(CompoundTag compound_1_21_5, HolderLookup.Provider prov) {
+            var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
+
             if (compound.contains("MillItems", Tag.TAG_LIST)) {
-                ListTag tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
+                ListTag_1_21_5 tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
                 for (int i = 0; i < tagList.size(); i++) {
-                    CompoundTag itemTag = tagList.getCompound(i);
+                    CompoundTag_1_21_5 itemTag = tagList.getCompound(i);
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.getContainerSize()) {
-                        this.setItem(slot, ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY));
+                        this.setItem(slot, ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
                     }
                 }
             }

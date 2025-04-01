@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import java.util.Map;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
@@ -69,10 +70,10 @@ public class DoggyArmorTalent extends TalentInstance {
 
     private boolean mayNeedsDataUpgrade = false;
     @Override
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dogIn, compound);
         try {
-            dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
+            dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound.wrapped());
             if (compound.contains("armors_spareXp")) {
                 this.spareValue = compound.getInt("armors_spareXp");
                 mayNeedsDataUpgrade = false;
@@ -85,13 +86,13 @@ public class DoggyArmorTalent extends TalentInstance {
 
 
     @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
+    public void onRead(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         if (!mayNeedsDataUpgrade)
             return;
         
         try {
             if (compound.contains("dogArmors", Tag.TAG_LIST))
-                dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
+                dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound.wrapped());
             this.spareValue = compound.getInt("armors_spareXp");
         } catch (Exception e) {}
     }

@@ -52,7 +52,7 @@ public interface IDogAlteration {
 
     }
 
-    default void onWrite(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
+    default void onWrite(AbstractDog dogIn, CompoundTag compound) {
 
     }
 

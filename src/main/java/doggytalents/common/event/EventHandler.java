@@ -15,6 +15,7 @@ import doggytalents.DoggyAccessories;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
@@ -321,7 +322,7 @@ public class EventHandler {
                 tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
             }
 
-            CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
+            CompoundTag_1_21_5 persistTag = CompoundTag_1_21_5.wrap(tag).getCompound(Player.PERSISTED_NBT_TAG);
 
             if (!persistTag.getBoolean("gotDTStartingItems")) {
                 persistTag.putBoolean("gotDTStartingItems", true);

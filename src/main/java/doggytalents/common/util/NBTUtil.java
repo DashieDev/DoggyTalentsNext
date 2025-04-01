@@ -58,12 +58,12 @@ public class NBTUtil {
         return compound.containsAnyNumeric(key + "Most") && compound.containsAnyNumeric(key + "Least");
     }
 
-    public static void removeOldUniqueId(CompoundTag_1_21_5 compound, String key) {
+    public static void removeOldUniqueId(CompoundTag compound, String key) {
         compound.remove(key + "Most");
         compound.remove(key + "Least");
     }
 
-    public static void putResourceLocation(CompoundTag_1_21_5 compound, String key, @Nullable ResourceLocation rl) {
+    public static void putResourceLocation(CompoundTag compound, String key, @Nullable ResourceLocation rl) {
         if (rl != null) {
             compound.putString(key, rl.toString());
         }
@@ -78,7 +78,7 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putVector3d(CompoundTag_1_21_5 compound, @Nullable Vec3 vec3d) {
+    public static void putVector3d(CompoundTag compound, @Nullable Vec3 vec3d) {
         if (vec3d != null) {
             compound.putDouble("x", vec3d.x());
             compound.putDouble("y", vec3d.y());
@@ -96,7 +96,7 @@ public class NBTUtil {
     }
 
 
-    public static void putTextComponent(CompoundTag_1_21_5 compound, String key, @Nullable Component component) {
+    public static void putTextComponent(CompoundTag compound, String key, @Nullable Component component) {
         if (component != null) {
             compound.putString(key, serializeComponentToJsonStr(component));
         }
@@ -159,13 +159,13 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putRegistryValue(CompoundTag_1_21_5 compound, String key, ResourceLocation value) {
+    public static void putRegistryValue(CompoundTag compound, String key, ResourceLocation value) {
         if (value != null) {
             NBTUtil.putResourceLocation(compound, key, value);
         }
     }
 
-    public static void putBlockPos(CompoundTag_1_21_5 compound, @Nullable BlockPos vec3d) {
+    public static void putBlockPos(CompoundTag compound, @Nullable BlockPos vec3d) {
         if (vec3d != null) {
             compound.putInt("x", vec3d.getX());
             compound.putInt("y", vec3d.getY());
@@ -183,11 +183,11 @@ public class NBTUtil {
     }
 
 
-    public static void putBlockPos(CompoundTag_1_21_5 compound, String key, Optional<BlockPos> vec3d) {
+    public static void putBlockPos(CompoundTag compound, String key, Optional<BlockPos> vec3d) {
         if (vec3d.isPresent()) {
-            CompoundTag_1_21_5 posNBT = CompoundTag_1_21_5.createEmpty();
+            CompoundTag posNBT = new CompoundTag();
             putBlockPos(posNBT, vec3d.get());
-            compound.put(key, posNBT.wrapped());
+            compound.put(key, posNBT);
         }
     }
 
@@ -199,11 +199,11 @@ public class NBTUtil {
         return Optional.empty();
     }
 
-    public static void putBlockPos(CompoundTag_1_21_5 compound, String key, @Nullable BlockPos vec3d) {
+    public static void putBlockPos(CompoundTag compound, String key, @Nullable BlockPos vec3d) {
         if (vec3d != null) {
-            CompoundTag_1_21_5 posNBT = CompoundTag_1_21_5.createEmpty();
+            CompoundTag posNBT = new CompoundTag();
             putBlockPos(posNBT, vec3d);
-            compound.put(key, posNBT.wrapped());
+            compound.put(key, posNBT);
         }
     }
 
@@ -230,4 +230,9 @@ public class NBTUtil {
 
         return ItemStack.EMPTY;
     }
+
+
+
+    //1.21.5+
+    
 }

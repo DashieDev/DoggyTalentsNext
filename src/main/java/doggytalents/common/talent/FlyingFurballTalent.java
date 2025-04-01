@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import doggytalents.TalentsOptions;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -187,7 +188,7 @@ public class FlyingFurballTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dogIn, compound);
         this.allowFlying = compound.getBoolean("allowFlying");
     }

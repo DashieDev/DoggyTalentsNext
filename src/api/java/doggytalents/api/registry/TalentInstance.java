@@ -68,7 +68,7 @@ public class TalentInstance implements IDogAlteration {
         return ret;
     }
 
-    public void writeToNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
+    public void writeToNBT(AbstractDog dogIn, CompoundTag compound) {
         
     }
 
@@ -81,7 +81,7 @@ public class TalentInstance implements IDogAlteration {
         readFromNBT(dogIn, compound);
     }
 
-    public final void doWriteToNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
+    public final void doWriteToNBT(AbstractDog dogIn, CompoundTag compound) {
         compound.putInt("level", this.level());
         writeToNBT(dogIn, compound);
     }

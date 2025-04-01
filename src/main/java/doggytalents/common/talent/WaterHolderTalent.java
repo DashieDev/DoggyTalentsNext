@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
@@ -197,7 +198,7 @@ public class WaterHolderTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromNBT(AbstractDog dog, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dog, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dog, compound);
         this.setWaterUnitLeft(compound.getInt("DTwaterUnitLeft")); 
     }

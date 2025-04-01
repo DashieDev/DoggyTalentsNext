@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
@@ -64,7 +65,7 @@ public class ScentTreatItem extends Item {
             return DogInteractionResult.PASS;
         
         var stack = context.getItemInHand();
-        var tag = ItemUtil.getTag(stack);
+        var tag = ItemUtil.getTag(stack).wrapped();
         if (tag.contains(SCENT_BLOCK_ID))
             return DogInteractionResult.PASS;
 
@@ -75,7 +76,7 @@ public class ScentTreatItem extends Item {
         var id = BuiltInRegistries.BLOCK.getKey(block);
         NBTUtil.putResourceLocation(tag, SCENT_BLOCK_ID, id);
 
-        ItemUtil.putTag(stack, tag);
+        ItemUtil.putTag(stack, CompoundTag_1_21_5.wrap(tag));
 
         return DogInteractionResult.SUCCESS;
     }

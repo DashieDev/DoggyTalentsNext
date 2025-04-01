@@ -2694,7 +2694,7 @@ public class Dog extends AbstractDog {
 
         for (int i = 0; i < talents.size(); i++) {
             CompoundTag talentTag = new CompoundTag();
-            talents.get(i).writeInstance(this, talentTag);
+            talents.get(i).writeInstance(this, CompoundTag_1_21_5.wrap(talentTag));
             talentList.add(talentTag);
         }
 
@@ -2809,8 +2809,8 @@ public class Dog extends AbstractDog {
             var ownerUUID = this.getOwnerUUID();
             if (uuid != null && ownerUUID != null) {
                 var backupUUIDTag = new CompoundTag();
-                backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
-                backupUUIDTag.putUUID("dtn_uuid_self", uuid);
+                CompoundTag_1_21_5.wrap(backupUUIDTag).putUUID("dtn_uuid_owner", ownerUUID);
+                CompoundTag_1_21_5.wrap(backupUUIDTag).putUUID("dtn_uuid_self", uuid);
                 writeSessionUUIDToCompound(uuid, backupUUIDTag);
                 compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
             }
@@ -3212,7 +3212,7 @@ public class Dog extends AbstractDog {
 
     private void writeSessionUUIDToCompound(UUID uuid, CompoundTag tag) {
         if (cachedSessionUUID != null) {
-            tag.putUUID("session_uuid", cachedSessionUUID);
+            CompoundTag_1_21_5.wrap(tag).putUUID("session_uuid", cachedSessionUUID);
             cachedSessionUUID = null;
             return;
         }
@@ -3228,7 +3228,7 @@ public class Dog extends AbstractDog {
         var sessionUUID = data.getSessionUUID();
         if (sessionUUID == null)
             return;
-        tag.putUUID("session_uuid", sessionUUID);
+        CompoundTag_1_21_5.wrap(tag).putUUID("session_uuid", sessionUUID);
     }
 
     private void cacheSessionUUID() {
@@ -3248,7 +3248,7 @@ public class Dog extends AbstractDog {
         this.cachedSessionUUID = sessionUUID;
     }
 
-    private void checkAndRecorrectOwner(CompoundTag tag) {
+    private void checkAndRecorrectOwner(CompoundTag_1_21_5 tag) {
         if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
             return;
         var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");

@@ -1,5 +1,6 @@
 package doggytalents.common.talent;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -37,7 +38,7 @@ public class GuardDogTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dogIn, compound);
         this.cooldown = dogIn.tickCount + compound.getInt("guardtime");
     }

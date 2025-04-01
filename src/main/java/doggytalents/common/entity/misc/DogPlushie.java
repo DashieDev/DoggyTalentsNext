@@ -2,6 +2,7 @@ package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggySerializers;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NetworkUtil;
@@ -72,7 +73,9 @@ public class DogPlushie extends Entity implements IEntityWithComplexSpawn {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
+    protected void readAdditionalSaveData(CompoundTag compound_1_21_5) {
+        var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
+
         if (compound.contains("PlushCollarColor", Tag.TAG_INT))
             this.setCollarColor(compound.getInt("PlushCollarColor"));
         if (compound.contains("classicalVariant", Tag.TAG_STRING)) {

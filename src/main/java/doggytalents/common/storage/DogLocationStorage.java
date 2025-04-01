@@ -2,6 +2,8 @@ package doggytalents.common.storage;
 
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
@@ -131,11 +133,13 @@ public class DogLocationStorage extends SavedData {
         return Collections.unmodifiableCollection(this.locationDataMap.values());
     }
 
-    public static DogLocationStorage load(CompoundTag nbt, HolderLookup.Provider prov) {
+    public static DogLocationStorage load(CompoundTag compound_1_21_5, HolderLookup.Provider prov) {
+        var nbt = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
+
         DogLocationStorage store = new DogLocationStorage();
         store.locationDataMap.clear();
 
-        ListTag list = nbt.getList("locationData", Tag.TAG_COMPOUND);
+        ListTag_1_21_5 list = nbt.getList("locationData", Tag.TAG_COMPOUND);
 
         // Old style
         if (list.isEmpty()) {
@@ -143,7 +147,7 @@ public class DogLocationStorage extends SavedData {
         }
 
         for (int i = 0; i < list.size(); ++i) {
-            CompoundTag locationCompound = list.getCompound(i);
+            CompoundTag_1_21_5 locationCompound = list.getCompound(i);
 
             UUID uuid = NBTUtil.getUniqueId(locationCompound, "uuid");
 
@@ -175,7 +179,7 @@ public class DogLocationStorage extends SavedData {
             CompoundTag locationCompound = new CompoundTag();
 
             DogLocationData locationData = entry.getValue();
-            NBTUtil.putUniqueId(locationCompound, "uuid", entry.getKey());
+            NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(locationCompound), "uuid", entry.getKey());
             locationData.write(locationCompound);
 
             list.add(locationCompound);

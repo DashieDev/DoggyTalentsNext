@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggyTags;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.impl.BeddingMaterial;
 import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
@@ -60,12 +61,12 @@ public class DogBedMaterialManager {
         return ret;
     }
 
-    public static IBeddingMaterial getBedding(CompoundTag tag, String id) {
+    public static IBeddingMaterial getBedding(CompoundTag_1_21_5 tag, String id) {
         var loc = NBTUtil.getResourceLocation(tag, id);
         return getBedding(loc);
     }
 
-    public static ICasingMaterial getCasing(CompoundTag tag, String id) {
+    public static ICasingMaterial getCasing(CompoundTag_1_21_5 tag, String id) {
         var loc = NBTUtil.getResourceLocation(tag, id);
         return getCasing(loc);
     }

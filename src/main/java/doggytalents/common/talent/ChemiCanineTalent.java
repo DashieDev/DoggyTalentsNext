@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -74,7 +75,7 @@ public class ChemiCanineTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dogIn, compound);
         if (!compound.contains("DTN_ChemiCanine", Tag.TAG_COMPOUND))
             return;
@@ -86,7 +87,7 @@ public class ChemiCanineTalent extends TalentInstance {
         for (int i = 0; i < effectTags.size(); ++i) {
             try {
                 var effectTag = effectTags.getCompound(i);
-                var effectInst = MobEffectInstance.load(effectTag);
+                var effectInst = MobEffectInstance.load(effectTag.wrapped());
                 if (effectInst != null)
                     this.storedEffects.add(effectInst);   
             } catch (Exception e) {

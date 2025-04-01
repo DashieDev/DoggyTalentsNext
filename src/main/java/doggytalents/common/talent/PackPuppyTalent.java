@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.TalentsOptions;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -259,9 +260,9 @@ public class PackPuppyTalent extends TalentInstance {
     }
 
     @Override
-    public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
+    public void readFromNBT(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
         super.readFromNBT(dogIn, compound);
-        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound.wrapped());
         this.renderChest = compound.getBoolean("renderChest");
         this.pickupItems = compound.getBoolean("pickupNearby");
         this.offerFood = compound.getBoolean("offerFood");
@@ -270,8 +271,8 @@ public class PackPuppyTalent extends TalentInstance {
 
     // Left in for backwards compatibility for versions <= 2.0.0.5
     @Override
-    public void onRead(AbstractDog dogIn, CompoundTag compound) {
-        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
+    public void onRead(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
+        this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound.wrapped());
     }
 
     @Override
