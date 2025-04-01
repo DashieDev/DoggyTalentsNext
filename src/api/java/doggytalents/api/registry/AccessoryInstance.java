@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -71,13 +72,13 @@ public class AccessoryInstance {
      * valid or an exception is thrown during loading then an empty optional
      * is returned.
      */
-    public static Optional<AccessoryInstance> readInstance(CompoundTag compound) {
+    public static Optional<AccessoryInstance> readInstance(CompoundTag_1_21_5 compound) {
         ResourceLocation rl = null;
         try {
             rl = ResourceLocation.tryParse(compound.getString("type"));
             if (DoggyTalentsAPI.ACCESSORIES.get().containsKey(rl)) {
                 Accessory type = DoggyTalentsAPI.ACCESSORIES.get().getValue(rl);
-                return Optional.of(type.read(compound));
+                return Optional.of(type.read(compound.wrapped()));
             } else {
                 DoggyTalentsAPI.LOGGER.warn("Failed to load accessory {}", compound);
             }

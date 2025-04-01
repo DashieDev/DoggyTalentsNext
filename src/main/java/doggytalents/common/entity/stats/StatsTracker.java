@@ -2,6 +2,8 @@ package doggytalents.common.entity.stats;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,13 +34,13 @@ public class StatsTracker {
     // Cache
     private final Cache<Integer> killCount = Cache.make(this::getTotalKillCountInternal);
 
-    public void writeAdditional(CompoundTag compound) {
+    public void writeAdditional(CompoundTag_1_21_5 compound) {
         ListTag killList = new ListTag();
         for (Entry<EntityType<?>, Integer> entry : this.ENTITY_KILLS.entrySet()) {
-            CompoundTag stats = new CompoundTag();
+            CompoundTag_1_21_5 stats = CompoundTag_1_21_5.createEmpty();
             NBTUtil.putRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey()));
             stats.putInt("count", entry.getValue());
-            killList.add(stats);
+            killList.add(stats.wrapped());
         }
         compound.put("entityKills", killList);
         compound.putDouble("damageDealt", this.damageDealt);
@@ -50,10 +52,10 @@ public class StatsTracker {
         compound.putInt("distanceRidden", this.distanceRidden);
     }
 
-    public void readAdditional(CompoundTag compound) {
-        ListTag killList = compound.getList("entityKills", Tag.TAG_COMPOUND);
+    public void readAdditional(CompoundTag_1_21_5 compound) {
+        ListTag_1_21_5 killList = compound.getList("entityKills", Tag.TAG_COMPOUND);
         for (int i = 0; i < killList.size(); i++) {
-            CompoundTag stats = killList.getCompound(i);
+            CompoundTag_1_21_5 stats = killList.getCompound(i);
             EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE);
             this.ENTITY_KILLS.put(type, stats.getInt("count"));
         }

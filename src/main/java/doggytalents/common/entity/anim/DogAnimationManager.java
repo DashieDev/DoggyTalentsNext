@@ -3,6 +3,7 @@ package doggytalents.common.entity.anim;
 import java.util.Objects;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import net.minecraft.nbt.CompoundTag;
@@ -141,7 +142,7 @@ public class DogAnimationManager {
         tag.put("dtnDogAnimDebug", debug_tag);
     }
 
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag_1_21_5 tag) {
         if (!tag.contains("dtnDogAnimDebug", Tag.TAG_COMPOUND))
             return;
         var debug_tag = tag.getCompound("dtnDogAnimDebug");
