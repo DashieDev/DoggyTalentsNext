@@ -56,7 +56,7 @@ runs {
         modSources.add(project.getSourceSets().api)
     }
 
-    data {
+    clientData {
         //taskName 'doggytalents_data'
         workingDirectory file('run')
         systemProperty 'forge.logging.console.level', 'debug'
@@ -73,7 +73,7 @@ repositories {
 
 dependencies {
 
-    implementation "net.neoforged:neoforge:21.3.60"
+    implementation "net.neoforged:neoforge:21.5.15-beta"
     
 }
 
@@ -118,11 +118,11 @@ task vscodePrintRunClient {
 task vscodePrintRunData {
     doFirst {
         println("vmArgs:")
-        def vmArgs = vscodeFetchJVMArguments({ runs.data.realiseJvmArguments() })
+        def vmArgs = vscodeFetchJVMArguments({ runs.clientData.realiseJvmArguments() })
         println(vmArgs)
         println("==================================")
         println("args:")
-        def programArgs = vscodeFetchProgramArguments({ runs.data.getProgramArguments().get() })
+        def programArgs = vscodeFetchProgramArguments({ runs.clientData.getProgramArguments().get() })
         println(programArgs)
         println("==================================")
         println("")
