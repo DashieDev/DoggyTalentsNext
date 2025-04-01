@@ -2424,7 +2424,7 @@ public class Dog extends AbstractDog {
             ConfigHandler.ServerConfig.getConfigOrDefault(
                 ConfigHandler.SERVER.DOG_MAX_BUILD_Y_CAP, false);
         if (max_build_height_check) {
-            int y_cap = this.level().getMaxBuildHeight();
+            int y_cap = this.level().getMaxY();
             if (y > y_cap) y = y_cap;
         }
         

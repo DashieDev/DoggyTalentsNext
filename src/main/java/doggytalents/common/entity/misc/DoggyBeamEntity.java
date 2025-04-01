@@ -8,6 +8,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -86,7 +87,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         }
 
         if (do_cooldown)
-            thrower.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+            PlayerUtil.addCooldown(thrower, DoggyItems.WHISTLE.get(), 40);
     }
 
     private boolean isEligibleDog(Dog dog, LivingEntity target, LivingEntity thrower) {
