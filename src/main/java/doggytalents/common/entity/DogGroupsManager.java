@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -19,12 +20,12 @@ public class DogGroupsManager {
         return Collections.unmodifiableList(groups);
     }
 
-    public void load(CompoundTag compound) {
+    public void load(CompoundTag_1_21_5 compound) {
         var groupsListTag = compound.getList("doggy_groups", Tag.TAG_COMPOUND);
         for (var tag : groupsListTag) {
             if (!(tag instanceof CompoundTag groupTag)) continue;
-            var group_name = groupTag.getString("group_name");
-            var group_color = groupTag.getInt("group_color");
+            var group_name = CompoundTag_1_21_5.wrap(groupTag).getString("group_name");
+            var group_color = CompoundTag_1_21_5.wrap(groupTag).getInt("group_color");
             add(new DogGroup(group_name, group_color));
         }
     }

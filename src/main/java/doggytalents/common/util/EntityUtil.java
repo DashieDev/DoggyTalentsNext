@@ -17,6 +17,9 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -78,7 +81,7 @@ public class EntityUtil {
         return entityIn.getRandom().nextInt(maxIn - minIn + 1) + minIn;
     }
 
-    public static boolean isHolding(@Nullable LivingEntity entity, Item item, Predicate<CompoundTag> nbtPredicate) {
+    public static boolean isHolding(@Nullable LivingEntity entity, Item item, Predicate<CompoundTag_1_21_5> nbtPredicate) {
         return isHolding(entity, stack -> stack.getItem() == item && ItemUtil.hasTag(stack) && nbtPredicate.test(ItemUtil.getTag(stack)));
     }
 

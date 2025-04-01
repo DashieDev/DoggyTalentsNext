@@ -9,6 +9,7 @@ import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.registry.AccessoryInstance;
@@ -513,7 +514,7 @@ public class DogIncapacitatedMananger {
         tag.put("doggyIncapacitated", tg0);
     }
 
-    public void load(CompoundTag tag) {
+    public void load(CompoundTag_1_21_5 tag) {
         var tg0 = tag.getCompound("doggyIncapacitated");
         var type = DefeatedType.byId(tg0.getInt("type"));
         var bandaid_count = tg0.getInt("bandaid");

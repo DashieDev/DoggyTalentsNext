@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -60,7 +61,7 @@ public class CanineTrackerItem extends Item {
         return Component.translatable(this.getDescriptionId());
     }
 
-    private @Nullable Component getStatusText(CompoundTag tag) {
+    private @Nullable Component getStatusText(CompoundTag_1_21_5 tag) {
         if (tag == null)
             return null;
         if (!tag.contains("name", Tag.TAG_STRING))

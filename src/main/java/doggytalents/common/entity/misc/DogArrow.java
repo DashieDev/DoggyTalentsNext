@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogAllyCheck;
@@ -247,15 +248,15 @@ public class DogArrow extends AbstractArrow {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.dogOwnerUUID.ifPresent(x -> {
-            tag.putUUID("dtn_dog_owner_id", x);
+            CompoundTag_1_21_5.wrap(tag).putUUID("dtn_dog_owner_id", x);
         });
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.hasUUID("dtn_dog_owner_id")) {
-            var uuid = tag.getUUID("dtn_dog_owner_id");
+        if (CompoundTag_1_21_5.wrap(tag).hasUUID("dtn_dog_owner_id")) {
+            var uuid = CompoundTag_1_21_5.wrap(tag).getUUID("dtn_dog_owner_id");
             this.dogOwnerUUID = Optional.ofNullable(uuid);
         }
     }

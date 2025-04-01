@@ -34,13 +34,13 @@ public class StatsTracker {
     // Cache
     private final Cache<Integer> killCount = Cache.make(this::getTotalKillCountInternal);
 
-    public void writeAdditional(CompoundTag_1_21_5 compound) {
+    public void writeAdditional(CompoundTag compound) {
         ListTag killList = new ListTag();
         for (Entry<EntityType<?>, Integer> entry : this.ENTITY_KILLS.entrySet()) {
-            CompoundTag_1_21_5 stats = CompoundTag_1_21_5.createEmpty();
+            CompoundTag stats = new CompoundTag();
             NBTUtil.putRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey()));
             stats.putInt("count", entry.getValue());
-            killList.add(stats.wrapped());
+            killList.add(stats);
         }
         compound.put("entityKills", killList);
         compound.putDouble("damageDealt", this.damageDealt);

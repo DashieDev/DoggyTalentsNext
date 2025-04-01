@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -127,7 +128,7 @@ public class DogRespawnData implements IDogData {
         target.putInt(STORAGE_AGE_TAG, dog.getAge());
         var owner_uuid = dog.getOwnerUUID();
         if (owner_uuid != null) {
-            target.putUUID(STORAGE_OWNER_TAG, owner_uuid);
+            CompoundTag_1_21_5.wrap(target).putUUID(STORAGE_OWNER_TAG, owner_uuid);
         }
         var custom_name = dog.getCustomName();
         if (custom_name != null) {
@@ -157,7 +158,7 @@ public class DogRespawnData implements IDogData {
         }
     }
 
-    private void restoreAndConsumeImportantDataIfNeeded(Dog dog, CompoundTag tag) {
+    private void restoreAndConsumeImportantDataIfNeeded(Dog dog, CompoundTag_1_21_5 tag) {
         if (tag.contains(STORAGE_AGE_TAG, Tag.TAG_INT)) {
             dog.setAge(tag.getInt(STORAGE_AGE_TAG));
             tag.remove(STORAGE_AGE_TAG);
@@ -195,7 +196,7 @@ public class DogRespawnData implements IDogData {
         }
         
         dog.moveTo(Vec3.atBottomCenterOf(pos));
-        restoreAndConsumeImportantDataIfNeeded(dog, this.data);
+        restoreAndConsumeImportantDataIfNeeded(dog, CompoundTag_1_21_5.wrap(this.data));
         CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
@@ -230,8 +231,8 @@ public class DogRespawnData implements IDogData {
         return dog;
     }
 
-    public void read(CompoundTag compound) {
-        this.data = compound.getCompound("data");
+    public void read(CompoundTag_1_21_5 compound) {
+        this.data = compound.getCompound("data").wrapped();
         if (compound.contains("dog_name", Tag.TAG_STRING)) {
             try {
                 var name_str = compound.getString("dog_name");
@@ -250,7 +251,7 @@ public class DogRespawnData implements IDogData {
             compound.putString("dog_name", this.dogName.get());
         }
         if (this.ownerUUID != null) {
-            compound.putUUID("owner_uuid", this.ownerUUID);
+            CompoundTag_1_21_5.wrap(compound).putUUID("owner_uuid", this.ownerUUID);
         }
         writeKilledBy(compound);
         return compound;
@@ -267,7 +268,7 @@ public class DogRespawnData implements IDogData {
         compound.put("dog_killed_by", killedByTag);
     }
 
-    public void readKilledBy(CompoundTag compound) {
+    public void readKilledBy(CompoundTag_1_21_5 compound) {
         if (!compound.contains("dog_killed_by", Tag.TAG_COMPOUND))
             return;
         var killedByTag = compound.getCompound("dog_killed_by");
