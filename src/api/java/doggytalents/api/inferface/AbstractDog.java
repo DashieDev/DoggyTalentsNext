@@ -208,4 +208,10 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public boolean canStillEat() {
         return false;
     }
+
+
+
+    //1.21.5+
+    public abstract void setOwnerUUID(UUID uuid);
+    public abstract @Nullable UUID getOwnerUUID();
 }
