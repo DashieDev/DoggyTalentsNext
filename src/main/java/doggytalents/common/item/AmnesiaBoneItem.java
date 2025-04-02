@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.network.chat.Style;
 
 
-public class AmnesiaBoneItem extends Item implements IDogItem  {
+public class AmnesiaBoneItem extends Item implements IDogItem, HoverTextAppender_1_21_5 {
 
     public AmnesiaBoneItem(Properties p_41383_) {
         super(p_41383_);

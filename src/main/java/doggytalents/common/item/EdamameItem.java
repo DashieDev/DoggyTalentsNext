@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class EdamameItem extends Item{
+public class EdamameItem extends Item implements HoverTextAppender_1_21_5{
 
     public EdamameItem(Properties p_41383_) {
         super(p_41383_);

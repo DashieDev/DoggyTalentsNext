@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class StarterBundleItem extends Item {
+public class StarterBundleItem extends Item implements HoverTextAppender_1_21_5 {
 
     public static List<Supplier<? extends Item>> STARTER_ITEMS = List.of(
         DoggyItems.DOGGY_CHARM,

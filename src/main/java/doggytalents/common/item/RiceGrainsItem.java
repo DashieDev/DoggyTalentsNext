@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.sounds.SoundEvents;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class RiceGrainsItem extends BlockItem{
+public class RiceGrainsItem extends BlockItem implements HoverTextAppender_1_21_5{
 
     public RiceGrainsItem(Block p_40565_, Properties p_40566_) {
         super(p_40565_, p_40566_);

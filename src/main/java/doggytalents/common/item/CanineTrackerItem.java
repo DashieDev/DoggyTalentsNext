@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-public class CanineTrackerItem extends Item {
+public class CanineTrackerItem extends Item implements HoverTextAppender_1_21_5 {
 
     public CanineTrackerItem(Properties properties) {
         super(properties);

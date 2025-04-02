@@ -6,7 +6,10 @@
     "mixins": [
 
         
-        "EntityMixin_1_21_3"
+        "EntityMixin_1_21_3",
+
+
+        "ItemStackMixin_1_21_5"
     ],
     "client": [
       "LivingEntityRendererMixin",

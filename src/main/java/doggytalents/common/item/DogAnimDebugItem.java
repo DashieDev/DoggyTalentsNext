@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.DogAnimDebugScreen;
@@ -26,7 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class DogAnimDebugItem extends Item implements IDogItem {
+public class DogAnimDebugItem extends Item implements IDogItem, HoverTextAppender_1_21_5 {
     
     public static final String SELECT_ANIM_ID = "dtn_selected_id";
     public static final String ITEM_MODE_ID = "dtn_item_mode";
