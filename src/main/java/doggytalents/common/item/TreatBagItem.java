@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
@@ -42,7 +43,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TreatBagItem extends Item implements IDogFoodHandler {
+public class TreatBagItem extends Item implements IDogFoodHandler, HoverTextAppender_1_21_5 {
 
     private Cache<String> contentsTranslationKey = Cache.make(() -> this.getDescriptionId() + ".contents");
 
@@ -133,7 +134,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
+        HoverTextAppender_1_21_5.super.appendHoverText(stack, context, tooltip, flagIn);
 
         tooltip.add(Component.translatable("item.doggytalents.treat_bag.help").withStyle(
             Style.EMPTY.withItalic(true)

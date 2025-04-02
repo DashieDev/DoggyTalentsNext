@@ -10,6 +10,7 @@ import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.event.ClientEventHandler;
@@ -36,7 +37,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem {
+public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem, HoverTextAppender_1_21_5 {
 
     public DogPlushieItem(Properties itemProps) {
         super(itemProps.stacksTo(1));

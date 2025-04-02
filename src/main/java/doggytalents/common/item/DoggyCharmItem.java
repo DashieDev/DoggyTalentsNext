@@ -2,6 +2,7 @@ package doggytalents.common.item;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
@@ -40,7 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class DoggyCharmItem extends Item implements IDogItem {
+public class DoggyCharmItem extends Item implements IDogItem, HoverTextAppender_1_21_5 {
 
     public DoggyCharmItem(Properties properties) {
         super(properties);

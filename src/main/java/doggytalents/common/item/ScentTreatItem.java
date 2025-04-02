@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ScentTreatItem extends Item {
+public class ScentTreatItem extends Item implements HoverTextAppender_1_21_5 {
 
     public static String SCENT_BLOCK_ID = "DTN_scented_block_id";
     

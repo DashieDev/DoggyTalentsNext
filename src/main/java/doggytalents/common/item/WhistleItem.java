@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggySounds;
 import doggytalents.DoggyTalents;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.AllStandSwitchModeScreen;
@@ -57,7 +58,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-public class WhistleItem extends Item implements IDogItem {
+public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_21_5 {
 
     public static enum WhistleMode {
         STAND(0, WhistleSound.LONG),

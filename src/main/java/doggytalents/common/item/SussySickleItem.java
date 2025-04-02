@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class SussySickleItem extends SwordItem {
+public class SussySickleItem extends SwordItem implements HoverTextAppender_1_21_5 {
 
     public SussySickleItem(Properties p_43272_) {
         super(ToolMaterial.IRON,  3, 0F, p_43272_);

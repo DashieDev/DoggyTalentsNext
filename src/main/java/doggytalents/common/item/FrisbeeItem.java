@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class FrisbeeItem extends ThrowableItem implements IDyeableArmorItem {
+public class FrisbeeItem extends ThrowableItem implements IDyeableArmorItem, HoverTextAppender_1_21_5 {
 
     public FrisbeeItem(Supplier<? extends Item> altBone, Supplier<? extends Item> renderBone, Properties properties) {
         super(altBone, renderBone, properties);

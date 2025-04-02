@@ -6,6 +6,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
@@ -80,7 +81,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class DogBedBlock extends BaseEntityBlock {
+public class DogBedBlock extends BaseEntityBlock implements HoverTextAppender_1_21_5 {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
@@ -367,7 +368,7 @@ public class DogBedBlock extends BaseEntityBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
+        HoverTextAppender_1_21_5.super.appendHoverText(stack, context, tooltip, flagIn);
         
         Pair<ICasingMaterial, IBeddingMaterial> materials = DogBedUtil.getMaterials(stack);
 

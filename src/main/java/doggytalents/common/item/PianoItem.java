@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.common.entity.misc.Piano;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PianoItem extends Item {
+public class PianoItem extends Item implements HoverTextAppender_1_21_5 {
 
     private Supplier<EntityType<Piano>> pianoSup;
 

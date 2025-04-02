@@ -1,6 +1,7 @@
 package doggytalents.common.item;
 
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.api.registry.Accessory;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Supplier;
 
-public class AccessoryItem extends Item implements IDogItem {
+public class AccessoryItem extends Item implements IDogItem, HoverTextAppender_1_21_5 {
 
     public Supplier<? extends Accessory> type;
 

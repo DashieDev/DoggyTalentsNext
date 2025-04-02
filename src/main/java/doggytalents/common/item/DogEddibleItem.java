@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.mojang.datafixers.util.Pair;
 
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.backward_imitate.DogFoodProperties_21_3;
 import doggytalents.common.backward_imitate.DogFoodProperties_21_3.PossibleEffect_1_21_3;
@@ -24,7 +25,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public abstract class DogEddibleItem extends Item implements IDogEddible {
+public abstract class DogEddibleItem extends Item implements IDogEddible, HoverTextAppender_1_21_5 {
 
     // private static FoodProperties NULL_PROPS = 
     //     (new FoodProperties.Builder())
