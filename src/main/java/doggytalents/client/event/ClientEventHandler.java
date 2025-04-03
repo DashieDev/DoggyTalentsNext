@@ -9,6 +9,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.DoggyKeybinds;
+import doggytalents.client.backward_imitate.DogBedModifyingBakingResult_1_21_5;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
@@ -80,25 +81,25 @@ public class ClientEventHandler {
 
     public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
         try {
-            var modelRegistry = event.getModels();
+            // var modelRegistry = event.getModels();
 
-            ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+            // ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
+            // ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
+            // var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
 
-            var modelUnbaked = (BlockModel) event.getModelBakery().topModels.get(ModelResourceLocation.standalone(bakedModelLoc));
+            // var modelUnbaked = (BlockModel) event.getModelBakery().topModels.get(ModelResourceLocation.standalone(bakedModelLoc));
 
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
+            // BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
-            // Replace all valid block states
-            DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
-                modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
-            });
+            // // Replace all valid block states
+            // DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
+            //     modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
+            // });
 
-            // Replace inventory model
-            modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
-            
+            // // Replace inventory model
+            // modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
+            DogBedModifyingBakingResult_1_21_5.modifyBakedModels(event);   
         }
         catch(Exception e) {
             DoggyTalentsNext.LOGGER.warn("Error modifying baking result. Reverting to default textures...");

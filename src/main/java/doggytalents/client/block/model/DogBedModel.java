@@ -9,25 +9,32 @@ import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
 import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import doggytalents.common.util.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.ModelDebugName;
 import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.ResolvedModel;
+import net.minecraft.client.resources.model.SpriteGetter;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
+import net.neoforged.neoforge.model.data.ModelData;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
@@ -40,21 +47,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
-public class DogBedModel implements BakedModel {
+public class DogBedModel implements BlockStateModel {
 
     public static DogBedItemOverride ITEM_OVERIDE = new DogBedItemOverride();
     private static final ResourceLocation MISSING_TEXTURE = Util.getVanillaResource("missingno");
 
     private final ModelBakery modelLoader;
     private final BlockModel unbakedModel;
-    private final BakedModel defaultModelVariant;
-    private final Map<Direction, BakedModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
-    private final Map<Direction, BakedModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
+    private final BlockStateModel defaultModelVariant;
+    private final Map<Direction, BlockStateModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
+    private final Map<Direction, BlockStateModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
-    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
+    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BlockStateModel> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
-    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel defaultModelVariant, int maxCacheSize) {
+    public DogBedModel(ModelBakery modelLoader, BlockModel model, BlockStateModel defaultModelVariant, int maxCacheSize) {
         this.modelLoader = modelLoader;
         this.unbakedModel = model;
         this.defaultModelVariant = defaultModelVariant;
@@ -62,11 +69,11 @@ public class DogBedModel implements BakedModel {
         this.initItemOverride_21_3();
     }
 
-    public BakedModel getModelVariant(@Nonnull ModelData data) {
+    public BlockStateModel getModelVariant(@Nonnull ModelData data) {
         return this.getModelVariant(data.get(DogBedTileEntity.CASING), data.get(DogBedTileEntity.BEDDING), data.get(DogBedTileEntity.FACING));
     }
 
-    public BakedModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
+    public BlockStateModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
         if (facing == null)
             facing = Direction.NORTH;
         
@@ -88,7 +95,7 @@ public class DogBedModel implements BakedModel {
         return model_variant;
     }
 
-    private BakedModel getMissingVariant(Direction dir) {
+    private BlockStateModel getMissingVariant(Direction dir) {
         var missing = this.missingModelVariant.get(dir);
         if (missing != null)
             return missing;
@@ -97,7 +104,7 @@ public class DogBedModel implements BakedModel {
         return missing;
     }
 
-    private BakedModel getDefaultVariant(Direction dir) {
+    private BlockStateModel getDefaultVariant(Direction dir) {
         var default_variant = this.defaultModelVariants.get(dir);
         if (default_variant != null)
             return default_variant;
@@ -107,99 +114,101 @@ public class DogBedModel implements BakedModel {
         return default_variant;
     }
 
-    @Override
-    public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand) {
-        //!!!!!!
-        return this.getModelVariant(null, null, Direction.NORTH).getQuads(state, side, rand,ModelData.EMPTY, null);
-    }
+    // @Override
+    // public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand) {
+    //     //!!!!!!
+    //     return this.getModelVariant(null, null, Direction.NORTH).getQuads(state, side, rand,ModelData.EMPTY, null);
+    // }
 
-    @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData data, @Nullable RenderType renderType) {
-        return this.getModelVariant(data).getQuads(state, side, rand, ModelData.EMPTY, renderType);
-    }
+    // @Override
+    // public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData data, @Nullable RenderType renderType) {
+    //     return this.getModelVariant(data).getQuads(state, side, rand, ModelData.EMPTY, renderType);
+    // }
 
     // @Override
     // public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, ModelData data) {
     //     return this.getModelVariant(data).getQuads(state, side, rand, data);
     // }
 
-    @Override
+    //@Override
     public TextureAtlasSprite getParticleIcon(@Nonnull ModelData data) {
-        return this.getModelVariant(data).getParticleIcon(data);
+        return this.getModelVariant(data).particleIcon();
     }
 
-    public BakedModel bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
-        var new_model = deepCopyBlockModel(this.unbakedModel);
+    public BlockStateModel bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
+        // var new_model = deepCopyBlockModel(this.unbakedModel);
 
-        var casing_texture = findCasingTexture(casing);
-        var bedding_texture = findBeddingTexture(bedding);
-        new_model.textureMap.put("bedding", bedding_texture);
-        new_model.textureMap.put("casing", casing_texture);
-        new_model.textureMap.put("particle", casing_texture);
+        // var casing_texture = findCasingTexture(casing);
+        // var bedding_texture = findBeddingTexture(bedding);
+        // new_model.textureMap.put("bedding", bedding_texture);
+        // new_model.textureMap.put("casing", casing_texture);
+        // new_model.textureMap.put("particle", casing_texture);
+        var new_model = prepareVariantBlockModelForBaking_1_21_5(unbakedModel, casing, bedding);
 
         var ret = bakeModel(new_model, facing);
         return ret;
     }
 
-    private static BlockModel deepCopyBlockModel(BlockModel model) {
-        var elements_old = model.getElements();
-        var elements_new = new ArrayList<BlockElement>(elements_old.size());
-        for (var element : elements_old) {
-            var element_copy = new BlockElement(element.from, element.to, 
-                Maps.newHashMap(element.faces), element.rotation, element.shade, element.lightEmission);
-            elements_new.add(element_copy);
-        }
+    // private static BlockModel deepCopyBlockModel(BlockModel model) {
+    //     var elements_old = model.getElements();
+    //     var elements_new = new ArrayList<BlockElement>(elements_old.size());
+    //     for (var element : elements_old) {
+    //         var element_copy = new BlockElement(element.from, element.to, 
+    //             Maps.newHashMap(element.faces), element.rotation, element.shade, element.lightEmission);
+    //         elements_new.add(element_copy);
+    //     }
 
-        var ret = new BlockModel(model.getParentLocation(), elements_new,
-            Maps.newHashMap(model.textureMap), model.hasAmbientOcclusion(), model.getGuiLight(),
-            model.getTransforms(), new ArrayList<>(model.getOverrides()));
-        ret.name = model.name;
-        ret.parent = model.parent;
-        return ret;
-    }
+    //     var ret = new BlockModel(model.getParentLocation(), elements_new,
+    //         Maps.newHashMap(model.textureMap), model.hasAmbientOcclusion(), model.getGuiLight(),
+    //         model.getTransforms(), new ArrayList<>(model.getOverrides()));
+    //     ret.name = model.name;
+    //     ret.parent = model.parent;
+    //     return ret;
+    // }
 
-    private static BakedModel bakeModel(BlockModel to_bake, Direction dir) {
-        var baker = (new ModelBaker() {
+    private static BlockStateModel bakeModel(BlockModel to_bake, Direction dir) {
+        // var baker = (new ModelBaker() {
 
-            @Override
-            public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
-                    Function<Material, TextureAtlasSprite> sprites) {
-                return to_bake.bake(Material::sprite, 
-                    getModelRotation(dir),
-                    true
-                );
-            }
+        //     @Override
+        //     public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+        //             Function<Material, TextureAtlasSprite> sprites) {
+        //         return to_bake.bake(Material::sprite, 
+        //             getModelRotation(dir),
+        //             true
+        //         );
+        //     }
 
-            @Override
-            public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
-                return Material::sprite;
-            }
+        //     @Override
+        //     public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
+        //         return Material::sprite;
+        //     }
 
-            // @Override
-            // public UnbakedModel getModel(ResourceLocation p_252194_) {
-            //     return to_bake;
-            // }
+        //     // @Override
+        //     // public UnbakedModel getModel(ResourceLocation p_252194_) {
+        //     //     return to_bake;
+        //     // }
 
-            @Override
-            @javax.annotation.Nullable
-            public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
-                return this.bake(p_250776_, p_251280_, getModelTextureGetter());
-            }
+        //     @Override
+        //     @javax.annotation.Nullable
+        //     public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+        //         return this.bake(p_250776_, p_251280_, getModelTextureGetter());
+        //     }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
-                // TODO Auto-generated method stub
-                return null;
-            }
+        //     @Override
+        //     public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
+        //         // TODO Auto-generated method stub
+        //         return null;
+        //     }
 
-            @Override
-            public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
-                    Function<Material, TextureAtlasSprite> sprites) {
-                return null;
-            }
+        //     @Override
+        //     public @org.jetbrains.annotations.Nullable BakedModel bakeUncached(UnbakedModel model, ModelState state,
+        //             Function<Material, TextureAtlasSprite> sprites) {
+        //         return null;
+        //     }
             
-        });
-        return baker.bake(null, null, null);
+        // });
+        // return baker.bake(null, null, null);
+        return bakeModel_1_21_5(to_bake, dir);
     }
 
     private static BlockModelRotation getModelRotation(@Nonnull Direction dir) {
@@ -224,38 +233,38 @@ public class DogBedModel implements BakedModel {
             resource = MISSING_TEXTURE;
         }
 
-        return Either.left(new Material(InventoryMenu.BLOCK_ATLAS, resource));
+        return Either.left(new Material(TextureAtlas.LOCATION_BLOCKS, resource));
     }
 
-    @Override
-    public boolean useAmbientOcclusion() {
-        return this.defaultModelVariant.useAmbientOcclusion();
-    }
+    // @Override
+    // public boolean useAmbientOcclusion() {
+    //     return this.defaultModelVariant.useAmbientOcclusion();
+    // }
+
+    // @Override
+    // public boolean isGui3d() {
+    //     return this.defaultModelVariant.isGui3d();
+    // }
+
+    // @Override
+    // public boolean usesBlockLight() {
+    //     return this.defaultModelVariant.usesBlockLight();
+    // }
+
+    // @Override
+    // public boolean isCustomRenderer() {
+    //     return this.defaultModelVariant.isCustomRenderer();
+    // }
 
     @Override
-    public boolean isGui3d() {
-        return this.defaultModelVariant.isGui3d();
+    public TextureAtlasSprite particleIcon() {
+        return this.defaultModelVariant.particleIcon();
     }
 
-    @Override
-    public boolean usesBlockLight() {
-        return this.defaultModelVariant.usesBlockLight();
-    }
-
-    @Override
-    public boolean isCustomRenderer() {
-        return this.defaultModelVariant.isCustomRenderer();
-    }
-
-    @Override
-    public TextureAtlasSprite getParticleIcon() {
-        return this.defaultModelVariant.getParticleIcon();
-    }
-
-    @Override
-    public ItemTransforms getTransforms() {
-        return this.defaultModelVariant.getTransforms();
-    }
+    // @Override
+    // public ItemTransforms getTransforms() {
+    //     return this.defaultModelVariant.getTransforms();
+    // }
 
     @Override
     public BakedOverrides overrides() {
@@ -270,4 +279,121 @@ public class DogBedModel implements BakedModel {
     private void initItemOverride_21_3() {
         this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
     }
+
+    //1.21.5+
+    @Override
+    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random,
+            List<BlockModelPart> parts) {
+        var model_data = level.getModelData(pos);                
+        this.getModelVariant(model_data).collectParts(level, pos, state, random, parts);
+    }
+
+    @Override
+    public void collectParts(RandomSource random, List<BlockModelPart> partList) {
+        this.getModelVariant(null, null, Direction.NORTH).collectParts(random, partList);
+    }
+
+    @Override
+    public TextureAtlasSprite particleIcon(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+        var model_data = level.getModelData(pos);
+        return this.getParticleIcon(model_data);
+    }
+
+    private static List<BlockElement> getElements_1_21_5(BlockModel model) {
+        if (!(model.geometry() instanceof SimpleUnbakedGeometry element_getter))
+            return List.of();
+        return element_getter.elements();
+    }
+
+    private BlockModel prepareVariantBlockModelForBaking_1_21_5(BlockModel model, @Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding) {
+        var elements_old = getElements_1_21_5(model);
+        var elements_new = new ArrayList<BlockElement>(elements_old.size());
+        for (var element : elements_old) {
+            var element_copy = new BlockElement(element.from(), element.to(), 
+                Maps.newHashMap(element.faces()), element.rotation(), element.shade(), element.lightEmission());
+            elements_new.add(element_copy);
+        }
+
+        var casing_texture = findCasingTexture(casing);
+        var bedding_texture = findBeddingTexture(bedding);
+        var builder = new TextureSlots.Data.Builder();
+        addMaterialToBuilder_1_21_5(builder, "bedding", bedding_texture);
+        addMaterialToBuilder_1_21_5(builder, "casing", casing_texture);
+        addMaterialToBuilder_1_21_5(builder, "particle", casing_texture);
+        var texture_map = builder.build();
+
+        var ret = new BlockModel(new SimpleUnbakedGeometry(elements_new), model.guiLight(), 
+            model.ambientOcclusion(), model.transforms(), texture_map, 
+            model.parent(), model.rootTransform(), model.renderTypeGroup(), new HashMap<>(model.partVisibility()));
+        return ret;
+    }
+
+    private static void addMaterialToBuilder_1_21_5(TextureSlots.Data.Builder builder, String name,
+        Either<Material, String> material) {
+        
+        if (material.left().isPresent()) {
+            builder.addTexture(name, material.left().get());
+            return;
+        }
+        if (material.right().isPresent()) {
+            builder.addReference(name, material.right().get());
+            return;
+        }
+        
+    }
+
+    private static BlockStateModel bakeModel_1_21_5(BlockModel model, Direction dir) {
+        var bake_func = StandaloneModelBaker.blockStateModel(getModelRotation(dir));
+        var resolved_model = new ResolvedModel() {
+
+            @Override
+            public String debugName() {
+                return "DTN Dog Bed Variant Model";
+            }
+
+            @Override
+            public UnbakedModel wrapped() {
+                return model;
+            }
+
+            @Override
+            @Nullable
+            public ResolvedModel parent() {
+                return null;
+            }
+            
+        };
+        var baker = new ModelBaker() {
+
+            @Override
+            public ResolvedModel getModel(ResourceLocation p_405736_) {
+                return resolved_model;
+            }
+
+            @Override
+            public SpriteGetter sprites() {
+                return new SpriteGetter() {
+
+                    @Override
+                    public TextureAtlasSprite get(Material material, ModelDebugName p_404904_) {
+                        return material.sprite();
+                    }
+
+                    @Override
+                    public TextureAtlasSprite reportMissingReference(String p_387031_, ModelDebugName p_405621_) {
+                        return new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation()).sprite();
+                    }
+                    
+                };
+            }
+
+            @Override
+            public <T> T compute(SharedOperationKey<T> p_410340_) {
+                return p_410340_.compute(this);
+            }
+            
+        };
+        return bake_func.bake(resolved_model, baker);
+    }
+
 }
