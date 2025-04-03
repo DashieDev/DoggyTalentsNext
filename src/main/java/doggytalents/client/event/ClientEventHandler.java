@@ -9,6 +9,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.DoggyKeybinds;
+import doggytalents.client.backward_imitate.DogBedModifyingBakingResult_1_21_5;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
