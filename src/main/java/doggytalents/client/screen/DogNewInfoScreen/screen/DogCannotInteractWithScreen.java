@@ -2,7 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.screen;
 
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -184,11 +183,11 @@ public class DogCannotInteractWithScreen extends Screen {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        //RenderSystem.enableBlend();
+        //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = size;
         ScreenUtil.blit_21_3(graphics, getDefeatedKanji(this.dog), x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        RenderSystem.disableBlend();
+        //RenderSystem.disableBlend();
     }
 
     public static ResourceLocation getDefeatedKanji(Dog dog) {

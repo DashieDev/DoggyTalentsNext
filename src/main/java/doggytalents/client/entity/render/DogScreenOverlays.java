@@ -28,7 +28,7 @@ public class DogScreenOverlays {
 
             //mc.getProfiler().push("food_dog");
 
-            RenderSystem.enableBlend();
+            //RenderSystem.enableBlend();
             int left = screenWidth / 2 + 91;
             int top = screenHeight - gui.rightHeight;
             gui.rightHeight += 10;
@@ -54,7 +54,7 @@ public class DogScreenOverlays {
                 else if (idx == level)
                     ScreenUtil.blit_21_3(mStack, GUI_ICONS_LOCATION, x, y, icon + 45, 27, 9, 9);
             }
-            RenderSystem.disableBlend();
+            //RenderSystem.disableBlend();
             //mc.getProfiler().pop();
         }
     };
@@ -69,7 +69,7 @@ public class DogScreenOverlays {
 
             //gui.setupOverlayRenderState(true, false);
             //mc.getProfiler().push("air_dog");
-            RenderSystem.enableBlend();
+            //RenderSystem.enableBlend();
             int left = screenWidth / 2 + 91;
             int top = screenHeight - gui.rightHeight;
 
@@ -88,7 +88,7 @@ public class DogScreenOverlays {
                 gui.rightHeight += 10;
             }
 
-            RenderSystem.disableBlend();
+            //RenderSystem.disableBlend();
             //mc.getProfiler().pop();
         }
     };
