@@ -14,6 +14,7 @@ import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
@@ -50,12 +51,9 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -168,7 +166,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (isItemBlacklisted(stack))
                 continue;
             var item = stack.getItem();
-            if (item instanceof SwordItem) {
+            if (ItemUtil_1_21_5.isMeleeWeapon(stack)) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
@@ -213,7 +211,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     public DogInteractionResult processInteract(AbstractDog d, Level levek, Player player,
             InteractionHand hand) {
         var stack = player.getItemInHand(hand);
-        if (!(stack.getItem() instanceof PickaxeItem)) 
+        if (!(ItemUtil_1_21_5.isPickaxeExact(stack))) 
             return DogInteractionResult.PASS;
         if (!(d instanceof Dog dog)) 
             return DogInteractionResult.PASS;

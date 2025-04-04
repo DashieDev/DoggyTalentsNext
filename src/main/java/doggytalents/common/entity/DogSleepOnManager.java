@@ -74,7 +74,7 @@ public class DogSleepOnManager {
         final float sleep_yrot = sleep_pair.getLeft();
 
         player.startSleeping(dog.blockPosition());
-        player.moveTo(sleep_pair.getRight());
+        player.snapTo(sleep_pair.getRight());
         rotateDogPerpenToSleepYRot(dog, sleep_yrot);
         rotatePlayerYRotToDog(dog, player, sleep_yrot);
         

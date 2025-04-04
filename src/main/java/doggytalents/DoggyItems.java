@@ -218,7 +218,7 @@ public class DoggyItems {
             () -> new FeatheredMantleArtifact(), props), 1);
     public static final Supplier<Item> CREATIVE_CANINE_TRACKER = registerWith("creative_canine_tracker", props -> new CanineTrackerItem(props) 
         { @Override public boolean isFoil(ItemStack stack) { return true; } }, 1);
-    public static final Supplier<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
+    public static final Supplier<Item> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
     public static final Supplier<DogPlushieItem> DOG_PLUSHIE_TOY = register("dog_plushie_toy_item", 
         (props) -> new DogPlushieItem(props));
 

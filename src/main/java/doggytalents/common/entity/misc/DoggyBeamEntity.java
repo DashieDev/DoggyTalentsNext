@@ -3,6 +3,7 @@ package doggytalents.common.entity.misc;
 import com.google.common.base.Predicates;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -125,7 +126,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         if (owner == null)
             return false;
         if (entity instanceof TamableAnimal other_dog) {
-            var other_owner_id = other_dog.getOwnerUUID();
+            var other_owner_id = EntityUtil_1_21_5.getOwnerUUID(other_dog);
             var owner_id = owner.getUUID();
             if (owner_id != null && owner_id.equals(other_owner_id))
                 return true;

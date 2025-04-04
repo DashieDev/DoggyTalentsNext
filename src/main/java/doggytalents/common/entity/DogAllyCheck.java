@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +89,7 @@ public class DogAllyCheck {
     }
 
     private static boolean checkSameOwnerUUIDWithDog(UUID dog_owner_uuid, TamableAnimal entity) {
-        var other_owner_uuid = entity.getOwnerUUID();
+        var other_owner_uuid = EntityUtil_1_21_5.getOwnerUUID(entity);
         if (other_owner_uuid == null)
             return false;
         return dog_owner_uuid.equals(other_owner_uuid);
@@ -101,7 +102,7 @@ public class DogAllyCheck {
         if (entity instanceof Player) {
             return true;
         } else if (entity instanceof TamableAnimal other_dog) {
-            return other_dog.getOwnerUUID() != null;
+            return EntityUtil_1_21_5.getOwnerUUID(other_dog) != null;
         } else {
             return false;
         }

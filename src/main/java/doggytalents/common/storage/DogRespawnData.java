@@ -195,7 +195,7 @@ public class DogRespawnData implements IDogData {
             return null;
         }
         
-        dog.moveTo(Vec3.atBottomCenterOf(pos));
+        dog.snapTo(Vec3.atBottomCenterOf(pos));
         restoreAndConsumeImportantDataIfNeeded(dog, CompoundTag_1_21_5.wrap(this.data));
         CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
         UUID uuid = dog.getUUID();

@@ -246,7 +246,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (lightningbolt == null)
             return false;
 
-        lightningbolt.moveTo(Vec3.atBottomCenterOf(target_b0));
+        lightningbolt.snapTo(Vec3.atBottomCenterOf(target_b0));
         lightningbolt.setCause(null);
         this.level().addFreshEntity(lightningbolt);
 
