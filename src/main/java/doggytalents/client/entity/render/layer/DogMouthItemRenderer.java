@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.backward_imitate.DogItemRender_1_21_5;
@@ -27,11 +28,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
 
 public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
     
@@ -78,7 +77,7 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
         stack.translate(-0.025F, 0.125F, -0.32F);
         var item = itemStack.getItem();
 
-        if (item instanceof SwordItem || item instanceof DiggerItem
+        if (ItemUtil_1_21_5.isMeleeWeapon(itemStack) || ItemUtil_1_21_5.isDiggerItem(itemStack)
             || itemStack.is(Items.TRIDENT)) {
             stack.translate(0.25, 0, 0);
         }

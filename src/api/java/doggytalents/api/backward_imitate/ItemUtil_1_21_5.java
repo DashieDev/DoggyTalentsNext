@@ -3,6 +3,7 @@ package doggytalents.api.backward_imitate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class ItemUtil_1_21_5 {
     
@@ -22,6 +23,20 @@ public class ItemUtil_1_21_5 {
         if (slot == null)
             return false;
         return slot.getType() == EquipmentSlot.Type.ANIMAL_ARMOR;
+    }
+
+    public static boolean isDiggerItem(ItemStack stack) {
+        return stack.has(DataComponents.TOOL);
+    }
+
+    public static boolean isPickaxeExact(ItemStack stack) {
+        var item = stack.getItem();
+        return item == Items.STONE_PICKAXE
+            || item == Items.IRON_PICKAXE
+            || item == Items.GOLDEN_PICKAXE
+            || item == Items.DIAMOND_PICKAXE
+            || item == Items.NETHERITE_PICKAXE
+            || item == Items.WOODEN_PICKAXE;
     }
 
 }

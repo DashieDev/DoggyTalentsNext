@@ -15,15 +15,14 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class SussySickleItem extends SwordItem implements HoverTextAppender_1_21_5 {
+public class SussySickleItem extends Item implements HoverTextAppender_1_21_5 {
 
     public SussySickleItem(Properties p_43272_) {
-        super(ToolMaterial.IRON,  3, 0F, p_43272_);
+        super(p_43272_.sword(ToolMaterial.IRON,  3, 0F));
     }
 
     @Override

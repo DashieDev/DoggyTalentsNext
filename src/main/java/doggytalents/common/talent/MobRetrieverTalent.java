@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -97,7 +98,7 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target instanceof TamableAnimal otherDog 
             && dog.getOwnerUUID() != null
-            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
+            && ObjectUtils.notEqual(EntityUtil_1_21_5.getOwnerUUID(otherDog), dog.getOwnerUUID()))
             return false;
         if (!canLevelRideTarget(dog, target))
             return false;
@@ -128,7 +129,7 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target instanceof TamableAnimal otherDog 
             && dog.getOwnerUUID() != null
-            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
+            && ObjectUtils.notEqual(EntityUtil_1_21_5.getOwnerUUID(otherDog), dog.getOwnerUUID()))
             return false;
         if (!canLevelRideTarget(dog, target))
             return false;

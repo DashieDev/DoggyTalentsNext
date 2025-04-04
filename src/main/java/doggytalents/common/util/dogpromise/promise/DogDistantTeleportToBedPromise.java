@@ -84,7 +84,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             return;
         }
         this.dog.fallDistance = 0;
-        dog.moveTo(b1.getX() + 0.5F, b1.getY(), b1.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
+        dog.snapTo(b1.getX() + 0.5F, b1.getY(), b1.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
         dog.getNavigation().stop();
         dog.setOrderedToSit(true);
         this.dogTeleported = true;

@@ -1,7 +1,7 @@
 package doggytalents.common.entity;
 
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ProjectileWeaponItem;
 
 public class DogAvoidGoingInFrontOfOwnerManager {
@@ -44,7 +44,7 @@ public class DogAvoidGoingInFrontOfOwnerManager {
     private boolean ownerMayBeMining(LivingEntity owner) {
         return
             owner.swinging 
-            && owner.getMainHandItem().getItem() instanceof DiggerItem;      
+            && ItemUtil_1_21_5.isDiggerItem(owner.getMainHandItem());      
     }
 
 }
