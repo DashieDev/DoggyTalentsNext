@@ -9,7 +9,7 @@ import doggytalents.common.variant.DogVariant;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.animal.WolfVariant;
+import net.minecraft.world.entity.animal.wolf.WolfVariant;
 
 public class DogVariantUtil {
     
