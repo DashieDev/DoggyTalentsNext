@@ -6,7 +6,7 @@ import doggytalents.common.event.EventHandler;
 import doggytalents.common.network.IPacket;
 import doggytalents.common.network.packet.data.TrainWolfToDogData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 
