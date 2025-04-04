@@ -5,10 +5,12 @@ import com.mojang.math.Axis;
 
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.common.entity.misc.DogFoodProjectile;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -23,7 +25,7 @@ public class DogFoodProjectileRenderer extends EntityRenderer_21_3<DogFoodProjec
 
     public DogFoodProjectileRenderer(Context ctx) {
         super(ctx);
-        itemRenderer = ctx.getItemRenderer();
+        itemRenderer = Minecraft.getInstance().getItemRenderer();
         placeholder = new ItemStack(Items.SNOWBALL);
     }
 
@@ -45,7 +47,7 @@ public class DogFoodProjectileRenderer extends EntityRenderer_21_3<DogFoodProjec
 
     @Override
     public ResourceLocation getTextureLocation(DogFoodProjectile proj) {
-        return InventoryMenu.BLOCK_ATLAS;
+        return TextureAtlas.LOCATION_BLOCKS;
     }
     
 }
