@@ -2,9 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.widge
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -62,9 +59,9 @@ public class AccessoryHolder extends AbstractWidget {
         graphics.renderItem(itemStack, this.getX()+1, this.getY()+1);
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        //RenderSystem.enableBlend();
+        //RenderSystem.defaultBlendFunc();
+        //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = add ? ICON_ADD_X : ICON_REM_X;
         if (warning) iX = ICON_WARN_X;
         ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, getX()+14, getY()+14, iX, 0, 9, 9);

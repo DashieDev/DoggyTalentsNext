@@ -2,7 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.vi
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -74,9 +73,9 @@ public class ArtifactShowBox extends AbstractWidget {
 
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        //RenderSystem.enableBlend();
+        //RenderSystem.defaultBlendFunc();
+        //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int iX = ICON_REM_X;
         ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, this.getX()+this.width - 2, getY()+this.height -2, iX, 0, 9, 9);
     }

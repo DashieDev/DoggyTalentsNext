@@ -1,6 +1,5 @@
 package doggytalents.client.screen.DogNewInfoScreen.element;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -58,9 +57,9 @@ public class MainButtonToolboxRowElement extends AbstractElement {
 
                 //RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+                //RenderSystem.enableBlend();
+                //RenderSystem.defaultBlendFunc();
+                //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
                 ScreenUtil.blit_21_3(graphics, Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20);
             }
         };

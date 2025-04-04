@@ -2,7 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -332,8 +331,8 @@ public class DogSkinElement extends AbstractElement {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        //RenderSystem.enableBlend();
+        //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 100;
         ScreenUtil.blit_21_3(graphics, Resources.KANJI_MYSTERY_BKG, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
@@ -343,6 +342,6 @@ public class DogSkinElement extends AbstractElement {
         ScreenUtil.blit_21_3(graphics, Resources.KANJI_MYSTERY, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         stack.popPose();
-        RenderSystem.disableBlend();
+        //RenderSystem.disableBlend();
     }
 }

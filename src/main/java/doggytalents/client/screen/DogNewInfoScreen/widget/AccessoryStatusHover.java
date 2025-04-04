@@ -1,6 +1,5 @@
 package doggytalents.client.screen.DogNewInfoScreen.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import doggytalents.DoggyItems;
@@ -46,9 +45,9 @@ public class AccessoryStatusHover extends AbstractWidget {
             return;
         graphics.renderItem(render_icon, this.getX()+1, this.getY()+1);
         int iX = getIconXState();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        //RenderSystem.enableBlend();
+        //RenderSystem.defaultBlendFunc();
+        //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         ScreenUtil.blit_21_3(graphics, Resources.STYLE_ADD_REMOVE, getX()+11, getY()+11, iX, 0, 9, 9);
     }
 
