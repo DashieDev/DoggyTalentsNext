@@ -4,8 +4,6 @@ import javax.annotation.Nullable;
 
 import doggytalents.client.block.model.DogBedModel;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.block.model.BakedOverrides;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
