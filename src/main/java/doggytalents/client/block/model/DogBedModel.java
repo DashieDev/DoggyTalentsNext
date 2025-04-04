@@ -266,10 +266,10 @@ public class DogBedModel implements BlockStateModel {
     //     return this.defaultModelVariant.getTransforms();
     // }
 
-    @Override
-    public BakedOverrides overrides() {
-        return override_21_3;
-    }
+    // @Override
+    // public BakedOverrides overrides() {
+    //     return override_21_3;
+    // }
 
 
 
