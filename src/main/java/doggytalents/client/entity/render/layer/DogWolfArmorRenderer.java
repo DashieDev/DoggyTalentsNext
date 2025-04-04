@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -23,7 +24,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Crackiness;
-import net.minecraft.world.item.AnimalArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -88,22 +88,22 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
         renderWolfArmorLayerCracks(dogModel, poseStack, buffer, packedLight, wolfArmorPair.getLeft());
     }
 
-    private Optional<Pair<ItemStack, AnimalArmorItem>> getWolfArmorItem(Dog dog) {
+    private Optional<Pair<ItemStack, Item>> getWolfArmorItem(Dog dog) {
         var wolf_armor_stack = dog.wolfArmor();
-        if (!(wolf_armor_stack.getItem() instanceof AnimalArmorItem wolfArmorItem))
+        if (!(ItemUtil_1_21_5.isWolfArmor(wolf_armor_stack)))
             return Optional.empty();
         // if (wolfArmorItem.getBodyType() != AnimalArmorItem.BodyType.CANINE)
         //     return Optional.empty();
-        return Optional.of(Pair.of(wolf_armor_stack, wolfArmorItem));
+        return Optional.of(Pair.of(wolf_armor_stack, wolf_armor_stack.getItem()));
     }
 
-    private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, AnimalArmorItem item) {
+    private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, Item item) {
         var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(WOLF_ARMOR_MAIN_21_3));
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
     private void renderWolfArmorLayerDyed(DogModel model, PoseStack stack, MultiBufferSource buffer, int light, 
-        ItemStack itemStack, AnimalArmorItem item) {
+        ItemStack itemStack, Item item) {
         if (item != Items.WOLF_ARMOR)
             return;
         int i = DyedItemColor.getOrDefault(itemStack, 0);

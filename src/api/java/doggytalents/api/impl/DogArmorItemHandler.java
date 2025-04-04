@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_3;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.core.HolderLookup;
@@ -11,7 +12,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -63,7 +63,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
 
     public void setArmorInSlot(ItemStack stack) {
         var item = stack.getItem();
-        if (!(item instanceof ArmorItem armor))
+        if (!(ItemUtil_1_21_5.isHumanoidArmor(stack)))
             return;
         var slot = ItemUtil_1_21_3.getEquipmentSlot(stack);
         setArmorInSlot(stack, slot);
@@ -98,7 +98,7 @@ public class DogArmorItemHandler extends ItemStackHandler {
         var equip = dogSlot.val;
 
         var item = stack.getItem();
-        if (!(item instanceof ArmorItem armor))
+        if (!(ItemUtil_1_21_5.isHumanoidArmor(stack)))
             return false;
         var wantSlot = ItemUtil_1_21_3.getEquipmentSlot(stack);
 

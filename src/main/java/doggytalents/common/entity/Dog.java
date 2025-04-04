@@ -8,6 +8,7 @@ import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
@@ -141,7 +142,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -4985,7 +4985,7 @@ public class Dog extends AbstractDog {
     private boolean checkEligibleArmorItemAndAvailableSlot(ItemStack stack) {
         if (!this.canDogWearArmor())
             return false;
-        if (!(stack.getItem() instanceof ArmorItem))
+        if (!(ItemUtil_1_21_5.isHumanoidArmor(stack)))
             return false;
         var slot = this.getEquipmentSlotForItem(stack);
         if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -21,7 +22,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -115,7 +115,7 @@ public class DoggyArmorTalent extends TalentInstance {
     @Override
     public DogInteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
-        if (playerIn.getMainHandItem().getItem() instanceof ArmorItem) {
+        if (ItemUtil_1_21_5.isHumanoidArmor(playerIn.getMainHandItem())) {
             if (!(dogIn instanceof Dog)) return DogInteractionResult.PASS;
             if (!worldIn.isClientSide) {
                 var owner = dogIn.getOwner();

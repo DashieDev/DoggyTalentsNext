@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggyAccessories;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
 import doggytalents.api.registry.Accessory;
@@ -20,7 +21,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,7 +65,7 @@ public class DoggyArmorMapping {
     private static Map<Item, ResourceLocation> MAPPING = Maps.newConcurrentMap();
 
     private static ResourceLocation computeArmorTexture(Item item, Dog dog, ItemStack stack) {
-        if (!(item instanceof ArmorItem armor))
+        if (!(ItemUtil_1_21_5.isHumanoidArmor(stack)))
             return Resources.DEFAULT_DOG_ARMOR;
         //1.21.3+
         var armor_layers_21_3 = getEquippimentLayer_21_3(stack); 

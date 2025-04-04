@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.TalentInstance;
@@ -111,7 +112,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     private void checkAndRenderSlot(Dog dog, EquipmentSlot slot, PoseStack stack, MultiBufferSource buffer, int light) {
         var itemStack = dog.getItemBySlot(slot);
         var item = itemStack.getItem();
-        if (!(item instanceof ArmorItem armor))
+        if (!(ItemUtil_1_21_5.isHumanoidArmor(itemStack)))
             return;
         
         switch (slot) {
