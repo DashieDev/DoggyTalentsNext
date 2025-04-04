@@ -2,6 +2,7 @@ package doggytalents.common.entity.accessory;
 
 import java.util.function.Supplier;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.AccessoryType;
@@ -50,7 +51,7 @@ public class DoubleDyableAccessory extends Accessory {
     }
 
     @Override
-    public AccessoryInstance read(CompoundTag compound) {
+    public AccessoryInstance read(CompoundTag_1_21_5 compound) {
         int bg_color = 0;
         if (compound.contains("dtn_bg_color")) {
             bg_color = compound.getInt("dtn_bg_color");

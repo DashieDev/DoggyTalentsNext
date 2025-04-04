@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +52,7 @@ public class Accessory {
         return this.getDefault();
     }
 
-    public AccessoryInstance read(CompoundTag compound) {
+    public AccessoryInstance read(CompoundTag_1_21_5 compound) {
         return this.getDefault();
     }
 
