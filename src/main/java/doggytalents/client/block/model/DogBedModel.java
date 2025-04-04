@@ -344,7 +344,13 @@ public class DogBedModel implements BlockStateModel {
 
     private static BlockStateModel bakeModel_1_21_5(BlockModel model, Direction dir) {
         var bake_func = StandaloneModelBaker.blockStateModel(getModelRotation(dir));
-        var resolved_model = new ResolvedModel() {
+        var resolved_model = resolvedModel_1_21_5(model);
+        var baker = modelBaker_1_21_5(resolved_model);
+        return bake_func.bake(resolved_model, baker);
+    }
+
+    public static ResolvedModel resolvedModel_1_21_5(UnbakedModel model) {
+        return new ResolvedModel() {
 
             @Override
             public String debugName() {
@@ -363,7 +369,10 @@ public class DogBedModel implements BlockStateModel {
             }
             
         };
-        var baker = new ModelBaker() {
+    }
+
+    public static ModelBaker modelBaker_1_21_5(ResolvedModel resolved_model) {
+        return new ModelBaker() {
 
             @Override
             public ResolvedModel getModel(ResourceLocation p_405736_) {
@@ -393,7 +402,6 @@ public class DogBedModel implements BlockStateModel {
             }
             
         };
-        return bake_func.bake(resolved_model, baker);
     }
 
 }
