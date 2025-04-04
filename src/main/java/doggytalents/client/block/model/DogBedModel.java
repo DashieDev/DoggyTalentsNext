@@ -64,10 +64,10 @@ public class DogBedModel implements BlockStateModel {
     private final ModelBaker modelLoader;
     private final BlockModel unbakedModel;
     private final BlockStateModel defaultModelVariant;
-    private final Map<Direction, BlockStateModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
-    private final Map<Direction, BlockStateModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
+    private final Map<Direction, SimpleModelWrapper> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
+    private final Map<Direction, SimpleModelWrapper> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
-    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BlockStateModel> cache = Maps.newConcurrentMap();
+    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, SimpleModelWrapper> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
     public DogBedModel(ModelBaker modelLoader, BlockModel model, BlockStateModel defaultModelVariant, int maxCacheSize) {
@@ -78,11 +78,11 @@ public class DogBedModel implements BlockStateModel {
         //this.initItemOverride_21_3();
     }
 
-    public BlockStateModel getModelVariant(@Nonnull DogBedModelData data) {
+    public SimpleModelWrapper getModelVariant(@Nonnull DogBedModelData data) {
         return this.getModelVariant(data.casing(), data.bedding(), data.direction());
     }
 
-    public BlockStateModel getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
+    public SimpleModelWrapper getModelVariant(ICasingMaterial casing, IBeddingMaterial bedding, Direction facing) {
         if (facing == null)
             facing = Direction.NORTH;
         
@@ -104,7 +104,7 @@ public class DogBedModel implements BlockStateModel {
         return model_variant;
     }
 
-    private BlockStateModel getMissingVariant(Direction dir) {
+    private SimpleModelWrapper getMissingVariant(Direction dir) {
         var missing = this.missingModelVariant.get(dir);
         if (missing != null)
             return missing;
@@ -113,7 +113,7 @@ public class DogBedModel implements BlockStateModel {
         return missing;
     }
 
-    private BlockStateModel getDefaultVariant(Direction dir) {
+    private SimpleModelWrapper getDefaultVariant(Direction dir) {
         var default_variant = this.defaultModelVariants.get(dir);
         if (default_variant != null)
             return default_variant;
@@ -144,7 +144,7 @@ public class DogBedModel implements BlockStateModel {
         return this.getModelVariant(data).particleIcon();
     }
 
-    public BlockStateModel bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
+    public SimpleModelWrapper bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
         // var new_model = deepCopyBlockModel(this.unbakedModel);
 
         // var casing_texture = findCasingTexture(casing);
@@ -175,7 +175,7 @@ public class DogBedModel implements BlockStateModel {
     //     return ret;
     // }
 
-    private static BlockStateModel bakeModel(BlockModel to_bake, Direction dir) {
+    private static SimpleModelWrapper bakeModel(BlockModel to_bake, Direction dir) {
         // var baker = (new ModelBaker() {
 
         //     @Override
@@ -324,13 +324,15 @@ public class DogBedModel implements BlockStateModel {
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random,
             List<BlockModelPart> parts) {
-        var model_data = level.getModelData(pos);                
-        this.getModelVariant(model_data).collectParts(level, pos, state, random, parts);
+        var model_data = level.getModelData(pos);
+        var part = this.getModelVariant(model_data);
+        if (part != null) parts.add(part);
     }
 
     @Override
-    public void collectParts(RandomSource random, List<BlockModelPart> partList) {
-        this.getModelVariant(null, null, Direction.NORTH).collectParts(random, partList);
+    public void collectParts(RandomSource random, List<BlockModelPart> parts) {
+        var part = this.getModelVariant(null, null, Direction.NORTH);
+        if (part != null) parts.add(part);
     }
 
     @Override
@@ -382,11 +384,10 @@ public class DogBedModel implements BlockStateModel {
         
     }
 
-    private static BlockStateModel bakeModel_1_21_5(BlockModel model, Direction dir) {
-        var bake_func = StandaloneModelBaker.blockStateModel(getModelRotation(dir));
+    private static SimpleModelWrapper bakeModel_1_21_5(BlockModel model, Direction dir) {
         var resolved_model = resolvedModel_1_21_5(model);
         var baker = modelBaker_1_21_5(resolved_model);
-        return bake_func.bake(resolved_model, baker);
+        return SimpleModelWrapper.bake(baker, resolved_model, getModelRotation(dir));
     }
 
     public static ResolvedModel resolvedModel_1_21_5(UnbakedModel model) {
