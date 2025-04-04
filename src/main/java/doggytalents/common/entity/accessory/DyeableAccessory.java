@@ -1,6 +1,7 @@
 package doggytalents.common.entity.accessory;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.inferface.IDogAlteration;
@@ -47,7 +48,7 @@ public class DyeableAccessory extends Accessory {
     }
 
     @Override
-    public AccessoryInstance read(CompoundTag compound) {
+    public AccessoryInstance read(CompoundTag_1_21_5 compound) {
         return this.create(compound.getInt("color"));
     }
 
