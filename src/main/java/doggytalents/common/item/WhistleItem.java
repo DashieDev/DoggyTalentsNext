@@ -129,7 +129,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
         byte id_mode = 0;
 
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+        if (tag.containsAnyNumeric("mode")) {
             id_mode = tag.getByte("mode");
         }
         if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
@@ -158,7 +158,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
             boolean on_duty_only = false;
 
             var tag = ItemUtil.getTag(stack);
-            if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+            if (tag.containsAnyNumeric("mode")) {
                 id_mode = tag.getByte("mode");
             }
             on_duty_only = tag.getBoolean("dog_on_duty_only");
@@ -555,7 +555,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
             return false;
         byte mode = 0;
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+        if (tag.containsAnyNumeric("mode")) {
             mode = (byte) Mth.clamp(tag.getByte("mode"), 0, WhistleMode.VALUES.length - 1);
         }
         if (WhistleMode.VALUES[mode] != WhistleMode.DUTY_WHISTLE)
@@ -568,7 +568,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
         byte mode = 0;
 
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
+        if (tag.containsAnyNumeric("mode")) {
             mode = tag.getByte("mode");
         }
         return Component.translatable(this.getDescriptionId() + "." + mode);

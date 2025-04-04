@@ -127,7 +127,7 @@ public class TalentInstance implements IDogAlteration {
         this.setTalentOption(entry, value);
     }
 
-    public final void writeInstance(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
+    public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
         ResourceLocation rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
         if (rl != null) {
             compound.putString("type", rl.toString());

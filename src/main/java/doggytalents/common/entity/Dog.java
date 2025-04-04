@@ -2694,7 +2694,7 @@ public class Dog extends AbstractDog {
 
         for (int i = 0; i < talents.size(); i++) {
             CompoundTag talentTag = new CompoundTag();
-            talents.get(i).writeInstance(this, CompoundTag_1_21_5.wrap(talentTag));
+            talents.get(i).writeInstance(this, talentTag);
             talentList.add(talentTag);
         }
 
