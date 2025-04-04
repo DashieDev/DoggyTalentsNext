@@ -66,7 +66,7 @@ public class DogBedModel implements BlockStateModel {
         this.unbakedModel = model;
         this.defaultModelVariant = defaultModelVariant;
         this.maxCacheSize = maxCacheSize;
-        this.initItemOverride_21_3();
+        //this.initItemOverride_21_3();
     }
 
     public SimpleModelWrapper getModelVariant(@Nonnull ModelData data) {
@@ -275,10 +275,10 @@ public class DogBedModel implements BlockStateModel {
 
 
     //1.20.3+
-    private WrappedDogBedItemOverride_21_3 override_21_3;
-    private void initItemOverride_21_3() {
-        this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
-    }
+    // private WrappedDogBedItemOverride_21_3 override_21_3;
+    // private void initItemOverride_21_3() {
+    //     this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
+    // }
 
     //1.21.5+
     @Override
