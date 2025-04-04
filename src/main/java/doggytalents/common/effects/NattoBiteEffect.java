@@ -23,7 +23,7 @@ public class NattoBiteEffect extends MobEffect {
     }
 
     public void doAdditionalAttackEffects(Dog dog, LivingEntity target) {
-        target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30 * 20, 3));
+        target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 30 * 20, 3));
     }
 
     //@Override

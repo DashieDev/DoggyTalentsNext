@@ -4519,8 +4519,8 @@ public class Dog extends AbstractDog {
     private void doDogRideJump(double forward) {
         // Calculate jump value based of jump strength, power this jump and jump boosts
         double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
-        if (this.hasEffect(MobEffects.JUMP)) {
-            jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
+        if (this.hasEffect(MobEffects.JUMP_BOOST)) {
+            jumpValue += (this.getEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F;
         }
 
         // Apply jump

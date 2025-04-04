@@ -131,10 +131,10 @@ public class SakeItem extends DogEddibleItem {
         if (!drunk) {
             if (!(entity instanceof Dog || entity instanceof Player))
                 return;
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60 * 20, 1));
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 20, 2));
-            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 20, 0));
-            entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 20, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 60 * 20, 1));
+            entity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 60 * 20, 2));
+            entity.addEffect(new MobEffectInstance(MobEffects.SPEED, 60 * 20, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.HASTE, 60 * 20, 0));
             return;
         }
 
@@ -147,10 +147,10 @@ public class SakeItem extends DogEddibleItem {
             r_drunkTicks = 60 * 20;
             if (player.getRandom().nextBoolean())
                 r_drunkTicks *=2;
-            player.removeEffect(MobEffects.MOVEMENT_SPEED);
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, r_drunkTicks, 2));
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, r_drunkTicks, 3));
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, r_drunkTicks, 1));
+            player.removeEffect(MobEffects.SPEED);
+            player.addEffect(new MobEffectInstance(MobEffects.NAUSEA, r_drunkTicks, 2));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, r_drunkTicks, 3));
+            player.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, r_drunkTicks, 1));
             player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, r_drunkTicks, 3));
         }
     }

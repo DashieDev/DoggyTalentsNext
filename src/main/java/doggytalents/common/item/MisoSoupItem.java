@@ -28,9 +28,9 @@ public class MisoSoupItem extends DogEddibleBowlFoodItem {
                 .nutrition(10)
                 .saturationModifier(0.8F)
                 .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 1200, 2), 1)
-                .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 1200, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.HASTE, 1200, 1), 1)
                 .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1), 1)
-                .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1), 1)
+                .effect(() -> new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1), 1)
                 .alwaysEdible()
         );
     }
