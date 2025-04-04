@@ -508,14 +508,14 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         extractRightHandItemModelForDog(dog, extract_to);
     }
     private void extractRightHandItemModelForDog(Dog dog, DogRenderState_21_3 extract_to) {
-        if (extract_to.rightHandItemModel != null)
-            return;
-        var mouth_stack_optional = dog.getMouthItemForRender();
-        if (!mouth_stack_optional.isPresent())
-            return;
-        var mouth_stack = mouth_stack_optional.get();
-        extract_to.rightHandItem = mouth_stack;
-        extract_to.rightHandItemModel = itemRenderer.resolveItemModel(mouth_stack, dog, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND);
+        // if (extract_to.rightHandItemModel != null)
+        //     return;
+        // var mouth_stack_optional = dog.getMouthItemForRender();
+        // if (!mouth_stack_optional.isPresent())
+        //     return;
+        // var mouth_stack = mouth_stack_optional.get();
+        // extract_to.rightHandItem = mouth_stack;
+        // extract_to.rightHandItemModel = itemRenderer.resolveItemModel(mouth_stack, dog, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND);
     } 
     @Override
     protected float getShadowRadius(DogRenderState_21_3 p_365066_) {

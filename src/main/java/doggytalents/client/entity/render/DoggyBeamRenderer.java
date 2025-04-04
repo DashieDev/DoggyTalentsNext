@@ -4,11 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +27,7 @@ public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_21_3<T> 
 
     public DoggyBeamRenderer(EntityRendererProvider.Context ctx, float p_i226035_3_, boolean p_i226035_4_) {
         super(ctx);
-        this.itemRenderer = ctx.getItemRenderer();
+        this.itemRenderer = Minecraft.getInstance().getItemRenderer();
         this.scale = p_i226035_3_;
         this.fullBright = p_i226035_4_;
     }
@@ -54,6 +56,6 @@ public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_21_3<T> 
 
     @Override
     public ResourceLocation getTextureLocation(Entity entity) {
-        return InventoryMenu.BLOCK_ATLAS;
+        return TextureAtlas.LOCATION_BLOCKS;
     }
 }
