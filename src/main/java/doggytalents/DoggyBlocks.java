@@ -1,5 +1,6 @@
 package doggytalents;
 
+import doggytalents.api.backward_imitate.DogBedItemProps_1_21_5;
 import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.block.DogBedBlock;
@@ -27,7 +28,7 @@ public class DoggyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, Constants.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DoggyItems.ITEMS;
 
-    public static final Supplier<DogBedBlock> DOG_BED = registerWithItem("dog_bed", DogBedBlock::new, (prop) -> prop);
+    public static final Supplier<DogBedBlock> DOG_BED = registerWithItem("dog_bed", DogBedBlock::new, (prop) -> DogBedItemProps_1_21_5.props(prop));
     public static final Supplier<DogBathBlock> DOG_BATH = registerWithItem("dog_bath", DogBathBlock::new);
     public static final Supplier<FoodBowlBlock> FOOD_BOWL = registerWithItem("food_bowl", FoodBowlBlock::new);
     public static final Supplier<RiceMillBlock> RICE_MILL = registerWithItem("rice_mill", RiceMillBlock::new);

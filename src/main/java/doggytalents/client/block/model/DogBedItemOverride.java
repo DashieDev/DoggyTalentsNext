@@ -4,7 +4,8 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.util.DogBedUtil;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -19,12 +20,13 @@ import javax.annotation.Nullable;
 public class DogBedItemOverride {
 
     //@Override
-    public BakedModel resolve(BakedModel modelOriginal, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity livingEntity, int p_173469_) {
+    public SimpleModelWrapper resolve(BlockStateModel modelOriginal, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity livingEntity, int p_173469_) {
         if (modelOriginal instanceof DogBedModel) {
             Pair<ICasingMaterial, IBeddingMaterial> materials = DogBedUtil.getMaterials(stack);
             return ((DogBedModel) modelOriginal).getModelVariant(materials.getLeft(), materials.getRight(), Direction.NORTH);
         }
 
-        return modelOriginal;
+        //return modelOriginal;
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package doggytalents.client.backward_imitate;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.api.backward_imitate.DogBedItemProps_1_21_5;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.Util;
@@ -28,7 +29,7 @@ public class DogBedModifyingBakingResult_1_21_5 {
         });
 
         //ItemStackModel
-        modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
+        baking_result.itemStackModels().put(DogBedItemProps_1_21_5.dogBedModelLocation(), new DogBedItemModel_1_21_5(dog_bed_model));
     }
 
     private static ResourceLocation getBlockModelLocation(Block block) {
