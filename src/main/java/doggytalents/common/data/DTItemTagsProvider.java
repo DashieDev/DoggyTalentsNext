@@ -54,5 +54,5 @@ public class DTItemTagsProvider/* extends ItemTagsProvider*/ {
     // @SafeVarargs
     // private final void appendToTag(TagKey<Item> tag, TagKey<Item>... toAppend) {
     //     tag(tag).addTags(toAppend);
-    // }
+    // }x
 }
