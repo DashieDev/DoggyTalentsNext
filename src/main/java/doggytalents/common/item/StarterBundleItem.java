@@ -41,7 +41,7 @@ public class StarterBundleItem extends Item implements HoverTextAppender_1_21_5 
             return InteractionResult.SUCCESS;
         
         var inv = player.getInventory();
-        var items = inv.items;
+        var items = inv.getNonEquipmentItems();
         boolean hasEnoughSpace = false; 
         int freeSlot = 0;
         for (var item : items) {

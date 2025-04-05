@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.phys.Vec3;
 
 public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity> {
 
@@ -25,7 +26,7 @@ public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity
     @Override
     public void render(RiceMillBlockEntity mill, float pTicks, PoseStack stack, 
             MultiBufferSource buffer,
-            int light, int overlay) {
+            int light, int overlay, Vec3 vec) {
         stack.pushPose();
         // float scaleFactor = 1f;
         // stack.scale(scaleFactor, -scaleFactor, -scaleFactor);

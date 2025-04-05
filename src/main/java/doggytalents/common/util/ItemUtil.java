@@ -23,6 +23,7 @@ import net.minecraft.world.item.consume_effects.ConsumeEffect;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
@@ -204,12 +205,12 @@ public class ItemUtil {
         var equip = getEquippable_1_21_3(stack);
         if (equip == null)
             return false;
-        if (!equip.model().isPresent())
+        if (!equip.assetId().isPresent())
             return false;
         return true;
     }
-    public static ResourceLocation getEquippableModelUnsafe_1_21_3(ItemStack stack) {
-        return getEquippable_1_21_3(stack).model().get();
+    public static ResourceKey<EquipmentAsset> getEquippableModelUnsafe_1_21_3(ItemStack stack) {
+        return getEquippable_1_21_3(stack).assetId().get();
     }
     public static FoodProperties food_1_21_3(ItemStack stack) {
         return stack.get(DataComponents.FOOD);
