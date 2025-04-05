@@ -7,10 +7,10 @@ import javax.annotation.Nonnull;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.core.Holder;

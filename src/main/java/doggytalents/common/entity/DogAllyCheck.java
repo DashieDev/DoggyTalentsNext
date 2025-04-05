@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
