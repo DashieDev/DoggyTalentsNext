@@ -6,6 +6,7 @@ import doggytalents.*;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
@@ -757,7 +758,7 @@ public class Dog extends AbstractDog {
             this.wetSource = WetSource.RAIN;
             return true;
         }
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             this.wetSource = WetSource.BUBBLE_COLUMN;
             return true;
         }
@@ -878,8 +879,8 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {   
             this.getSensing().tick();
-            this.lerpSteps = 0;
-            this.lerpHeadSteps = 0;
+            //this.lerpSteps = 0;
+            //this.lerpHeadSteps = 0;
             this.dogAi.tickServer();
             this.dogSwimmingManager.tickServer();
         }
@@ -1468,7 +1469,7 @@ public class Dog extends AbstractDog {
     }
 
     //@Override
-    public boolean canTrample(ServerLevel level, BlockState state, BlockPos pos, float fallDistance) {
+    public boolean canTrample(ServerLevel level, BlockState state, BlockPos pos, double fallDistance) {
         //Temporary to avoid wolf mount bug when trampling crops.
         return false;
     }
@@ -1495,12 +1496,12 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(double distance, float damageMultiplier, DamageSource source) {
         if (dogFallImmune()) {
             return false;
         }
         for (IDogAlteration alter : this.alterations) {
-            var result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
+            var result = alter.onLivingFall(this, (float)distance, damageMultiplier); // TODO pass source
 
             if (result.shouldSwing()) {
                 return true;
@@ -1555,13 +1556,13 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        MobEffectInstance effectInst = this.getEffect(MobEffects.JUMP);
+    protected int calculateFallDamage(double distance, float damageMultiplier) {
+        MobEffectInstance effectInst = this.getEffect(MobEffects.JUMP_BOOST);
         float f = effectInst == null ? 0.0F : effectInst.getAmplifier() + 1;
         distance -= f;
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.calculateFallDistance(this, distance);
+            InteractionResultHolder<Float> result = alter.calculateFallDistance(this, (float)distance);
 
             if (result.getResult().shouldSwing()) {
                 distance = result.getObject();
@@ -1659,7 +1660,7 @@ public class Dog extends AbstractDog {
         if (target instanceof AbstractPiglin) {
             var owner = this.getOwner();
             if (owner != null) {
-                for (var stack : owner.getArmorSlots()) {
+                for (var stack : EntityUtil_1_21_5.getArmorSlots(owner)) {
                     if (FabricUtil.makesPiglinsNeutral(stack)) {
                         return true;
                     }
@@ -1965,20 +1966,20 @@ public class Dog extends AbstractDog {
         }
     }
 
-    @Override
-    public boolean isDamageSourceBlocked(DamageSource source) {
-        for (IDogAlteration alter : this.alterations) {
-            var result = alter.canBlockDamageSource(this, source);
+    // @Override
+    // public boolean isDamageSourceBlocked(DamageSource source) {
+    //     for (IDogAlteration alter : this.alterations) {
+    //         var result = alter.canBlockDamageSource(this, source);
 
-            if (result.shouldSwing()) {
-                return true;
-            } else if (result == DogInteractionResult.FAIL) {
-                return false;
-            }
-        }
+    //         if (result.shouldSwing()) {
+    //             return true;
+    //         } else if (result == DogInteractionResult.FAIL) {
+    //             return false;
+    //         }
+    //     }
 
-        return super.isDamageSourceBlocked(source);
-    }
+    //     return super.isDamageSourceBlocked(source);
+    // }
 
     @Override
     public boolean canBeSeenAsEnemy() {
@@ -4281,7 +4282,7 @@ public class Dog extends AbstractDog {
     private void mayFloatDogInLava() {
         if (!this.isInLava()) return;
         var collisioncontext = CollisionContext.of(this);
-        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
+        if (collisioncontext.isAbove(LiquidBlock.SHAPE_STABLE, 
             this.blockPosition(), true) 
             && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
             this.setOnGround(true);
@@ -4904,7 +4905,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
-        this.verifyEquippedItem(stack);
+        //this.verifyEquippedItem(stack);
         if (trySetDogArmorSlot(slot, stack))
             return;
         if (trySetDogToolSlot(slot, stack))
