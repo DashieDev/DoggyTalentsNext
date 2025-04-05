@@ -27,11 +27,11 @@ public class DogLocationStorageMigration {
         if (oldStorage.getAll().isEmpty())
             return;
             
-        savedData.set(Constants.STORAGE_DOG_LOCATION, oldStorage);
+        savedData.set(DogLocationStorage.savedDataType_1_21_5(Constants.STORAGE_DOG_LOCATION), oldStorage);
         oldStorage.setDirty();
 
         var dummy = new DogLocationStorage();
-        savedData.set(Constants.STORAGE_DOG_LOCATION_OLD, dummy);
+        savedData.set(DogLocationStorage.savedDataType_1_21_5(Constants.STORAGE_DOG_LOCATION_OLD), dummy);
         dummy.setDirty();
     }
 
