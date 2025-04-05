@@ -385,8 +385,8 @@ public class DTNClientPettingManager {
         if (view_type.isFirstPerson())
             return;
         var input = event.getInput();
-        input.forwardImpulse = 0;
-        input.leftImpulse = 0;
+        // input.forwardImpulse = 0;
+        // input.leftImpulse = 0;
         // input.up = false;
         // input.down = false;
         // input.left = false;
