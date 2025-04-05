@@ -154,7 +154,7 @@ String vscodeFetchJVMArguments(Closure vmArgsGetter) {
     for (item in args) {
         def item1 = item;
         if (item.startsWith("-DignoreList=")) {
-            def to_insert = "asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,"
+            def to_insert = "asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar," + "asm-9.6.jar,asm-commons-9.6.jar,asm-tree-9.6.jar,asm-util-9.6.jar,asm-analysis-9.6.jar"
             def str = item;
             int equal_start = str.indexOf("=");
             item1 = str.substring(0, equal_start + 1) + to_insert + str.substring(equal_start + 1, str.length());
