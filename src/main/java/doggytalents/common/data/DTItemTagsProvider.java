@@ -25,10 +25,9 @@ public class DTItemTagsProvider extends ItemTagsProvider {
     public DTItemTagsProvider(
         PackOutput p_275204_,
         CompletableFuture<HolderLookup.Provider> p_275194_,
-        CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_,
-        @javax.annotation.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper
+        CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_
      ) {
-        super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID, existingFileHelper);
+        super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID);
     }
 
     @Override

@@ -20,8 +20,8 @@ import net.neoforged.neoforge.common.Tags;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
-    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @org.jetbrains.annotations.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper) {
-        super(p_256095_, p_256572_, Constants.MOD_ID, existingFileHelper);
+    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_) {
+        super(p_256095_, p_256572_, Constants.MOD_ID);
         //TODO Auto-generated constructor stub
     }
 

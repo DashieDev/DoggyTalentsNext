@@ -31,14 +31,14 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementProvider;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,8 +56,8 @@ public class DTAdvancementProvider extends AdvancementProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
 
-    public DTAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
-        super(output, registries, existingFileHelper,
+    public DTAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries,
             List.of(new DoggyAdvancementsSubProvider())
         );
     }   
@@ -67,10 +67,10 @@ public class DTAdvancementProvider extends AdvancementProvider {
     //     return pathIn.resolve("data/" + advancementIn.getId().getNamespace() + "/advancements/" + advancementIn.getId().getPath() + ".json");
     // }
 
-    public static class DoggyAdvancementsSubProvider implements AdvancementProvider.AdvancementGenerator {
+    public static class DoggyAdvancementsSubProvider implements AdvancementSubProvider {
 
         @Override
-        public void generate(Provider registries, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
+        public void generate(Provider registries, Consumer<AdvancementHolder> consumer) {
             var charm_advancement =
                 Advancement.Builder.advancement()
                     .display(
