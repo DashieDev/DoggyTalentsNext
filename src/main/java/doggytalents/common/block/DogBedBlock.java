@@ -405,7 +405,7 @@ public class DogBedBlock extends BaseEntityBlock implements HoverTextAppender_1_
     }
 
     @Override
-    public ItemStack getCloneItemStack(/*BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player*/LevelReader world, BlockPos pos, BlockState state) {
+    public ItemStack getCloneItemStack(/*BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player*/LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(world, pos, DogBedTileEntity.class);
 
         if (dogBedTileEntity != null) {

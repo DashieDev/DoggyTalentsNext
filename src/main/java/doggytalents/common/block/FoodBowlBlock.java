@@ -17,6 +17,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -98,7 +99,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier p_405359_) {
         if (entityIn instanceof ItemEntity) {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
@@ -117,9 +118,9 @@ public class FoodBowlBlock extends BaseEntityBlock {
         }
     }
 
-    @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+    //@Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state, Level worldIn) {
+        if (/*state.getBlock() != newState.getBlock()*/true) {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
             if (foodBowl != null) {
                 var bowlInventory = foodBowl.getInventory();
@@ -129,7 +130,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
 
-            super.onRemove(state, worldIn, pos, newState, isMoving);
+            //super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
 
