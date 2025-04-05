@@ -5543,7 +5543,8 @@ public class Dog extends AbstractDog {
         return owner_ref.getUUID();
     }
     public void setOwnerUUID_1_21_3_Under_SuperCall(UUID uuid) {
-        super.setOwnerReference(new EntityReference<>(uuid));
+        var owner_ref = uuid == null ? null : new EntityReference<LivingEntity>(uuid);
+        super.setOwnerReference(owner_ref);
     }
     @Override
     public void setOwnerReference(@Nullable EntityReference<LivingEntity> owner_ref) {
