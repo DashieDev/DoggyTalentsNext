@@ -98,7 +98,7 @@ public class DogSleepOnManager {
         if (!dog.isDoingFine())
             return DogSleepOnFailMessage.OTHER.asResult();
         var level = (ServerLevel) dog.level();
-        if (level.isDay())
+        if (level.isBrightOutside())
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
             return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();

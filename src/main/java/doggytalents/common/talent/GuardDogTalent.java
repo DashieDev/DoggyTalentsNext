@@ -58,7 +58,7 @@ public class GuardDogTalent extends TalentInstance {
 
                 if (dogIn.getRandom().nextInt(12) < blockChance) {
                     this.cooldown = dogIn.tickCount + 10;
-                    dogIn.playSound(SoundEvents.ITEM_BREAK, dogIn.getSoundVolume() / 2, (dogIn.getRandom().nextFloat() - dogIn.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    dogIn.playSound(SoundEvents.ITEM_BREAK.value(), dogIn.getSoundVolume() / 2, (dogIn.getRandom().nextFloat() - dogIn.getRandom().nextFloat()) * 0.2F + 1.0F);
                     return InteractionResultHolder.fail(0F);
                 }
             }

@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -16,6 +17,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -87,7 +89,7 @@ public class ChemiCanineTalent extends TalentInstance {
         for (int i = 0; i < effectTags.size(); ++i) {
             try {
                 var effectTag = effectTags.getCompound(i);
-                var effectInst = MobEffectInstance.load(effectTag.wrapped());
+                var effectInst = MobEffectInstance.CODEC.parse(NbtOps.INSTANCE, effectTag.wrapped()).getOrThrow();
                 if (effectInst != null)
                     this.storedEffects.add(effectInst);   
             } catch (Exception e) {
@@ -103,7 +105,7 @@ public class ChemiCanineTalent extends TalentInstance {
         tg0.putInt("tickTillEffectDecay", this.tickTillEffectDecay);
         var effectTags = new ListTag();
         for (var effect : this.storedEffects) {
-            effectTags.add(effect.save());
+            effectTags.add(EntityUtil_1_21_5.tryEncodeEffect(effect));
         }
         tg0.put("effects", effectTags);
         compound.put("DTN_ChemiCanine", tg0);

@@ -2,6 +2,7 @@ package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.entity.Dog;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -47,7 +48,7 @@ public class Piano extends Entity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
-        boolean bigLidClosed = compound.getBoolean("pianoFallboardClosed");
+        boolean bigLidClosed = CompoundTag_1_21_5.wrap(compound).getBoolean("pianoFallboardClosed");
         this.setFallboardClosed(bigLidClosed);
     }
 
