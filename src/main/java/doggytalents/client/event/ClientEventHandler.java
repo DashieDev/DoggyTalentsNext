@@ -43,8 +43,6 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -65,18 +63,18 @@ import java.util.List;
 
 public class ClientEventHandler {
 
-    public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
+    // public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
-        try {
-            ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation unbakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-            event.register(ModelResourceLocation.standalone(unbakedModelLoc));
-        }
-        catch(Exception e) {
-            DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
-            e.printStackTrace();
-        }
-    }
+    //     try {
+    //         ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
+    //         ResourceLocation unbakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+    //         event.register(ModelResourceLocation.standalone(unbakedModelLoc));
+    //     }
+    //     catch(Exception e) {
+    //         DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
+    //         e.printStackTrace();
+    //     }
+    // }
 
     public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
         try {

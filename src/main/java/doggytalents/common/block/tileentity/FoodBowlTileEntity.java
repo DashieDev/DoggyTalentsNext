@@ -1,7 +1,9 @@
 package doggytalents.common.block.tileentity;
 
+import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.feature.FoodHandler;
+import doggytalents.common.block.FoodBowlBlock;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.inventory.container.FoodBowlContainer;
@@ -244,5 +246,14 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
             return Vec3.atBottomCenterOf(this.bowl.getBlockPos());
         }
 
+    }
+
+
+
+    //1.21.5+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState old_state) {
+        if (this.level != null)
+            ((FoodBowlBlock)DoggyBlocks.FOOD_BOWL.get()).preRemoveSideEffects(pos, old_state, level);
     }
 }

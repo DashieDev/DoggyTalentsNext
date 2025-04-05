@@ -10,13 +10,14 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class DogBedRenderer implements BlockEntityRenderer<DogBedTileEntity> {
 
     public DogBedRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     @Override
-    public void render(DogBedTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(DogBedTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 vec3) {
         if (tileEntityIn.getBedName() != null && this.isLookingAtBed(tileEntityIn)) {
             matrixStackIn.pushPose();
             matrixStackIn.translate(0.5D, 0.5D, 0.5D);
