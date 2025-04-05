@@ -368,6 +368,14 @@
     "subtitle": "doggytalents.dog_ambient",
     "sounds": [ "doggytalents:wolf/sad_hurt3_alt" ]
   },
+  "dog_classic_howl1" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_howl1" ]
+  },
+  "dog_classic_howl2" : {
+    "subtitle": "doggytalents.dog_ambient",
+    "sounds": [ "doggytalents:wolf/classic_howl2" ]
+  },
 
   "chopin_op64_no1" : {
     "subtitle": "doggytalents.music.chopin_op64_no1",

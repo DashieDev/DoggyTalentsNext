@@ -449,7 +449,7 @@ public class Dog extends AbstractDog {
     }
 
     protected SoundEvent getHowlSound() {
-        return SoundEvents.WOLF_HOWL;
+        return EntityUtil_1_21_5.legacyWolfHowlSound(this);
     }
 
     public void howl() {

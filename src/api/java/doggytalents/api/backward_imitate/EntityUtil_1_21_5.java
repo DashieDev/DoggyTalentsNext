@@ -80,4 +80,8 @@ public class EntityUtil_1_21_5 {
         return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_HURT1.get(), DogSounds.CLASSIC_HURT2.get(), DogSounds.CLASSIC_HURT3.get())).get();
     }
 
+    public static SoundEvent legacyWolfHowlSound(Dog dog) {
+        return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_HOWL1.get(), DogSounds.CLASSIC_HOWL2.get())).get();
+    }
+
 }
