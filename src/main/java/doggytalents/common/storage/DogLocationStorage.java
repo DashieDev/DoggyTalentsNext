@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.LegacyNbtCodec_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
@@ -19,7 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
-import net.minecraft.world.level.saveddata.SavedData.Factory;
+import net.minecraft.world.level.saveddata.SavedDataType;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 
@@ -46,14 +47,14 @@ public class DogLocationStorage extends SavedData {
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(savedDataType_1_21_5(Constants.STORAGE_DOG_LOCATION));
     }
 
     public static DogLocationStorage get(MinecraftServer server) {
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(storageFactory(), Constants.STORAGE_DOG_LOCATION);
+        return storage.computeIfAbsent(savedDataType_1_21_5(Constants.STORAGE_DOG_LOCATION));
     }
 
     public Stream<DogLocationData> getDogs(LivingEntity owner) {
@@ -133,9 +134,7 @@ public class DogLocationStorage extends SavedData {
         return Collections.unmodifiableCollection(this.locationDataMap.values());
     }
 
-    public static DogLocationStorage load(CompoundTag compound_1_21_5, HolderLookup.Provider prov) {
-        var nbt = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
-
+    public static DogLocationStorage load(CompoundTag_1_21_5 nbt/*, HolderLookup.Provider prov*/) {
         DogLocationStorage store = new DogLocationStorage();
         store.locationDataMap.clear();
 
@@ -171,8 +170,8 @@ public class DogLocationStorage extends SavedData {
         return store;
     }
 
-    @Override
-    public CompoundTag save(CompoundTag compound, HolderLookup.Provider prov) {
+    //@Override
+    public CompoundTag_1_21_5 save(CompoundTag_1_21_5 compound/*, HolderLookup.Provider prov*/) {
         ListTag list = new ListTag();
 
         for (Entry<UUID, DogLocationData> entry : this.locationDataMap.entrySet()) {
@@ -213,9 +212,17 @@ public class DogLocationStorage extends SavedData {
         this.onlineDogManager.onServerStopped();
     }
 
-    private static SavedData.Factory<DogLocationStorage> FACTORY
-        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load);
-    public static SavedData.Factory<DogLocationStorage> storageFactory() {
-        return FACTORY;
+    // private static SavedData.Factory<DogLocationStorage> FACTORY
+    //     = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load);
+    // public static SavedData.Factory<DogLocationStorage> storageFactory() {
+    //     return FACTORY;
+    // }
+
+
+    
+    //1.21.5+
+    public static SavedDataType<DogLocationStorage> savedDataType_1_21_5(String name) {
+        return LegacyNbtCodec_1_21_5.createSavedDataType(name, 
+            DogLocationStorage::new, DogLocationStorage::save, DogLocationStorage::load);
     }
 }
