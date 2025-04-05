@@ -19,4 +19,9 @@ public class PettingArmPose {
         DTNClientPettingManager.get().applyTransform(model, PlayerRenderPrep_21_3.player, arm);
     }
 
+
+    //1.21.5+
+    public static boolean activeRight_1_21_5 = false;
+    public static boolean activeLeft_1_21_5 = false;
+
 }

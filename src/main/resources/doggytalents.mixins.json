@@ -17,7 +17,8 @@
       "CameraMixin",
 
 
-      "PlayerRendererMixin_1_21_3"
+      "PlayerRendererMixin_1_21_3",
+      "PlayerRendererMixin_1_21_5"
     ],
     "server": [],
     "injectors": {

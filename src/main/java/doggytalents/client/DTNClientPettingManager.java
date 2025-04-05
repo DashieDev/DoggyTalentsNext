@@ -272,8 +272,8 @@ public class DTNClientPettingManager {
         
         //model.leftArmPose = PettingArmPose.VALUE;
         //model.rightArmPose = PettingArmPose.VALUE;
-        event.getRenderState().mainHandState.customArmPose = PettingArmPose.VALUE; event.getRenderState().mainHandState.isEmpty = false;
-        event.getRenderState().offhandState.customArmPose = PettingArmPose.VALUE; event.getRenderState().offhandState.isEmpty = false;
+        PettingArmPose.activeLeft_1_21_5 = true;
+        PettingArmPose.activeRight_1_21_5 = true;
     }
 
     private boolean isPettingPlayer(Player player) {
@@ -378,8 +378,8 @@ public class DTNClientPettingManager {
         if (view_type.isFirstPerson())
             return;
         var input = event.getInput();
-        input.forwardImpulse = 0;
-        input.leftImpulse = 0;
+        // input.forwardImpulse = 0;
+        // input.leftImpulse = 0;
         // input.up = false;
         // input.down = false;
         // input.left = false;
