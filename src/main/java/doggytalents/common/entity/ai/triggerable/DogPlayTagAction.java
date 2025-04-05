@@ -1,5 +1,6 @@
 package doggytalents.common.entity.ai.triggerable;
 
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
@@ -97,7 +98,7 @@ public class DogPlayTagAction extends TriggerableAction {
         if (checkAndTag(dog, owner)) {
             n.stop();
             PlayerUtil.sendSystemMessage(owner, Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
-            this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, 1);
+            this.dog.playSound(EntityUtil_1_21_5.legacyWolfAmbientSound(dog), 1, 1);
             this.ownerBeenTagged = true;
             this.cooldownChase = 30;
             this.timeLeft = TIME_LIMIT_PER_TURN;

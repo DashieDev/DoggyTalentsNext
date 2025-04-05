@@ -6,8 +6,12 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DogSounds;
+import doggytalents.common.entity.Dog;
+import doggytalents.common.util.LangUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -62,6 +66,18 @@ public class EntityUtil_1_21_5 {
 
         }
         return new CompoundTag();
+    }
+
+    public static SoundEvent legacyWolfGrowlSound(Dog dog) {
+        return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_GROWL1.get(), DogSounds.CLASSIC_GROWL2.get(), DogSounds.CLASSIC_GROWL3.get())).get();
+    }
+
+    public static SoundEvent legacyWolfAmbientSound(Dog dog) {
+        return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_BARK1.get(), DogSounds.CLASSIC_BARK2.get(), DogSounds.CLASSIC_BARK3.get())).get();
+    }
+
+    public static SoundEvent legacyWolfHurtSound(Dog dog) {
+        return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_HURT1.get(), DogSounds.CLASSIC_HURT2.get(), DogSounds.CLASSIC_HURT3.get())).get();
     }
 
 }

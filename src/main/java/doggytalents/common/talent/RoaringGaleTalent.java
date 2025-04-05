@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
@@ -103,11 +104,11 @@ public class RoaringGaleTalent extends TalentInstance {
 
             int cooldown = 0;
             if (hit) {
-                dog.playSound(SoundEvents.WOLF_GROWL, 0.7F, 1.0F);
+                dog.playSound(EntityUtil_1_21_5.legacyWolfGrowlSound(dog), 0.7F, 1.0F);
                 cooldown = level >= 5 ? 60 : 100;
                 anyHits = true;
             } else {
-                dog.playSound(SoundEvents.WOLF_AMBIENT, 1F, 1.2F);
+                dog.playSound(EntityUtil_1_21_5.legacyWolfAmbientSound(dog), 1F, 1.2F);
                 cooldown = level >= 5 ? 30 : 50;
             }
 

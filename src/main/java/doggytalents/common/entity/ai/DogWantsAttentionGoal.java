@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.DogSounds;
 import doggytalents.DogVariants;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
@@ -110,7 +111,7 @@ public class DogWantsAttentionGoal extends Goal {
             }
             if (!whinedToAttention) {
                 whinedToAttention = true;
-                this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+                this.dog.playSound(DogSounds.CLASSIC_WHINE.get(), this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             checkAndSwitchToAttention();
         }

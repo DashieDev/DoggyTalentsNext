@@ -1,6 +1,7 @@
 package doggytalents.common.entity.ai.triggerable;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -35,7 +36,7 @@ public class DogHowlAction extends TriggerableAction {
         if (tickTillHowl == 0) {
             dog.dogSoundManager.playInterruptible(SoundEvents.WOLF_HOWL, 1, dog.getVoicePitch());
         } else if (tickTillHowl == 30) {
-            this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
+            this.dog.playSound(EntityUtil_1_21_5.legacyWolfGrowlSound(dog), 0.3F, dog.getVoicePitch());
         }
     }
 

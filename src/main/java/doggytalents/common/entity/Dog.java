@@ -388,7 +388,7 @@ public class Dog extends AbstractDog {
                     this.incapacitatedMananger.canMove() ? 5 : 8; 
                 return this.random.nextInt(chance_window) == 0 ? this.dogMood.getInjuredAmbient() : null;
             } else {
-                return SoundEvents.WOLF_PANT;
+                return DogSounds.CLASSIC_PANTING.get();
             }
         }
         if (this.pettingManager.isPetting() || this.isDogSilent()) {

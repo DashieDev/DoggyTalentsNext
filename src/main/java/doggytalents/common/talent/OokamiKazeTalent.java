@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 import doggytalents.DoggyAdvancementTriggers;
 import doggytalents.DoggyTalents;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -200,7 +201,7 @@ public class OokamiKazeTalent extends TalentInstance {
             if (tickTillHowl == 0) {
                 dog.howl();
             } else if (tickTillHowl == 30) {
-                this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
+                this.dog.playSound(EntityUtil_1_21_5.legacyWolfGrowlSound(dog), 0.3F, dog.getVoicePitch());
             }
 
             --tickTillBoom;

@@ -2,6 +2,7 @@ package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
 
+import doggytalents.DogSounds;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.entity.Dog;
@@ -67,7 +68,7 @@ public class DogFeelingNakeyGoal extends Goal {
     @Override
     public void tick() {
         if (tickAnim == 67)
-            this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+            this.dog.playSound(DogSounds.CLASSIC_WHINE.get(), this.dog.getSoundVolume(), this.dog.getVoicePitch());
         ++tickAnim;
     }
 

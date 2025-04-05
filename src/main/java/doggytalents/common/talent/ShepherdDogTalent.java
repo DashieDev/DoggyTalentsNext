@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
@@ -239,7 +240,7 @@ public class ShepherdDogTalent extends TalentInstance {
             }
 
             if (this.dog.getRandom().nextFloat() < 0.15F) {
-                this.dog.playSound(SoundEvents.WOLF_AMBIENT, this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
+                this.dog.playSound(EntityUtil_1_21_5.legacyWolfAmbientSound(dog), this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
             }
         }
 
