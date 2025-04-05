@@ -1,6 +1,6 @@
 package doggytalents;
 
-import doggytalents.api.backward_imitate.DogBedItemProps_1_21_5;
+import doggytalents.common.backward_imitate.DogBedItemProps_1_21_5;
 import doggytalents.common.backward_imitate.ResourceKeyHelper_21_3;
 import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.block.DogBedBlock;

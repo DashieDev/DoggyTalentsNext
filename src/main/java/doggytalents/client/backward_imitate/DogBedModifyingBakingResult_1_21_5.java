@@ -1,8 +1,8 @@
 package doggytalents.client.backward_imitate;
 
 import doggytalents.DoggyBlocks;
-import doggytalents.api.backward_imitate.DogBedItemProps_1_21_5;
 import doggytalents.client.block.model.DogBedModel;
+import doggytalents.common.backward_imitate.DogBedItemProps_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.block.model.BlockModel;
