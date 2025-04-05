@@ -32,6 +32,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Input;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec2;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
@@ -386,6 +387,7 @@ public class DTNClientPettingManager {
         // input.right = false;
         var input_21_3_old = input.keyPresses;
         input.keyPresses = new Input(false, false, false, false, input_21_3_old.jump(), input_21_3_old.shift(), input_21_3_old.sprint());
+        input.moveVector = Vec2.ZERO; //1.21.5+
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {
