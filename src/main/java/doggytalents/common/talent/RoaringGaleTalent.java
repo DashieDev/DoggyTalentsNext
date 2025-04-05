@@ -5,11 +5,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import doggytalents.DoggyTalents;
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.api.feature.DataKey;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.WhistleItem;
 import net.minecraft.network.chat.Component;

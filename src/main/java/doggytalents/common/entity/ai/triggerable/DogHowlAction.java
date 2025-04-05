@@ -1,7 +1,7 @@
 package doggytalents.common.entity.ai.triggerable;
 
 import doggytalents.api.anim.DogAnimation;
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

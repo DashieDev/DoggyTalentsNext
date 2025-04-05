@@ -1,6 +1,6 @@
 package doggytalents.common.entity.ai.triggerable;
 
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;

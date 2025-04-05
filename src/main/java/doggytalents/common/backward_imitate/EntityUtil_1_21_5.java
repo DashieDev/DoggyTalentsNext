@@ -1,4 +1,4 @@
-package doggytalents.api.backward_imitate;
+package doggytalents.common.backward_imitate;
 
 import java.util.ArrayList;
 import java.util.List;

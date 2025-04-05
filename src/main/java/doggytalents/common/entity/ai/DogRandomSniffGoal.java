@@ -3,7 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.api.anim.DogAnimation;
-import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.util.DogUtil;
