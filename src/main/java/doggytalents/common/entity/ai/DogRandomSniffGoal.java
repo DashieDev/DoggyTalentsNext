@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import java.util.EnumSet;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.util.DogUtil;
@@ -142,7 +143,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 var pushBackVec = current_center.subtract(this.dog.position())
                     .normalize();
                 this.dog.push(pushBackVec.x() * 0.3, 0, pushBackVec.z() * 0.3);
-                this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
+                this.dog.playSound(EntityUtil_1_21_5.legacyWolfHurtSound(dog), 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
                 this.continueEvenWhenChanged = true;
@@ -163,7 +164,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         case TOUCHY_TOUCH:
         {
             if (this.tickAnim == 35) {
-                this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
+                this.dog.playSound(EntityUtil_1_21_5.legacyWolfHurtSound(dog), 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
                 this.continueEvenWhenChanged = true;
