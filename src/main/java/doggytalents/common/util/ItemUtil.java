@@ -156,12 +156,12 @@ public class ItemUtil {
             return default_color;
         return stack.getOrDefault(
             DataComponents.DYED_COLOR, 
-            new DyedItemColor(default_color, false)
+            new DyedItemColor(default_color)
         ).rgb() | color_mask;
     }
 
     public static void setDyeColorForStack(ItemStack stack, int color) {
-        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color, true));
+        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color));
     }
 
     public static Optional<ArmorTrim> getTrim(ItemStack stack) {

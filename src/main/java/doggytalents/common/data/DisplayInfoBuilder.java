@@ -1,6 +1,7 @@
 package doggytalents.common.data;
 
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.network.chat.Component;
 
@@ -97,7 +98,7 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfo build() {
-        return new DisplayInfo(icon, title, description, Optional.ofNullable(background), frame, showToast, announceToChat, hidden);
+        return new DisplayInfo(icon, title, description, Optional.ofNullable(background).map(x -> new ClientAsset(x)), frame, showToast, announceToChat, hidden);
     }
 
     public static DisplayInfoBuilder create() {

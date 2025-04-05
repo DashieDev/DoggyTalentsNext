@@ -36,11 +36,11 @@ public class DogArmorContainer extends AbstractContainerMenu {
     private Dog dog;
 
     public static final ResourceLocation BLOCK_ATLAS = Util.getVanillaResource("textures/atlas/blocks.png");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_HELMET = Util.getVanillaResource("item/empty_armor_slot_helmet");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_CHESTPLATE = Util.getVanillaResource("item/empty_armor_slot_chestplate");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_LEGGINGS = Util.getVanillaResource("item/empty_armor_slot_leggings");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_BOOTS = Util.getVanillaResource("item/empty_armor_slot_boots");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_SHIELD = Util.getVanillaResource("item/empty_armor_slot_shield");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_HELMET = Util.getVanillaResource("container/slot/helmet");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_CHESTPLATE = Util.getVanillaResource("container/slot/chestplate");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_LEGGINGS = Util.getVanillaResource("container/slot/leggings");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_BOOTS = Util.getVanillaResource("container/slot/boots");
+    public static final ResourceLocation EMPTY_ARMOR_SLOT_SHIELD = Util.getVanillaResource("container/slot/shield");
     static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
@@ -69,8 +69,8 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 }
 
                 @Override
-                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
+                public ResourceLocation getNoItemIcon() {
+                    return TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()];
                 }
     
              });
@@ -94,8 +94,8 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 }
 
                 @Override
-                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                    return Pair.of(InventoryMenu.BLOCK_ATLAS, TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()]);
+                public ResourceLocation getNoItemIcon() {
+                    return TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()];
                 }
     
              });

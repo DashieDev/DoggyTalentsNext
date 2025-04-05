@@ -19,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.EntityUtil_1_21_5;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -94,7 +95,7 @@ public class EntityUtil {
             return false;
         }
 
-        Iterator<ItemStack> heldItems = entity.getHandSlots().iterator();
+        Iterator<ItemStack> heldItems = EntityUtil_1_21_5.getHandSlot(entity).iterator();
         while (heldItems.hasNext()) {
             ItemStack stack = heldItems.next();
             if (matcher.test(stack)) {
