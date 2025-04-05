@@ -33,7 +33,7 @@ public class ChangeArtifactPacket extends DogPacket<ChangeArtifactData> {
         if (!dog.canInteract(sender)) return;
         if (data.add) {
             var inventory = sender.getInventory();
-            var items = inventory.items;
+            var items = inventory.getNonEquipmentItems();
             if (data.slotId < 0 || data.slotId >= items.size()) return;
             var item = items.get(data.slotId);
             if (item.getItem() instanceof DoggyArtifactItem artifact) {

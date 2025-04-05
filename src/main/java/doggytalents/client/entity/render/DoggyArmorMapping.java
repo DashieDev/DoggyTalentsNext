@@ -15,6 +15,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,8 +25,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.equipment.EquipmentModel;
-import net.minecraft.world.item.equipment.EquipmentModel.LayerType;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -79,7 +78,7 @@ public class DoggyArmorMapping {
 
         var armorLoc = armor_layers_21_3
             .get(0)
-            .getTextureLocation(LayerType.HUMANOID);
+            .getTextureLocation(EquipmentClientInfo.LayerType.HUMANOID);
         if (!(ClientEventHandler.vertifyArmorTexture(armorLoc)))
             return Resources.DEFAULT_DOG_ARMOR;
         
@@ -127,19 +126,19 @@ public class DoggyArmorMapping {
 
 
 
-    private static List<EquipmentModel.Layer> getEquippimentLayer_21_3(ItemStack stack) {
+    private static List<EquipmentClientInfo.Layer> getEquippimentLayer_21_3(ItemStack stack) {
         var equip = ItemUtil.getEquippable_1_21_3(stack);
         if (equip == null)
             return List.of();
-        var model_optional = equip.model();
+        var model_optional = equip.assetId();
         if (!model_optional.isPresent())
             return List.of();
         var model_loc = model_optional.get();
         var mc = Minecraft.getInstance();
-        var model = mc.getEquipmentModels().get(model_loc);
+        var model = mc.getEntityRenderDispatcher().equipmentAssets.get(model_loc);
         if (model == null)
             return List.of();
-        var model_layers = model.getLayers(EquipmentModel.LayerType.HUMANOID);
+        var model_layers = model.getLayers(EquipmentClientInfo.LayerType.HUMANOID);
         if (model_layers == null)
             return List.of();
     

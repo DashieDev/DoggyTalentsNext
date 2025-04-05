@@ -72,7 +72,7 @@ public class TreatBagItem extends Item implements IDogFoodHandler, HoverTextAppe
             if (playerIn instanceof ServerPlayer) {
                 ServerPlayer serverPlayer = (ServerPlayer) playerIn;
 
-                Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().selected);
+                Screens.openTreatBagScreen(serverPlayer, stack, playerIn.getInventory().getSelectedSlot());
             }
 
             return InteractionResult.SUCCESS;

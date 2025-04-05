@@ -92,7 +92,7 @@ public class ArtifactEditElement extends AbstractElement {
     @Override
     public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         int holderIndx = 0;
-        var items = this.inventory.items;
+        var items = this.inventory.getNonEquipmentItems();
         this.lastPage.active = startIndex > 0;
         this.nextPage.active = false;
         this.startIndex = Math.max(0, startIndex);

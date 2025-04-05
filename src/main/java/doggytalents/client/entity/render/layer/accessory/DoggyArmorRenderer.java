@@ -38,16 +38,18 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.client.resources.model.EquipmentClientInfo.LayerType;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.EquipmentModel;
-import net.minecraft.world.item.equipment.EquipmentModel.LayerType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
 public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
@@ -141,7 +143,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
                 parentModel.copyPropertiesTo(this.alternativeModel);
                 this.alternativeModel.sync(parentModel);
             } 
-            startRenderAlternativeModelFromRoot(altModel.get(), dog, stack, buffer, light, itemStack, armor);
+            startRenderAlternativeModelFromRoot(altModel.get(), dog, stack, buffer, light, itemStack, item);
             return;
         } 
 
@@ -157,20 +159,21 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     }
 
     private Optional<Model> getAlternativeArmorModel(Dog dog, EquipmentSlot slot, PoseStack stack, ItemStack itemStack) {
-        if (slot == EquipmentSlot.HEAD && ConfigHandler.CLIENT.USE_THIRD_PARTY_PLAYER_HELMET_MODEL.get()) {
-            var dummy = this.helmetAltModel.getDummy();
-            var customHeadModel = net.neoforged.neoforge.client.ClientHooks
-                .getArmorModel(itemStack, EquipmentModel.LayerType.HUMANOID, dummy);
-            if (customHeadModel != dummy && customHeadModel != null)
-                return Optional.of(customHeadModel);
-        }
+        //1.21.5+ disable using third-party helmet model for now.
+        // if (slot == EquipmentSlot.HEAD && ConfigHandler.CLIENT.USE_THIRD_PARTY_PLAYER_HELMET_MODEL.get()) {
+        //     var dummy = this.helmetAltModel.getDummy();
+        //     var customHeadModel = net.neoforged.neoforge.client.ClientHooks
+        //         .getArmorModel(itemStack, EquipmentModel.LayerType.HUMANOID, dummy);
+        //     if (customHeadModel != dummy && customHeadModel != null)
+        //         return Optional.of(customHeadModel);
+        // }
         if (slot == EquipmentSlot.HEAD && ConfigHandler.CLIENT.USE_PLAYER_HELMET_MODEL_BY_DEFAULT.get()) {
             return Optional.of(this.helmetAltModel.getModel());
         }
         return Optional.empty();
     }
 
-    private void startRenderAlternativeModelFromRoot(Model model, Dog dog, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack, ArmorItem armor) {
+    private void startRenderAlternativeModelFromRoot(Model model, Dog dog, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack, Item armor) {
         this.alternativeModel.startRenderFromRoot(stack, stack1 -> {
             stack1.pushPose();
             stack1.scale(0.6f, 0.6f, 0.6f);
@@ -200,7 +203,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
         model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, red, green, blue));
     }
 
-    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, BaseModel_21_3 model, ResourceLocation armor_model) {
+    private void renderTrim(PoseStack stack, MultiBufferSource buffer, int light, ArmorTrim trim, BaseModel_21_3 model, ResourceKey<EquipmentAsset> armor_model) {
         var textureatlassprite = this.trimSpriteLookup.apply(new TrimSpriteKey(trim, LayerType.HUMANOID, armor_model));
         var vertexconsumer = textureatlassprite.wrap(buffer.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
@@ -216,11 +219,11 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     private Function<TrimSpriteKey, TextureAtlasSprite> trimSpriteLookup;
     private void initLookup_1_21_3() {
         this.trimSpriteLookup = net.minecraft.Util.memoize(p_371220_ -> {
-            ResourceLocation resourcelocation = p_371220_.trim.getTexture(p_371220_.layerType, p_371220_.equipmentModelId);
+            ResourceLocation resourcelocation = p_371220_.trim.layerAssetId(p_371220_.layerType.trimAssetPrefix(), p_371220_.equipmentModelId);
             return this.dogArmorTrimAtlas.getSprite(resourcelocation);
         });
     }
-    static record TrimSpriteKey(ArmorTrim trim, EquipmentModel.LayerType layerType, ResourceLocation equipmentModelId) {
+    static record TrimSpriteKey(ArmorTrim trim, EquipmentClientInfo.LayerType layerType, ResourceKey<EquipmentAsset> equipmentModelId) {
     }
   
 }

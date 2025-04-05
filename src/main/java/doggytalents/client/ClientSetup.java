@@ -133,8 +133,8 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -418,9 +418,9 @@ public class ClientSetup {
         e.registerAboveAll(Util.getResource("dog_air_evel"), DogScreenOverlays.AIR_LEVEL_ELEMENT);
     }
 
-    public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(DogTextureManager.INSTANCE);
-        event.registerReloadListener(DogRandomNameRegistry.getInstance());
+    public static void addClientReloadListeners(final AddClientReloadListenersEvent event) {
+        event.addListener(Util.getResource("dogskinmanager"), DogTextureManager.INSTANCE);
+        event.addListener(Util.getResource("dognamemanager"), DogRandomNameRegistry.getInstance());
     }
 
 
