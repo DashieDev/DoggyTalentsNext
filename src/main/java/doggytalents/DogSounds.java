@@ -101,6 +101,11 @@ public class DogSounds {
     public static final Supplier<SoundEvent> SAD_HURT2_ALT = register("dog_sad_hurt2_alt");
     public static final Supplier<SoundEvent> SAD_HURT3_ALT = register("dog_sad_hurt3_alt");
 
+
+    //1.21.5+
+    public static final Supplier<SoundEvent> CLASSIC_HOWL1 = register("dog_classic_howl1");
+    public static final Supplier<SoundEvent> CLASSIC_HOWL2 = register("dog_classic_howl2");
+
     public static void bootstrap() {}
 
     private static Supplier<SoundEvent> register(final String name) {
