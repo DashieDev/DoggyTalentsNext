@@ -393,6 +393,7 @@ public class DTNClientPettingManager {
         // input.right = false;
         var input_21_3_old = input.keyPresses;
         input.keyPresses = new Input(false, false, false, false, input_21_3_old.jump(), input_21_3_old.shift(), input_21_3_old.sprint());
+        input.moveVector = Vec2.ZERO; //1.21.5+
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {
