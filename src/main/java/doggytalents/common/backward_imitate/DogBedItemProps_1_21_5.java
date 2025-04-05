@@ -1,4 +1,4 @@
-package doggytalents.api.backward_imitate;
+package doggytalents.common.backward_imitate;
 
 import doggytalents.DoggyBlocks;
 import net.minecraft.core.component.DataComponents;
