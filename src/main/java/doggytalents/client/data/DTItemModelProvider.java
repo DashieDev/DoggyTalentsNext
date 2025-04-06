@@ -2,36 +2,34 @@ package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
+import doggytalents.common.backward_imitate.DTNModelProvider_1_21_5;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
+import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile;
-import net.neoforged.neoforge.client.model.generators.ModelProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
 
-public class DTItemModelProvider extends ItemModelProvider {
+public class DTItemModelProvider {
 
-    public DTItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, Constants.MOD_ID, existingFileHelper);
-    }
+    // public DTItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+    //     super(output, Constants.MOD_ID, existingFileHelper);
+    // }
 
-    @Override
-    public String getName() {
-        return "DoggyTalents Item Models";
-    }
+    // @Override
+    // public String getName() {
+    //     return "DoggyTalents Item Models";
+    // }
 
-    @Override
-    protected void registerModels() {
+    // @Override
+    public void registerModels() {
         handheld(DoggyItems.SHRINKING_MALLET);
         handheld(DoggyItems.MAGNIFYING_BONE);
 
@@ -190,102 +188,107 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
         plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
 
-        blockItem(DoggyBlocks.DOG_BATH);
-        blockItem(DoggyBlocks.DOG_BED);
-        blockItem(DoggyBlocks.FOOD_BOWL);
-        generated(DoggyBlocks.RICE_MILL);
+        // blockItem(DoggyBlocks.DOG_BATH);
+        // blockItem(DoggyBlocks.DOG_BED);
+        // blockItem(DoggyBlocks.FOOD_BOWL);
+        generated(DoggyBlocks.RICE_MILL.get()::asItem);
 
         generated(DoggyItems.DOG_ANIM_DEBUG);
     }
 
-    private ResourceLocation itemTexture(Supplier<? extends ItemLike> item) {
-        return modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item));
-    }
+    // private ResourceLocation itemTexture(Supplier<? extends ItemLike> item) {
+    //     return modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item));
+    // }
 
     private String name(Supplier<? extends ItemLike> item) {
         return BuiltInRegistries.ITEM.getKey(item.get().asItem()).getPath();
     }
 
-    private ItemModelBuilder blockItem(Supplier<? extends Block> block) {
-        return blockItem(block, "");
+    // private ItemModelBuilder blockItem(Supplier<? extends Block> block) {
+    //     return blockItem(block, "");
+    // }
+
+    // private ItemModelBuilder radar(Supplier<? extends ItemLike> item) {
+    //     return radar(item, itemTexture(item));
+    // }
+
+    // private ItemModelBuilder radar(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    //     ItemModelBuilder builder = generated(item, texture);
+    //     builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 0, 55F).translation(0, 4F, 0.5F).scale(0.85F);
+    //     builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 0, -55F).translation(0, 4F, 0.5F).scale(0.85F);
+    //     builder.transforms().transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).translation(-3.13F, 3.2F, 1.13F).scale(0.8F);
+    //     builder.transforms().transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).translation(-3.13F, 3.2F, 1.13F).scale(0.8F);
+    //     return builder;
+    // }
+
+    private void generated(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated(itemGenerators_1_21_5, item);
     }
 
-    private ItemModelBuilder radar(Supplier<? extends ItemLike> item) {
-        return radar(item, itemTexture(item));
+    // private void generated(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", texture);
+    // }
+
+    private void wetFrisbee(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "frisbee", "frisbee_overlay");
     }
 
-    private ItemModelBuilder radar(Supplier<? extends ItemLike> item, ResourceLocation texture) {
-        ItemModelBuilder builder = generated(item, texture);
-        builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 0, 55F).translation(0, 4F, 0.5F).scale(0.85F);
-        builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 0, -55F).translation(0, 4F, 0.5F).scale(0.85F);
-        builder.transforms().transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).translation(-3.13F, 3.2F, 1.13F).scale(0.8F);
-        builder.transforms().transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).translation(-3.13F, 3.2F, 1.13F).scale(0.8F);
-        return builder;
+    private void birthdayHat(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "birthday_hat_bg", "birthday_hat_fg");
     }
 
-    private ItemModelBuilder generated(Supplier<? extends ItemLike> item) {
-        return generated(item, itemTexture(item));
+    private void ceremonialGarb(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, name(item), name(item) + "_overlay");
     }
 
-    private ItemModelBuilder generated(Supplier<? extends ItemLike> item, ResourceLocation texture) {
-        return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", texture);
+    private void midiKeyboard(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, name(item), name(item) + "_overlay");
     }
 
-    private ItemModelBuilder wetFrisbee(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/frisbee"), modLoc(ModelProvider.ITEM_FOLDER + "/frisbee_overlay"));
+    private void plushieToy(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, name(item), name(item) + "_overlay");
     }
 
-    private ItemModelBuilder birthdayHat(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/birthday_hat_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/birthday_hat_fg"));
-    }
-
-    private ItemModelBuilder ceremonialGarb(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
-    }
-
-    private ItemModelBuilder midiKeyboard(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
-    }
-
-    private ItemModelBuilder plushieToy(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
-    }
-
-    private ItemModelBuilder scentTreatDrooled(Supplier<? extends ItemLike> item, Supplier<? extends ItemLike> base) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(base) + "_overlay"));
+    private void scentTreatDrooled(Supplier<? extends Item> item, Supplier<? extends Item> base) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, name(base), name(base) + "_overlay");
     }    
 
-    private ItemModelBuilder contactLens(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item)), modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item) + "_overlay"));
+    private void contactLens(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, name(item), name(item) + "_overlay");
     }
 
-    private ItemModelBuilder dyableOrb(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/locator_orb_dyable_fg"));
+    private void dyableOrb(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "locator_orb_dyable_bg", "locator_orb_dyable_fg");
     }
     
-    private ItemModelBuilder dogPresentCostume(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/dog_gift_costume"), modLoc(ModelProvider.ITEM_FOLDER + "/dog_gift_costume_overlay"));
+    private void dogPresentCostume(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "dog_gift_costume", "dog_gift_costume_overlay");
     }
 
-    private ItemModelBuilder stripedScarf(Supplier<? extends ItemLike> item) {
-        return generated2(item, modLoc(ModelProvider.ITEM_FOLDER + "/striped_scarf_bg"), modLoc(ModelProvider.ITEM_FOLDER + "/striped_scarf_fg"));
+    private void stripedScarf(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "striped_scarf_bg", "striped_scarf_fg");
     }
 
-    private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
-        return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))
-            .texture("layer0", tex0)
-            .texture("layer1", tex1);
+    // private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
+    //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))
+    //         .texture("layer0", tex0)
+    //         .texture("layer1", tex1);
+    // }
+
+    private void handheld(Supplier<? extends Item> item) {
+        DTNModelProvider_1_21_5.handheld(itemGenerators_1_21_5, item);
     }
 
-    private ItemModelBuilder handheld(Supplier<? extends ItemLike> item) {
-        return handheld(item, itemTexture(item));
-    }
+    // private ItemModelBuilder handheld(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/handheld")).texture("layer0", texture);
+    // }
 
-    private ItemModelBuilder handheld(Supplier<? extends ItemLike> item, ResourceLocation texture) {
-        return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/handheld")).texture("layer0", texture);
-    }
+    // private ItemModelBuilder blockItem(Supplier<? extends Block> block, String suffix) {
+    //     return withExistingParent(name(block), modLoc(ModelProvider.BLOCK_FOLDER + "/" + name(block) + suffix));
+    // }
 
-    private ItemModelBuilder blockItem(Supplier<? extends Block> block, String suffix) {
-        return withExistingParent(name(block), modLoc(ModelProvider.BLOCK_FOLDER + "/" + name(block) + suffix));
-    }
+
+
+    //1.21.5+
+    public ItemModelGenerators itemGenerators_1_21_5 = null;
 }

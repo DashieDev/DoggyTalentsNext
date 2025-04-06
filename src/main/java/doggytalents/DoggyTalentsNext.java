@@ -176,28 +176,29 @@ public class DoggyTalentsNext {
     //     //AddonManager.init();
     // }
 
-    private void gatherData(final GatherDataEvent event) {
+    private void gatherData(final GatherDataEvent.Client event) {
         DataGenerator gen = event.getGenerator();
         var packOutput = gen.getPackOutput();
         var lookup = event.getLookupProvider();
 
-        if (event.includeClient()) {
-            DTBlockstateProvider blockstates = new DTBlockstateProvider(packOutput, event.getExistingFileHelper());
-            gen.addProvider(true, blockstates);
-            gen.addProvider(true, new DTItemModelProvider(packOutput, blockstates.getExistingHelper()));
-        }
+        // if (event.includeClient()) {
+        //     DTBlockstateProvider blockstates = new DTBlockstateProvider(packOutput, event.getExistingFileHelper());
+        //     gen.addProvider(true, blockstates);
+        //     gen.addProvider(true, new DTItemModelProvider(packOutput, blockstates.getExistingHelper()));
+        // }
+        gen.addProvider(true, new DTNModelProvider_1_21_5(packOutput)); //1.21.5+
 
-        if (event.includeServer()) {
+        if (/*event.includeServer()*/true) {
             // gen.addProvider(new DTBlockTagsProvider(gen));
-            gen.addProvider(true, new DTAdvancementProvider(packOutput, lookup, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTAdvancementProvider(packOutput, lookup));
             
-            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup, event.getExistingFileHelper());
+            DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup);
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter(), event.getExistingFileHelper()));
+            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter()));
             gen.addProvider(true, new DTNRecipeProvider_21_3(packOutput, lookup));
             gen.addProvider(true, new DTLootTableProvider(packOutput, lookup));
             gen.addProvider(true, new DTLootModifierProvider(packOutput, lookup));
-            gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
+            gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup));
         }
 
         DTNDataRegistryProvider.start(event);
