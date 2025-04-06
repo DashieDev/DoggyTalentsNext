@@ -7,7 +7,6 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.client.ClientSetup;
-import doggytalents.client.backward_imitate.DogItemRender_1_21_5;
 import doggytalents.client.backward_imitate.DogRenderLayerWithRenderState_21_3;
 import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.backward_imitate.DogRenderState_21_3;
@@ -24,6 +23,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BowItem;
@@ -41,6 +42,9 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
         super(dogRendererIn);
         this.itemInHandRenderer = Minecraft.getInstance().getItemRenderer();
         itemSyncer = new SyncedRenderFunctionWithHeadModel(ctx.bakeLayer(ClientSetup.DOG_SYNCED_FUNCTION_WITH_HEAD));
+        
+        //1.21.5
+        init_1_21_5(ctx);
     }
 
     @Override
@@ -88,7 +92,23 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
         stack.mulPose(Axis.YP.rotationDegrees(45.0F));
         stack.mulPose(Axis.XP.rotationDegrees(90.0F));
 
-        DogItemRender_1_21_5.render(this.itemInHandRenderer, itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+        updateAndRenderItem_1_21_5(dog, itemStack, stack, bufferSource, packedLight);
         stack.popPose();
+    }
+
+
+
+    //1.21.5+
+    private void init_1_21_5(EntityRendererProvider.Context ctx) {
+        itemModelResolver_1_21_5 = ctx.getItemModelResolver();
+    }
+    private ItemModelResolver itemModelResolver_1_21_5;
+    private final ItemStackRenderState mouthItemRenderState_1_21_5 = new ItemStackRenderState();
+    private void updateMouthItemRenderState_1_21_5(Dog dog, ItemStack mouth_item) {
+        itemModelResolver_1_21_5.updateForLiving(mouthItemRenderState_1_21_5, mouth_item, ItemDisplayContext.GROUND, dog);
+    }
+    private void updateAndRenderItem_1_21_5(Dog dog, ItemStack itemStack, PoseStack stack, MultiBufferSource bufferSource, int packedLight) {
+        updateMouthItemRenderState_1_21_5(dog, itemStack);
+        mouthItemRenderState_1_21_5.render(stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
     }
 }
