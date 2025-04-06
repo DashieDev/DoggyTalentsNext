@@ -23,15 +23,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class DogBedItemModel_1_21_5 extends SpecialModelWrapper<ItemStack> {
 
-    public DogBedItemModel_1_21_5(DogBedModel dogBedModel) {
-        super(new DogBedItemModelRendererr_1_21_5(dogBedModel), renderPopsFromDogBedModel(dogBedModel));
-    }
-
-    public static ModelRenderProperties renderPopsFromDogBedModel(DogBedModel model) {
-        var resolved = model.resolvedDefaultUnbakedModel_1_21_5();
-        var baked = model.defaultBakedModel_1_21_5();
-        return new ModelRenderProperties(resolved.getTopGuiLight().lightLikeBlock(), 
-            baked.particleIcon(), resolved.getTopTransforms());
+    public DogBedItemModel_1_21_5(DogBedModel dogBedModel, ModelRenderProperties props) {
+        super(new DogBedItemModelRendererr_1_21_5(dogBedModel), props);
     }
     
 }
