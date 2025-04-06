@@ -344,14 +344,6 @@ public class DogBedModel implements BlockStateModel {
         
     }
 
-    public ResolvedModel resolvedDefaultUnbakedModel_1_21_5() {
-        return resolvedModel_1_21_5(this.unbakedModel);
-    }
-
-    public BlockStateModel defaultBakedModel_1_21_5() {
-        return this.defaultModelVariant;
-    }
-
     private static SimpleModelWrapper bakeModel_1_21_5(BlockModel model, Direction dir) {
         var resolved_model = resolvedModel_1_21_5(model);
         var baker = modelBaker_1_21_5(resolved_model);
