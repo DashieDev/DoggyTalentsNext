@@ -2,10 +2,12 @@ package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
+import doggytalents.common.backward_imitate.DTNModelProvider_1_21_5;
 import doggytalents.common.lib.Constants;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
