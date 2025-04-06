@@ -14,7 +14,7 @@ public class SlotItemHandler extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack itemStack) {
-        return handler.isItemValid(this.index, itemStack);
+        return handler.isItemValid(this.getContainerSlot(), itemStack);
     }
     
 }
