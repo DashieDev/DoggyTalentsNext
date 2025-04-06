@@ -11,6 +11,7 @@ import doggytalents.client.entity.render.DoggyArmorMapping;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.backward_imitate.DTNModelProvider_1_21_5;
 import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
