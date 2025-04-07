@@ -1,4 +1,4 @@
-package doggytalents.common.backward_imitate;
+package doggytalents.client.backward_imitate;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
-import doggytalents.client.backward_imitate.DoubleDyableTint_1_21_5;
 import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.item.DoubleDyableAccessoryItem;
