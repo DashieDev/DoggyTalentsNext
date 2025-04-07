@@ -11,6 +11,7 @@ import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.common.block.crops.DogCropBlock;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
+import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -328,5 +329,11 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
     }
 
-    
+    public static void dogBathItem(ItemModelGenerators itemModels, Supplier<? extends Block> block_supplier) {
+        var block = block_supplier.get();
+        var block_item = block.asItem();
+        var block_model = ModelLocationUtils.getModelLocation(block);
+        var item_model = ItemModelUtils.tintedModel(block_model, new Constant(4159204));
+        itemModels.itemModelOutput.accept(block_item, item_model);
+    }
 }
