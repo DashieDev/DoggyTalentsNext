@@ -2,7 +2,7 @@ package doggytalents.client.data;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
-import doggytalents.common.backward_imitate.DTNModelProvider_1_21_5;
+import doggytalents.client.backward_imitate.DTNModelProvider_1_21_5;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.data.models.ItemModelGenerators;
