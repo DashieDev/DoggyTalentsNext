@@ -188,7 +188,7 @@ public class DTItemModelProvider {
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
         plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
 
-        // blockItem(DoggyBlocks.DOG_BATH);
+        DTNModelProvider_1_21_5.dogBathItem(this.itemGenerators_1_21_5, DoggyBlocks.DOG_BATH);
         // blockItem(DoggyBlocks.DOG_BED);
         // blockItem(DoggyBlocks.FOOD_BOWL);
         generated(DoggyBlocks.RICE_MILL.get()::asItem);
