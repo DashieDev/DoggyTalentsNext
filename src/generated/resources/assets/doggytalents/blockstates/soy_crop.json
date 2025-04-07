@@ -1,28 +1,28 @@
 {
   "variants": {
     "age=0": {
-      "model": "doggytalents:soy_crop/stage_0"
+      "model": "doggytalents:block/soy_crop/stage_0"
     },
     "age=1": {
-      "model": "doggytalents:soy_crop/stage_1"
+      "model": "doggytalents:block/soy_crop/stage_1"
     },
     "age=2": {
-      "model": "doggytalents:soy_crop/stage_2"
+      "model": "doggytalents:block/soy_crop/stage_2"
     },
     "age=3": {
-      "model": "doggytalents:soy_crop/stage_3"
+      "model": "doggytalents:block/soy_crop/stage_3"
     },
     "age=4": {
-      "model": "doggytalents:soy_crop/stage_4"
+      "model": "doggytalents:block/soy_crop/stage_4"
     },
     "age=5": {
-      "model": "doggytalents:soy_crop/stage_5"
+      "model": "doggytalents:block/soy_crop/stage_5"
     },
     "age=6": {
-      "model": "doggytalents:soy_crop/stage_6"
+      "model": "doggytalents:block/soy_crop/stage_6"
     },
     "age=7": {
-      "model": "doggytalents:soy_crop/stage_7"
+      "model": "doggytalents:block/soy_crop/stage_7"
     }
   }
 }

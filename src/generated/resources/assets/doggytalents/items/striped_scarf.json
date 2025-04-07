@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "doggytalents:item/striped_scarf",
+    "tints": [
+      {
+        "type": "doggytalents:double_dyable_bg",
+        "default": -1
+      },
+      {
+        "type": "doggytalents:double_dyable_fg",
+        "default": -1
+      }
+    ]
+  }
+}
