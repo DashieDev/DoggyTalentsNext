@@ -7,16 +7,20 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import doggytalents.DogSounds;
+import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.LangUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 
 public class EntityUtil_1_21_5 {
@@ -82,6 +86,18 @@ public class EntityUtil_1_21_5 {
 
     public static SoundEvent legacyWolfHowlSound(Dog dog) {
         return LangUtil.getRandomItem(dog.getRandom(), List.of(DogSounds.CLASSIC_HOWL1.get(), DogSounds.CLASSIC_HOWL2.get())).get();
+    }
+
+    public static void spawnProjectile(AbstractDog dog, Projectile proj) {
+        var proj_stack = ItemStack.EMPTY;
+        if (proj instanceof AbstractArrow arrow) {
+            proj_stack = arrow.getPickupItemStackOrigin();
+        } 
+        if (proj_stack.isEmpty()) {
+            dog.level().addFreshEntity(proj);
+        } else {
+            Projectile.spawnProjectile(proj, (ServerLevel)dog.level(), proj_stack);
+        }
     }
 
 }

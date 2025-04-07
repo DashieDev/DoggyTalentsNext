@@ -8,6 +8,7 @@ import doggytalents.DoggyTalents;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.impl.IDogRangedAttackManager.UsingWeaponContext;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.common.backward_imitate.EntityUtil_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.misc.DogThrownTrident;
@@ -72,7 +73,7 @@ public class DoggyToolsRangedAttack implements IDogRangedAttackManager {
             power, error_window);
 
         dog.playSound(shoot_sound, 1.0F, 1.0F / (dog.getRandom().nextFloat() * 0.4F + 0.8F));
-        dog.level().addFreshEntity(proj);
+        EntityUtil_1_21_5.spawnProjectile(dog, proj); //1.21.5+
     }
 
     @Override
