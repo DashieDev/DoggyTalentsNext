@@ -116,7 +116,7 @@ public class DoggyTalentsNext {
             modEventBus.addListener(DoggyKeybinds::registerDTKeyMapping);
             modEventBus.addListener(this::clientSetup);
             modEventBus.addListener(DoggyBlocks::registerBlockColours);
-            modEventBus.addListener(DoggyItems::registerItemColours);
+            //modEventBus.addListener(DoggyItems::registerItemColours);
             //modEventBus.addListener(ClientEventHandler::registerModelForBaking);
             modEventBus.addListener(ClientEventHandler::modifyBakedModels);
             modEventBus.addListener(ClientSetup::setupTileEntityRenderers);

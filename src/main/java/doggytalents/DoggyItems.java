@@ -31,8 +31,6 @@ import doggytalents.common.item.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
-import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -44,7 +42,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SwordItem;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -330,56 +327,56 @@ public class DoggyItems {
         return ITEMS.register(name, () -> sup.apply(createInitialProp().setId(ResourceKeyHelper_21_3.itemKey(name))));
     }
 
-    public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {
-        ItemColors itemColors = event.getItemColors();
-        var all_dtn_items = ITEMS.getEntries();
+    // public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {
+    //     ItemColors itemColors = event.getItemColors();
+    //     var all_dtn_items = ITEMS.getEntries();
 
-        final var dye_layer_override = new IdentityHashMap<Item, Integer>();
-        dye_layer_override.put(CERE_GARB.get(), 1);
-        dye_layer_override.put(MIDI_KEYBOARD.get(), 1);
-        dye_layer_override.put(DOG_PLUSHIE_TOY.get(), 1);
+    //     final var dye_layer_override = new IdentityHashMap<Item, Integer>();
+    //     dye_layer_override.put(CERE_GARB.get(), 1);
+    //     dye_layer_override.put(MIDI_KEYBOARD.get(), 1);
+    //     dye_layer_override.put(DOG_PLUSHIE_TOY.get(), 1);
 
-        final var double_dye_layer_override = new IdentityHashMap<Item, Pair<Integer, Integer>>();
+    //     final var double_dye_layer_override = new IdentityHashMap<Item, Pair<Integer, Integer>>();
         
-        final Function<Integer, ItemColor> for_single_dyable = 
-            dye_layer -> (stack, layer_indx) -> {
-                return layer_indx != dye_layer ? -1 : ItemUtil.getDyeColorForStack(stack);
-            };
-        final BiFunction<Integer, Integer, ItemColor> for_double_dyable = 
-            (dye_layer_fg, dye_layer_bg) -> (stack, layer_indx) -> {
-                var double_dyeable_item = ((DoubleDyableAccessoryItem) stack.getItem());
-                if (layer_indx == dye_layer_fg) {
-                    return double_dyeable_item.getFgColor(stack);
-                } else if (layer_indx == dye_layer_bg) {
-                    return double_dyeable_item.getBgColor(stack);
-                }
-                return -1;
-            };
+    //     final Function<Integer, ItemColor> for_single_dyable = 
+    //         dye_layer -> (stack, layer_indx) -> {
+    //             return layer_indx != dye_layer ? -1 : ItemUtil.getDyeColorForStack(stack);
+    //         };
+    //     final BiFunction<Integer, Integer, ItemColor> for_double_dyable = 
+    //         (dye_layer_fg, dye_layer_bg) -> (stack, layer_indx) -> {
+    //             var double_dyeable_item = ((DoubleDyableAccessoryItem) stack.getItem());
+    //             if (layer_indx == dye_layer_fg) {
+    //                 return double_dyeable_item.getFgColor(stack);
+    //             } else if (layer_indx == dye_layer_bg) {
+    //                 return double_dyeable_item.getBgColor(stack);
+    //             }
+    //             return -1;
+    //         };
 
-        final var default_single_dyable = for_single_dyable.apply(0); 
-        final var default_double_dyable = for_double_dyable.apply(1, 0);
+    //     final var default_single_dyable = for_single_dyable.apply(0); 
+    //     final var default_double_dyable = for_double_dyable.apply(1, 0);
 
-        for (var item_holder : all_dtn_items) {
-            var item = item_holder.get();
-            if (item instanceof IDyeableArmorItem) {
-                var item_color = default_single_dyable;
-                var override = dye_layer_override.get(item);
-                if (override != null)
-                    item_color = for_single_dyable.apply(override);
-                event.register(item_color, item);
-            } else if (item instanceof DoubleDyableAccessoryItem) {
-                var item_color = default_double_dyable;
-                var override = double_dye_layer_override.get(item);
-                if (override != null)
-                    item_color = for_double_dyable.apply(override.getLeft(), override.getRight());
-                event.register(item_color, item);
-            }
-        }
+    //     for (var item_holder : all_dtn_items) {
+    //         var item = item_holder.get();
+    //         if (item instanceof IDyeableArmorItem) {
+    //             var item_color = default_single_dyable;
+    //             var override = dye_layer_override.get(item);
+    //             if (override != null)
+    //                 item_color = for_single_dyable.apply(override);
+    //             event.register(item_color, item);
+    //         } else if (item instanceof DoubleDyableAccessoryItem) {
+    //             var item_color = default_double_dyable;
+    //             var override = double_dye_layer_override.get(item);
+    //             if (override != null)
+    //                 item_color = for_double_dyable.apply(override.getLeft(), override.getRight());
+    //             event.register(item_color, item);
+    //         }
+    //     }
 
-        Util.acceptOrElse(DoggyBlocks.DOG_BATH, (item) -> {
-            itemColors.register((stack, tintIndex) -> {
-                return 4159204;
-             }, item);
-        }, DoggyBlocks::logError);
-    }
+    //     Util.acceptOrElse(DoggyBlocks.DOG_BATH, (item) -> {
+    //         itemColors.register((stack, tintIndex) -> {
+    //             return 4159204;
+    //          }, item);
+    //     }, DoggyBlocks::logError);
+    // }
 }
