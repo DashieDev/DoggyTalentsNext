@@ -24,8 +24,10 @@ public class ItemStackMixin_1_21_5 {
     @Inject(at = @At("HEAD"),  method = "addDetailsToTooltip")
     public void dtn__addDetailsToTooltip(Item.TooltipContext context, TooltipDisplay display, @Nullable Player player, TooltipFlag tooltipFlag, Consumer<Component> consumer, CallbackInfo info) {
         var self = (ItemStack)(Object)this;
-        if (!(self.getItem() instanceof HoverTextAppender_1_21_5 appender))
+        var appender_optional = HoverTextAppender_1_21_5.findFromStack(self);
+        if (!appender_optional.isPresent())
             return;
+        var appender = appender_optional.get();
         var component_list = new ArrayList<Component>();
         appender.appendHoverText(self, context, component_list, tooltipFlag);
         component_list.forEach(consumer);
