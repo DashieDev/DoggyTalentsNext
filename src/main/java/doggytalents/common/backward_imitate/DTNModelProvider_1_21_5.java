@@ -1,17 +1,21 @@
 package doggytalents.common.backward_imitate;
 
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.DoggyItems;
+import doggytalents.client.backward_imitate.DoubleDyableTint_1_21_5;
 import doggytalents.client.data.DTItemModelProvider;
 import doggytalents.common.block.crops.DogCropBlock;
+import doggytalents.common.item.DoubleDyableAccessoryItem;
+import doggytalents.common.item.IDyeableArmorItem;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.Constant;
+import net.minecraft.client.color.item.Dye;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -27,10 +31,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.client.model.generators.template.ElementBuilder;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 import net.neoforged.neoforge.client.model.generators.template.FaceBuilder;
 
@@ -310,8 +314,13 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         item_model_prov.itemGenerators_1_21_5 = null;
     }
 
-    public static void generated(ItemModelGenerators itemModels, Supplier<? extends Item> item) {
-        itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM);
+    public static void generated(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier) {
+        var item = item_supplier.get();
+        if (item instanceof IDyeableArmorItem dyable) {
+            generateSingleDyeable(itemModels, item, dyable);
+            return;
+        }
+        itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
     }
 
     public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item, String layer0, String layer1) {
@@ -320,9 +329,54 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         generated2(itemModels, item, layer0_rl, layer1_rl);
     }
 
-    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item, ResourceLocation layer0, ResourceLocation layer1) {
-        var model = itemModels.generateLayeredItem(item.get(), layer0, layer1);
-        itemModels.itemModelOutput.accept(item.get(), ItemModelUtils.plainModel(model));
+    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier, ResourceLocation layer0, ResourceLocation layer1) {
+        var item = item_supplier.get();
+        if (item instanceof DoubleDyableAccessoryItem dyeable) {
+            generateDoubleDyeable(itemModels, item, dyeable, layer0, layer1);
+            return;
+        }
+        if (item instanceof IDyeableArmorItem dyeable) {
+            boolean dye_override = 
+                item == DoggyItems.CERE_GARB.get() 
+                || item == DoggyItems.MIDI_KEYBOARD.get()
+                || item == DoggyItems.DOG_PLUSHIE_TOY.get();
+            int dye_layer = dye_override ? 1 : 0;
+            generateSingleDyeable(itemModels, item, dyeable, dye_layer, layer0, layer1);
+            return;
+        }
+        var model = itemModels.generateLayeredItem(item, layer0, layer1);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(model));
+    }
+
+    public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, IDyeableArmorItem dyable) {
+        var item_model = itemModels.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
+        var item_model_tinted = ItemModelUtils.tintedModel(item_model, 
+            new Dye(dyable.getDefaultColor(ItemStack.EMPTY)));
+        itemModels.itemModelOutput.accept(item, item_model_tinted);
+    }
+
+    public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, 
+        IDyeableArmorItem dyable, int dye_layer, ResourceLocation layer0, ResourceLocation layer1) {
+        
+        var model = itemModels.generateLayeredItem(item, layer0, layer1);
+        var dye_tint = new Dye(dyable.getDefaultColor(ItemStack.EMPTY));
+        var tints = dye_layer == 0 ?
+            new ItemTintSource[] {dye_tint, ItemModelGenerators.BLANK_LAYER}
+            : new ItemTintSource[] {ItemModelGenerators.BLANK_LAYER, dye_tint};
+        var item_model_tinted = ItemModelUtils.tintedModel(model, tints);
+        itemModels.itemModelOutput.accept(item, item_model_tinted);
+    }
+
+    public static void generateDoubleDyeable(ItemModelGenerators itemModels, Item item, 
+        DoubleDyableAccessoryItem dyable, ResourceLocation layer0, ResourceLocation layer1) {
+
+        var model = itemModels.generateLayeredItem(item, layer0, layer1);
+        var model_tinted = ItemModelUtils.tintedModel(
+            model,
+            DoubleDyableTint_1_21_5.bg(dyable),
+            DoubleDyableTint_1_21_5.fg(dyable)
+        );
+        itemModels.itemModelOutput.accept(item, model_tinted);
     }
 
     public static void handheld(ItemModelGenerators itemModels, Supplier<? extends Item> item) {
