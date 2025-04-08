@@ -1838,3 +1838,7 @@ Locator Orbs will be prioritized.
 * HOTFIX: PackPuppy Dogs having access to locked inventory slots (unlocked at higher level) when
 collecting nearby items.  
 * HOTFIX: Pillow Paw Dogs already got fall immune at level 1
+
+**1.18.46 - 8th April 2025**
+* Fix Flying Furball being unable to fly while being ridden despite having flying allowed. 
+* (Fabric Only) Fix players being unable to put items in Pack Puppy Inventory via Dog Inventory Screen.
