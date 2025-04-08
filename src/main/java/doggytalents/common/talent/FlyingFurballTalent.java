@@ -168,7 +168,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     @Override
     public void props(AbstractDog dog, DogAlterationProps props) {
-        props.setCanFly().setFallImmune();
+        props.setCanFly().setWillFly(this::allowFlying).setFallImmune();
     }
 
     public void startGliding(AbstractDog dog) {
