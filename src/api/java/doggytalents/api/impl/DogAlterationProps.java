@@ -1,5 +1,7 @@
 package doggytalents.api.impl;
 
+import java.util.function.Supplier;
+
 public class DogAlterationProps {
     
     private boolean fireImmune = false;
@@ -11,6 +13,7 @@ public class DogAlterationProps {
     private boolean canUseTools = false;
     private boolean fallImmune = false;
     private float bonusSwimSpeed = 0f;
+    private Supplier<Boolean> willFly = null;
 
     public DogAlterationProps() {}
 
@@ -23,6 +26,12 @@ public class DogAlterationProps {
     public boolean fallImmune() { return fallImmune; }
     public float bonusSwimSpeed() { return this.bonusSwimSpeed; }
     public boolean resistWaterPush() { return this.resistWaterPush; }
+
+    public boolean willFly() { 
+        if (this.willFly == null) 
+            return false;
+        return this.willFly.get();
+    }
 
     public DogAlterationProps setFireImmune() {
         this.fireImmune = true;
@@ -66,6 +75,11 @@ public class DogAlterationProps {
 
     public DogAlterationProps setResistWaterPush() {
         this.resistWaterPush = true;
+        return this;
+    }
+
+    public DogAlterationProps setWillFly(Supplier<Boolean> willFly) {
+        this.willFly = willFly;
         return this;
     }
 }
