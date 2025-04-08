@@ -39,6 +39,7 @@ public class DogAiManager {
     private DogActionExecutorGoal trivialActionGoal;
     private int delayedActionStart = 0;
     private int timeoutPending = 0;
+    private boolean startedSomeGoals = false;
 
     public DogAiManager(Dog dog, Supplier<ProfilerFiller> profileSup) {
         this.dog = dog;
@@ -148,6 +149,10 @@ public class DogAiManager {
         if (!dog.canUpdateDogAi()) {
             if (this.getActiveAction().isPresent())
                 this.clearTriggerableAction();
+            if (startedSomeGoals) {
+                startedSomeGoals = false;
+                forceStopAllGoal();
+            }
             return;
         }
 
@@ -271,6 +276,7 @@ public class DogAiManager {
         }
         
         goal.start();
+        this.startedSomeGoals = true;
     }
 
     private boolean goalCanStart(WrappedGoal goal) {
