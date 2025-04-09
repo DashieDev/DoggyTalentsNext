@@ -81,7 +81,7 @@ public class DogSleepOnManager {
         dog.setSleepOnState(new DogSleepOnState(player.getUUID(), true, sleep_yrot));
         addDogSleepOnPair(player, dog);
 
-        ((ServerLevel) player.level()).updateSleepingPlayerList();
+        ((ServerLevel) player.level).updateSleepingPlayerList();
         return StartSleepOnDogResult.OK;
     }
 
@@ -136,8 +136,8 @@ public class DogSleepOnManager {
     private boolean checkIfSleepPosIsEligible(Dog dog, Vec3 check_pos) {
         var air_iterater = 
             BlockPos.betweenClosed(
-                BlockPos.containing(check_pos.add(-1, 0, -1)),
-                BlockPos.containing(check_pos.add(1, 0, 1)));
+                new BlockPos(check_pos.add(-1, 0, -1)),
+                new BlockPos(check_pos.add(1, 0, 1)));
         for (var pos : air_iterater) {
             var state = dog.level().getBlockState(pos);
             if (!state.isAir()) {
@@ -146,8 +146,8 @@ public class DogSleepOnManager {
         }
         var solid_iterater = 
             BlockPos.betweenClosed(
-                BlockPos.containing(check_pos.add(-1, -1, -1)),
-                BlockPos.containing(check_pos.add(1, -1, 1)));
+                new BlockPos(check_pos.add(-1, -1, -1)),
+                new BlockPos(check_pos.add(1, -1, 1)));
         for (var pos : solid_iterater) {
             var state = dog.level().getBlockState(pos);
             if (!state.isCollisionShapeFullBlock(dog.level(), pos)) {
@@ -317,7 +317,7 @@ public class DogSleepOnManager {
     }
 
     public static void onPlayerWakeUp(Player player) {
-        var level = (ServerLevel) player.level();
+        var level = (ServerLevel) player.level;
         DogSleepOnManager.getServer(level).checkAndClearWhenPlayerWakeUp(player);
     }
 

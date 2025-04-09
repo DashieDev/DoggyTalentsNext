@@ -104,7 +104,7 @@ public class DogSounds {
     public static void bootstrap() {}
 
     private static Supplier<SoundEvent> register(final String name) {
-        return register(name, () -> SoundEvent.createVariableRangeEvent(Util.getResource(name)));
+        return register(name, () -> new SoundEvent(Util.getResource(name)));
     }
 
     private static <T extends SoundEvent> Supplier<T> register(final String name, final Supplier<T> sup) {

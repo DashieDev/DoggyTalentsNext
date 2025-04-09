@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.joml.Vector3f;
+import com.mojang.math.Vector3f;
 
 
 import net.minecraft.client.animation.AnimationChannel;
@@ -74,7 +74,7 @@ public class DogKeyframeAnimations {
 
         var result = new Vector3f(0, 0, 0);
         getAnimationValueForChannel(result, rotationChannel, elapsed_in_seconds, swing);
-        return result.y;
+        return result.y();
    }
 
     public static interface AnimationContext {

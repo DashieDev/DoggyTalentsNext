@@ -45,7 +45,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     @Override
     protected void onHit(HitResult result) {
         if (result.getType() == HitResult.Type.ENTITY) {
-            if (!this.level().isClientSide) {
+            if (!this.level.isClientSide) {
                 mayTriggerNearbyDogs((EntityHitResult)result);
             } else {
                 for (int j = 0; j < 8; ++j) {
@@ -69,7 +69,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
 
         var trigger_bb = thrower.getBoundingBox().inflate(16, 8, 16);
         var trigger_list = 
-            this.level().getEntitiesOfClass(Dog.class, trigger_bb,
+            this.level.getEntitiesOfClass(Dog.class, trigger_bb,
                 filter_dog -> isEligibleDog(filter_dog, hit, thrower));
         do_cooldown = !trigger_list.isEmpty();
 

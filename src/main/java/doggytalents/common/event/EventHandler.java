@@ -629,7 +629,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerWakeUpEvent(PlayerWakeUpEvent event) {
-        if (!event.getEntity().level().isClientSide)
+        if (!event.getEntity().level.isClientSide)
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());
     }
 }
