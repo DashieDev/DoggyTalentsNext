@@ -61,6 +61,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
+import doggytalents.client.entity.model.dog.MochiModel;
 import doggytalents.client.entity.model.dog.Na;
 import doggytalents.client.entity.model.dog.NewfoundlandModel;
 import doggytalents.client.entity.model.dog.NorfolkTerrierModel;
@@ -223,6 +224,7 @@ public class ClientSetup {
     public static final ModelLayerLocation DOG_AUSTRALIAN_KELPIE = new ModelLayerLocation(Util.getResource("australian_kelpie"), "main");
     public static final ModelLayerLocation NA = new ModelLayerLocation(Util.getResource("na"), "main");
     public static final ModelLayerLocation DOG_NEWFOUNDLAND = new ModelLayerLocation(Util.getResource("newfoundland"), "main");
+    public static final ModelLayerLocation MOCHI = new ModelLayerLocation(Util.getResource("mochi"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(Util.getResource("dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(Util.getResource("dog"), "armor_legacy");
@@ -338,6 +340,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_AUSTRALIAN_KELPIE, AustralianKelpieModel::createBodyLayer);
         event.registerLayerDefinition(DOG_NEWFOUNDLAND, NewfoundlandModel::createBodyLayer);
         event.registerLayerDefinition(NA, Na::na);
+        event.registerLayerDefinition(MOCHI, MochiModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
