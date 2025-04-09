@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 import doggytalents.DogVariants;
 import doggytalents.client.ClientSetup;
@@ -23,11 +22,11 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.variant.DogVariant;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -183,41 +182,41 @@ public class DoggySpinModel {
         
     }
 
-    public void renderGui(GuiGraphics graphics, float mid_x, float mid_y) {
+    public void renderGui(PoseStack graphics, float mid_x, float mid_y) {
         int scale = 70;
         var offset = new Vector3f(0, 0.5f - 0.0625F, 0);
-        Quaternionf rotation;
+        Quaternion rotation;
         if (this.style == Style.CHOPIN || this.style == Style.AMMY) {
-            rotation = Axis.XP.rotationDegrees(15);
+            rotation = Vector3f.XP.rotationDegrees(15);
         } else if (this.style == Style.BACKFLIP) {
-            rotation = Axis.XP.rotationDegrees(4).mul(Axis.YP.rotationDegrees(20));
-            offset.sub(0, -0.15f, 0);
+            rotation = Vector3f.XP.rotationDegrees(4); rotation.mul(Vector3f.YP.rotationDegrees(20));
+            offset.sub(new Vector3f(0, -0.15f, 0));
         } else {
-            rotation = Axis.XP.rotationDegrees(10);
-            offset.sub(0, -0.08f, 0);
+            rotation = Vector3f.XP.rotationDegrees(10);
+            offset.sub(new Vector3f(0, -0.08f, 0));
         }
         renderGui(graphics, mid_x, mid_y, scale, offset, rotation);
     }
 
     public void renderGui(
-        GuiGraphics graphics,
+        PoseStack graphics,
         float mid_x,
         float mid_y,
         float scale,
         Vector3f offset,
-        Quaternionf rot
+        Quaternion rot
     ) {
         
-        graphics.pose().pushPose();
-        graphics.pose().translate((double)mid_x, (double)mid_y, 50.0);
-        graphics.pose().mulPoseMatrix((new Matrix4f()).scaling(scale, scale, -scale));
-        graphics.pose().translate(offset.x, offset.y, offset.z);
-        graphics.pose().mulPose(rot);
-        graphics.pose().translate(0.0F, -1.501F, 0.0F);
+        graphics.pushPose();
+        graphics.translate((double)mid_x, (double)mid_y, 50.0);
+        graphics.scale(scale, scale, -scale);
+        graphics.translate(offset.x(), offset.y(), offset.z());
+        graphics.mulPose(rot);
+        graphics.translate(0.0F, -1.501F, 0.0F);
         Lighting.setupForEntityInInventory();
-        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics.pose(), graphics.bufferSource()));
-        graphics.flush();
-        graphics.pose().popPose();
+        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics, Minecraft.getInstance().renderBuffers().bufferSource()));
+        //graphics.flush();
+        graphics.popPose();
         Lighting.setupFor3DItems();
     }
     
@@ -245,24 +244,24 @@ public class DoggySpinModel {
         var pivot = DogModel.DEFAULT_ROOT_PIVOT;
         stack.pushPose();
         stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
+        stack.translate((double)(pivot.x() / 16.0F), (double)(pivot.y() / 16.0F), (double)(pivot.z() / 16.0F));
         if (root.zRot != 0.0F) {
-            stack.mulPose(Axis.ZP.rotation(root.zRot));
+            stack.mulPose(Vector3f.ZP.rotation(root.zRot));
         }
 
         if (root.yRot != 0.0F) {
-            stack.mulPose(Axis.YP.rotation(root.yRot));
+            stack.mulPose(Vector3f.YP.rotation(root.yRot));
         }
 
         if (root.xRot != 0.0F) {
-            stack.mulPose(Axis.XP.rotation(root.xRot));
+            stack.mulPose(Vector3f.XP.rotation(root.xRot));
         }
         float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
         float x0 = root.x, y0 = root.y, z0 = root.z;
         root.xRot = 0; root.yRot = 0; root.zRot = 0;
         root.x = 0; root.y = 0; root.z = 0;
         stack.pushPose();
-        stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
+        stack.translate((double)(-pivot.x() / 16.0F), (double)(-pivot.y() / 16.0F), (double)(-pivot.z() / 16.0F));
         root.render(stack, consumer, light, overlay_coord, FastColor.ARGB32.red(color_overlay)/255f, FastColor.ARGB32.green(color_overlay)/255f, FastColor.ARGB32.blue(color_overlay)/255f, FastColor.ARGB32.alpha(color_overlay)/255f);
         stack.popPose();
         stack.popPose();

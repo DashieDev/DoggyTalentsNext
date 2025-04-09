@@ -95,8 +95,8 @@ public class WhistleScreen extends StringEntrySelectScreen {
             } 
         ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 var title = Component.translatable("doggytalents.screen.whistler.target.title")
@@ -105,7 +105,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.target.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                WhistleScreen.this.renderComponentTooltip(graphics, list, mouseX, mouseY);
             }
         };
 
@@ -113,8 +113,8 @@ public class WhistleScreen extends StringEntrySelectScreen {
 
         var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
+                super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
@@ -122,7 +122,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                WhistleScreen.this.renderComponentTooltip(graphics, list, mouseX, mouseY);
             }
         };
 
@@ -151,12 +151,12 @@ public class WhistleScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         mayRenderModeHelp(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void mayRenderModeHelp(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void mayRenderModeHelp(PoseStack graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showModeHelp)
             return;
         var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
@@ -175,14 +175,14 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 int uuid_width = font.width(str);
                 int tX = mX - uuid_width/2;
                 
-                graphics.drawString(font, str, tX, tY, 0xffffffff);
+                font.draw(graphics, str, tX, tY, 0xffffffff);
                 tY += font.lineHeight + 2;
             }
             
         } else {
             var mode_name = Component.translatable(mode.getUnlocalisedTitle())
                 .withStyle(Style.EMPTY.withBold(true));
-            graphics.renderComponentTooltip(font, 
+            this.renderComponentTooltip(graphics, 
                 List.of(mode_name, mode_help_c1), mouseX, mouseY);
         }
     }

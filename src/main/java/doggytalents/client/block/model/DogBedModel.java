@@ -158,37 +158,38 @@ public class DogBedModel implements BakedModel {
         return ret;
     }
 
-    private static BakedModel bakeModel(BlockModel to_bake, Direction dir) {
-        var baker = (new ModelBaker() {
+    private BakedModel bakeModel(BlockModel to_bake, Direction dir) {
+        // var baker = (new ModelBaker() {
 
-            @Override
-            public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
-                    Function<Material, TextureAtlasSprite> sprites) {
-                return to_bake.bake(this, to_bake, Material::sprite, 
-                    getModelRotation(dir),
-                    createResourceVariant_1_20_1_under(dir), 
-                    true
-                );
-            }
+        //     @Override
+        //     public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+        //             Function<Material, TextureAtlasSprite> sprites) {
+        //         return to_bake.bake(this, to_bake, Material::sprite, 
+        //             getModelRotation(dir),
+        //             createResourceVariant_1_20_1_under(dir), 
+        //             true
+        //         );
+        //     }
 
-            @Override
-            public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
-                return Material::sprite;
-            }
+        //     @Override
+        //     public Function<Material, TextureAtlasSprite> getModelTextureGetter() {
+        //         return Material::sprite;
+        //     }
 
-            @Override
-            public UnbakedModel getModel(ResourceLocation p_252194_) {
-                return to_bake;
-            }
+        //     @Override
+        //     public UnbakedModel getModel(ResourceLocation p_252194_) {
+        //         return to_bake;
+        //     }
 
-            @Override
-            @javax.annotation.Nullable
-            public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
-                return this.bake(p_250776_, p_251280_, getModelTextureGetter());
-            }
+        //     @Override
+        //     @javax.annotation.Nullable
+        //     public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+        //         return this.bake(p_250776_, p_251280_, getModelTextureGetter());
+        //     }
             
-        });
-        return baker.bake(null, null, null);
+        // });
+        //return baker.bake(null, null, null);
+        return to_bake.bake(this.modelLoader, to_bake, Material::sprite, getModelRotation(dir), createResourceVariant_1_20_1_under(dir), true);
     }
 
     private static BlockModelRotation getModelRotation(@Nonnull Direction dir) {

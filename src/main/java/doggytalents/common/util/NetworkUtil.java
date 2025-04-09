@@ -9,7 +9,6 @@ import doggytalents.api.registry.Talent;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;

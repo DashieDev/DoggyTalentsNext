@@ -1,7 +1,8 @@
 package doggytalents.client.screen.widget.DoggySpin;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import doggytalents.common.config.ConfigHandler;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
@@ -22,7 +23,7 @@ public class DoggySpin extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
         updateAcculumlatedMillis();
         // graphics.fill(this.getX(), this.getY(), 
         //     this.getX() + this.getWidth(), 
@@ -49,7 +50,7 @@ public class DoggySpin extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+    public void updateNarration(NarrationElementOutput p_169152_) {
     }
     
     private static final DoggySpin spinWidget = new DoggySpin(0, 0, 128);
@@ -66,7 +67,7 @@ public class DoggySpin extends AbstractWidget {
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
         spinWidget.setY(event.getScreen().height - spinWidget.getHeight());
-        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
     private static boolean isLevelLoadingScreen(ScreenEvent event) {
@@ -76,4 +77,10 @@ public class DoggySpin extends AbstractWidget {
         return screen.getClass() == LevelLoadingScreen.class;
     }
 
+
+    //1.19.2-
+    public int getX() { return this.x; }
+    public int getY() { return this.y; }
+    public void setX(int val) { this.x = val; }
+    public void setY(int val) { this.y = val; }
 }

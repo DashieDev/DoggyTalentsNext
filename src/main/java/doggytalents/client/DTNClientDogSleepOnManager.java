@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
@@ -101,8 +101,8 @@ public class DTNClientDogSleepOnManager {
         float facing = player.getYRot() - 180;
         var translate = calclateSleepTranslate(player);
         stack.translate(translate.x, 0, translate.z);
-        stack.mulPose(Axis.YP.rotationDegrees(180 - facing));
-        stack.mulPose(Axis.XP.rotationDegrees(90));
+        stack.mulPose(Vector3f.YP.rotationDegrees(180 - facing));
+        stack.mulPose(Vector3f.XP.rotationDegrees(90));
         return true;
     }
 

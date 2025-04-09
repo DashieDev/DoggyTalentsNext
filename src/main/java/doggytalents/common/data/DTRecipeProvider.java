@@ -943,7 +943,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_paddy_rice_dtn", has(DoggyItems.RICE_WHEAT.get()))
             .save(consumer);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CHRISTMAS_HAT.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.CHRISTMAS_HAT.get(), 1)
             .pattern(" W ")
             .pattern("RTR")
             .pattern("WWW")
@@ -953,7 +953,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_TREE.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DOG_CHRISTMAS_TREE.get(), 1)
             .pattern(" G ")
             .pattern("GSG")
             .pattern(" T ")
@@ -963,7 +963,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_STAR.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DOG_CHRISTMAS_STAR.get(), 1)
             .pattern(" G ")
             .pattern("GTG")
             .pattern(" G ")
@@ -972,7 +972,7 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_GIFT_COSTUME.get(), 1)
+        ShapedRecipeBuilder.shaped(DoggyItems.DOG_GIFT_COSTUME.get(), 1)
             .pattern(" B ")
             .pattern("PP ")
             .pattern("PP ")

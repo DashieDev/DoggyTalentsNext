@@ -228,8 +228,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
+                        super.renderButton(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.on_duty.help"), 150, font));
                         }
