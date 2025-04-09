@@ -1,4 +1,4 @@
-// 1.19.2	2024-12-11T01:05:23.1116544	DoggyTalents Item Models
+// 1.19.2	2025-04-09T18:33:27.6367469	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -16,6 +16,7 @@ ab1f84f9e80f52a2d8cdd8bb0bfe8d6bc261fd65 assets/doggytalents/models/item/canine_
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
 a3db6caed7926dbea72012574d9c775869bfdb2f assets/doggytalents/models/item/ceremonial_garb.json
 f759df831f276523e8853e6da72020e9ea29bbcc assets/doggytalents/models/item/chef_hat.json
+1b06ebaf682721be9851a34141942df30cd8f446 assets/doggytalents/models/item/christmas_hat.json
 f52223bb5d6925b64f96598d718dc11355d78019 assets/doggytalents/models/item/conan_suit.json
 d4961b5956ecb514cc73fc4902995ee2dc1e4e76 assets/doggytalents/models/item/conducting_bone.json
 883caec86cd13a261438be08ca0f17c3936c8134 assets/doggytalents/models/item/creative_canine_tracker.json
@@ -31,6 +32,9 @@ e6928e128e709eed661a926a6341052c5dee3952 assets/doggytalents/models/item/doggy_c
 fb2564063ed899e0bb9358ae7ac1540828e11b29 assets/doggytalents/models/item/dog_anim_debug_stick.json
 d7d1edf4ba2e22a722df08baa0d660f52ab65240 assets/doggytalents/models/item/dog_bath.json
 aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed.json
+94d28c328ec36fff2e890105abd8cfddfc692ab1 assets/doggytalents/models/item/dog_christmas_star.json
+65bea454c523228562a168ef99d9608af0088243 assets/doggytalents/models/item/dog_christmas_tree.json
+61950cc916377c1fbfbc898d186f9e6c36bc595c assets/doggytalents/models/item/dog_gift_costume.json
 3e834b3edef3a73ce8751e4c2c1363d7983d72b1 assets/doggytalents/models/item/dog_plushie_toy_item.json
 d4e16dd49b3b9367913eed29f9d7e4c9cb56ff85 assets/doggytalents/models/item/dragon_costume_head.json
 89723e9319ed5a15907d0f1ef04d39c1b6bafd81 assets/doggytalents/models/item/dragon_costume_suit.json
