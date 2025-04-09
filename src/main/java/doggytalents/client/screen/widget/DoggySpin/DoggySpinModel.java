@@ -207,17 +207,18 @@ public class DoggySpinModel {
         Quaternion rot
     ) {
         
-        graphics.pushPose();
-        graphics.translate((double)mid_x, (double)mid_y, 50.0);
-        graphics.scale(scale, scale, -scale);
-        graphics.translate(offset.x(), offset.y(), offset.z());
-        graphics.mulPose(rot);
-        graphics.translate(0.0F, -1.501F, 0.0F);
-        Lighting.setupForEntityInInventory();
-        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics, Minecraft.getInstance().renderBuffers().bufferSource()));
-        //graphics.flush();
-        graphics.popPose();
-        Lighting.setupFor3DItems();
+        // graphics.pushPose();
+        // graphics.translate((double)mid_x, (double)mid_y, 50.0);
+        // graphics.scale(scale, scale, -scale);
+        // graphics.translate(offset.x(), offset.y(), offset.z());
+        // graphics.mulPose(rot);
+        // graphics.translate(0.0F, -1.501F, 0.0F);
+        // Lighting.setupForEntityInInventory();
+        // RenderSystem.runAsFancy(() -> this.doRenderModel(graphics, Minecraft.getInstance().renderBuffers().bufferSource()));
+        // //graphics.flush();
+        // graphics.popPose();
+        // Lighting.setupFor3DItems();
+        this.renderGui_1_19_2_under(graphics, mid_x, mid_y, scale, offset, rot);
     }
     
     private void doRenderModel(PoseStack stack, MultiBufferSource source) {
@@ -456,5 +457,39 @@ public class DoggySpinModel {
             new AnimationChannel(AnimationChannel.Targets.ROTATION,
                 new Keyframe(0f, KeyframeAnimations.degreeVec(-32.5f, 0f, 0f),
                     AnimationChannel.Interpolations.CATMULLROM))).build();
+
+    
+    private void renderGui_1_19_2_under(
+        PoseStack graphics,
+        float mid_x,
+        float mid_y,
+        float scale,
+        Vector3f offset,
+        Quaternion rot
+    ) {
+
+        var model_view = RenderSystem.getModelViewStack();
+        model_view.pushPose();
+        model_view.translate((double)mid_x, (double)mid_y, 1050.0D);
+        model_view.scale(1.0F, 1.0F, -1.0F);
+        RenderSystem.applyModelViewMatrix();
+
+        graphics.pushPose();
+        graphics.translate((double)0, (double)0, 1000.0);
+        graphics.scale(scale, scale, scale);
+        graphics.translate(offset.x(), offset.y(), offset.z());
+        graphics.mulPose(rot);
+        graphics.translate(0.0F, -1.501F, 0.0F);
+        Lighting.setupForEntityInInventory();
+        var buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics, buffer));
+        buffer.endBatch();
+        //graphics.flush();
+        graphics.popPose();
+        Lighting.setupFor3DItems();
+
+        model_view.popPose();
+        RenderSystem.applyModelViewMatrix();
+    }
 
 }
