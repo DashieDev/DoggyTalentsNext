@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "GTG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "result": {
+    "item": "doggytalents:dog_christmas_star"
+  }
+}

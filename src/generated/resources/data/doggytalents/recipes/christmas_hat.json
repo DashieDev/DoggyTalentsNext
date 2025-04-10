@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "RTR",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:white_wool"
+    },
+    "R": {
+      "item": "minecraft:red_carpet"
+    },
+    "T": {
+      "item": "doggytalents:training_treat"
+    }
+  },
+  "result": {
+    "item": "doggytalents:christmas_hat"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "doggytalents:dog_christmas_tree"
+    ]
+  },
+  "criteria": {
+    "has_training_treat_dtn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "doggytalents:training_treat"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "doggytalents:dog_christmas_tree"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_training_treat_dtn",
+      "has_the_recipe"
+    ]
+  ]
+}
