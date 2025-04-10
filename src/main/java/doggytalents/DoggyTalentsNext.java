@@ -26,6 +26,7 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.forward_imitate.ServerTickEventWorkaround_1_18_2;
 import doggytalents.common.item.ChopinRecordItem;
 import doggytalents.common.item.itemgroup.DTNItemCategory;
 import doggytalents.common.lib.Constants;
@@ -129,7 +130,7 @@ public class DoggyTalentsNext {
         //AddonManager.init();
 
         //1.18.2
-        forgeEventBus.addListener(OnlineDogLocationManager::onLevelTick1_18_2);
+        forgeEventBus.addListener(ServerTickEventWorkaround_1_18_2::onLevelTick1_18_2);
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {

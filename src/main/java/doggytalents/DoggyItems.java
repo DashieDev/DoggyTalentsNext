@@ -366,13 +366,13 @@ public class DoggyItems {
                 var override = dye_layer_override.get(item);
                 if (override != null)
                     item_color = for_single_dyable.apply(override);
-                event.register(item_color, item);
+                itemColors.register(item_color, item);
             } else if (item instanceof DoubleDyableAccessoryItem) {
                 var item_color = default_double_dyable;
                 var override = double_dye_layer_override.get(item);
                 if (override != null)
                     item_color = for_double_dyable.apply(override.getLeft(), override.getRight());
-                event.register(item_color, item);
+                itemColors.register(item_color, item);
             }
         }
 

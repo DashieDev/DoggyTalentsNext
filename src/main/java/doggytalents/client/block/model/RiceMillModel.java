@@ -44,16 +44,16 @@ public class RiceMillModel extends SimpleAnimatedModel {
     }
 
 	@Override
-	public Optional<ModelPart> getPartFromName(String name) {
+	public Optional<DogModelPart> getPartFromName(String name) {
 		if ("spin".equals(name))
 			return Optional.of(this.spin);
 		if (this.hammer.hasChild(name))
-			return Optional.of(this.hammer.getChild(name));
+			return Optional.of((DogModelPart)this.hammer.getChild(name));
 		return Optional.empty();
 	}
 
 	@Override
-	public void resetPart(ModelPart part) {
+	public void resetPart(DogModelPart part) {
 		((DogModelPart)part).resetPose();
 	}
 

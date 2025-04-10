@@ -2,6 +2,7 @@ package doggytalents.client.screen.widget.DoggySpin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -17,7 +18,7 @@ public class DoggySpin extends AbstractWidget {
     private long lastAccumulate = 0;
 
     public DoggySpin(int x, int y, int size) {
-        super(x, y, size, size, Component.empty());
+        super(x, y, size, size, ComponentUtil.empty());
         this.size = size;
         this.lastAccumulate = System.currentTimeMillis();
     }
@@ -55,19 +56,19 @@ public class DoggySpin extends AbstractWidget {
     
     private static final DoggySpin spinWidget = new DoggySpin(0, 0, 128);
 
-    public static void onScreenInit(final ScreenEvent.Init.Post event) {
+    public static void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
         if (isLevelLoadingScreen(event)) {
             spinWidget.chooseStyle();
         }
     }
 
-    public static void onScreenRenderForeground(final ScreenEvent.Render.Post event) {
+    public static void onScreenRenderForeground(final ScreenEvent.DrawScreenEvent.Post event) {
         if (!isLevelLoadingScreen(event))
             return;
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
         spinWidget.setY(event.getScreen().height - spinWidget.getHeight());
-        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        spinWidget.render(event.getPoseStack(), event.getMouseX(), event.getMouseY(), event.getPartialTicks());
     }
 
     private static boolean isLevelLoadingScreen(ScreenEvent event) {

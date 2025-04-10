@@ -602,7 +602,7 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
-    public Optional<ModelPart> searchForPartWithName(String name) {
+    public Optional<DogModelPart> searchForPartWithName(String name) {
         return DogKeyframeAnimations.searchForPartWithName(this.root, name);
     }
 

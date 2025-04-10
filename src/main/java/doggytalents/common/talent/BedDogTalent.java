@@ -2,6 +2,7 @@ package doggytalents.common.talent;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTalents;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -96,7 +97,7 @@ public class BedDogTalent extends TalentInstance {
             sendCooldownMsg(dog, player);
             return;
         }
-        player.sendSystemMessage(result.failMsg().getMsg(dog));
+        player.sendMessage(result.failMsg().getMsg(dog), net.minecraft.Util.NIL_UUID);
     }
 
     private static void sendCooldownMsg(Dog dog, Player player) {
@@ -104,8 +105,8 @@ public class BedDogTalent extends TalentInstance {
         if (!inst_optional.isPresent())
             return;
         var inst = inst_optional.get();
-        player.sendSystemMessage(Component.translatable("talent.doggytalents.bed_dog.fail.cooldown",
-            dog.getName().getString(), Integer.toString(inst.getCooldownDaysLeft(dog))));
+        player.sendMessage(ComponentUtil.translatable("talent.doggytalents.bed_dog.fail.cooldown",
+            dog.getName().getString(), Integer.toString(inst.getCooldownDaysLeft(dog))), net.minecraft.Util.NIL_UUID);
     }
     
     public static StartSleepOnDogResult isSleepCondition(Dog dog, BedDogTalent inst) {

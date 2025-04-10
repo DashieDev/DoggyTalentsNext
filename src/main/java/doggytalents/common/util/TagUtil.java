@@ -6,10 +6,11 @@ import java.util.stream.Collectors;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class TagUtil {
     
-    public static <T> List<T> queryAllValuesForTag(IForgeRegistry<T> reg, TagKey<T> key) {
+    public static <T extends IForgeRegistryEntry<T>> List<T> queryAllValuesForTag(IForgeRegistry<T> reg, TagKey<T> key) {
         var tag = reg.tags().getTag(key);
         if (tag == null)
             return List.of();

@@ -2,12 +2,11 @@ package doggytalents.common.util;
 
 import java.util.List;
 import java.util.Optional;
-
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 
 public class LangUtil {
     
-    public static <T> Optional<T> getRandomItem(RandomSource random, List<T> list) {
+    public static <T> Optional<T> getRandomItem(Random random, List<T> list) {
         if (list.isEmpty())
             return Optional.empty();
         int size = list.size();

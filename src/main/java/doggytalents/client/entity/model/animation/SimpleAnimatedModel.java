@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.animation;
 import java.util.Optional;
 import java.util.function.Function;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
@@ -15,9 +16,9 @@ public abstract class SimpleAnimatedModel extends Model  {
         //TODO Auto-generated constructor stub
     }
 
-    public abstract Optional<ModelPart> getPartFromName(String name);
+    public abstract Optional<DogModelPart> getPartFromName(String name);
 
-    public abstract void resetPart(ModelPart part);
+    public abstract void resetPart(DogModelPart part);
 
     public abstract void resetAllPose();
     

@@ -94,7 +94,7 @@ public class WolfMountTalent extends TalentInstance {
         if (dog.isVehicle() && dog.getDogHunger() < 1) {
             var control = dog.getControllingPassenger();
             if (control != null)
-                control.sendMessage(ComponentUtil.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()), Util.NIL_UUID);
+                control.sendMessage(ComponentUtil.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()), net.minecraft.Util.NIL_UUID);
 
             dog.ejectPassengers();
         }

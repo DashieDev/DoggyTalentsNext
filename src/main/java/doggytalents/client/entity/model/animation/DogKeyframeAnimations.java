@@ -18,10 +18,6 @@ import java.util.function.Function;
 
 import com.mojang.math.Vector3f;
 
-
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.AnimationChannel.Targets;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -80,40 +76,40 @@ public class DogKeyframeAnimations {
     public static interface AnimationContext {
 
         public static AnimationContext of(
-            Function<String, Optional<ModelPart>> partGetter,
-            Consumer<ModelPart> partReset
+            Function<String, Optional<DogModelPart>> partGetter,
+            Consumer<DogModelPart> partReset
         ) {
             return of(partGetter, partReset, $ -> {});
         }
 
         public static AnimationContext of(
-            Function<String, Optional<ModelPart>> partGetter,
-            Consumer<ModelPart> partReset,
-            Consumer<ModelPart> partAdjust
+            Function<String, Optional<DogModelPart>> partGetter,
+            Consumer<DogModelPart> partReset,
+            Consumer<DogModelPart> partAdjust
         ) {
             return new AnimationContext() {
 
                 @Override
-                public Optional<ModelPart> getPart(String name) {
+                public Optional<DogModelPart> getPart(String name) {
                     return partGetter.apply(name);
                 }
 
                 @Override
-                public void resetPart(ModelPart part) {
+                public void resetPart(DogModelPart part) {
                     partReset.accept(part);
                 }
 
                 @Override
-                public void adjustAnimatedPart(ModelPart part) {
+                public void adjustAnimatedPart(DogModelPart part) {
                     partAdjust.accept(part);
                 }
                 
             };
         }
         
-        public Optional<ModelPart> getPart(String name);
-        public void resetPart(ModelPart part);
-        public void adjustAnimatedPart(ModelPart part);
+        public Optional<DogModelPart> getPart(String name);
+        public void resetPart(DogModelPart part);
+        public void adjustAnimatedPart(DogModelPart part);
 
     }
 
@@ -166,18 +162,18 @@ public class DogKeyframeAnimations {
         return animation.looping() ? f % animation.lengthInSeconds() : f;
     }
 
-    public static Optional<ModelPart> searchForPartWithName(ModelPart root, String name) {
+    public static Optional<DogModelPart> searchForPartWithName(DogModelPart root, String name) {
         return searchForPartWithName(root, name, true);
     }
 
-    public static Optional<ModelPart> searchForPartWithName(ModelPart root, String name, boolean check_root) {
+    public static Optional<DogModelPart> searchForPartWithName(DogModelPart root, String name, boolean check_root) {
         if (root.hasChild(name)) 
-            return Optional.of(root.getChild(name));
+            return Optional.of((DogModelPart)root.getChild(name));
         if (check_root && name.equals("root"))
             return Optional.of(root);
         var partOptional = root.getAllParts()
-            .filter(part -> part.hasChild(name))
+            .filter(part -> ((DogModelPart)part).hasChild(name))
             .findFirst();
-        return partOptional.map(part -> part.getChild(name));
+        return partOptional.map(part -> (DogModelPart)part.getChild(name));
     }
 }

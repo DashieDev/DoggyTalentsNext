@@ -13,6 +13,11 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 
 import doggytalents.DogVariants;
+import doggytalents.api.enu.forward_imitate.anim.AnimationChannel;
+import doggytalents.api.enu.forward_imitate.anim.AnimationDefinition;
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
+import doggytalents.api.enu.forward_imitate.anim.Keyframe;
+import doggytalents.api.enu.forward_imitate.anim.KeyframeAnimations;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.animation.DogAnimationSequences;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
@@ -23,10 +28,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.animation.Keyframe;
-import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -74,26 +75,26 @@ public class DoggySpinModel {
         0xff835432, 0xff1d1d21, 0xff5e7c16, 
     };
     private static final Random random = new Random();
-    private ModelPart root;
-    private ModelPart tail;
+    private DogModelPart root;
+    private DogModelPart tail;
 
-    private ModelPart rootAmmy;
-    private ModelPart tailAmmy;
+    private DogModelPart rootAmmy;
+    private DogModelPart tailAmmy;
     
     private DoggySpinModel() {
-        this.root = DogModel.createBodyLayer().bakeRoot();
-        this.rootAmmy = AmaterasuModel.createBodyLayer().bakeRoot();
-        this.tail = root.getChild("tail");
-        this.tailAmmy = rootAmmy.getChild("tail");
+        this.root = DogModelPart.recreateFromModelPart(DogModel.createBodyLayer().bakeRoot());
+        this.rootAmmy = DogModelPart.recreateFromModelPart(AmaterasuModel.createBodyLayer().bakeRoot());
+        this.tail = (DogModelPart)root.getChild("tail");
+        this.tailAmmy = (DogModelPart)rootAmmy.getChild("tail");
     }
 
-    private ModelPart getRootForStyle() {
+    private DogModelPart getRootForStyle() {
         if (this.style == Style.AMMY)
             return rootAmmy;
         return root;
     }
 
-    private ModelPart getTailForStyle() {
+    private DogModelPart getTailForStyle() {
         if (this.style == Style.AMMY)
             return tailAmmy;
         return tail;
@@ -134,7 +135,7 @@ public class DoggySpinModel {
 
     private Vector3f buf = new Vector3f();
 
-    private void resetPart(ModelPart part) {
+    private void resetPart(DogModelPart part) {
         if (part == getTailForStyle()) {
             part.resetPose();
             getTailForStyle().xRot = 1.73f;
@@ -145,10 +146,10 @@ public class DoggySpinModel {
 
     public void resetAllPose() {
         if (this.style == Style.AMMY) {
-            this.rootAmmy.getAllParts().forEach(x -> x.resetPose());
+            this.rootAmmy.getAllParts().forEach(x -> ((DogModelPart)x).resetPose());
             return;
         }
-        this.root.getAllParts().forEach(x -> x.resetPose());
+        this.root.getAllParts().forEach(x -> ((DogModelPart)x).resetPose());
     }
 
     public void prepareRender(long elapsed_millis) {

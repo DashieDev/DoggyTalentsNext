@@ -17,7 +17,7 @@ public class DogInterruptibleSoundInstance extends AbstractTickableSoundInstance
     private float fadeSpeed = 0;
 
     public DogInterruptibleSoundInstance(Dog dog, SoundEvent event, float vol, float pitch) {
-        super(event, SoundSource.NEUTRAL, SoundInstance.createUnseededRandom());
+        super(event, SoundSource.NEUTRAL);
         this.dog = dog;
         this.volume = vol;
         this.pitch = pitch;

@@ -13,7 +13,7 @@ public abstract class AnimatedSyncedAccessoryModel extends SyncedAccessoryModel 
         super(root);
     }
 
-    public Optional<ModelPart> searchForPartWithName(String name) {
+    public Optional<DogModelPart> searchForPartWithName(String name) {
         return DogKeyframeAnimations.searchForPartWithName(root, name);
     }
 

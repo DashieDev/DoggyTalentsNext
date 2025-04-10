@@ -3,6 +3,7 @@ package doggytalents.common.item;
 import java.util.List;
 import java.util.function.Supplier;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.common.entity.accessory.DyeableAccessory;
@@ -35,6 +36,6 @@ public class DualDyableAccessoryItem extends DyeableAccessoryItem {
     public void appendHoverText(ItemStack p_41421_, Level p_339594_, List<Component> list,
             TooltipFlag p_41424_) {
         super.appendHoverText(p_41421_, p_339594_, list, p_41424_);
-        list.add(Component.translatable("general.doggytalents.dual_accessories_item_help"));
+        list.add(ComponentUtil.translatable("general.doggytalents.dual_accessories_item_help"));
     }
 }

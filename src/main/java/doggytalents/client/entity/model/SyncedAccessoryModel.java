@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 
+import doggytalents.api.enu.forward_imitate.anim.DogModelPart;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -16,7 +17,7 @@ import net.minecraft.client.model.geom.ModelPart;
 
 public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
 
-    public final ModelPart root;
+    public final DogModelPart root;
     private Vector3f pivot = DogModel.DEFAULT_ROOT_PIVOT;
     
     public Optional<ModelPart> head = Optional.empty();
@@ -31,7 +32,8 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     public Optional<ModelPart> realTail = Optional.empty();
 
     public SyncedAccessoryModel(ModelPart root) {
-        this.root = root;
+        root = DogModelPart.recreateFromModelPart(root);
+        this.root = (DogModelPart) root;
         populatePart(root);
     }
 

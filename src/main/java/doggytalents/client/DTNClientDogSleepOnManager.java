@@ -129,7 +129,7 @@ public class DTNClientDogSleepOnManager {
     }
 
     private Optional<Player> checkIsSleepingOnDog(Entity entity) {
-        if (!entity.hasPose(Pose.SLEEPING))
+        if (!(entity.getPose() == (Pose.SLEEPING)))
             return Optional.empty();
         if (sleeperMap.isEmpty())
             return Optional.empty();

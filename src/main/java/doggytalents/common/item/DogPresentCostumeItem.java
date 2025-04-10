@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.common.entity.accessory.DoubleDyableAccessory;
 
 public class DogPresentCostumeItem extends DoubleDyableAccessoryItem {
@@ -21,7 +22,7 @@ public class DogPresentCostumeItem extends DoubleDyableAccessoryItem {
     public void appendHoverText(ItemStack stack, Level context, List<Component> components,
             TooltipFlag flags) {
         var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.add(ComponentUtil.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

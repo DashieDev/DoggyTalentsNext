@@ -83,7 +83,7 @@ public class ClientEventHandler {
 
             var modelUnbaked = (BlockModel) event.getModelLoader().getModel(unbakedModelLoc);
 
-            BakedModel customModel = new DogBedModel(event.getModelLoader(), modelUnbaked, modelUnbaked.bake(event.getModelBakery(), modelUnbaked, ForgeModelBakery.defaultTextureGetter(), BlockModelRotation.X180_Y180, unbakedModelLoc, true), ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
+            BakedModel customModel = new DogBedModel(event.getModelLoader(), modelUnbaked, modelUnbaked.bake(event.getModelLoader(), modelUnbaked, ForgeModelBakery.defaultTextureGetter(), BlockModelRotation.X180_Y180, unbakedModelLoc, true), ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
             // Replace all valid block states
             DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
@@ -117,14 +117,14 @@ public class ClientEventHandler {
 
     private DogInventoryButton activeInventoryButton;
     @SubscribeEvent
-    public void onScreenInit(final ScreenEvent.Init.Post event) {
+    public void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
         DogInventoryButton.onScreenInit(event);
         DoggySpin.onScreenInit(event);
     }
 
     
     @SubscribeEvent
-    public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
+    public void onScreenDrawForeground(final ScreenEvent.DrawScreenEvent.Post event) {
         DoggySpin.onScreenRenderForeground(event);
     }
 

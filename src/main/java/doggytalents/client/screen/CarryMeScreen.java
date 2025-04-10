@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.network.PacketHandler;
@@ -23,7 +24,7 @@ public class CarryMeScreen extends StringEntrySelectScreen {
     private final List<Integer> dogIdList = new ArrayList<>();
 
     public CarryMeScreen(Player player) {
-        super(Component.empty());
+        super(ComponentUtil.empty());
         var mc = Minecraft.getInstance();
         var level = mc.level;
         if (level == null)
@@ -50,13 +51,13 @@ public class CarryMeScreen extends StringEntrySelectScreen {
         int mX = this.width/2;
         int mY = this.height/2;
 
-        var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("item.doggytalents.whistle.20")
+                list.add(ComponentUtil.translatable("item.doggytalents.whistle.20")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, CarryMeScreen.this.font));

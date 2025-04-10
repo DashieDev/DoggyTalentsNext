@@ -83,15 +83,15 @@ public class WhistleScreen extends StringEntrySelectScreen {
         pY += setKey.getHeight() + 2;
 
         var onDuty = new FlatButton(mX - 100 - 60 - 2, pY, 60, 20, dogOnDutyOnly ? 
-            Component.translatable("doggytalents.screen.whistler.target.on_duty") 
-            : Component.translatable("doggytalents.screen.whistler.target.all"), 
+            ComponentUtil.translatable("doggytalents.screen.whistler.target.on_duty") 
+            : ComponentUtil.translatable("doggytalents.screen.whistler.target.all"), 
             b -> {
                 if (dogOnDutyOnly) {
                     dogOnDutyOnly = false;
-                    b.setMessage(Component.translatable("doggytalents.screen.whistler.target.all"));
+                    b.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.target.all"));
                 } else {
                     dogOnDutyOnly = true;
-                    b.setMessage(Component.translatable("doggytalents.screen.whistler.target.on_duty"));
+                    b.setMessage(ComponentUtil.translatable("doggytalents.screen.whistler.target.on_duty"));
                 }
             } 
         ) {
@@ -100,7 +100,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
-                var title = Component.translatable("doggytalents.screen.whistler.target.title")
+                var title = ComponentUtil.translatable("doggytalents.screen.whistler.target.title")
                     .withStyle(Style.EMPTY.withBold(true));
                 list.add(title);
                 String str = I18n.get("doggytalents.screen.whistler.target.help");
@@ -112,13 +112,13 @@ public class WhistleScreen extends StringEntrySelectScreen {
 
         pY += onDuty.getHeight() + 2;
 
-        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, Component.literal("?"), b -> {} ) {
+        var help = new FlatButton(mX - 100 - 20 - 2, pY, 20, 20, ComponentUtil.literal("?"), b -> {} ) {
             @Override
             public void renderButton(PoseStack graphics, int mouseX, int mouseY, float pTicks) {
                 super.renderButton(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
-                list.add(Component.translatable("doggytalents.screen.whistler.screen.help_title")
+                list.add(ComponentUtil.translatable("doggytalents.screen.whistler.screen.help_title")
                     .withStyle(Style.EMPTY.withBold(true)));
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
@@ -134,17 +134,17 @@ public class WhistleScreen extends StringEntrySelectScreen {
         int pY_right = mY - 100;
         var mode_help_str_id = "doggytalents.screen.whistler.mode_help";
         var initial_mode_help_str = this.showModeHelp ? 
-            Component.translatable(mode_help_str_id)
+            ComponentUtil.translatable(mode_help_str_id)
                 .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor()))
-            : Component.translatable(mode_help_str_id);
+            : ComponentUtil.translatable(mode_help_str_id);
         var show_whistle_help = new FlatButton(mX + 100 + 2, pY_right, 60, 20,initial_mode_help_str, 
             b -> {
                 this.showModeHelp = !this.showModeHelp;
                 if (this.showModeHelp) {
-                    b.setMessage(Component.translatable(mode_help_str_id)
+                    b.setMessage(ComponentUtil.translatable(mode_help_str_id)
                         .withStyle(Style.EMPTY.withColor(this.getHightlightSelectedColor())));
                 } else {
-                    b.setMessage(Component.translatable(mode_help_str_id));
+                    b.setMessage(ComponentUtil.translatable(mode_help_str_id));
                 }
             }
         );
@@ -165,7 +165,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
             return;
         int entry_id = hover_entry_optional.get();
         var mode = this.modeList.get(entry_id);
-        var mode_help_c1 = Component.translatable(mode.getHelpMsg());
+        var mode_help_c1 = ComponentUtil.translatable(mode.getHelpMsg());
         if (this.height >= 338) {
             int mX = this.width/2;
             int mY = this.height/2;
@@ -181,7 +181,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
             }
             
         } else {
-            var mode_name = Component.translatable(mode.getUnlocalisedTitle())
+            var mode_name = ComponentUtil.translatable(mode.getUnlocalisedTitle())
                 .withStyle(Style.EMPTY.withBold(true));
             this.renderComponentTooltip(graphics, 
                 List.of(mode_name, mode_help_c1), mouseX, mouseY);

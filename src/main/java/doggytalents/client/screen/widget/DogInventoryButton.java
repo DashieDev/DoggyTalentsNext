@@ -152,7 +152,7 @@ public class DogInventoryButton extends AbstractButton {
 
     private static DogInventoryButton inventoryButton;
 
-    public static void onScreenInit(final ScreenEvent.Init.Post event) {
+    public static void onScreenInit(final ScreenEvent.InitScreenEvent.Post event) {
         var screen = event.getScreen();
         boolean is_survival = screen != null 
             && screen.getClass() == InventoryScreen.class;
@@ -180,7 +180,7 @@ public class DogInventoryButton extends AbstractButton {
         event.addListener(inventoryButton);
     }
 
-    public static void onScreenRenderForeground(final ScreenEvent.Render.Post event) {
+    public static void onScreenRenderForeground(final ScreenEvent.DrawScreenEvent.Post event) {
         
     }
 

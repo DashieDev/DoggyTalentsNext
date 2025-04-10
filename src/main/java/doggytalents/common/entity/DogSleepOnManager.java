@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggyTalents;
+import doggytalents.api.enu.forward_imitate.ComponentUtil;
 import doggytalents.api.feature.DogSize;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.common.talent.BedDogTalent;
@@ -27,7 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.event.level.SleepFinishedTimeEvent;
+import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 
 public class DogSleepOnManager {
@@ -305,14 +306,14 @@ public class DogSleepOnManager {
         // if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
         //     return;
         var player = event.getEntity();
-        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
+        var dog_optional = (player instanceof LivingEntity) ? DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog((LivingEntity)player) : Optional.empty();
         if (!dog_optional.isPresent())
             return;
         event.setResult(Result.ALLOW);
     }
 
     public static void beforeSleepFinishedForAllPlayer(SleepFinishedTimeEvent event) {
-        var level = (ServerLevel) event.getLevel();
+        var level = (ServerLevel) event.getWorld();
         DogSleepOnManager.getServer(level).notifySleepSuccesAllDogAndStopSleeping(level);
     }
 
@@ -399,24 +400,24 @@ public class DogSleepOnManager {
 
     public static enum DogSleepOnFailMessage {
         NOT_SLEEP_TIME("not_sleep_time", 
-            (dog, locId) -> Component.translatable(locId, dog.getName().getString())),
+            (dog, locId) -> ComponentUtil.translatable(locId, dog.getName().getString())),
         OTHER("other",
-            (dog, locId) -> Component.translatable(locId)),
+            (dog, locId) -> ComponentUtil.translatable(locId)),
         CANT_SLEEP_THROUGH_NIGHT("cant_sleep_thru_night",
-            (dog, locId) -> Component.translatable(locId)),
+            (dog, locId) -> ComponentUtil.translatable(locId)),
         DOG_LOW_HUNGER("low_hunger",
-            (dog, locId) -> Component.translatable(locId, 
+            (dog, locId) -> ComponentUtil.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject())),
         COOLDOWN("cooldown",
-            (dog, locId) -> Component.empty()),
+            (dog, locId) -> ComponentUtil.empty()),
         NO_POS("no_pos",
-            (dog, locId) -> Component.translatable(locId, 
+            (dog, locId) -> ComponentUtil.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject())),
         TOO_SMOL("to_smol",
-            (dog, locId) -> Component.translatable(locId, 
+            (dog, locId) -> ComponentUtil.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject())),
         TOO_BIG("to_big",
-            (dog, locId) -> Component.translatable(locId, 
+            (dog, locId) -> ComponentUtil.translatable(locId, 
                 dog.getName().getString(), dog.getGenderSubject()));
 
         private final String locId;
