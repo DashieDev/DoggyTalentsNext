@@ -8,6 +8,7 @@ import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.entity.misc.DoggyBeamEntity;
 import doggytalents.common.entity.misc.Piano;
+import doggytalents.common.entity.misc.SamoyedPlushie;
 import doggytalents.common.entity.misc.Piano.PianoColor;
 import doggytalents.common.entity.misc.Piano.PianoType;
 import doggytalents.common.lib.Constants;
@@ -70,6 +71,13 @@ public class DoggyEntityTypes {
             .setShouldReceiveVelocityUpdates(false));
 
     public static final Supplier<EntityType<DogPlushie>> DOG_PLUSHIE_TOY = register("dog_plushie_toy", (type, level) -> new DogPlushie(type, level), MobCategory.MISC,
+        b -> b
+            .sized(0.5f, 0.5f)
+            .setUpdateInterval(3)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(true));
+
+    public static final Supplier<EntityType<SamoyedPlushie>> SAMOYED_PLUSHIE = register("samoyed_plushie", (type, level) -> new SamoyedPlushie(type, level), MobCategory.MISC,
         b -> b
             .sized(0.5f, 0.5f)
             .setUpdateInterval(3)
