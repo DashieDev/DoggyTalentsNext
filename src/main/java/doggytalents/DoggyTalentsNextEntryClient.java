@@ -20,7 +20,6 @@ public class DoggyTalentsNextEntryClient implements ClientModInitializer {
 
         //Last
         ForgeClientSetup.init();
-        DoggySpinModel.init();
     }
 
     private void registerBlockRenderTypes() {
