@@ -91,6 +91,7 @@ import doggytalents.client.entity.model.dog.kusa.UmeModel;
 import doggytalents.client.entity.model.dog.oina.*;
 import doggytalents.client.entity.model.misc.DogPlushieModel;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
+import doggytalents.client.entity.model.misc.SamoyedPlushieModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.CollarRenderManager;
@@ -116,6 +117,7 @@ import doggytalents.client.entity.render.misc.DogArrowRenderer;
 import doggytalents.client.entity.render.misc.DogPlushieRenderer;
 import doggytalents.client.entity.render.misc.DogThrownTridentRenderer;
 import doggytalents.client.entity.render.misc.PianoRenderer;
+import doggytalents.client.entity.render.misc.SamoyedPlushieRenderer;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
 import doggytalents.client.screen.DoggyToolsScreen;
@@ -240,6 +242,7 @@ public class ClientSetup {
     public static final ModelLayerLocation PIANO_UPRIGHT = new ModelLayerLocation(Util.getResource("piano_upright"), "main");
     public static final ModelLayerLocation DOG_PLUSHIE = new ModelLayerLocation(Util.getResource("dog_plushie_toy"), "main");
     public static final ModelLayerLocation RICE_MILL = new ModelLayerLocation(Util.getResource("rice_mill"), "main");
+    public static final ModelLayerLocation SAMOYED_PLUSHIE = new ModelLayerLocation(Util.getResource("samoyed_plushie"), "main");
 
     public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
 
@@ -356,6 +359,7 @@ public class ClientSetup {
         event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
         event.registerLayerDefinition(DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
         event.registerLayerDefinition(RICE_MILL, RiceMillModel::createLayer);
+        event.registerLayerDefinition(SAMOYED_PLUSHIE, SamoyedPlushieModel::createBodyLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -389,6 +393,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BLACK.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BROWN.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_PLUSHIE_TOY.get(), DogPlushieRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.SAMOYED_PLUSHIE.get(), SamoyedPlushieRenderer::new);
     }
 
     public static void onClientSetup(FMLClientSetupEvent event) {
