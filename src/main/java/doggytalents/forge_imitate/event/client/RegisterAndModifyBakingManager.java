@@ -6,6 +6,7 @@ import java.util.Map;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.client.block.model.DogBedModel;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.forge_imitate.event.Event;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;

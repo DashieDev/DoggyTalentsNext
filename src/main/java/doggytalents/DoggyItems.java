@@ -332,7 +332,7 @@ public class DoggyItems {
     }
 
     public static void registerItemColours(final RegisterColorHandlersEvent.Item event) {
-        ItemColors itemColors = event.getItemColors();
+        var itemColors = event.getItemColors();
         var all_dtn_items = ITEMS.getEntries();
 
         final var dye_layer_override = new IdentityHashMap<Item, Integer>();

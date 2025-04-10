@@ -9,12 +9,12 @@ import doggytalents.api.registry.Talent;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class NetworkUtil {
     
@@ -116,12 +116,12 @@ public class NetworkUtil {
     public static void writeSoundEventToBuf(FriendlyByteBuf buf, SoundEvent val) {
         // var reg_buf = (RegistryFriendlyByteBuf) buf;
         // SOUND_EVENT_CODEC.encode(reg_buf, val);
-        buf.writeRegistryIdUnsafe(ForgeRegistries.SOUND_EVENTS, val);
+        buf.writeId(BuiltInRegistries.SOUND_EVENT, val);
     }
 
     public static SoundEvent readSoundEventFromBuf(FriendlyByteBuf buf) {
         // var reg_buf = (RegistryFriendlyByteBuf) buf;
         // return SOUND_EVENT_CODEC.decode(reg_buf);
-        return buf.readRegistryIdUnsafe(ForgeRegistries.SOUND_EVENTS);
+        return buf.readById(BuiltInRegistries.SOUND_EVENT);
     }
 }

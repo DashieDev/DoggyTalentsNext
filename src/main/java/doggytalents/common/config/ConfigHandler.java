@@ -360,6 +360,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
+        public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 

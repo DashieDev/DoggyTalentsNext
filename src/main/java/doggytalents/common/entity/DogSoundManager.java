@@ -10,7 +10,6 @@ import doggytalents.common.network.packet.data.DogInterruptibleSoundData;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.network.PacketDistributor;
 
 public class DogSoundManager {
     

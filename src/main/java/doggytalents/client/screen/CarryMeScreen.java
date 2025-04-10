@@ -15,7 +15,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.PacketDistributor;
 
 public class CarryMeScreen extends StringEntrySelectScreen {
 

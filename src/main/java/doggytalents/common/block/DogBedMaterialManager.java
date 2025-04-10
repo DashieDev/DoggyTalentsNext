@@ -109,9 +109,9 @@ public class DogBedMaterialManager {
         casingMap.clear();
 
         var specific_beddings = TagUtil.queryAllValuesForTag(
-            ForgeRegistries.BLOCKS, DoggyTags.DOG_BED_BEDDINGS);
+            BuiltInRegistries.BLOCK, DoggyTags.DOG_BED_BEDDINGS);
         var specific_casings = TagUtil.queryAllValuesForTag(
-            ForgeRegistries.BLOCKS, DoggyTags.DOG_BED_CASINGS);
+            BuiltInRegistries.BLOCK, DoggyTags.DOG_BED_CASINGS);
         boolean specific_mode = !specific_beddings.isEmpty() && !specific_casings.isEmpty();
 
         populateBedding(cause, specific_mode ? 
