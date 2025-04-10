@@ -1,4 +1,4 @@
-// 1.21.1	2024-12-23T00:52:34.0667165	DoggyTalents Item Models
+// 1.21.1	2025-04-11T00:03:48.2390796	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -108,6 +108,7 @@ b0f107f2f5ab3f19510345eb8f1f2c572ea4550c assets/doggytalents/models/item/rice_gr
 feaf5b15d7fa562f9522295316fd13bcde4b884d assets/doggytalents/models/item/rice_wheat.json
 f4eb65322d6283975c987d29cc2ce6427327842f assets/doggytalents/models/item/sake.json
 8bb09e6e2e958ee4dbf81e03c86931b1b0b68e55 assets/doggytalents/models/item/salmon_sushi.json
+5519cb93e56c48f61ea193b64de7de2335b2ddc5 assets/doggytalents/models/item/samoyed_plushie_item.json
 1acc57c4ee6005b46ab3359724b620a35d462d8f assets/doggytalents/models/item/sausage.json
 6cc52705d4cfa5c3d8efca18b02a1ea116439a9a assets/doggytalents/models/item/scent_treat.json
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
