@@ -2,7 +2,6 @@ package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyItems;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.SynchedEntityData.Builder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -111,7 +110,7 @@ public class SamoyedPlushie extends Entity {
     }
 
     @Override
-    protected void defineSynchedData(Builder p_326003_) {
+    protected void defineSynchedData() {
     }
 
 }

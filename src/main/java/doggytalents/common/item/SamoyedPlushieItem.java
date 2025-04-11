@@ -3,6 +3,8 @@ package doggytalents.common.item;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.inferface.AbstractDog;
@@ -52,7 +54,7 @@ public class SamoyedPlushieItem extends Item implements IDyeableArmorItem, IDogI
             spawnAt = pos.relative(face);
         }
         var plush = DoggyEntityTypes.SAMOYED_PLUSHIE.get().create(
-            (ServerLevel) level, null, spawnAt, 
+            (ServerLevel) level, null, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
@@ -71,9 +73,9 @@ public class SamoyedPlushieItem extends Item implements IDyeableArmorItem, IDogI
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
             TooltipFlag flags) {
-        if (context.level() == null)    
+        if (level == null)    
             return;
         var desc_id = "item.doggytalents.samoyed_plushie_toy_item.description";
         components.add(Component.translatable(desc_id).withStyle(

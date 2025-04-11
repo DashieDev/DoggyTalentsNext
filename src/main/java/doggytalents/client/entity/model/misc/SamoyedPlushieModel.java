@@ -158,10 +158,9 @@ public class SamoyedPlushieModel extends EntityModel<SamoyedPlushie>{
             float p_102623_) {
         
     }
-
-    @Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color_overlay) {
-		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color_overlay);
+	@Override
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
     
 }
