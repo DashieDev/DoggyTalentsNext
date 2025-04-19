@@ -44,6 +44,7 @@ import doggytalents.client.entity.model.dog.CollieBorderModel;
 import doggytalents.client.entity.model.dog.CollieBorderShortModel;
 import doggytalents.client.entity.model.dog.CollieRoughModel;
 import doggytalents.client.entity.model.dog.CollieSmoothModel;
+import doggytalents.client.entity.model.dog.CorgiModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DobermanModel;
@@ -227,6 +228,7 @@ public class ClientSetup {
     public static final ModelLayerLocation NA = new ModelLayerLocation(Util.getResource("na"), "main");
     public static final ModelLayerLocation DOG_NEWFOUNDLAND = new ModelLayerLocation(Util.getResource("newfoundland"), "main");
     public static final ModelLayerLocation MOCHI = new ModelLayerLocation(Util.getResource("mochi"), "main");
+    public static final ModelLayerLocation DOG_CORGI = new ModelLayerLocation(Util.getResource("corgi"), "main");
 
     public static final ModelLayerLocation DOG_ARMOR = new ModelLayerLocation(Util.getResource("dog"), "armor");
     public static final ModelLayerLocation DOG_ARMOR_LEGACY = new ModelLayerLocation(Util.getResource("dog"), "armor_legacy");
@@ -344,6 +346,7 @@ public class ClientSetup {
         event.registerLayerDefinition(DOG_NEWFOUNDLAND, NewfoundlandModel::createBodyLayer);
         event.registerLayerDefinition(NA, Na::na);
         event.registerLayerDefinition(MOCHI, MochiModel::createBodyLayer);
+        event.registerLayerDefinition(DOG_CORGI, CorgiModel::createBodyLayer);
 
         event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
         event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
