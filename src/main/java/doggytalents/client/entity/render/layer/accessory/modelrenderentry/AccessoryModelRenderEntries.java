@@ -3,6 +3,7 @@ package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.entity.accessory.BirthdayHatAccessory;
+import doggytalents.common.entity.accessory.BunnyEars;
 
 public class AccessoryModelRenderEntries {
     
@@ -51,6 +52,7 @@ public class AccessoryModelRenderEntries {
     public static Entry CHRISTMAS_TREE = new ChristmasTreeRenderEntry();
     public static Entry CHRISTMAS_STAR = new ChristmasStarRenderEntry();
     public static Entry PRESENT_COSTUME = new PresentCostumeRenderEntry();
+    public static Entry BUNNY_EARS = new BunnyEarsRenderEntry();
 
     public static void registerEntries() {
         AccessoryModelManager.register(BOWTIE);
@@ -99,6 +101,7 @@ public class AccessoryModelRenderEntries {
         AccessoryModelManager.register(CHRISTMAS_TREE);
         AccessoryModelManager.register(CHRISTMAS_STAR);
         AccessoryModelManager.register(PRESENT_COSTUME);
+        AccessoryModelManager.register(BUNNY_EARS);
     }
 
 }

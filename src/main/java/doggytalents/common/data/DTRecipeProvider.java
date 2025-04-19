@@ -984,6 +984,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BUNNY_EARS.get(), 1)
+            .pattern("W W")    
+            .pattern("WLW")
+            .pattern(" T ")
+            .define('W', Items.WHITE_WOOL)
+            .define('L', Items.LEATHER_HELMET)
+            .define('T', DoggyItems.TRAINING_TREAT.get())
+            .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
+            .save(consumer);
     }
 
     private void registerTripleCooking(RecipeOutput consumer, Ingredient input, Item output,

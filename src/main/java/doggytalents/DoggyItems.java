@@ -116,7 +116,9 @@ public class DoggyItems {
     public static final Supplier<Item> OYAKODON = register("oyakodon", OyakodonItem::new);
     public static final Supplier<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final Supplier<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
+
     public static final Supplier<Item> SAUSAGE = register("sausage", SausageItem::new);
+    public static final Supplier<Item> EASTER_EGG_CANDY = register("easter_egg_candy", EasterEggCandyItem::new);
 
     //DTN Style ==========================
     public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", (props) -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, props));
@@ -205,6 +207,7 @@ public class DoggyItems {
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_TREE = registerAccessory("dog_christmas_tree", DoggyAccessories.DOG_CHRISTMAS_TREE);
     public static final Supplier<AccessoryItem> DOG_CHRISTMAS_STAR = registerAccessory("dog_christmas_star", DoggyAccessories.DOG_CHRISTMAS_STAR);
     public static final Supplier<AccessoryItem> DOG_GIFT_COSTUME = register("dog_gift_costume", (props) -> new DogPresentCostumeItem(DoggyAccessories.DOG_GIFT_COSTUME, props));
+    public static final Supplier<AccessoryItem> BUNNY_EARS = register("bunny_ears", (props) -> new BunnyEarsItem(DoggyAccessories.BUNNY_EARS, props));
 
     //DTN Misc ==========================
     public static final Supplier<Item> THROW_BONE_WET = registerThrowBoneWet("throw_bone_wet");
