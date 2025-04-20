@@ -118,6 +118,7 @@ public class DoggyItems {
     public static final Supplier<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final Supplier<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
     public static final Supplier<Item> SAUSAGE = register("sausage", SausageItem::new);
+    public static final Supplier<Item> EASTER_EGG_CANDY = register("easter_egg_candy", EasterEggCandyItem::new);
 
     //DTN Style ==========================
     public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", (props) -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, props));
