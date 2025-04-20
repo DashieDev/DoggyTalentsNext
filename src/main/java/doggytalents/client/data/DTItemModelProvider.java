@@ -190,6 +190,7 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.UPRIGHT_PIANO_BLACK);
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
         plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
+        generated(DoggyItems.SAMOYED_PLUSHIE_TOY);
 
         blockItem(DoggyBlocks.DOG_BATH);
         blockItem(DoggyBlocks.DOG_BED);

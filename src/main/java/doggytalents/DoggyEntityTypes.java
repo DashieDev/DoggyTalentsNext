@@ -8,6 +8,7 @@ import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.entity.misc.DoggyBeamEntity;
 import doggytalents.common.entity.misc.Piano;
+import doggytalents.common.entity.misc.SamoyedPlushie;
 import doggytalents.common.entity.misc.Piano.PianoColor;
 import doggytalents.common.entity.misc.Piano.PianoType;
 import doggytalents.common.lib.Constants;
@@ -78,7 +79,14 @@ public class DoggyEntityTypes {
             .setTrackingRange(10)
             .setShouldReceiveVelocityUpdates(true));
 
-    public static final RegistryObject<EntityType<DogFoodProjectile>> DOG_FOOD_PROJ = register("dog_food_projectile", DogFoodProjectile::new, MobCategory.MISC, (b) -> b
+    public static final Supplier<EntityType<SamoyedPlushie>> SAMOYED_PLUSHIE_TOY = register("samoyed_plushie_toy", (type, level) -> new SamoyedPlushie(type, level), MobCategory.MISC,
+        b -> b
+            .sized(0.5f, 0.5f)
+            .setUpdateInterval(3)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(true));
+
+    public static final Supplier<EntityType<DogFoodProjectile>> DOG_FOOD_PROJ = register("dog_food_projectile", DogFoodProjectile::new, MobCategory.MISC, (b) -> b
         .sized(0.25F, 0.25F)
         .setUpdateInterval(4)
         .setTrackingRange(10)
