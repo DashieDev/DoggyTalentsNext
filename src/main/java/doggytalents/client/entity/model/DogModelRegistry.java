@@ -58,6 +58,7 @@ import doggytalents.client.entity.model.dog.JunoModel;
 import doggytalents.client.entity.model.dog.LegoshiModel;
 import doggytalents.client.entity.model.dog.LucarioModel;
 import doggytalents.client.entity.model.dog.MiniaturePinscherModel;
+import doggytalents.client.entity.model.dog.MochiModel;
 import doggytalents.client.entity.model.dog.Na;
 import doggytalents.client.entity.model.dog.NewfoundlandModel;
 import doggytalents.client.entity.model.dog.NorfolkTerrierModel;
@@ -216,6 +217,7 @@ public class DogModelRegistry {
         register("australian_kelpie", ctx ->  new AustralianKelpieModel(ctx.bakeLayer(ClientSetup.DOG_AUSTRALIAN_KELPIE)));
         register("newfoundland", ctx ->  new NewfoundlandModel(ctx.bakeLayer(ClientSetup.DOG_NEWFOUNDLAND)));
         register("na", ctx ->  new Na(ctx.bakeLayer(ClientSetup.NA)));
+        register("mochi", ctx ->  new MochiModel(ctx.bakeLayer(ClientSetup.MOCHI)));
 
         registerFromEvent();
     }
