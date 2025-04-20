@@ -361,6 +361,12 @@
             "author" : "MashXP"
         },
         {
+            "skin_name" : "Mochi",
+            "skin_id" : "mochi",
+            "use_model" : "mochi",
+            "author" : "Crystal, MashXP"
+        },
+        {
             "skin_name" : "Borzoi",
             "skin_id" : "borzoi",
             "use_model" : "borzoi",
