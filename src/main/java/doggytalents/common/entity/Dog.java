@@ -2339,8 +2339,11 @@ public class Dog extends AbstractDog {
         this.DTN_dogChangingDim = true;
         Entity transportedEntity = super.changeDimension(worldIn, teleporter);
         this.DTN_dogChangingDim = false;
-        if (transportedEntity instanceof Dog) {
-            DogLocationStorage.get(this.level()).getOrCreateData(this).update((Dog) transportedEntity);
+        if (transportedEntity instanceof Dog dog) {
+            DogLocationStorage.get(this.level()).getOrCreateData(this).update(dog);
+            if (dog.getMode().canWander()) {
+                dog.setMode(DogMode.DOCILE);
+            }
         }
         return transportedEntity;
     }
