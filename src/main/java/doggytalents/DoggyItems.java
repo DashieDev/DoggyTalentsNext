@@ -119,7 +119,6 @@ public class DoggyItems {
     public static final Supplier<Item> EGG_SANDWICH = register("egg_sandwich", EggSandwichItem::new);
     public static final Supplier<Item> GOLDEN_A_FIVE_WAGYU = register("golden_a_five_wagyu", GoldenAFiveWagyuItem::new);
     public static final Supplier<Item> SAUSAGE = register("sausage", SausageItem::new);
-    public static final Supplier<Item> EASTER_EGG_CANDY = register("easter_egg_candy", EasterEggCandyItem::new);
 
     //DTN Style ==========================
     public static final Supplier<AccessoryItem> BIRTHDAY_HAT = register("birthday_hat", (props) -> new DyableBirthdayHatItem(DoggyAccessories.BIRTHDAY_HAT, props));
@@ -216,6 +215,7 @@ public class DoggyItems {
     public static final Supplier<Item> FRISBEE_WET = registerFrisbeeWet("frisbee_wet");
     public static final Supplier<Item> DROOL_SCENT_TREAT = register("drool_scent_treat", DroolScentTreatItem::new);
     public static final Supplier<Item> ENERGIZER_STICK = register("energizer_stick", EnergizerStick::new);
+    public static final Supplier<Item> EASTER_EGG_CANDY = register("easter_egg_candy", EasterEggCandyItem::new);
     public static final Supplier<DoggyArtifactItem> FEATHERED_MANTLE = registerWith("feathered_mantle", 
         props -> new DoggyArtifactItem(
             () -> new FeatheredMantleArtifact(), props), 1);
