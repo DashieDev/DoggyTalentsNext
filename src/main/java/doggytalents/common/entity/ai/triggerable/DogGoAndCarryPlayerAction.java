@@ -27,6 +27,10 @@ public class DogGoAndCarryPlayerAction extends TriggerableAction {
 
     @Override
     public void tick() {
+        if (owner.distanceToSqr(dog) > 12 * 12) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
         if (!WolfMountTalent.isValidCarryMeDog(dog)) {
             this.setState(ActionState.FINISHED);
             return;
