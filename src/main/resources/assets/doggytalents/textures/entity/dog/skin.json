@@ -367,6 +367,38 @@
             "author" : "Crystal, MashXP"
         },
         {
+            "skin_name" : "Corgi (Red)",
+            "skin_id" : "corgi_red",
+            "use_model" : "corgi",
+            "author" : "Crystal, MashXP"
+        },
+        {
+            "skin_name" : "Corgi (White)",
+            "skin_id" : "corgi_white",
+            "use_model" : "corgi",
+            "author" : "Crystal, MashXP"
+        },
+        {
+            "skin_name" : "Corgi (Black Tan)",
+            "skin_id" : "corgi_black_tan",
+            "use_model" : "corgi",
+            "author" : "Crystal, MashXP"
+        },
+        {
+            "skin_name" : "Corgi (Raspberry Cake)",
+            "skin_id" : "corgi_raspberry_cake",
+            "use_model" : "corgi",
+            "author" : "Crystal, MashXP",
+            "mystery": true
+        },
+        {
+            "skin_name" : "Corgi (Raspberry Cake - No Cream)",
+            "skin_id" : "corgi_raspberry_cake_no_cream",
+            "use_model" : "corgi",
+            "author" : "Crystal, MashXP",
+            "mystery": true
+        },
+        {
             "skin_name" : "Borzoi",
             "skin_id" : "borzoi",
             "use_model" : "borzoi",
