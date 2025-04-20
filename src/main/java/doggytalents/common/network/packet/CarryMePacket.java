@@ -31,6 +31,8 @@ public class CarryMePacket extends DogPacket<CarryMeData> {
             return;
         if (!ConfigHandler.SERVER.CARRY_ME_WHISTLE.get())
             return;
+        if (owner.distanceToSqr(dog) > 12 * 12)
+            return;
         if (!WolfMountTalent.isValidCarryMeDog(dog))
             return;
         if (!WolfMountTalent.isValidCarryMeTarget(owner))
