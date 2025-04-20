@@ -41,6 +41,7 @@ import doggytalents.client.entity.model.dog.CollieBorderModel;
 import doggytalents.client.entity.model.dog.CollieBorderShortModel;
 import doggytalents.client.entity.model.dog.CollieRoughModel;
 import doggytalents.client.entity.model.dog.CollieSmoothModel;
+import doggytalents.client.entity.model.dog.CorgiModel;
 import doggytalents.client.entity.model.dog.DachshundModel;
 import doggytalents.client.entity.model.dog.DeathModel;
 import doggytalents.client.entity.model.dog.DobermanModel;
@@ -218,6 +219,7 @@ public class DogModelRegistry {
         register("newfoundland", ctx ->  new NewfoundlandModel(ctx.bakeLayer(ClientSetup.DOG_NEWFOUNDLAND)));
         register("na", ctx ->  new Na(ctx.bakeLayer(ClientSetup.NA)));
         register("mochi", ctx ->  new MochiModel(ctx.bakeLayer(ClientSetup.MOCHI)));
+        register("corgi", ctx ->  new CorgiModel(ctx.bakeLayer(ClientSetup.DOG_CORGI)));
 
         registerFromEvent();
     }
