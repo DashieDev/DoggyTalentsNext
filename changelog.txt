@@ -1842,3 +1842,16 @@ collecting nearby items.
 **1.18.46 - 8th April 2025**
 * Fix Flying Furball being unable to fly while being ridden despite having flying allowed. 
 * (Fabric Only) Fix players being unable to put items in Pack Puppy Inventory via Dog Inventory Screen.
+
+**1.18.47 - 20th April 2025**
+Happy Easter Sunday!
+
+New Skin: 
++ Mochi by Crystal
++ Corgis: 4 variants
+
+New Accessory: 
++ Bunny Ears: Dog wearing this will occasionally drop Egg Candy.
++ Samoyed Plushie Toy
+
+# Dog Carry Me Action now stops if owner is too far away.
