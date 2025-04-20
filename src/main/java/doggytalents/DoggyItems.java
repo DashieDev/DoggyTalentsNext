@@ -221,6 +221,8 @@ public class DoggyItems {
     public static final Supplier<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
     public static final Supplier<DogPlushieItem> DOG_PLUSHIE_TOY = register("dog_plushie_toy_item", 
         (props) -> new DogPlushieItem(props));
+    public static final Supplier<SamoyedPlushieItem> SAMOYED_PLUSHIE_TOY = register("samoyed_plushie_toy_item", 
+        (props) -> new SamoyedPlushieItem(props));
 
     public static final Supplier<Item> MUSIC_DISC_CHOPIN_OP64_NO1 = register("disc_chopin_op64_no1", 
         (props) -> new ChopinRecordItem(
