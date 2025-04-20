@@ -88,6 +88,8 @@ public class DTNItemCategory {
     public static boolean isAgri(Item item) {
         if (item == null)
             return false;
+        if (item == DoggyItems.EASTER_EGG_CANDY.get())
+            return false;
         if (item instanceof IDogEddible)
             return true;
         return agri_base != null && agri_base.contains(item);
