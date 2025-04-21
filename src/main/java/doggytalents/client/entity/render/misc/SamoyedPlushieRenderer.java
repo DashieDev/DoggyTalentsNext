@@ -41,7 +41,7 @@ public class SamoyedPlushieRenderer extends EntityRenderer<SamoyedPlushie> {
         stack.translate(0.0F, -1.5F, 0.0F);
         stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
         var consumer = bufferSource.getBuffer(getRenderType(piano));
-        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
+        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
         stack.popPose();
     }

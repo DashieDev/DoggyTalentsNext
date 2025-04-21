@@ -26,4 +26,8 @@ public class SamoyedPlushie extends BaseDogPlushie {
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
     }
+
+    @Override
+    protected void defineSynchedData() {
+    }
 }
