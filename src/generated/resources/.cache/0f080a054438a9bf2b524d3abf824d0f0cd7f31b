@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-24T17:04:44.035199	DoggyTalents Item Models
+// 1.20.1	2025-04-21T13:08:07.0933022	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -12,6 +12,7 @@ b5e90b9e4c73e4e830dfa769f25fa806aa5dab8c assets/doggytalents/models/item/baker_h
 b6860f6c2d9962310d27d5ba8f1de51d7f4673e6 assets/doggytalents/models/item/birthday_hat.json
 3d9d5eecd0fd643f244fcbff0e632a1c69fe532f assets/doggytalents/models/item/bowtie.json
 e16db99d3f12eb93982beacb24a089aeea4a0139 assets/doggytalents/models/item/breeding_bone.json
+88a94c42b63d5e1a3bc0ca23674e9578c59bcaca assets/doggytalents/models/item/bunny_ears.json
 ab1f84f9e80f52a2d8cdd8bb0bfe8d6bc261fd65 assets/doggytalents/models/item/canine_tracker.json
 f4680c4abb5ae1f964c3a9d18c72867eda849841 assets/doggytalents/models/item/cape_coloured.json
 a3db6caed7926dbea72012574d9c775869bfdb2f assets/doggytalents/models/item/ceremonial_garb.json
@@ -40,6 +41,7 @@ d4e16dd49b3b9367913eed29f9d7e4c9cb56ff85 assets/doggytalents/models/item/dragon_
 89723e9319ed5a15907d0f1ef04d39c1b6bafd81 assets/doggytalents/models/item/dragon_costume_suit.json
 d38e5e92b7b0677d84b44b0d1e02a8a6867aafb3 assets/doggytalents/models/item/dragon_costume_wings.json
 e573b037300087bb973ec849784125738b482122 assets/doggytalents/models/item/drool_scent_treat.json
+ce97526235ee17595babec6e5b0d4b5e3ec2c34b assets/doggytalents/models/item/easter_egg_candy.json
 54845463612496361d248445a4e723fdfc0a0529 assets/doggytalents/models/item/edamame.json
 c308c809213ff3393bfd94da560555797d4097cc assets/doggytalents/models/item/edamame_unpodded.json
 272d4020b9c5873f4ad8fd7d4294ece831af494c assets/doggytalents/models/item/egg_sandwich.json
@@ -108,6 +110,7 @@ b0f107f2f5ab3f19510345eb8f1f2c572ea4550c assets/doggytalents/models/item/rice_gr
 feaf5b15d7fa562f9522295316fd13bcde4b884d assets/doggytalents/models/item/rice_wheat.json
 f4eb65322d6283975c987d29cc2ce6427327842f assets/doggytalents/models/item/sake.json
 8bb09e6e2e958ee4dbf81e03c86931b1b0b68e55 assets/doggytalents/models/item/salmon_sushi.json
+a4c7f4b64de59fbbf2f660100fd6556e8d5e9294 assets/doggytalents/models/item/samoyed_plushie_toy_item.json
 1acc57c4ee6005b46ab3359724b620a35d462d8f assets/doggytalents/models/item/sausage.json
 6cc52705d4cfa5c3d8efca18b02a1ea116439a9a assets/doggytalents/models/item/scent_treat.json
 846f55137451d54b108cb05be5a3f66ff601401a assets/doggytalents/models/item/shrinking_mallet.json
