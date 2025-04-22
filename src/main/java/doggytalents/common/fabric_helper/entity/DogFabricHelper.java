@@ -13,7 +13,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
-import doggytalents.common.entity.serializers.DimensionDependantArg;
+import doggytalents.common.entity.serializers.Dimension2BlockPosMap;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllData;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
@@ -34,8 +34,8 @@ public class DogFabricHelper {
     private DogVariant dogVariant = DogVariantUtil.getDefault();
     private DogGender dogGender = DogGender.MALE;
     private DogMode dogMode = DogMode.DOCILE;
-    private DimensionDependantArg<Optional<BlockPos>> bowlPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);    
-    private DimensionDependantArg<Optional<BlockPos>> bedPos = new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS);
+    private Dimension2BlockPosMap bowlPos = new Dimension2BlockPosMap();    
+    private Dimension2BlockPosMap bedPos = new Dimension2BlockPosMap();
     private IncapacitatedSyncState incapSyncState = IncapacitatedSyncState.NONE;
     private List<DoggyArtifactItem> artifacts = new ArrayList<>();
     private DogSize dogSize = DogSize.MODERATO;
@@ -128,19 +128,19 @@ public class DogFabricHelper {
         this.dog.onFabricDataUpdated(SyncTypes.DOG_MODE);
     }
 
-    public DimensionDependantArg<Optional<BlockPos>> getBowlPos() {
+    public Dimension2BlockPosMap getBowlPos() {
         return bowlPos;
     }
 
-    public void setBowlPos(DimensionDependantArg<Optional<BlockPos>> bowlPos) {
+    public void setBowlPos(Dimension2BlockPosMap bowlPos) {
         this.bowlPos = bowlPos;
     }
 
-    public DimensionDependantArg<Optional<BlockPos>> getBedPos() {
+    public Dimension2BlockPosMap getBedPos() {
         return bedPos;
     }
 
-    public void setBedPos(DimensionDependantArg<Optional<BlockPos>> bedPos) {
+    public void setBedPos(Dimension2BlockPosMap bedPos) {
         this.bedPos = bedPos;
     }
 
