@@ -48,7 +48,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.ai.*;
-import doggytalents.common.entity.serializers.DimensionDependantArg;
+import doggytalents.common.entity.serializers.Dimension2BlockPosMap;
 import doggytalents.common.entity.stats.StatsTracker;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.event.EventHandler;
@@ -217,8 +217,8 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<DogLevel> DOG_LEVEL = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER);
     private static final EntityDataAccessor<DogGender> GENDER = SynchedEntityData.defineId(Dog.class,  DoggySerializers.GENDER_SERIALIZER);
     private static final EntityDataAccessor<DogMode> MODE = SynchedEntityData.defineId(Dog.class, DoggySerializers.MODE_SERIALIZER);
-    private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BED_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
-    private static final EntityDataAccessor<DimensionDependantArg<Optional<BlockPos>>> DOG_BOWL_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.BED_LOC_SERIALIZER);
+    private static final EntityDataAccessor<Dimension2BlockPosMap> DOG_BED_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.DIM2BLOCKPOS_SERIALIZER);
+    private static final EntityDataAccessor<Dimension2BlockPosMap> DOG_BOWL_LOCATION = SynchedEntityData.defineId(Dog.class, DoggySerializers.DIM2BLOCKPOS_SERIALIZER);
     private static final EntityDataAccessor<IncapacitatedSyncState> DOG_INCAP_SYNC_STATE = SynchedEntityData.defineId(Dog.class, DoggySerializers.INCAP_SYNC_SERIALIZER);
     private static final EntityDataAccessor<List<DoggyArtifactItem>> ARTIFACTS = SynchedEntityData.defineId(Dog.class, DoggySerializers.ARTIFACTS_SERIALIZER);
     private static final EntityDataAccessor<DogSize> DOG_SIZE = SynchedEntityData.defineId(Dog.class,  DoggySerializers.DOG_SIZE_SERIALIZER);
@@ -351,8 +351,8 @@ public class Dog extends AbstractDog {
         this.entityData.define(DOG_SIZE, DogSize.MODERATO);
         this.entityData.define(BONE_VARIANT, ItemStack.EMPTY);
         this.entityData.define(ARTIFACTS, new ArrayList<DoggyArtifactItem>(3));
-        this.entityData.define(DOG_BED_LOCATION, new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        this.entityData.define(DOG_BOWL_LOCATION, new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        this.entityData.define(DOG_BED_LOCATION, new Dimension2BlockPosMap());
+        this.entityData.define(DOG_BOWL_LOCATION, new Dimension2BlockPosMap());
         this.entityData.define(INCAP_VAL, 0);
         this.entityData.define(ANIMATION, 0);
         this.entityData.define(ANIM_SYNC_TIME, 0);
@@ -2738,12 +2738,12 @@ public class Dog extends AbstractDog {
         if (wolf_armor != null && !wolf_armor.isEmpty())
             NBTUtil.writeItemStack(compound, "wolfArmorItem", wolf_armor);
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION);
+        var bedsData = this.entityData.get(DOG_BED_LOCATION);
 
         if (!bedsData.isEmpty()) {
             ListTag bedsList = new ListTag();
 
-            for (Entry<ResourceKey<Level>, Optional<BlockPos>> entry : bedsData.entrySet()) {
+            for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
                 NBTUtil.putResourceLocation(bedNBT, "dim", entry.getKey().location());
                 NBTUtil.putBlockPos(bedNBT, "pos", entry.getValue());
@@ -2753,12 +2753,12 @@ public class Dog extends AbstractDog {
             compound.put("beds", bedsList);
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION);
+        var bowlsData = this.entityData.get(DOG_BOWL_LOCATION);
 
         if (!bowlsData.isEmpty()) {
             ListTag bowlsList = new ListTag();
 
-            for (Entry<ResourceKey<Level>, Optional<BlockPos>> entry : bowlsData.entrySet()) {
+            for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
                 NBTUtil.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
                 NBTUtil.putBlockPos(bowlsNBT, "pos", entry.getValue());
@@ -2932,7 +2932,7 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.entityData.get(DOG_BED_LOCATION).copyEmpty();
+        var bedsData = new Dimension2BlockPosMap();
 
         try {
             if (compound.contains("beds", Tag.TAG_LIST)) {
@@ -2943,7 +2943,8 @@ public class Dog extends AbstractDog {
                     ResourceLocation loc = NBTUtil.getResourceLocation(bedNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
-                    bedsData.put(type, pos);
+                    if (pos.isPresent())
+                        bedsData.put(type, pos.get());
                 }
             }
         } catch (Exception e) {
@@ -2953,7 +2954,7 @@ public class Dog extends AbstractDog {
 
         this.entityData.set(DOG_BED_LOCATION, bedsData);
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.entityData.get(DOG_BOWL_LOCATION).copyEmpty();
+        var bowlsData = new Dimension2BlockPosMap();
 
         try {
             if (compound.contains("bowls", Tag.TAG_LIST)) {
@@ -2964,7 +2965,8 @@ public class Dog extends AbstractDog {
                     ResourceLocation loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
-                    bowlsData.put(type, pos);
+                    if (pos.isPresent())
+                        bowlsData.put(type, pos.get());
                 }
             }
         } catch (Exception e) {
@@ -3560,7 +3562,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBedPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BED_LOCATION).getOrDefault(registryKey, Optional.empty());
+        return this.entityData.get(DOG_BED_LOCATION).get(registryKey);
     }
 
     public void setBedPos(@Nullable BlockPos pos) {
@@ -3572,7 +3574,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBedPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BED_LOCATION, this.entityData.get(DOG_BED_LOCATION).copy().set(registryKey, pos));
+        this.entityData.set(DOG_BED_LOCATION, this.entityData.get(DOG_BED_LOCATION).copyAndSet(registryKey, pos));
     }
 
     public Optional<BlockPos> getBowlPos() {
@@ -3580,7 +3582,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBowlPos(ResourceKey<Level> registryKey) {
-        return this.entityData.get(DOG_BOWL_LOCATION).getOrDefault(registryKey, Optional.empty());
+        return this.entityData.get(DOG_BOWL_LOCATION).get(registryKey);
     }
 
     public void setBowlPos(@Nullable BlockPos pos) {
@@ -3592,7 +3594,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBowlPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.entityData.set(DOG_BOWL_LOCATION, this.entityData.get(DOG_BOWL_LOCATION).copy().set(registryKey, pos));
+        this.entityData.set(DOG_BOWL_LOCATION, this.entityData.get(DOG_BOWL_LOCATION).copyAndSet(registryKey, pos));
     }
 
     @Override
