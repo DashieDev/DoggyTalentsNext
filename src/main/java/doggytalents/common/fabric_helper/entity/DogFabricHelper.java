@@ -133,7 +133,12 @@ public class DogFabricHelper {
     }
 
     public void setBowlPos(Dimension2BlockPosMap bowlPos) {
+        if (this.bowlPos.equals(bowlPos))
+            return;
+        if (!dog.level().isClientSide) 
+            this.setDirty(SyncTypes.BOWL_POS);
         this.bowlPos = bowlPos;
+        this.dog.onFabricDataUpdated(SyncTypes.BOWL_POS);
     }
 
     public Dimension2BlockPosMap getBedPos() {
