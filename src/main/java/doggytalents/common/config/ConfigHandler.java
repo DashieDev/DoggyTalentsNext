@@ -359,8 +359,8 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
-        public ModConfigSpec.BooleanValue DOGGY_TOOLS_BRIDGING;
-        public ModConfigSpec.IntValue DOGGY_TOOLS_BRIDGING_LIMIT;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_BRIDGING;
+        public ForgeConfigSpec.IntValue DOGGY_TOOLS_BRIDGING_LIMIT;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
         public ForgeConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;

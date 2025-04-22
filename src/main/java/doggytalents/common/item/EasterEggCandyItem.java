@@ -18,7 +18,7 @@ public class EasterEggCandyItem extends DogEddibleItem{
             b -> b
                 .nutrition(2)
                 .saturationModifier(0.6F)
-                .effect(() -> new MobEffectInstance(MobEffects.HEAL, 1, 0), 1)
+                .effect(new MobEffectInstance(MobEffects.HEAL, 1, 0), 1)
         );
     }
 }
