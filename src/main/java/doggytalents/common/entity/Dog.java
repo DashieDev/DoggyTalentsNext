@@ -49,7 +49,7 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.ai.*;
-import doggytalents.common.entity.serializers.DimensionDependantArg;
+import doggytalents.common.entity.serializers.Dimension2BlockPosMap;
 import doggytalents.common.entity.stats.StatsTracker;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
@@ -356,9 +356,9 @@ public class Dog extends AbstractDog {
         //builder.define(DOG_INCAP_SYNC_STATE.get(), IncapacitatedSyncState.NONE);
         //builder.define(DOG_SIZE.get(), DogSize.MODERATO);
         builder.define(BONE_VARIANT, ItemStack.EMPTY);
-        //builder.define(ARTIFACTS.get(), new ArrayList<DoggyArtifactItem>(3));
-        //builder.define(DOG_BED_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
-        //builder.define(DOG_BOWL_LOCATION.get(), new DimensionDependantArg<>(() -> EntityDataSerializers.OPTIONAL_BLOCK_POS));
+        // builder.define(ARTIFACTS, new ArrayList<DoggyArtifactItem>(3));
+        // builder.define(DOG_BED_LOCATION, new Dimension2BlockPosMap());
+        // builder.define(DOG_BOWL_LOCATION, new Dimension2BlockPosMap());
         builder.define(INCAP_VAL, 0);
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
@@ -2755,12 +2755,12 @@ public class Dog extends AbstractDog {
         if (wolf_armor != null && !wolf_armor.isEmpty())
             NBTUtil.writeItemStack(this.registryAccess(), compound, "wolfArmorItem", wolf_armor);
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.dogFabricHelper.getBedPos();
+        var bedsData = this.dogFabricHelper.getBedPos();
 
         if (!bedsData.isEmpty()) {
             ListTag bedsList = new ListTag();
 
-            for (Entry<ResourceKey<Level>, Optional<BlockPos>> entry : bedsData.entrySet()) {
+            for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
                 NBTUtil.putResourceLocation(bedNBT, "dim", entry.getKey().location());
                 NBTUtil.putBlockPos(bedNBT, "pos", entry.getValue());
@@ -2770,12 +2770,12 @@ public class Dog extends AbstractDog {
             compound.put("beds", bedsList);
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.dogFabricHelper.getBowlPos();
+        var bowlsData = this.dogFabricHelper.getBowlPos();
 
         if (!bowlsData.isEmpty()) {
             ListTag bowlsList = new ListTag();
 
-            for (Entry<ResourceKey<Level>, Optional<BlockPos>> entry : bowlsData.entrySet()) {
+            for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
                 NBTUtil.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
                 NBTUtil.putBlockPos(bowlsNBT, "pos", entry.getValue());
@@ -2948,7 +2948,7 @@ public class Dog extends AbstractDog {
             e.printStackTrace();
         }
 
-        DimensionDependantArg<Optional<BlockPos>> bedsData = this.dogFabricHelper.getBedPos().copyEmpty();
+        var bedsData = new Dimension2BlockPosMap();
 
         try {
             if (compound.contains("beds", Tag.TAG_LIST)) {
@@ -2959,7 +2959,8 @@ public class Dog extends AbstractDog {
                     ResourceLocation loc = NBTUtil.getResourceLocation(bedNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
-                    bedsData.put(type, pos);
+                    if (pos.isPresent())
+                        bedsData.put(type, pos.get());
                 }
             }
         } catch (Exception e) {
@@ -2969,7 +2970,7 @@ public class Dog extends AbstractDog {
 
         this.dogFabricHelper.setBedPos(bedsData);
 
-        DimensionDependantArg<Optional<BlockPos>> bowlsData = this.dogFabricHelper.getBowlPos().copyEmpty();
+        var bowlsData = new Dimension2BlockPosMap();
 
         try {
             if (compound.contains("bowls", Tag.TAG_LIST)) {
@@ -2980,7 +2981,8 @@ public class Dog extends AbstractDog {
                     ResourceLocation loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
-                    bowlsData.put(type, pos);
+                    if (pos.isPresent())
+                        bowlsData.put(type, pos.get());
                 }
             }
         } catch (Exception e) {
@@ -3556,7 +3558,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBedPos(ResourceKey<Level> registryKey) {
-        return this.dogFabricHelper.getBedPos().getOrDefault(registryKey, Optional.empty());
+        return this.dogFabricHelper.getBedPos().get(registryKey);
     }
 
     public void setBedPos(@Nullable BlockPos pos) {
@@ -3568,7 +3570,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBedPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.dogFabricHelper.setBedPos(this.dogFabricHelper.getBedPos().copy().set(registryKey, pos));
+        this.dogFabricHelper.setBedPos(this.dogFabricHelper.getBedPos().copyAndSet(registryKey, pos));
     }
 
     public Optional<BlockPos> getBowlPos() {
@@ -3576,7 +3578,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<BlockPos> getBowlPos(ResourceKey<Level> registryKey) {
-        return this.dogFabricHelper.getBowlPos().getOrDefault(registryKey, Optional.empty());
+        return this.dogFabricHelper.getBowlPos().get(registryKey);
     }
 
     public void setBowlPos(@Nullable BlockPos pos) {
@@ -3588,7 +3590,7 @@ public class Dog extends AbstractDog {
     }
 
     public void setBowlPos(ResourceKey<Level> registryKey, Optional<BlockPos> pos) {
-        this.dogFabricHelper.setBowlPos(this.dogFabricHelper.getBowlPos().copy().set(registryKey, pos));
+        this.dogFabricHelper.setBowlPos(this.dogFabricHelper.getBowlPos().copyAndSet(registryKey, pos));
     }
 
     @Override
