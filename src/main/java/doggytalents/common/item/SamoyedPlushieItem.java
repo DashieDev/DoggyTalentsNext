@@ -61,8 +61,8 @@ public class SamoyedPlushieItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
             TooltipFlag flags) {
-        if (context.level() == null)    
-            return;
+        // if (context.level() == null)    
+        //     return;
         var desc_id = "items.doggytalents.piano_item_common.description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
