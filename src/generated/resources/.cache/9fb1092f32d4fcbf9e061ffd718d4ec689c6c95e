@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-24T17:04:44.0401953	Recipes
+// 1.20.1	2025-04-23T00:20:20.3743999	Recipes
 ea68a61203b9cbc571cd72244381cf91136cafa5 data/doggytalents/advancements/recipes/building_blocks/dog_bath.json
 5bb21f3599e9ca5620bca26f572185ad321709a2 data/doggytalents/advancements/recipes/building_blocks/dog_bed_def.json
 f91ec59098e89f116d7fddac4acf1a9d46ddd802 data/doggytalents/advancements/recipes/building_blocks/food_bowl.json
@@ -10,6 +10,7 @@ e9a7939e636c946605c49dcbe129b974377c5c33 data/doggytalents/advancements/recipes/
 4d907395932b9167fc42a812351b2f8217eda722 data/doggytalents/advancements/recipes/decorations/beastars_uniform_male.json
 994ee5bb7d169fd395c53ec12e78c28e5e84b103 data/doggytalents/advancements/recipes/decorations/birthday_hat_alt.json
 89321d48d90fe2bf3afcdd8f5274c7360fbec7c8 data/doggytalents/advancements/recipes/decorations/bowtie.json
+be1cbeb37dd51cd3c65c1bd1ecf5952bb375d025 data/doggytalents/advancements/recipes/decorations/bunny_ears.json
 c8449eeff76762f9eef09df4956b9b3aa9d7b7de data/doggytalents/advancements/recipes/decorations/cape_coloured.json
 274dbed94a33762f9b01f4f98a08c488418c92d6 data/doggytalents/advancements/recipes/decorations/ceremonial_garb.json
 74a9389b94c816f8c2231cc13d35afc03a6cdb47 data/doggytalents/advancements/recipes/decorations/chef_hat.json
@@ -134,6 +135,7 @@ d7e762538d6354b54b49b498678af3b21a9a5bc7 data/doggytalents/recipes/beastars_unif
 f6aa85f570f68662cf9682465aaf8c0c99d66ad9 data/doggytalents/recipes/birthday_hat_alt.json
 858a3b05f7c466fdce47fe482d968c83c004d26c data/doggytalents/recipes/bowtie.json
 2adc89fc801f9544f46e89b27e15778c5661fa5d data/doggytalents/recipes/breeding_bone.json
+9c3d3e07432b2122e92f88fe7f9a6c98cda6c5ba data/doggytalents/recipes/bunny_ears.json
 17b2623a965932aca18c232dda2d5f043c7dc1e0 data/doggytalents/recipes/canine_tracker.json
 74892e854aac5d3bfed3c43a27a6f48823a36253 data/doggytalents/recipes/cape_coloured.json
 8bd34c6ed7c82e521cd7bc97c30deb2cb7b639d3 data/doggytalents/recipes/ceremonial_garb.json
