@@ -1855,3 +1855,12 @@ New Accessory:
 + Samoyed Plushie Toy
 
 # Dog Carry Me Action now stops if owner is too far away.
+
+**1.18.48 - 22th April 2025**
+Bridging Dogs!
++ (Configurable) Max level Doggy Tools Dogs with any Block in their
+toolbar can now help you bridging. To command a nearby eligible Dog to begin bridging, 
+use the Dog Bridging Whistle while standing in the position and facing the direction that 
+you want the Dog to begin bridging and to bridge towards respectively. Note that they can 
+only bridge straight and will stop bridging if you are too far away.
+* (Fabric Only) Fix Dog Food Bowl Position not synchronizing with client.
