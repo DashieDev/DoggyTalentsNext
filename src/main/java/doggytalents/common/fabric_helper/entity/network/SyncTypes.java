@@ -3,6 +3,7 @@ package doggytalents.common.fabric_helper.entity.network;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -17,15 +18,18 @@ import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncStat
 import doggytalents.common.entity.DogPettingManager.DogPettingState;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
+import doggytalents.common.entity.serializers.Dimension2BlockPosMap;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.fabric_helper.entity.DogFabricHelper;
+import doggytalents.common.fabric_helper.entity.network.SyncTypes.SyncType;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.variant.DogVariant;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataSerializer;
 
 public class SyncTypes {
 
-    public static int COUNT = 10;
+    public static int COUNT = 12;
     private static Map<Integer, SyncType<?>> ID_TO_TYPE = Maps.newHashMap();
     private static List<SyncType<?>> ALL = new ArrayList<>(COUNT);
     public static SyncType<DogLevel> DOG_LEVEL = register(new SyncType<DogLevel>(0, DoggySerializers.DOG_LEVEL_SERIALIZER, DogFabricHelper::setDogLevel, DogFabricHelper::getDogLevel));
@@ -39,6 +43,7 @@ public class SyncTypes {
     public static SyncType<DogPettingState> DOG_PETTING_STATE = register(new SyncType<DogPettingState>(8, DoggySerializers.DOG_PETTING_STATE, DogFabricHelper::setDogPettingState, DogFabricHelper::getDogPettingState));
     public static SyncType<DogAnimDebugState> DOG_ANIM_DEBUG_STATE = register(new SyncType<DogAnimDebugState>(9, DoggySerializers.DOG_ANIM_DEBUG_STATE, DogFabricHelper::setDogAnimDebugState, DogFabricHelper::getDogAnimDebugState));
     public static SyncType<DogSleepOnState> DOG_SLEEP_ON_STATE = register(new SyncType<DogSleepOnState>(10, DoggySerializers.DOG_SLEEP_ON_STATE, DogFabricHelper::setDogSleepOnState, DogFabricHelper::getDogSleepOnState));
+    public static SyncType<Dimension2BlockPosMap> BOWL_POS = register(new SyncType<Dimension2BlockPosMap>(11, DoggySerializers.DIM2BLOCKPOS_SERIALIZER, DogFabricHelper::setBowlPos, DogFabricHelper::getBowlPos));
 
     public static void init() {}
 
