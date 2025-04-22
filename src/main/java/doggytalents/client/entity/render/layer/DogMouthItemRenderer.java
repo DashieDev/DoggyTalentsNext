@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.DiggerItem;
@@ -75,8 +76,14 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
             stack.scale(1, 1, -1);
             stack.translate(0, 0, -0.1);
         }
-        stack.mulPose(Axis.YP.rotationDegrees(45.0F));
-        stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        if (item instanceof BlockItem) {
+            stack.scale(0.5f, -0.5f, -0.5f);
+            stack.translate(0.2f, -0.31f, 0.07f);
+            stack.mulPose(Axis.YP.rotationDegrees(60.0F));
+        } else {
+            stack.mulPose(Axis.YP.rotationDegrees(45.0F));
+            stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        }
 
         this.itemInHandRenderer.renderItem(dog, itemStack, ItemDisplayContext.GROUND, false, stack, bufferSource, packedLight);
         stack.popPose();
