@@ -359,6 +359,8 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
+        public ModConfigSpec.BooleanValue DOGGY_TOOLS_BRIDGING;
+        public ModConfigSpec.IntValue DOGGY_TOOLS_BRIDGING_LIMIT;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
         public ForgeConfigSpec.BooleanValue DOG_PETITNG_JEALOUS;
         public ForgeConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
@@ -534,6 +536,14 @@ public class ConfigHandler {
                 .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
                 .translation("doggytalents.doggy_tools_projectile_pass_allies")
                 .define("doggy_tools_projectile_pass_allies", true);
+            DOGGY_TOOLS_BRIDGING = builder
+                .comment("Allow Dogs who have Doggy Tools maxed out to help their owners bridging.")
+                .translation("doggytalents.doggy_tools_bridging")
+                .define("doggy_tools_bridging", true);
+            DOGGY_TOOLS_BRIDGING_LIMIT = builder
+                .comment("Specify how many Maxed out Doggy Tools dogs can help a player bridge at once.")
+                .translation("doggytalents.doggy_tools_bridging_limit")
+                .defineInRange("doggy_tools_bridging_limit", 1, 0, 16);
             DOG_PETTING = builder
                 .comment("Allow Players to Pet their Dogs.")
                 .translation("doggytalents.dog_petting")

@@ -33,6 +33,7 @@ public class DogLocationStorage extends SavedData {
     private final OnlineDogLocationManager onlineDogManager = new OnlineDogLocationManager(this);
 
     public final Map<UUID, Integer> grettingDogLimitMap = Maps.newHashMap();
+    public final Map<UUID, Integer> bridgingDogLimitMap = Maps.newHashMap();
 
     public DogLocationStorage() {}
 

@@ -19,6 +19,9 @@ import doggytalents.common.entity.misc.DoggyBeamEntity;
 import doggytalents.common.talent.BedDogTalent;
 import doggytalents.common.talent.MobRetrieverTalent;
 import doggytalents.common.talent.RoaringGaleTalent;
+import doggytalents.common.talent.doggy_tools.DogBridging;
+import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
+import doggytalents.common.talent.doggy_tools.tool_actions.DogBridgingAction;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
@@ -79,7 +82,8 @@ public class WhistleItem extends Item implements IDogItem {
         CROSS_ORIGIN_TP(17, WhistleSound.SHORT),
         BED_DOG_WHISTLE(18, WhistleSound.NONE),
         DUTY_WHISTLE(19, WhistleSound.SHORT),
-        CARRY_ME(20, WhistleSound.NONE);
+        CARRY_ME(20, WhistleSound.NONE),
+        BRIDING(21, WhistleSound.NONE);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -412,6 +416,9 @@ public class WhistleItem extends Item implements IDogItem {
         case CARRY_ME:
             if (world.isClientSide) 
                 CarryMeScreen.open(player);
+            return;
+        case BRIDING:
+            DogBridging.useBridgingWhistle(this, player, world);
             return;
         }
     }
