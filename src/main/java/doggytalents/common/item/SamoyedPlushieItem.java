@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 
 public class SamoyedPlushieItem extends Item {
 
@@ -40,7 +41,7 @@ public class SamoyedPlushieItem extends Item {
             spawnAt = pos.relative(face);
         }
         var plush = DoggyEntityTypes.SAMOYED_PLUSHIE_TOY.get().create(
-            (ServerLevel) level, null, spawnAt, 
+            (ServerLevel) level, null, null, spawnAt, 
             MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
@@ -59,10 +60,10 @@ public class SamoyedPlushieItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Level context, List<Component> components,
             TooltipFlag flags) {
-        if (context.level() == null)    
-            return;
+        // if (context.level() == null)    
+        //     return;
         var desc_id = "items.doggytalents.piano_item_common.description";
         components.add(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)

@@ -1,6 +1,5 @@
 package doggytalents.common.entity.misc;
 
-import net.minecraft.network.syncher.SynchedEntityData.Builder;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +21,7 @@ public abstract class BaseDogPlushie extends Entity {
     }
 
     @Override
-    protected void defineSynchedData(Builder builder) {
+    protected void defineSynchedData() {
         
     }
 

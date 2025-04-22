@@ -11,7 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -125,9 +125,9 @@ public class DogBridgingAction extends TriggerableAction {
 
     private NextPosAction getNextPosAction(BlockPos pos) {
         var path_type = dog.getBlockPathTypeViaAlterations(pos);
-        if (path_type == PathType.OPEN)
+        if (path_type == BlockPathTypes.OPEN)
             return NextPosAction.BRIDGE;
-        if (path_type == PathType.WALKABLE)
+        if (path_type == BlockPathTypes.WALKABLE)
             return NextPosAction.GO;
         return NextPosAction.STOP;
     }
