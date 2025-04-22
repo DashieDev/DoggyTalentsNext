@@ -31,7 +31,7 @@ public class DoggySerializers {
     public static final EntityDataSerializer<DogGender> GENDER_SERIALIZER = register("gender", GenderSerializer::new);
     public static final EntityDataSerializer<DogMode> MODE_SERIALIZER = register("mode", ModeSerializer::new);
     public static final EntityDataSerializer<DogLevel> DOG_LEVEL_SERIALIZER = register("dog_level", DogLevelSerializer::new);
-    public static final EntityDataSerializer<DimensionDependantArg<Optional<BlockPos>>> BED_LOC_SERIALIZER = register("dog_bed_location", BedLocationsSerializer::new);
+    public static final EntityDataSerializer<Dimension2BlockPosMap> DIM2BLOCKPOS_SERIALIZER = register("dim2blockpos", Dim2BlockPosSerializer::new);
     public static final EntityDataSerializer<IncapacitatedSyncState> INCAP_SYNC_SERIALIZER = register("incap_sync", IncapacitatedSyncSerializer::new);
     public static final EntityDataSerializer<List<DoggyArtifactItem>> ARTIFACTS_SERIALIZER = register("doggy_artifacts", DoggyArtifactsSerializer::new);
     public static final EntityDataSerializer<DogSize> DOG_SIZE_SERIALIZER = register("dog_size", DogSizeSerializer::new);
