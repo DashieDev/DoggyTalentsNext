@@ -1,6 +1,7 @@
 package doggytalents.common.talent.doggy_tools.tool_actions;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DogBridging;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
@@ -49,6 +50,8 @@ public class DogBridgingAction extends TriggerableAction {
         }
         phase = Phase.GO_TO_INITIAL_POS;
         dog.getNavigation().moveTo(path, 1);
+        if (this.dog.getNavigation() instanceof DogPathNavigation dogNav)
+            dogNav.setDogMoveInTargetNode();
         DogBridging.equipBridgingStack(toolsTalent, dog);
     }
 
