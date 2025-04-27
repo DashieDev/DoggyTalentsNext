@@ -4,6 +4,7 @@ import doggytalents.DoggyRecipeSerializers;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.util.DogBedUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -30,11 +31,10 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
         for (int col = 0; col < 3; col++) {
             for (int row = 0; row < 3; row++) {
                 if (col == 1 && row < 2) {
-                    IBeddingMaterial id = DogBedUtil.getBeddingFromStack(inv.getItem(row * inv.getWidth() + col));
-
-                    if (id == null) {
+                    var material_optional = DogBedUtil.getBeddingFromStack(inv.getItem(row * inv.getWidth() + col));
+                    if (!material_optional.isPresent())
                         return false;
-                    }
+                    var id = material_optional.get();
 
                     if (beddingId == null) {
                         beddingId = id;
@@ -43,12 +43,11 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
                     }
                 }
                 else {
-                    ICasingMaterial id = DogBedUtil.getCasingFromStack(inv.getItem(row * inv.getWidth() + col));
-
-                    if (id == null) {
+                    var material_optional = DogBedUtil.getCasingFromStack(inv.getItem(row * inv.getWidth() + col));
+                    if (!material_optional.isPresent())
                         return false;
-                    }
-
+                    var id = material_optional.get();
+                    
                     if (casingId == null) {
                         casingId = id;
                     } else if (casingId != id) {
@@ -96,8 +95,10 @@ public class DogBedRecipe extends CustomRecipe implements IShapedRecipe<Crafting
 
     @Override
     public ItemStack assemble(CraftingContainer inv, RegistryAccess p_267165_) {
-        IBeddingMaterial beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1));
-        ICasingMaterial casingId = DogBedUtil.getCasingFromStack(inv.getItem(0));
+        var beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1))
+            .orElse(DogBedMaterialManager.NaniBedding.NULL);
+        var casingId = DogBedUtil.getCasingFromStack(inv.getItem(0))
+            .orElse(DogBedMaterialManager.NaniCasing.NULL);
 
         return DogBedUtil.createItemStack(casingId, beddingId);
     }
