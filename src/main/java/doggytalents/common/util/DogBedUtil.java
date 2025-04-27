@@ -18,6 +18,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class DogBedUtil {
@@ -62,26 +63,26 @@ public class DogBedUtil {
         return stack;
     }
 
-    public static ICasingMaterial getCasingFromStack(ItemStack stack) {
+    public static Optional<ICasingMaterial> getCasingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getCasings().entrySet()) {
             var m = e.getValue();
             if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
-                return m;
+                return Optional.of(m);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public static IBeddingMaterial getBeddingFromStack(ItemStack stack) {
+    public static Optional<IBeddingMaterial> getBeddingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getBeddings().entrySet()) {
             var m = e.getValue();
             if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
-                return m;
+                return Optional.of(m);
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public static ItemStack createItemStackForced(Block casing, Block bedding) {

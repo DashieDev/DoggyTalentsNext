@@ -26,8 +26,8 @@ import java.util.UUID;
 
 public class DogBedTileEntity extends PlacedTileEntity {
 
-    private ICasingMaterial casingType = null;
-    private IBeddingMaterial beddingType = null;
+    private ICasingMaterial casingType = DogBedMaterialManager.NaniCasing.NULL;
+    private IBeddingMaterial beddingType = DogBedMaterialManager.NaniBedding.NULL;
 
 
     // public static ModelProperty<ICasingMaterial> CASING = new ModelProperty<>();
