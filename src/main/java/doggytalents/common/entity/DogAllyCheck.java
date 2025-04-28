@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyEntityTypes;
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -106,4 +108,26 @@ public class DogAllyCheck {
             return false;
         }
     }
+
+    //Workaround to apply DogAllyCheck to sweeping attack too.
+    private static final ThreadLocal<Boolean> isMixinCalling = ThreadLocal.withInitial(() -> false);
+    public static boolean onEntityIsAlliedToServer(Entity self, Entity entity) {
+        boolean entity_type_check = 
+            self.getType() == EntityType.PLAYER
+            && entity.getType() == DoggyEntityTypes.DOG.get();
+        if (!entity_type_check)
+            return false;
+        if (isMixinCalling.get())
+            return false;
+            
+        if (!(entity instanceof Dog dog))
+            return false;
+        
+        isMixinCalling.set(true);
+        boolean result = DogAllyCheck.isAlliedToDog(dog, self);
+        isMixinCalling.set(false);
+        
+        return result;
+    }
+
 }
