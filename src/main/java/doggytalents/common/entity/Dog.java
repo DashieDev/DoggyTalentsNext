@@ -2884,12 +2884,15 @@ public class Dog extends AbstractDog {
 		}
 
         try {
-            this.setGender(DogGender.bySaveName(compound.getString("dogGender")));
+            this.setDogVariant(
+                DogVariantUtil.fromSaveString(compound.getString("classicalVariant"))
+            );
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.error("Failed to load Dog Variant: " + e.getMessage());
+            e.printStackTrace();
+        }
 
-            if (compound.contains("mode", Tag.TAG_STRING)) {
-            this.setMode(DogMode.bySaveName(compound.getString("mode")));
-            }
-
+        try {
             var dogSkinData = DogSkinData.readFromTag(compound);
             this.setDogSkinData(dogSkinData);
 
@@ -2899,10 +2902,16 @@ public class Dog extends AbstractDog {
             if (compound.contains("fetchItem", Tag.TAG_COMPOUND)) {
                 this.setBoneVariant(NBTUtil.readItemStack(this.registryAccess(), compound, "fetchItem"));
             }
+        } catch (Exception e) {
 
-            this.setDogVariant(
-                DogVariantUtil.fromSaveString(compound.getString("classicalVariant"))
-            );
+        }
+
+        try {
+            this.setGender(DogGender.bySaveName(compound.getString("dogGender")));
+
+            if (compound.contains("mode", Tag.TAG_STRING)) {
+                this.setMode(DogMode.bySaveName(compound.getString("mode")));
+            }
             
             this.setHungerDirectly(compound.getFloat("dogHunger"));
             this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
