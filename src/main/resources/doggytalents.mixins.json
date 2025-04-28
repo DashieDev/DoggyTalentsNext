@@ -4,6 +4,7 @@
     "package": "doggytalents.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
+        "EntityMixin",
 
         
         "EntityMixin_1_21_3",
