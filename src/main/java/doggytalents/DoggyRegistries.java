@@ -32,7 +32,7 @@ public class DoggyRegistries {
         DoggyTalentsAPI.ACCESSORIES = event.create(makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class));
         DoggyTalentsAPI.ACCESSORY_TYPE = event.create(makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class).disableSync());
         DoggyTalentsAPI.TALENT_OPTIONS = makeDogSyncRegistry(event);
-        DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
+        DOG_VARIANT = makeRegistry(event, Keys.DOG_VARIANT, DogVariant.class, Util.getResource("missing"));
     }
 
     private static <T> RegistryBuilder<T> makeRegistry(final ResourceLocation rl, Class<T> type) {

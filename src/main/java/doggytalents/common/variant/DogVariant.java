@@ -12,6 +12,10 @@ public class DogVariant {
         .icon(Util.getResource("textures/entity/dog/classical_icon/pale.png"))
         .guiColor(0xffdad7d8));
 
+    public static final DogVariant MISSING = new DogVariant(DogVariant.props("missing")
+        .icon(Util.getResource("textures/entity/dog/classical_icon/pale.png"))
+        .guiColor(0xffff5555));
+
     private final ResourceLocation id;
     private final ResourceLocation texture;
     private final String translation;
