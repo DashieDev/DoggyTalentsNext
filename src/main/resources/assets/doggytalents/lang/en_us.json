@@ -586,6 +586,8 @@
 
    "dog.classical.variant.compl.vscode": "VSCode",
 
+   "dog.classical.variant.compl.missing": "Missing",
+
    "dog.petmode.facerub": "Face Rub",
    "dog.petmode.hug": "Hug",
    "dog.petmode.belly_rub": "Belly Rub",

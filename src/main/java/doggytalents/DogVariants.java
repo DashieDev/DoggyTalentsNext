@@ -46,6 +46,8 @@ public class DogVariants {
     public static final Supplier<DogVariant> MOLTEN = register("molten", MoltenWolfVariant::new);
     public static final Supplier<DogVariant> YUZU = register("yuzu", 0xffe3b401);
 
+    public static final Supplier<DogVariant> MISSING = registerMissing();
+
     private static Supplier<DogVariant> register(String name, Function<String, DogVariant> variant_creator) {
         var captured_variant = variant_creator.apply(name);
         return DOG_VARIANT.register(name, () -> captured_variant);
@@ -73,6 +75,10 @@ public class DogVariants {
 
     private static Supplier<DogVariant> registerDefault() {
         return DOG_VARIANT_VANILLA.register("pale", () -> DogVariant.PALE);
+    }
+
+    private static Supplier<DogVariant> registerMissing() {
+        return DOG_VARIANT.register("missing", () -> DogVariant.MISSING);
     }
 
 }
