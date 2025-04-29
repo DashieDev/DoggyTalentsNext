@@ -31,7 +31,7 @@ public class DoggyRegistries {
         DoggyTalentsAPI.ACCESSORIES = makeRegistry(Keys.ACCESSORIES_REGISTRY, Accessory.class);
         DoggyTalentsAPI.ACCESSORY_TYPE = makeRegistry(Keys.ACCESSORY_TYPE_REGISTRY, AccessoryType.class);
         DoggyTalentsAPI.TALENT_OPTIONS = makeDogSyncRegistry();
-        DOG_VARIANT = makeRegistry(Keys.DOG_VARIANT, DogVariant.class, Util.getVanillaResource("pale"));
+        DOG_VARIANT = makeRegistry(Keys.DOG_VARIANT, DogVariant.class, Util.getResource("missing"));
     }
 
     private static <T> Supplier<Registry<T>> makeRegistry(final ResourceKey<Registry<T>> key, Class<T> type) {
