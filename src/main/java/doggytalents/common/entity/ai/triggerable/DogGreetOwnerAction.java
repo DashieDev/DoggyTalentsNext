@@ -211,6 +211,11 @@ public class DogGreetOwnerAction extends TriggerableAction {
     }
 
     @Override
+    public void onDogGoesOfflineWhileActive() {
+        dog.dogOwnerDistanceManager.onGreetingActionStop(owner);
+    }
+
+    @Override
     public boolean canOverrideSit() {
         return true;
     }
