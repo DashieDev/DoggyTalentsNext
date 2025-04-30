@@ -125,6 +125,7 @@ public class OokamiKazeTalent extends TalentInstance {
                 return;
             }
             this.dog.setForcedActionAnim(true);
+            this.dog.dogSoundManager.setAmbientLocked(true);
         }
 
         @Override
@@ -199,7 +200,7 @@ public class OokamiKazeTalent extends TalentInstance {
             }
             --tickTillHowl;
             if (tickTillHowl == 0) {
-                dog.howl();
+                dog.dogSoundManager.playInterruptible(SoundEvents.WOLF_HOWL, 1, dog.getVoicePitch());
             } else if (tickTillHowl == 30) {
                 this.dog.playSound(EntityUtil_1_21_5.legacyWolfGrowlSound(dog), 0.3F, dog.getVoicePitch());
             }
@@ -216,6 +217,8 @@ public class OokamiKazeTalent extends TalentInstance {
         @Override
         public void onStop() {
             this.dog.setForcedActionAnim(false);
+            dog.dogSoundManager.setAmbientLocked(false);
+            dog.dogSoundManager.interuptPlaying();
             if (phase == ActionPhase.EXPLODE) {
                 if (dog.getAnim() == DogAnimation.HOWL) {
                     dog.setAnim(DogAnimation.NONE);
