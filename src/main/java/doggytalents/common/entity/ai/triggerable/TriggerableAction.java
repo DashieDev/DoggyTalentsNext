@@ -70,6 +70,8 @@ public abstract class TriggerableAction {
         return this.canPause;
     }
 
+    public void onDogGoesOfflineWhileActive() {}
+
     public ActionState getState() {
         return this.state;
     }
