@@ -180,4 +180,9 @@ public class DogBridgingAction extends TriggerableAction {
             dog.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         DogBridging.onBridgingActionStop(owner);
     }
+
+    @Override
+    public void onDogGoesOfflineWhileActive() {
+        DogBridging.onBridgingActionStop(owner);
+    }
 }

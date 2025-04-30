@@ -466,6 +466,11 @@ public class DogAiManager {
         this.trivialActionGoal.clearAction();
     }
 
+    public void handleOfflineDog() {
+        this.nonTrivialActionGoal.handleOfflineDog();
+        this.trivialActionGoal.handleOfflineDog();
+    }
+
     public boolean isActionBlockingSit() {
         var actionOptional = getActiveAction();
 
@@ -533,6 +538,13 @@ public class DogAiManager {
             if (this.action == null)
                 return;
             this.action.stop();
+            this.action = null;
+        }
+
+        public void handleOfflineDog() {
+            if (this.action == null)
+                return;
+            this.action.onDogGoesOfflineWhileActive();
             this.action = null;
         }
 

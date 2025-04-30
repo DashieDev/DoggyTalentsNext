@@ -43,6 +43,7 @@ public class OnlineDogLocationManager {
             toRemove.add(entry.getKey());
             if (ConfigHandler.SERVER.LOG_WHEN_DOG_GO_OFFLINE.get())
                 logOfflineDog(entry.getValue());
+            dog.dogAi.handleOfflineDog();
         }
         if (toRemove.isEmpty())
             return;
