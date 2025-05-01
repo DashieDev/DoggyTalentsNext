@@ -1,26 +1,18 @@
 package doggytalents.common.entity.ai;
 
 import java.util.EnumSet;
-import java.util.List;
-
-import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
-import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.phys.AABB;
 
 public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
@@ -31,8 +23,10 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
     //Guard Mode Job is to make sure everything in this radius around the owner is safe
     //If there is an enermy in this radius, the dog will attack the enermy until it either
     //leaves the radius or dies.
-    private static final int GUARD_DISTANCE_SQR = 25;
-    private static final int GUARD_DISTANCE = 5;
+    private static final int GUARD_DISTANCE = 6;
+    private static final int GUARD_DISTANCE_SQR = GUARD_DISTANCE * GUARD_DISTANCE;
+    private static final int START_FOLLOW_DISTANCE_SQR = 6;
+    private static final int STOP_FOLLOW_DISTANCE_SQR = 4;
 
     public GuardModeGoal(Dog dog) {
         super(dog, Mob.class, 3, false, false, (e) -> {
@@ -58,12 +52,12 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     @Override
     protected double getFollowDistance() {
-        return 6D;
+        return 2 * GUARD_DISTANCE * Mth.SQRT_OF_TWO + 1;
     }
 
     @Override
     protected void findTarget() {
-       this.target = this.dog.level().getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(this.getFollowDistance()));
+       this.target = this.dog.level().getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(GUARD_DISTANCE));
     }
 
     @Override
@@ -79,8 +73,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         private final Dog dog;
         private LivingEntity owner;
         private LivingEntity nearestDanger;
-        private int tickUntilSearch = 0;
-        private int tickUntilGrowl = 0;
+        private int searchTimestamp = 0;
+        private int growlCoolDownEnd = 0;
         private int tickUntilPathRecalc = 0;
 
         private final int SEARCH_RADIUS = GUARD_DISTANCE;
@@ -115,31 +109,42 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         @Override
         public void tick() { 
             if (this.nearestDanger != null)
-            this.dog.getLookControl().setLookAt(this.nearestDanger, 10.0F, this.dog.getMaxHeadXRot());
-            if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
+                this.dog.getLookControl().setLookAt(this.nearestDanger, 10.0F, this.dog.getMaxHeadXRot());
+            double dist_owner_sqr = dog.distanceToSqr(owner);
+            if (this.tickUntilPathRecalc > 0)
+                --this.tickUntilPathRecalc;
+            if (dist_owner_sqr >= START_FOLLOW_DISTANCE_SQR && this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
                         DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
                     } else {
-                        this.dog.getNavigation().moveTo(this.owner, 1.5);
+                        float speed = dist_owner_sqr <= 9 ? 1 : this.dog.getUrgentSpeedModifier(); 
+                        this.dog.getNavigation().moveTo(this.owner, speed);
                     }
                 }
             }
 
-            if (--this.tickUntilSearch <= 0) {
-                this.tickUntilSearch = 10;
+            if (dist_owner_sqr < STOP_FOLLOW_DISTANCE_SQR) {
+                this.dog.breakMoveControl();
+                this.dog.getNavigation().stop();
+            } 
+
+            if (dog.tickCount >= this.searchTimestamp) {
+                this.searchTimestamp = dog.tickCount + 10;
                 boolean wasSafe = this.nearestDanger == null;
                 this.findDanger();
                 if (this.nearestDanger != null && wasSafe ) {
-                    this.tickUntilGrowl = 0;
+                    int max_timestamp = this.dog.tickCount + 20;
+                    if (this.growlCoolDownEnd > max_timestamp)
+                        this.growlCoolDownEnd = max_timestamp;
                 }
             }
 
             if (this.nearestDanger != null) {
-                if (--this.tickUntilGrowl <= 0) {
-                    this.tickUntilGrowl = 25;
+                if (dog.tickCount >= this.growlCoolDownEnd) {
+                    this.growlCoolDownEnd = dog.tickCount + 50;
                     var sound = dog.dogMood.getSeriousGrowl();
                     dog.playSound(
                         sound, 
@@ -218,7 +223,6 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
             
             var target = this.dog.getTarget();
             if (target != null) {
-                // If target is in guard distance, then let the dog attack until target is no longer in.
                 if (target.distanceToSqr(this.owner) <= GUARD_DISTANCE_SQR) {
                     return false;
                 }
@@ -235,16 +239,25 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
         @Override
         public void tick() { 
             
-            if (dog.distanceToSqr(owner) > 2 && --this.tickUntilPathRecalc <= 0) {
+            double dist_owner_sqr = dog.distanceToSqr(owner);
+            if (this.tickUntilPathRecalc > 0)
+                --this.tickUntilPathRecalc;
+            if (dist_owner_sqr >= START_FOLLOW_DISTANCE_SQR && this.tickUntilPathRecalc <= 0) {
                 this.tickUntilPathRecalc = 5;
                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
                     //Outside guard radius -> tp 
                     if (this.dog.distanceToSqr(this.owner) > GUARD_DISTANCE_SQR) {
                         DogUtil.guessAndTryToTeleportToOwner(dog, owner, 4);
                     } else {
-                        this.dog.getNavigation().moveTo(this.owner, 1.5);
+                        float speed = dist_owner_sqr <= 9 ? 1 : this.dog.getUrgentSpeedModifier(); 
+                        this.dog.getNavigation().moveTo(this.owner, speed);
                     }
                 }
+            }
+
+            if (dist_owner_sqr < STOP_FOLLOW_DISTANCE_SQR) {
+                this.dog.breakMoveControl();
+                this.dog.getNavigation().stop();
             }
         }
 
