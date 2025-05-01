@@ -34,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec2;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.MovementInputUpdateEvent;
@@ -89,6 +90,11 @@ public class DTNClientPettingManager {
         if (isPetting)
             updatePetCameraRotation();
         invalidatePetterCache();
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        clearPetterMap();
     }
 
     private final List<UUID> toRemoveForPetter = new ArrayList<>();
@@ -425,6 +431,11 @@ public class DTNClientPettingManager {
         this.petterMap.remove(petter);
         if (isSelfUUID(petter))
             this.setPetting(null);
+    }
+
+    private void clearPetterMap() {
+        this.petterMap.clear();
+        this.setPetting(null);
     }
 
     private boolean isSelfUUID(UUID petter) {

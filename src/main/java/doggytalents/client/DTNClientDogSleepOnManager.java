@@ -24,6 +24,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 public class DTNClientDogSleepOnManager {
@@ -43,6 +44,11 @@ public class DTNClientDogSleepOnManager {
     @SubscribeEvent
     public void tickClient(ClientTickEvent.Post event) {
         invalidateSleeperCache();
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        this.sleeperMap.clear();
     }
 
     public void invalidateSleeperCache() {
