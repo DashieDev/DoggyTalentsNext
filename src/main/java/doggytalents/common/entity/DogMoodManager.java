@@ -203,7 +203,6 @@ public class DogMoodManager {
 
 
     private static final List<Supplier<SoundEvent>> serious_growl = List.of(
-        DogSounds.ANGRY_GROWL1,
         DogSounds.ANGRY_GROWL2,
         DogSounds.ANGRY_GROWL3,
         DogSounds.PUGLIN_GROWL1,
@@ -287,8 +286,7 @@ public class DogMoodManager {
         DogSounds.BIG_WHINE,
         DogSounds.BIG_PANTING,
         DogSounds.ANGRY_PANTING,
-        DogSounds.CLASSIC_PANTING,
-        DogSounds.GRUMPY_PANTING
+        DogSounds.CLASSIC_PANTING
     );
     public Pair<SoundEvent, Boolean> getPettingAmbient() {
         float r = this.dog.getRandom().nextFloat();
