@@ -95,6 +95,11 @@ public class DTNClientPettingManager {
         invalidatePetterCache();
     }
 
+    @SubscribeEvent
+    public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        clearPetterMap();
+    }
+
     private final List<UUID> toRemoveForPetter = new ArrayList<>();
     public void invalidatePetterCache() {
         if (this.petterMap.isEmpty())
@@ -432,6 +437,11 @@ public class DTNClientPettingManager {
         this.petterMap.remove(petter);
         if (isSelfUUID(petter))
             this.setPetting(null);
+    }
+
+    private void clearPetterMap() {
+        this.petterMap.clear();
+        this.setPetting(null);
     }
 
     private boolean isSelfUUID(UUID petter) {

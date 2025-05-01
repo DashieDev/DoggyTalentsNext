@@ -47,6 +47,11 @@ public class DTNClientDogSleepOnManager {
         invalidateSleeperCache();
     }
 
+    @SubscribeEvent
+    public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        this.sleeperMap.clear();
+    }
+
     public void invalidateSleeperCache() {
         if (this.sleeperMap.isEmpty())
             return;
