@@ -14,10 +14,12 @@ import org.spongepowered.asm.mixin.injection.modify.LocalVariableDiscriminator.C
 import doggytalents.DoggyAttributes;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.FabricDogKillXPFix;
+import doggytalents.common.fabric_helper.entity.FabricMobKillDropCapture;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player.BedSleepingProblem;
@@ -101,6 +103,22 @@ public class LivingEntityMixin {
         EventCallbacksRegistry.postEvent(event);
         if (event.canContinueSleeping())
             info.setReturnValue(true);
+    }
+
+    @Inject(method = "dropAllDeathLoot(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;)V", at = @At("HEAD"))
+    public void dtn__dropAllDeathLoot_head(ServerLevel level, DamageSource source, CallbackInfo info) {
+        var self = (LivingEntity)(Object)this;
+        if (self.level().isClientSide)
+            return;
+        FabricMobKillDropCapture.onServerMobLootStart(self);
+    }
+
+    @Inject(method = "dropAllDeathLoot(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;)V", at = @At("TAIL"))
+    public void dtn__dropAllDeathLoot_tail(ServerLevel level, DamageSource source, CallbackInfo info) {
+        var self = (LivingEntity)(Object)this;
+        if (self.level().isClientSide)
+            return;
+        FabricMobKillDropCapture.onServerMobLootEnd(self, source);
     }
 
 }

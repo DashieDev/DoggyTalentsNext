@@ -145,6 +145,12 @@ public class EventHandlerRegisterer {
                     (x, y) -> x.playerWakeUpEvent(y)
                 )
         );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, LivingDropsEvent>
+                (handlerIst, LivingDropsEvent.class,
+                    (x, y) -> x.onLivingDeath(y)
+                )
+        );
     }
 
 }

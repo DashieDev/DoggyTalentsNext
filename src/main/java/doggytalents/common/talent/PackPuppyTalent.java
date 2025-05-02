@@ -461,32 +461,32 @@ public class PackPuppyTalent extends TalentInstance {
 
     private static int NOTIFY_RADIUS = 20;
     public static void mayNotifyNearbyPackPuppy(LivingDropsEvent event) {
-        // var source = event.getSource();
-        // var killed = event.getEntity();
-        // var killer = source.getEntity();
-        // if (killer == null)
-        //     return;
-        // if (killer.level().isClientSide)
-        //     return;
+        var source = event.getSource();
+        var killed = event.getEntity();
+        var killer = source.getEntity();
+        if (killer == null)
+            return;
+        if (killer.level().isClientSide)
+            return;
 
         // var drops = event.getDrops();
         // if (drops.isEmpty())
         //     return;
 
-        // if (!(killer instanceof LivingEntity killerLiving))
-        //     return;
+        if (!(killer instanceof LivingEntity killerLiving))
+            return;
         
-        // boolean eligibleKiller = 
-        //     killerLiving instanceof Player
-        //     || killerLiving instanceof Dog;
-        // if (!eligibleKiller)
-        //     return;
+        boolean eligibleKiller = 
+            killerLiving instanceof Player
+            || killerLiving instanceof Dog;
+        if (!eligibleKiller)
+            return;
         
-        // var dogOptional = findNearestChestDogToNotify(killerLiving);
-        // if (!dogOptional.isPresent())
-        //     return;
-        // var dog = dogOptional.get();
-        // dog.triggerAction(new DogCollectLootAction(dog, killed.blockPosition()));
+        var dogOptional = findNearestChestDogToNotify(killerLiving);
+        if (!dogOptional.isPresent())
+            return;
+        var dog = dogOptional.get();
+        dog.triggerAction(new DogCollectLootAction(dog, killed.blockPosition()));
     }
 
     private static Optional<Dog> findNearestChestDogToNotify(LivingEntity killer) {

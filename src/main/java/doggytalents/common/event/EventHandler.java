@@ -42,6 +42,7 @@ import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
 import doggytalents.forge_imitate.event.EntityTravelToDimensionEvent;
 import doggytalents.forge_imitate.event.LivingChangeTargetEvent;
+import doggytalents.forge_imitate.event.LivingDropsEvent;
 import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
@@ -535,10 +536,10 @@ public class EventHandler {
         return from.distanceToSqr(to) < MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR;
     }
 
-    // @SubscribeEvent
-    // public void onLivingDeath(LivingDropsEvent event) {
-    //     PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
-    // }
+    //@SubscribeEvent
+    public void onLivingDeath(LivingDropsEvent event) {
+        PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
+    }
 
     //@SubscribeEvent
     public void onTagsUpdated(TagsUpdatedEvent event) {
