@@ -25,8 +25,8 @@ public class Resources {
     public static final ResourceLocation ENTITY_WOLF_ANGRY = Util.getResource(Constants.VANILLA_ID, "textures/entity/wolf/wolf_angry.png");
     public static final ResourceLocation ENTITY_WOLF_COLLAR = Util.getResource(Constants.VANILLA_ID, "textures/entity/wolf/wolf_collar.png");
 
-    public static final ResourceLocation DOG_CLASSICAL = getEntity("dog", "custom/classical/wolf");
-    public static final ResourceLocation DOG_MYSTERY = getEntity("dog", "custom/classical/wolf_nani");
+    public static final ResourceLocation DOG_CLASSICAL = getEntity("dog", "classical/wolf_pale");
+    public static final ResourceLocation DOG_MYSTERY = getEntity("dog", "classical/compl/wolf_missing");
     public static final ResourceLocation OKAMI_AMATERASU = getEntity("dog", "custom/ammy_divine_mouthopen");
 
     public static final ResourceLocation COLLAR_DEFAULT = getEntity("dog", "doggy_collar");
