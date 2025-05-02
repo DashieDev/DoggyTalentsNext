@@ -15,7 +15,8 @@
         "ThrownEggMixin",
         "MobMixin",
         "ServerLevelMixin",
-        "PlayerMixin"
+        "PlayerMixin",
+        "EntityMixin"
     ],
     "client": [
         "LocalPlayerMixin",
