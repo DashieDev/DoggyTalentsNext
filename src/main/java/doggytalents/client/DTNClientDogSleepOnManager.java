@@ -13,6 +13,7 @@ import com.mojang.math.Axis;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
+import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
 import net.minecraft.client.Camera;
@@ -46,7 +47,7 @@ public class DTNClientDogSleepOnManager {
         invalidateSleeperCache();
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         this.sleeperMap.clear();
     }

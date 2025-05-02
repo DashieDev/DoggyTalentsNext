@@ -116,6 +116,12 @@ public class ClientEventHandlerRegisterer {
                 )
         );
         EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientPettingManager, ClientPlayerNetworkEvent.LoggingOut>
+                (DTNClientPettingManager.get(), ClientPlayerNetworkEvent.LoggingOut.class,
+                    DTNClientPettingManager::onPlayerLoggingOut
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<DTNClientPettingManager, RenderArmEvent>
                 (DTNClientPettingManager.get(), RenderArmEvent.class,
                     DTNClientPettingManager::onRenderHand
@@ -149,6 +155,12 @@ public class ClientEventHandlerRegisterer {
             new InstanceEventCallBack<DTNClientDogSleepOnManager, ClientTickEvent>
                 (DTNClientDogSleepOnManager.get(), ClientTickEvent.class,
                     DTNClientDogSleepOnManager::tickClient
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<DTNClientDogSleepOnManager, ClientPlayerNetworkEvent.LoggingOut>
+                (DTNClientDogSleepOnManager.get(), ClientPlayerNetworkEvent.LoggingOut.class,
+                    DTNClientDogSleepOnManager::onPlayerLoggingOut
                 )
         );
     }
