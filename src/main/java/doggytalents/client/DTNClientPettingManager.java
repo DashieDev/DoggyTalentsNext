@@ -22,6 +22,7 @@ import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import doggytalents.common.fabric_helper.util.FabricUtil;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
+import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
 import doggytalents.forge_imitate.event.client.ComputeCameraAngles;
@@ -95,7 +96,7 @@ public class DTNClientPettingManager {
         invalidatePetterCache();
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         clearPetterMap();
     }
