@@ -1864,3 +1864,41 @@ use the Dog Bridging Whistle while standing in the position and facing the direc
 you want the Dog to begin bridging and to bridge towards respectively. Note that they can 
 only bridge straight and will stop bridging if you are too far away.
 * (Fabric Only) Fix Dog Food Bowl Position not synchronizing with client.
+
+**1.18.49 - 3rd May 2025**
++ Apply DogAllyCheck logic to prevent Sweeping Attack side effects 
+(Fire Aspect, Knockback, etc) on allied Dogs. This also means that the check can
+prevent Dogs whose Owners went Offline from Sweeping Attack side effects from 
+players who are allied to them.
++ Missing Dog Variant is now preserved upon attempting to load for a Dog. The Dog variant
+will temporary be "Missing" until the Dog either changes its variant or loads with
+the missing variant present.
+# Ookamikaze Howl will now play as interruptible
+
+Guard Mode Improvements:
+# Dogs now stay a bit further away from owner for lesser collision
+# When following owner, Dogs will now slow down and stop if too close
+to Owner to for lesser collision
+# Improve Repsonse Time and Navigation
+# Ensured that the interval between each time G Minor Dog growls to alert owner to 
+not be too small.
+# Prevent cases where a danger is in guard radius yet still not in Dog's follow distance
+causing it to not attack the target.
+# Guard Radius is nows increased to 6 blocks
+
+adjust, apply and define some parameters:
+GUARD_DISTANCE -> 6
+Correct improper use of getFollowDistance, now is the longest distance that the dog can be away from the target within the guard square.
+START_FOLLOW_DISTANCE and STOP_FOLLOW_DISTANC
+
+Dog Sound Interpretation change:
+# Removed GRUMPY_PANTING from petting ambient sounds
+# Removed ANGRY_GROWL1 from serious growl sounds
+
+* Potential Fix for cases where the player got disconnected while petting a Dog
+and then joined back with their hands still rendered as if they are still petting despite
+that they are not. 
+* Fix Bridging/Greeting Owner Limit Counter may not be able to decrease
+when a Dog goes Offline while carrying out those actions which may cause 
+the Owner to have fewer Briding/Greeting Dogs at the same time. 
+* Fix Potential Crash when getting a cloned ItemStack from Dog Bed. 
