@@ -82,7 +82,7 @@ public class DogVariantUtil {
 
     public static List<DogVariant> getAllWithMissing() {
         var variant_reg = DoggyRegistries.DOG_VARIANT.get();
-        var entries = variant_reg.stream()
+        var entries = variant_reg.getValues().stream()
             .collect(Collectors.toList());
         return entries;
     }
