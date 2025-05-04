@@ -1902,3 +1902,4 @@ that they are not.
 when a Dog goes Offline while carrying out those actions which may cause 
 the Owner to have fewer Briding/Greeting Dogs at the same time. 
 * Fix Potential Crash when getting a cloned ItemStack from Dog Bed. 
+* (Fabric only) Fix Pack Puppy Collect Kill Loot not working.
