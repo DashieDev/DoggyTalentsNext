@@ -11,4 +11,9 @@ public class DogRenderState_21_3 extends LivingEntityRenderState {
     //this state system acts as a view of the Dog for another thread  
     public Dog dog = null;
 
+
+
+    //Fabric
+    public float partialTick;
+
 }

@@ -75,8 +75,8 @@ public class ForgeGuiOverlayManager {
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
             }
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            // RenderSystem.setShader(GameRenderer::getPositionTexShader);
         }
     }
 

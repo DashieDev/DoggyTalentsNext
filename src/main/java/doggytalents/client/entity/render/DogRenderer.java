@@ -499,6 +499,9 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         extract_to.dog = dog;
         scaleDog(dog, extract_to, p_ticks);
         extractRightHandItemModelForDog(dog, extract_to);
+
+        //fabric
+        extract_to.partialTick = p_ticks;
     }
     private void extractRightHandItemModelForDog(Dog dog, DogRenderState_21_3 extract_to) {
         if (extract_to.rightHandItemModel != null)

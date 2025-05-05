@@ -40,7 +40,7 @@ public class NattoItem extends DogEddibleItem {
     @Override
     public List<PossibleEffect_1_21_3> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return List.of(new PossibleEffect_1_21_3(() -> new MobEffectInstance(DoggyEffects.NATTO_BITE, 180 * 20, 1), 1f));
+        return List.of(new PossibleEffect_1_21_3(() -> new MobEffectInstance(DoggyEffects.NATTO_BITE.holder(), 180 * 20, 1), 1f));
     }
 
     @Override

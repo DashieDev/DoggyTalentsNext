@@ -10,4 +10,9 @@ public class WrappedEntityRenderState_21_3<T extends Entity> extends EntityRende
         this.entity = entity;
     }
 
+
+
+    //Fabric
+    public float partialTick;
+
 }

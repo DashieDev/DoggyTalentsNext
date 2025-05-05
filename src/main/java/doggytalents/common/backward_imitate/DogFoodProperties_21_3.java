@@ -34,7 +34,8 @@ public class DogFoodProperties_21_3 {
         return this;
     }
 
-    public DogFoodProperties_21_3 effect(Supplier<MobEffectInstance> effectCreator, float possiblity) {
+    public DogFoodProperties_21_3 effect(MobEffectInstance effectCreator_fabric, float possiblity) {
+        Supplier<MobEffectInstance> effectCreator = () -> new MobEffectInstance(effectCreator_fabric); // fabric
         this.effectList.add(new PossibleEffect_1_21_3(effectCreator, possiblity));
         this.effectBuilder.onConsume(
             new ApplyStatusEffectsConsumeEffect(

@@ -2,7 +2,7 @@ package doggytalents.forge_imitate.event;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.ServerLevelAccessor;
 
@@ -10,18 +10,18 @@ public class MobSpawnEvent {
     
     public static class FinalizeSpawn extends Event {
         
-        private final MobSpawnType type;
+        private final EntitySpawnReason type;
         private final LivingEntity entity;
         private SpawnGroupData data;
 
-        public FinalizeSpawn(LivingEntity entity, MobSpawnType spawnType,
+        public FinalizeSpawn(LivingEntity entity, EntitySpawnReason spawnType,
             SpawnGroupData data) {
             this.type = spawnType;
             this.entity = entity;
             this.data = data;
         }
 
-        public MobSpawnType getSpawnType() {
+        public EntitySpawnReason getSpawnType() {
             return this.type;
         }
 
@@ -44,9 +44,9 @@ public class MobSpawnEvent {
         private final Entity entity;
         private Result result = Result.PASS;
         private final ServerLevelAccessor level;
-        private final MobSpawnType spawnType;
+        private final EntitySpawnReason spawnType;
 
-        public PositionCheck(Entity entity, ServerLevelAccessor sLevelAccessor, MobSpawnType spawnType) {
+        public PositionCheck(Entity entity, ServerLevelAccessor sLevelAccessor, EntitySpawnReason spawnType) {
             this.entity = entity;
             this.spawnType = spawnType;
             this.level = sLevelAccessor;
@@ -60,7 +60,7 @@ public class MobSpawnEvent {
             return this.level;
         }
 
-        public MobSpawnType getSpawnType() {
+        public EntitySpawnReason getSpawnType() {
             return this.spawnType;
         }
 

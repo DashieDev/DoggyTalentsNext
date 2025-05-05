@@ -16,6 +16,7 @@ import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.backward_imitate.DogBedHelper_21_3;
 import doggytalents.common.util.NBTUtil;
+import doggytalents.common.util.TagUtil;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent.UpdateCause;
@@ -172,7 +173,7 @@ public class DogBedMaterialManager {
 
     private static List<Block> fetchBeddingBlocks() {
         var tags = BuiltInRegistries.BLOCK;
-        var wools = tags.getTag(BlockTags.WOOL).map(x -> x
+        var wools = tags.get(BlockTags.WOOL).map(x -> x
             .stream().map(y -> y.value()).collect(Collectors.toList())).orElse(List.of());
         var ret = new ArrayList<Block>(wools.size());
         ret.addAll(wools);

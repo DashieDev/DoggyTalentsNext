@@ -36,6 +36,9 @@ public abstract class EntityRenderer_21_3<T extends Entity> extends EntityRender
     public void extractRenderState(T entity, WrappedEntityRenderState_21_3<T> render_state, float pticks) {
         super.extractRenderState(entity, render_state, pticks);
         render_state.entity = entity;
+
+        //fabric
+        render_state.partialTick = pticks;
     }
     
     public void render(T entity, float yrot, float pticks, PoseStack stack,

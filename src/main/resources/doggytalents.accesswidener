@@ -1,7 +1,6 @@
 accessWidener v2 named
 accessible class net/minecraft/server/level/ServerLevel$EntityCallbacks
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
-accessible method net/minecraft/client/renderer/block/model/ItemOverrides <init> ()V
 accessible field net/minecraft/client/renderer/block/model/BlockModel parentLocation Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/renderer/block/model/BlockModel textureMap Ljava/util/Map;
 accessible field net/minecraft/client/renderer/block/model/BlockModel parent Lnet/minecraft/client/renderer/block/model/BlockModel;
@@ -10,7 +9,6 @@ accessible field net/minecraft/world/entity/LivingEntity lastHurtByPlayer Lnet/m
 accessible field net/minecraft/world/entity/LivingEntity lastHurtByPlayerTime I
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getSoundType (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;
 extendable method net/minecraft/world/entity/LivingEntity getDimensions (Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
-accessible method net/minecraft/client/resources/model/ModelBakery getModel (Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/resources/model/UnbakedModel;
 accessible method net/minecraft/world/entity/projectile/AbstractArrow setPierceLevel (B)V
 accessible field net/minecraft/client/gui/screens/Screen renderables Ljava/util/List;
 accessible method net/minecraft/client/Camera move (FFF)V

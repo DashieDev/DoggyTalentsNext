@@ -11,24 +11,24 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 
 @Mixin(ServerPlayer.class)
 public class ServerPlayerMixin {
     
-    @Inject(at = @At("HEAD"),  method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V")
-    public void dtn__teleportTo(ServerLevel level, double x, double y, double z, float f1, float f2, CallbackInfo info) {
+    @Inject(at = @At("HEAD"),  method = "teleport(Lnet/minecraft/world/level/portal/TeleportTransition;)Lnet/minecraft/server/level/ServerPlayer;")
+    public void dtn__teleportTo(TeleportTransition transition, CallbackInfo info) {
         var self = (ServerPlayer)(Object)this;
-        if (level != self.level()) {
-            EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.dimension()));
+        if (transition.newLevel() != self.level()) {
+            EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, transition.newLevel().dimension()));
         }
     }
 
-    @Inject(at = @At("HEAD"),  method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;")
-    public void dtn_changeDimension(DimensionTransition level, CallbackInfoReturnable<Entity> info) {
-        var self = (ServerPlayer)(Object)this;
-        EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.newLevel().dimension()));
-    }
+    // @Inject(at = @At("HEAD"),  method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;")
+    // public void dtn_changeDimension(DimensionTransition level, CallbackInfoReturnable<Entity> info) {
+    //     var self = (ServerPlayer)(Object)this;
+    //     EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.newLevel().dimension()));
+    // }
 
 
 }
