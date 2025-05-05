@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bowl"
-    },
-    "S": {
-      "item": "doggytalents:soy_beans_dried"
-    }
+    "B": "minecraft:bowl",
+    "S": "doggytalents:soy_beans_dried"
   },
   "pattern": [
     "SSS",

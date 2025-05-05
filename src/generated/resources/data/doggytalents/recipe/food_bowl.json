@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "X": {
-      "item": "minecraft:iron_ingot"
-    },
-    "Y": {
-      "item": "minecraft:bowl"
-    }
+    "X": "minecraft:iron_ingot",
+    "Y": "minecraft:bowl"
   },
   "pattern": [
     "XXX",

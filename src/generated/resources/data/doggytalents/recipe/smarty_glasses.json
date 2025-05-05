@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:sunglasses"
-    },
-    {
-      "item": "minecraft:redstone"
-    }
+    "doggytalents:sunglasses",
+    "minecraft:redstone"
   ],
   "result": {
     "count": 1,

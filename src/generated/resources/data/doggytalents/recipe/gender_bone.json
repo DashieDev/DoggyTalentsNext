@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "doggytalents:amnesia_bone"
-    },
-    "B": {
-      "item": "minecraft:blue_dye"
-    },
-    "L": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "M": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "P": {
-      "item": "minecraft:pink_dye"
-    }
+    "A": "doggytalents:amnesia_bone",
+    "B": "minecraft:blue_dye",
+    "L": "minecraft:lapis_lazuli",
+    "M": "minecraft:amethyst_shard",
+    "P": "minecraft:pink_dye"
   },
   "pattern": [
     " LB",

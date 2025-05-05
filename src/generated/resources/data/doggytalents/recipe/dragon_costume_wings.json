@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:training_treat"
-    },
-    {
-      "item": "minecraft:elytra"
-    }
+    "doggytalents:training_treat",
+    "minecraft:elytra"
   ],
   "result": {
     "count": 1,

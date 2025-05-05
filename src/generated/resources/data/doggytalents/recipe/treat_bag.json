@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "C": {
-      "item": "doggytalents:energizer_stick"
-    },
-    "L": {
-      "item": "minecraft:leather"
-    }
+    "C": "doggytalents:energizer_stick",
+    "L": "minecraft:leather"
   },
   "pattern": [
     "LCL",

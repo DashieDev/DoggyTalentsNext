@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:black_dye"
-    },
-    "E": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "F": {
-      "item": "minecraft:feather"
-    }
+    "B": "minecraft:black_dye",
+    "E": "minecraft:phantom_membrane",
+    "F": "minecraft:feather"
   },
   "pattern": [
     "FBF",

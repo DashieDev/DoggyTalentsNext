@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "doggytalents:empty_locator_orb"
-    },
-    {
-      "item": "minecraft:magenta_dye"
-    }
+    "doggytalents:empty_locator_orb",
+    "minecraft:magenta_dye"
   ],
   "result": {
     "count": 1,

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:gold_nugget"
-    },
-    "S": {
-      "item": "minecraft:cooked_beef"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "G": "minecraft:gold_nugget",
+    "S": "minecraft:cooked_beef",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     " GT",

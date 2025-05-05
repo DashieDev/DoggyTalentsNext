@@ -3,9 +3,7 @@
   "category": "food",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "item": "doggytalents:uncooked_rice_bowl"
-  },
+  "ingredient": "doggytalents:uncooked_rice_bowl",
   "result": {
     "count": 1,
     "id": "doggytalents:rice_bowl"
