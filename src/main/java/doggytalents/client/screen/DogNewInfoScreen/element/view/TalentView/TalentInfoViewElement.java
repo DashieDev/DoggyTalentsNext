@@ -397,29 +397,29 @@ public class TalentInfoViewElement extends AbstractElement {
                 )
                 .init()
             );
-            container.addChildren(
-                new ButtonOptionEntry(container, getScreen(), 
-                    new FlatCheckbox(0, 0,
-                        b -> {
-                            boolean newVal = !packPup.collectKillLoot();
-                            b.setValue(newVal);
-                            packPup.setCollectKillLoot(newVal);
-                            var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_LOOT.get(), newVal);
-                            PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
-                        }     
-                    ) {
-                        @Override
-                        public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                            super.renderWidget(graphics, mouseX, mouseY, pTicks);
-                            if (!this.isHovered) return;
-                            var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
-                            ToolTipOverlayManager.get().setComponents(List.of(c1));
-                        }
-                    }.initialValue(packPup.collectKillLoot()),
-                    I18n.get("talent.doggytalents.pack_puppy.collect_kill_loot")
-                )
-                .init()
-            );
+            // container.addChildren(
+            //     new ButtonOptionEntry(container, getScreen(), 
+            //         new FlatCheckbox(0, 0,
+            //             b -> {
+            //                 boolean newVal = !packPup.collectKillLoot();
+            //                 b.setValue(newVal);
+            //                 packPup.setCollectKillLoot(newVal);
+            //                 var data = DogTalentOptionSetData.of(dog, talent, TalentsOptions.PACK_PUPPY_LOOT.get(), newVal);
+            //                 PacketHandler.send(PacketDistributor.SERVER.noArg(), data);
+            //             }     
+            //         ) {
+            //             @Override
+            //             public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+            //                 super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            //                 if (!this.isHovered) return;
+            //                 var c1 = Component.translatable("talent.doggytalents.pack_puppy.collect_kill_loot.desc");
+            //                 ToolTipOverlayManager.get().setComponents(List.of(c1));
+            //             }
+            //         }.initialValue(packPup.collectKillLoot()),
+            //         I18n.get("talent.doggytalents.pack_puppy.collect_kill_loot")
+            //     )
+            //     .init()
+            // );
         }
         if (packPup.canOfferFood()) {
             container.addChildren(
