@@ -24,7 +24,10 @@
         "PlayerRendererMixin",
         "HumanoidModelMixin",
         "CameraMixin",
-        "MouseHandlerMixin"
+        "MouseHandlerMixin",
+
+        
+        "LivingEntityRendererMixin_21_3"
     ],
     "server": [],
     "injectors": {

@@ -18,6 +18,7 @@ import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player.BedSleepingProblem;
@@ -79,13 +80,13 @@ public class LivingEntityMixin {
     }
 
     @Inject(
-        method = "actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V", 
+        method = "actuallyHurt(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)V", 
         at = @At(
             value = "INVOKE", 
             target = "Lnet/minecraft/world/entity/LivingEntity;setHealth(F)V"
         )
     )
-    public void dtn__actuallyHurt(DamageSource source, float amount, CallbackInfo info) {
+    public void dtn__actuallyHurt(ServerLevel level, DamageSource source, float amount, CallbackInfo info) {
         var self = (LivingEntity)(Object)this;
         FabricDogKillXPFix.onMobActuallyBeingHurt(self, source);
     }

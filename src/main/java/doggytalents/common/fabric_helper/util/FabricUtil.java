@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -15,11 +16,12 @@ import net.minecraft.world.level.pathfinder.PathType;
 public class FabricUtil {
 
     public static boolean makesPiglinsNeutral(ItemStack stack) {
-        var item = stack.getItem();
-        if (!(item instanceof ArmorItem armor))
-            return false;
-        var material = armor.getMaterial();
-        return material == ArmorMaterials.GOLD;
+        // var item = stack.getItem();
+        // if (!(item instanceof ArmorItem armor))
+        //     return false;
+        // var material = armor.getMaterial();
+        // return material == ArmorMaterials.GOLD;
+        return stack.is(ItemTags.PIGLIN_SAFE_ARMOR);
     }
 
     public static PathType getDanger(PathType type) {
@@ -51,7 +53,7 @@ public class FabricUtil {
     }
 
     public static float getPartialTick(Minecraft mc) {
-        return mc.getTimer().getGameTimeDeltaPartialTick(true);
+        return mc.getDeltaTracker().getGameTimeDeltaPartialTick(true);
     }
 
 }

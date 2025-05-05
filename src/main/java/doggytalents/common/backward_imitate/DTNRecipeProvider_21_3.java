@@ -31,17 +31,17 @@ public class DTNRecipeProvider_21_3 /*extends RecipeProvider.Runner*/ {
     //     return "DoggyTalentsNext Recipe Provider";
     // }
 
-    // public static abstract class BaseProv extends RecipeProvider {
-    //     public BaseProv(Provider prov, RecipeOutput output) {
-    //         super(prov, output);
-    //     }
-    //     @Override
-    //     protected void buildRecipes() {
-    //         this.buildRecipes(this.output);
-    //     }
+    public static abstract class BaseProv extends RecipeProvider {
+        public BaseProv(Provider prov, RecipeOutput output) {
+            super(prov, output);
+        }
+        @Override
+        public void buildRecipes() {
+            this.buildRecipes(this.output);
+        }
 
-    //     protected abstract void buildRecipes(RecipeOutput output);
-    // }
+        protected abstract void buildRecipes(RecipeOutput output);
+    }
 
     // public static ResourceKey<Recipe<?>> recipeKey(ResourceLocation loc) {
     //     return ResourceKey.create(Registries.RECIPE, loc);

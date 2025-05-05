@@ -1,5 +1,6 @@
 package doggytalents.forge_imitate.event;
 
+import doggytalents.common.backward_imitate.fabric_util.FabricEventRegisterer_1_21_3;
 import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 
@@ -10,6 +11,9 @@ public class ForgeCommonSetup {
         EventHandlerRegisterer.init();
         ForgeMod.init();
         fireAttributeEvent();
+
+        //1_21_3+
+        FabricEventRegisterer_1_21_3.init();
     }
 
     public static void fireAttributeEvent() {

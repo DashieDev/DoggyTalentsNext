@@ -36,9 +36,8 @@ public class RegisterClientReloadListenersEvent extends Event {
         }
         
         @Override
-        public CompletableFuture<Void> reload(PreparationBarrier var1, ResourceManager var2, ProfilerFiller var3,
-                ProfilerFiller var4, Executor var5, Executor var6) {
-            return this.wrapped.reload(var1, var2, var3, var4, var5, var6);
+        public CompletableFuture<Void> reload(PreparationBarrier var1, ResourceManager var2, Executor var5, Executor var6) {
+            return this.wrapped.reload(var1, var2, var5, var6);
         }
 
         @Override
