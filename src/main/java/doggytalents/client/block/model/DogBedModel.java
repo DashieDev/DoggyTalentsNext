@@ -54,7 +54,7 @@ public class DogBedModel implements BakedModel {
     //public static DogBedItemOverride ITEM_OVERIDE = new DogBedItemOverride();
     private static final ResourceLocation MISSING_TEXTURE = Util.getVanillaResource("missingno");
 
-    private final ModelBakery modelLoader;
+    private final ModelBaker modelLoader;
     private final BlockModel unbakedModel;
     private final BakedModel defaultModelVariant;
     private final Map<Direction, BakedModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
@@ -63,12 +63,12 @@ public class DogBedModel implements BakedModel {
     private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
-    public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel defaultModelVariant, int maxCacheSize) {
+    public DogBedModel(ModelBaker modelLoader, BlockModel model, BakedModel defaultModelVariant, int maxCacheSize) {
         this.modelLoader = modelLoader;
         this.unbakedModel = model;
         this.defaultModelVariant = defaultModelVariant;
         this.maxCacheSize = maxCacheSize;
-        this.initItemOverride_21_3();
+        //this.initItemOverride_21_3();
     }
 
     public BakedModel getModelVariant(@Nonnull DogBedModelData data) {
@@ -266,19 +266,19 @@ public class DogBedModel implements BakedModel {
         return this.defaultModelVariant.getTransforms();
     }
 
-    @Override
-    public BakedOverrides overrides() {
-        return override_21_3;
-    }
+    // @Override
+    // public BakedOverrides overrides() {
+    //     return override_21_3;
+    // }
 
 
 
 
     //1.20.3+
-    private WrappedDogBedItemOverride_21_3 override_21_3;
-    private void initItemOverride_21_3() {
-        this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
-    }
+    // private WrappedDogBedItemOverride_21_3 override_21_3;
+    // private void initItemOverride_21_3() {
+    //     this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
+    // }
 
 
 

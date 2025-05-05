@@ -15,3 +15,9 @@ accessible method net/minecraft/client/Camera move (FFF)V
 accessible method net/minecraft/client/Camera setPosition (DDD)V
 accessible method net/minecraft/client/Camera getMaxZoom (F)F
 accessible method net/minecraft/client/Camera setRotation (FF)V
+accessible method net/minecraft/client/renderer/block/model/BakedOverrides <init> ()V
+extendable method net/minecraft/world/entity/LivingEntity getScale ()F
+extendable method net/minecraft/client/model/Model renderToBuffer (Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+accessible field net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen recipeBookComponent Lnet/minecraft/client/gui/screens/recipebook/RecipeBookComponent;
+accessible class net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl
+accessible method net/minecraft/client/resources/model/ModelBakery$ModelBakerImpl getModel (Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/resources/model/UnbakedModel;

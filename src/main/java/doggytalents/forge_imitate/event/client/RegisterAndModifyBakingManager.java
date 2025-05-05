@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Contex
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.resources.model.ModelBakery.ModelBakerImpl;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
@@ -32,7 +33,7 @@ public class RegisterAndModifyBakingManager {
     public static class DTNModelLoadingHook implements ModelLoadingPlugin {
 
         @Override
-        public void onInitializeModelLoader(Context ctx) {
+        public void initialize(Context ctx) {
             doRegisterLoc(ctx);
             doRegisterModifyAfterBake(ctx);
         }
@@ -68,7 +69,7 @@ public class RegisterAndModifyBakingManager {
             if (ConfigHandler.CLIENT.DOGBED_FORCE_DEFAULT_MODEL.get())
                 return current_model;
             
-            var bakery = ctx.loader();
+            var bakery = (ModelBakerImpl) ctx.baker();
                 
             var bedKey = DoggyBlocks.DOG_BED.getId();
             var unbaked_bedModelKey = makeBlockodelLoc(bedKey);

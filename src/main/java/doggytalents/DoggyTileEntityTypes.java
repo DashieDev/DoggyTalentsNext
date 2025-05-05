@@ -7,6 +7,7 @@ import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.lib.Constants;
 import doggytalents.forge_imitate.registry.DeferredRegister;
 import doggytalents.forge_imitate.registry.RegistryObject;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,8 +24,8 @@ public class DoggyTileEntityTypes {
     public static final Supplier<BlockEntityType<RiceMillBlockEntity>> RICE_MILL = register("rice_mill", RiceMillBlockEntity::new, DoggyBlocks.RICE_MILL);
     public static final Supplier<BlockEntityType<DogBathBlockEntity>> DOG_BATH = register("dog_bath", DogBathBlockEntity::new, DoggyBlocks.DOG_BATH);
 
-    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(final String name, final BlockEntityType.BlockEntitySupplier<T> sup, Supplier<? extends Block> validBlock) {
-        return register(name, () -> new BlockEntityType<T>(sup, validBlock.get()));
+    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(final String name, final FabricBlockEntityTypeBuilder.Factory<T> sup, Supplier<? extends Block> validBlock) {
+        return register(name, () -> FabricBlockEntityTypeBuilder.create(sup, validBlock.get()).build());
     }
 
     private static <T extends BlockEntityType<?>> RegistryObject<T> register(final String name, final Supplier<T> sup) {
