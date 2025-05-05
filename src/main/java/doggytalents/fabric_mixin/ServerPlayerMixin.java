@@ -17,7 +17,7 @@ import net.minecraft.world.level.portal.TeleportTransition;
 public class ServerPlayerMixin {
     
     @Inject(at = @At("HEAD"),  method = "teleport(Lnet/minecraft/world/level/portal/TeleportTransition;)Lnet/minecraft/server/level/ServerPlayer;")
-    public void dtn__teleportTo(TeleportTransition transition, CallbackInfo info) {
+    public void dtn__teleportTo(TeleportTransition transition, CallbackInfoReturnable<ServerPlayer> info) {
         var self = (ServerPlayer)(Object)this;
         if (transition.newLevel() != self.level()) {
             EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, transition.newLevel().dimension()));

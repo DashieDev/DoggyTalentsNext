@@ -61,7 +61,7 @@ public class LivingEntityMixin {
     // }
 
     @ModifyArgs(
-        method = "travel(Lnet/minecraft/world/phys/Vec3;)V",
+        method = "travelInFluid(Lnet/minecraft/world/phys/Vec3;)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/entity/LivingEntity;moveRelative(FLnet/minecraft/world/phys/Vec3;)V"

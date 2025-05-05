@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 public class LivingEntityRendererMixin_21_3 {
     
     @Inject(at = @At("HEAD"), method = "render(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V")
-    public void dtn__render(LivingEntityRenderState state, float p_117789_, float pTicks, PoseStack stack, MultiBufferSource buffer, int light, CallbackInfo info) {
+    public void dtn__render(LivingEntityRenderState state, PoseStack stack, MultiBufferSource buffer, int light, CallbackInfo info) {
         var self = (LivingEntityRenderer<?,?,?>)(Object) this;
         if (self instanceof PlayerRenderer) {
             EventCallbacksRegistry.postEvent(new RenderPlayerEvent.Pre(PlayerRenderPrep_21_3.player));
@@ -28,7 +28,7 @@ public class LivingEntityRendererMixin_21_3 {
     }
 
     @Inject(at = @At("RETURN"), method = "render(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V")
-    public void dtn__render_post(LivingEntityRenderState state, float p_117789_, float pTicks, PoseStack stack, MultiBufferSource buffer, int light, CallbackInfo info) {
+    public void dtn__render_post(LivingEntityRenderState state, PoseStack stack, MultiBufferSource buffer, int light, CallbackInfo info) {
         var self = (LivingEntityRenderer<?,?,?>)(Object) this;
         if (self instanceof PlayerRenderer) {
             EventCallbacksRegistry.postEvent(new RenderPlayerEvent_21_3.Post(PlayerRenderPrep_21_3.player));
