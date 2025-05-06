@@ -2,6 +2,8 @@ package doggytalents.client.block.model;
 
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
+
+import doggytalents.DoggyBlocks;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.backward_imitate.WrappedDogBedItemOverride_21_3;
@@ -13,8 +15,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
 import net.fabricmc.fabric.api.blockview.v2.FabricBlockView;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
-import net.fabricmc.fabric.impl.renderer.VanillaModelEncoder;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.particle.TerrainParticle;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
@@ -39,10 +40,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.model.standalone.StandaloneModelBaker;
-import net.neoforged.neoforge.model.data.ModelData;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
@@ -53,6 +50,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 //@OnlyIn(Dist.CLIENT)
@@ -140,9 +138,9 @@ public class DogBedModel implements BlockStateModel {
     // }
 
     //@Override
-    public TextureAtlasSprite getParticleIcon(@Nonnull ModelData data) {
-        return this.getModelVariant(data).particleIcon();
-    }
+    // public TextureAtlasSprite getParticleIcon(@Nonnull ModelData data) {
+    //     return this.getModelVariant(data).particleIcon();
+    // }
 
     public SimpleModelWrapper bakeModelVariant(@Nullable ICasingMaterial casing, @Nullable IBeddingMaterial bedding, @Nonnull Direction facing) {
         // var new_model = deepCopyBlockModel(this.unbakedModel);
@@ -290,13 +288,13 @@ public class DogBedModel implements BlockStateModel {
     // }
 
     //1.21.5+
-    @Override
-    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random,
-            List<BlockModelPart> parts) {
-        var model_data = level.getModelData(pos);
-        var part = this.getModelVariant(model_data);
-        if (part != null) parts.add(part);
-    }
+    // @Override
+    // public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random,
+    //         List<BlockModelPart> parts) {
+    //     var model_data = level.getModelData(pos);
+    //     var part = this.getModelVariant(model_data);
+    //     if (part != null) parts.add(part);
+    // }
 
     @Override
     public void collectParts(RandomSource random, List<BlockModelPart> parts) {
@@ -304,11 +302,11 @@ public class DogBedModel implements BlockStateModel {
         if (part != null) parts.add(part);
     }
 
-    @Override
-    public TextureAtlasSprite particleIcon(BlockAndTintGetter level, BlockPos pos, BlockState state) {
-        var model_data = level.getModelData(pos);
-        return this.getParticleIcon(model_data);
-    }
+    // @Override
+    // public TextureAtlasSprite particleIcon(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+    //     var model_data = level.getModelData(pos);
+    //     return this.getParticleIcon(model_data);
+    // }
 
     private static List<BlockElement> getElements_1_21_5(BlockModel model) {
         if (!(model.geometry() instanceof SimpleUnbakedGeometry element_getter))
@@ -335,7 +333,7 @@ public class DogBedModel implements BlockStateModel {
 
         var ret = new BlockModel(new SimpleUnbakedGeometry(elements_new), model.guiLight(), 
             model.ambientOcclusion(), model.transforms(), texture_map, 
-            model.parent(), model.rootTransform(), model.renderTypeGroup(), new HashMap<>(model.partVisibility()));
+            model.parent()/*, model.rootTransform(), model.renderTypeGroup(), new HashMap<>(model.partVisibility())*/);
         return ret;
     }
 
@@ -356,7 +354,7 @@ public class DogBedModel implements BlockStateModel {
     private static SimpleModelWrapper bakeModel_1_21_5(BlockModel model, Direction dir) {
         var resolved_model = resolvedModel_1_21_5(model);
         var baker = modelBaker_1_21_5(resolved_model);
-        return SimpleModelWrapper.bake(baker, resolved_model, getModelRotation(dir));
+        return SimpleModelWrapper.bake(baker, DoggyBlocks.DOG_BED.getId(), getModelRotation(dir));
     }
 
     public static ResolvedModel resolvedModel_1_21_5(UnbakedModel model) {
@@ -386,7 +384,7 @@ public class DogBedModel implements BlockStateModel {
 
             @Override
             public ResolvedModel getModel(ResourceLocation p_405736_) {
-                return resolved_model;
+                return resolved_model; //Fabric depends on this impl
             }
 
             @Override
@@ -416,31 +414,31 @@ public class DogBedModel implements BlockStateModel {
 
 
     //Fabric
-    @Override
-    public boolean isVanillaAdapter() {
-        return false;
-    }
+    // @Override
+    // public boolean isVanillaAdapter() {
+    //     return false;
+    // }
 
     @Override
-    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos,
-            Supplier<RandomSource> randomSupplier, RenderContext context) {
+    public void emitQuads(QuadEmitter emitter, BlockAndTintGetter blockView, BlockPos pos, BlockState state,
+        RandomSource random, Predicate<Direction> cullTest) {
         var dataGetter = (FabricBlockView) blockView;
         var data = dataGetter.getBlockEntityRenderData(pos);
-        BakedModel bakedModel = null;
+        SimpleModelWrapper bakedModel = null;
         if (data instanceof DogBedModelData dogBedData) {
             bakedModel = this.getModelVariant(dogBedData);
         } else {
             bakedModel = this.getModelVariant(DogBedModelData.EMPTY);
         }
         
-        VanillaModelEncoder.emitBlockQuads(bakedModel, state, randomSupplier, context);
+        bakedModel.emitQuads(emitter, cullTest);
     }
 
-    @Override
-    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        var bedMaterial = DogBedUtil.getMaterials(stack);
-        var bakedModel = this.getModelVariant(bedMaterial.getLeft(), bedMaterial.getRight(), Direction.NORTH);
+    // @Override
+    // public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
+    //     var bedMaterial = DogBedUtil.getMaterials(stack);
+    //     var bakedModel = this.getModelVariant(bedMaterial.getLeft(), bedMaterial.getRight(), Direction.NORTH);
 
-        VanillaModelEncoder.emitItemQuads(bakedModel, null, randomSupplier, context);
-    }
+    //     VanillaModelEncoder.emitItemQuads(bakedModel, null, randomSupplier, context);
+    // }
 }
