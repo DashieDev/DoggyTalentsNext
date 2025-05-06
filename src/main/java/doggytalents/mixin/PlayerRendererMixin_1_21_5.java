@@ -19,16 +19,16 @@ public class PlayerRendererMixin_1_21_5 {
 
     @Inject(at = @At("HEAD"),  method = "getArmPose", cancellable = true)
     private static void dtn__getArmPose(AbstractClientPlayer player, HumanoidArm arm, CallbackInfoReturnable<HumanoidModel.ArmPose> info) {
-        if (arm == HumanoidArm.RIGHT && PettingArmPose.activeRight_1_21_5) {
-            PettingArmPose.activeRight_1_21_5 = false;
-            info.setReturnValue(PettingArmPose.VALUE);
-            return;
-        }
-        if (arm == HumanoidArm.LEFT && PettingArmPose.activeLeft_1_21_5) {
-            PettingArmPose.activeLeft_1_21_5 = false;
-            info.setReturnValue(PettingArmPose.VALUE);
-            return;
-        }
+        // if (arm == HumanoidArm.RIGHT && PettingArmPose.activeRight_1_21_5) {
+        //     PettingArmPose.activeRight_1_21_5 = false;
+        //     info.setReturnValue(PettingArmPose.VALUE);
+        //     return;
+        // }
+        // if (arm == HumanoidArm.LEFT && PettingArmPose.activeLeft_1_21_5) {
+        //     PettingArmPose.activeLeft_1_21_5 = false;
+        //     info.setReturnValue(PettingArmPose.VALUE);
+        //     return;
+        // }
     }
 
 }

@@ -1,5 +1,7 @@
 package doggytalents.api.forge_imitate.inventory;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -38,15 +40,16 @@ public class ItemStackHandler extends SimpleContainer {
         return compound;
     }
 
-    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {
+    public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound_1_21_5) {
+        var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
         if (!compound.contains("item_list", Tag.TAG_LIST)) return;
-        ListTag tagList = compound.getList("item_list", Tag.TAG_COMPOUND);
+        ListTag_1_21_5 tagList = compound.getList("item_list", Tag.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++) {
-            CompoundTag itemTag = tagList.getCompound(i);
+            CompoundTag_1_21_5 itemTag = tagList.getCompound(i);
             int slot = itemTag.getInt("Slot");
 
             if (slot >= 0 && slot < this.stacks.size()) {
-                this.stacks.set(slot, ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY));
+                this.stacks.set(slot, ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
             }
         }
         this.onLoad();

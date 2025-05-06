@@ -14,6 +14,7 @@ import com.mojang.serialization.Lifecycle;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
@@ -70,6 +71,6 @@ public class LegacyNbtCodec_1_21_5 {
         Function<CompoundTag_1_21_5, T> decoder) {
         
         var codec = create(encoder, decoder);
-        return new SavedDataType<>(name, creator, codec);
+        return new SavedDataType<>(name, creator, codec, DataFixTypes.LEVEL);
     }
 }

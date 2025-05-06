@@ -2,7 +2,6 @@ package doggytalents.forge_imitate.event;
 
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.item.ItemColor;
 
 public class RegisterColorHandlersEvent {
     
@@ -18,21 +17,21 @@ public class RegisterColorHandlersEvent {
 
     }
 
-    public static class Item extends Event {
+    // public static class Item extends Event {
 
-        private final RegisterCallback<ItemColor, net.minecraft.world.item.Item> callback = (x, y) -> {
-            ColorProviderRegistry.ITEM.register(x, y);  
-        };
+    //     private final RegisterCallback<ItemColor, net.minecraft.world.item.Item> callback = (x, y) -> {
+    //         ColorProviderRegistry.ITEM.register(x, y);  
+    //     };
 
-        public RegisterCallback<ItemColor, net.minecraft.world.item.Item> getItemColors() {
-            return this.callback;
-        }
+    //     public RegisterCallback<ItemColor, net.minecraft.world.item.Item> getItemColors() {
+    //         return this.callback;
+    //     }
 
-        public void register(ItemColor color, net.minecraft.world.item.Item item) {
-            this.callback.register(color, item);
-        }
+    //     public void register(ItemColor color, net.minecraft.world.item.Item item) {
+    //         this.callback.register(color, item);
+    //     }
 
-    }
+    // }
 
     public static interface RegisterCallback<X, Y> {
 
