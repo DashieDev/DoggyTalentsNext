@@ -289,37 +289,6 @@ public class DogBedModel implements BlockStateModel {
     //     this.override_21_3 = new WrappedDogBedItemOverride_21_3(this);
     // }
 
-
-
-    //Fabric
-    @Override
-    public boolean isVanillaAdapter() {
-        return false;
-    }
-
-    @Override
-    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos,
-            Supplier<RandomSource> randomSupplier, RenderContext context) {
-        var dataGetter = (FabricBlockView) blockView;
-        var data = dataGetter.getBlockEntityRenderData(pos);
-        BakedModel bakedModel = null;
-        if (data instanceof DogBedModelData dogBedData) {
-            bakedModel = this.getModelVariant(dogBedData);
-        } else {
-            bakedModel = this.getModelVariant(DogBedModelData.EMPTY);
-        }
-        
-        VanillaModelEncoder.emitBlockQuads(bakedModel, state, randomSupplier, context);
-    }
-
-    @Override
-    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        var bedMaterial = DogBedUtil.getMaterials(stack);
-        var bakedModel = this.getModelVariant(bedMaterial.getLeft(), bedMaterial.getRight(), Direction.NORTH);
-
-        VanillaModelEncoder.emitItemQuads(bakedModel, null, randomSupplier, context);
-    }
-
     //1.21.5+
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random,
@@ -445,4 +414,33 @@ public class DogBedModel implements BlockStateModel {
         };
     }
 
+
+    //Fabric
+    @Override
+    public boolean isVanillaAdapter() {
+        return false;
+    }
+
+    @Override
+    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos,
+            Supplier<RandomSource> randomSupplier, RenderContext context) {
+        var dataGetter = (FabricBlockView) blockView;
+        var data = dataGetter.getBlockEntityRenderData(pos);
+        BakedModel bakedModel = null;
+        if (data instanceof DogBedModelData dogBedData) {
+            bakedModel = this.getModelVariant(dogBedData);
+        } else {
+            bakedModel = this.getModelVariant(DogBedModelData.EMPTY);
+        }
+        
+        VanillaModelEncoder.emitBlockQuads(bakedModel, state, randomSupplier, context);
+    }
+
+    @Override
+    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
+        var bedMaterial = DogBedUtil.getMaterials(stack);
+        var bakedModel = this.getModelVariant(bedMaterial.getLeft(), bedMaterial.getRight(), Direction.NORTH);
+
+        VanillaModelEncoder.emitItemQuads(bakedModel, null, randomSupplier, context);
+    }
 }

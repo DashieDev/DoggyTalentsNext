@@ -5542,32 +5542,6 @@ public class Dog extends AbstractDog {
         }
     }
 
-
-
-    //1.21.3+
-    @Nullable
-    public Entity teleport(TeleportTransition transition) {
-        boolean is_change_dim = 
-            transition.newLevel() != this.level();
-        if (is_change_dim)
-            return this.changeDimension(transition);
-        return super.teleport(transition);
-    }
-    @Override
-    public boolean hurtServer(ServerLevel server_level, DamageSource source, float amount) {
-        return hurtDog(Optional.of(server_level), source, Optional.of(amount), 
-            (source_1, amount_1) -> super.hurtServer(server_level, source_1, amount_1.get())
-        );
-    }
-    @Override
-    public boolean hurtClient(DamageSource source) {
-        return hurtDog(Optional.empty(), source, Optional.empty(), 
-            (source_1, amount_1) -> super.hurtClient(source_1)
-        );
-    }
-
-
-
     private boolean isAddedToWorld = false;
     public boolean isAddedToWorld() {
         return isAddedToWorld;
@@ -5595,6 +5569,29 @@ public class Dog extends AbstractDog {
     // }
 
 
+
+    //1.21.3+
+    @Nullable
+    public Entity teleport(TeleportTransition transition) {
+        boolean is_change_dim = 
+            transition.newLevel() != this.level();
+        if (is_change_dim)
+            return this.changeDimension(transition);
+        return super.teleport(transition);
+    }
+    @Override
+    public boolean hurtServer(ServerLevel server_level, DamageSource source, float amount) {
+        return hurtDog(Optional.of(server_level), source, Optional.of(amount), 
+            (source_1, amount_1) -> super.hurtServer(server_level, source_1, amount_1.get())
+        );
+    }
+    @Override
+    public boolean hurtClient(DamageSource source) {
+        return hurtDog(Optional.empty(), source, Optional.empty(), 
+            (source_1, amount_1) -> super.hurtClient(source_1)
+        );
+    }
+    
     
     //1.21.5+
     @Override
