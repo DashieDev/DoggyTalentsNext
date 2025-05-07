@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.client.backward_imitate.fabric_util.RegisterColorHandlersEvent_1_21_5;
 import doggytalents.common.item.DoubleDyableAccessoryItem;
 import doggytalents.common.util.Util;
 import net.minecraft.client.color.item.ItemTintSource;
@@ -12,7 +13,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 public class DoubleDyableTint_1_21_5 {
 
@@ -74,7 +74,7 @@ public class DoubleDyableTint_1_21_5 {
             .apply(builder, Bg::new)
     );
     
-    public static void registerTints(RegisterColorHandlersEvent.ItemTintSources event) {
+    public static void registerTints(RegisterColorHandlersEvent_1_21_5.ItemTintSources event) {
         event.register(Util.getResource("double_dyable_fg"), FG_CODEC);
         event.register(Util.getResource("double_dyable_bg"), BG_CODEC);
     }

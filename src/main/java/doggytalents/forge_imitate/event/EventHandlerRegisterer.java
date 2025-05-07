@@ -91,12 +91,12 @@ public class EventHandlerRegisterer {
                 DoggyBlocks::registerBlockColours
             )
         );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<RegisterColorHandlersEvent.Item>(
-                RegisterColorHandlersEvent.Item.class,
-                DoggyItems::registerItemColours
-            )
-        );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<RegisterColorHandlersEvent.Item>(
+        //         RegisterColorHandlersEvent.Item.class,
+        //         DoggyItems::registerItemColours
+        //     )
+        // );
         EventCallbacksRegistry.registerCallback(
             new SingleEventCallBack<EntityAttributeCreationEvent>(
                 EntityAttributeCreationEvent.class,

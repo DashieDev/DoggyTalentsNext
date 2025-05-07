@@ -1,5 +1,6 @@
 package doggytalents.forge_imitate.event.client;
 
+import doggytalents.client.backward_imitate.fabric_util.RegisterColorHandlersEvent_1_21_5;
 import doggytalents.common.network.DTNNetworkHandlerClient;
 import doggytalents.forge_imitate.client.ForgeGuiOverlayManager;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
@@ -22,7 +23,10 @@ public class ForgeClientSetup {
 
     private static void fireColorRegisterEvent() {
         EventCallbacksRegistry.postEvent(new RegisterColorHandlersEvent.Block());
-        EventCallbacksRegistry.postEvent(new RegisterColorHandlersEvent.Item());
+        //EventCallbacksRegistry.postEvent(new RegisterColorHandlersEvent.Item());
+
+        //1.21.5+
+        EventCallbacksRegistry.postEvent(new RegisterColorHandlersEvent_1_21_5.ItemTintSources());
     }
 
     private static void fireModelLayersRegistration() {
