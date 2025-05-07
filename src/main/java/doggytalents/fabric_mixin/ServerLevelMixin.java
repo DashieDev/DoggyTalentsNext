@@ -15,7 +15,7 @@ public class ServerLevelMixin {
     @Inject(method = "wakeUpAllPlayers()V", at = @At("TAIL"))
     public void dtn__wakeUpAllPlayers(CallbackInfo info) {
         var self = (ServerLevel)(Object)this;
-        if (!self.isDay())
+        if (!self.isBrightOutside())
             return;
         var event = new SleepFinishedTimeEvent(self);
         EventCallbacksRegistry.postEvent(event);

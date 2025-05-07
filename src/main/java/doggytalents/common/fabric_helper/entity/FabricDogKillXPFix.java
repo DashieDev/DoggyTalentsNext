@@ -18,8 +18,9 @@ public class FabricDogKillXPFix {
             return;
         if (!(owner instanceof Player owner_player))
             return;
-        mob.lastHurtByPlayer = owner_player;
-        mob.lastHurtByPlayerTime = 100;
+        // mob.lastHurtByPlayer = owner_player;
+        // mob.lastHurtByPlayerTime = 100;
+        mob.setLastHurtByPlayer(owner_player, 100); //1.21.5
     }
 
 }

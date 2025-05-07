@@ -1511,10 +1511,10 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = /*net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
-        if (ret == null) return false;*/ (new float[] {distance, damageMultiplier});
+        double[] ret = /*net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
+        if (ret == null) return false;*/ (new double[] {distance, damageMultiplier});
         distance = ret[0];
-        damageMultiplier = ret[1];
+        damageMultiplier = (float) ret[1];
 
         int i = this.calculateFallDamage(distance, damageMultiplier);
 

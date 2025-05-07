@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.resources.model.ResolvedModel;
-import net.minecraft.client.resources.model.ModelBakery.ModelBakerImpl;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
@@ -81,7 +80,7 @@ public class RegisterAndModifyBakingManager {
             if (ConfigHandler.CLIENT.DOGBED_FORCE_DEFAULT_MODEL.get())
                 return current_model;
             
-            var bakery = (ModelBakerImpl) ctx.baker();
+            var bakery = ctx.baker();
                 
             var bedKey = DoggyBlocks.DOG_BED.getId();
             var unbaked_bedModelKey = makeBlockodelLoc(bedKey);
