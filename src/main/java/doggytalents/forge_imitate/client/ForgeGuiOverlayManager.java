@@ -72,8 +72,8 @@ public class ForgeGuiOverlayManager {
 
         public void setupOverlayRenderState(boolean blend, boolean depth) {
             if (blend) {
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
+                // RenderSystem.enableBlend();
+                // RenderSystem.defaultBlendFunc();
             }
             // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             // RenderSystem.setShader(GameRenderer::getPositionTexShader);

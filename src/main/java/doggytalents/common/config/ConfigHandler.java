@@ -4,8 +4,8 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.lib.Constants;
-import fuzs.forgeconfigapiport.fabric.api.forge.v4.ForgeConfigRegistry;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.ModConfigEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.neoforged.fml.config.ModConfig;
@@ -47,12 +47,12 @@ public class ConfigHandler {
         CONFIG_CLIENT_SPEC = clientPair.getRight();
         CLIENT = clientPair.getLeft();
 
-        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
-        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
+        ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
+        ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
         initCustomSkinsConfig();
         initCustomSkinsConfigClient();
-        NeoForgeModConfigEvents.loading(Constants.MOD_ID).register(ConfigHandler::onConfigLoad);
+        ModConfigEvents.loading(Constants.MOD_ID).register(ConfigHandler::onConfigLoad);
     }
 
     public static void initTalentConfig() {
@@ -60,7 +60,7 @@ public class ConfigHandler {
         CONFIG_TALENT_SPEC = talentPair.getRight();
         TALENT = talentPair.getLeft();
 
-        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
+        ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_TALENT_SPEC, "doggytalents-talents.toml");
     }
 
     public static void initRespawnTagsConfig() {
@@ -68,7 +68,7 @@ public class ConfigHandler {
         CONFIG_RESPAWN_TAG_SPEC = respawnPair.getRight();
         RESPAWN_TAGS = respawnPair.getLeft();
 
-        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
+        ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
     }
 
     public static void initCustomSkinsConfig() {
@@ -76,7 +76,7 @@ public class ConfigHandler {
         CONFIG_CUSTOM_SKINS_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS = customSkinPair.getLeft();
 
-        ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
+        ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
     }
 
     public static void initCustomSkinsConfigClient() {
@@ -84,7 +84,7 @@ public class ConfigHandler {
         CONFIG_CUSTOM_SKINS_CLIENT_SPEC = customSkinPair.getRight();
         CUSTOM_SKINS_CLIENT = customSkinPair.getLeft();
 
-        ForgeConfigRegistry.INSTANCE
+        ConfigRegistry.INSTANCE
             .register(Constants.MOD_ID, ModConfig.Type.CLIENT, 
                 CONFIG_CUSTOM_SKINS_CLIENT_SPEC, "doggytalents-dog_custom_skins_client.toml");
     }

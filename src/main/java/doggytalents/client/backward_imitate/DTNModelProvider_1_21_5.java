@@ -34,359 +34,357 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
-import net.neoforged.neoforge.client.model.generators.template.FaceBuilder;
 
-public class DTNModelProvider_1_21_5 extends ModelProvider {
+public class DTNModelProvider_1_21_5 /*extends ModelProvider*/ {
 
-    //Dog Bed
-    public static final TextureSlot BEDDING = TextureSlot.create("bedding");
-    public static final TextureSlot CASING = TextureSlot.create("casing");
+    // //Dog Bed
+    // public static final TextureSlot BEDDING = TextureSlot.create("bedding");
+    // public static final TextureSlot CASING = TextureSlot.create("casing");
 
-    //Dog Bath
-    public static final TextureSlot WATER = TextureSlot.create("water");
+    // //Dog Bath
+    // public static final TextureSlot WATER = TextureSlot.create("water");
 
 
-    private static final String RENDERTYPE_CUTOUT = "cutout";
+    // private static final String RENDERTYPE_CUTOUT = "cutout";
 
-    public DTNModelProvider_1_21_5(PackOutput output) {
-        super(output, Constants.MOD_ID);
-    }
+    // public DTNModelProvider_1_21_5(PackOutput output) {
+    //     super(output, Constants.MOD_ID);
+    // }
 
-    @Override
-    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        registerBlocks(blockModels);
-        registerItem(itemModels);
-    }
+    // @Override
+    // protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+    //     registerBlocks(blockModels);
+    //     registerItem(itemModels);
+    // }
 
-    //Block ===================================
+    // //Block ===================================
 
-    private void registerBlocks(BlockModelGenerators blockModels) {
-        registerDogBed(blockModels);
-        registerDogBath(blockModels);
-        registerFoodBowl(blockModels);
-        registerDoggyCrops(blockModels, DoggyBlocks.RICE_CROP);
-        registerDoggyCrops(blockModels, DoggyBlocks.SOY_CROP);
-        registerParticleOnly(blockModels, DoggyBlocks.RICE_MILL.get(), Blocks.OAK_PLANKS);
-    }
+    // private void registerBlocks(BlockModelGenerators blockModels) {
+    //     registerDogBed(blockModels);
+    //     registerDogBath(blockModels);
+    //     registerFoodBowl(blockModels);
+    //     registerDoggyCrops(blockModels, DoggyBlocks.RICE_CROP);
+    //     registerDoggyCrops(blockModels, DoggyBlocks.SOY_CROP);
+    //     registerParticleOnly(blockModels, DoggyBlocks.RICE_MILL.get(), Blocks.OAK_PLANKS);
+    // }
 
-    private void registerDogBed(BlockModelGenerators blockModels) {
-        var template_builder = ExtendedModelTemplateBuilder.builder();
-        template_builder.parent(vanillaBlockModelParent())
-            .requiredTextureSlot(TextureSlot.PARTICLE)
-            .requiredTextureSlot(BEDDING)
-            .requiredTextureSlot(CASING)
-            .ambientOcclusion(false);
+    // private void registerDogBed(BlockModelGenerators blockModels) {
+    //     var template_builder = ExtendedModelTemplateBuilder.builder();
+    //     template_builder.parent(vanillaBlockModelParent())
+    //         .requiredTextureSlot(TextureSlot.PARTICLE)
+    //         .requiredTextureSlot(BEDDING)
+    //         .requiredTextureSlot(CASING)
+    //         .ambientOcclusion(false);
         
-        template_builder.element(
-            b -> b
-            .from(1.6F, 3.2F, 1.6F)
-            .to(14.4F, 6.4F, 14.4F)
-            .face(Direction.UP, b1 -> b1.texture(BEDDING))
-            .face(Direction.NORTH, b1 -> b1.texture(BEDDING))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(1.6F, 3.2F, 1.6F)
+    //         .to(14.4F, 6.4F, 14.4F)
+    //         .face(Direction.UP, b1 -> b1.texture(BEDDING))
+    //         .face(Direction.NORTH, b1 -> b1.texture(BEDDING))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 0, 0)
-            .to(16, 3.2F, 16)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.DOWN))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 0, 0)
+    //         .to(16, 3.2F, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.DOWN))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(11.2F, 3.2F, 0)
-            .to(16, 9.6F, 1.6F)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.NORTH))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(11.2F, 3.2F, 0)
+    //         .to(16, 9.6F, 1.6F)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.NORTH))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 3.2F, 0)
-            .to(4.8F, 9.6F, 1.6F)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.NORTH))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 3.2F, 0)
+    //         .to(4.8F, 9.6F, 1.6F)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.NORTH))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(14.4F, 3.2F, 0)
-            .to(16, 9.6F, 16)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.EAST))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(14.4F, 3.2F, 0)
+    //         .to(16, 9.6F, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.EAST))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 3.2F, 14.4F)
-            .to(16, 9.6F, 16)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.SOUTH))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 3.2F, 14.4F)
+    //         .to(16, 9.6F, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.SOUTH))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 3.2F, 0)
-            .to(1.6F, 9.6F, 16)
-            .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.WEST))
-        );
-        var template = template_builder.build();
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 3.2F, 0)
+    //         .to(1.6F, 9.6F, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(CASING, Direction.WEST))
+    //     );
+    //     var template = template_builder.build();
 
-        Function<Block, TextureMapping> default_texture_provider = 
-            block -> new TextureMapping()
-                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(Blocks.OAK_PLANKS))
-                .put(BEDDING, TextureMapping.getBlockTexture(Blocks.WHITE_WOOL))
-                .put(CASING, TextureMapping.getBlockTexture(Blocks.OAK_PLANKS));
+    //     Function<Block, TextureMapping> default_texture_provider = 
+    //         block -> new TextureMapping()
+    //             .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(Blocks.OAK_PLANKS))
+    //             .put(BEDDING, TextureMapping.getBlockTexture(Blocks.WHITE_WOOL))
+    //             .put(CASING, TextureMapping.getBlockTexture(Blocks.OAK_PLANKS));
 
 
-        var template_provider = TexturedModel.createDefault(default_texture_provider, template);
+    //     var template_provider = TexturedModel.createDefault(default_texture_provider, template);
         
 
-        blockModels.createTrivialBlock(DoggyBlocks.DOG_BED.get(), template_provider);
-    }
+    //     blockModels.createTrivialBlock(DoggyBlocks.DOG_BED.get(), template_provider);
+    // }
 
-    private void registerDogBath(BlockModelGenerators blockModels) {
-        var template_builder = ExtendedModelTemplateBuilder.builder();
-        template_builder.parent(vanillaBlockModelParent())
-            .requiredTextureSlot(TextureSlot.PARTICLE)
-            .requiredTextureSlot(TextureSlot.SIDE)
-            .requiredTextureSlot(TextureSlot.BOTTOM)
-            .requiredTextureSlot(WATER)
-            .ambientOcclusion(false);
+    // private void registerDogBath(BlockModelGenerators blockModels) {
+    //     var template_builder = ExtendedModelTemplateBuilder.builder();
+    //     template_builder.parent(vanillaBlockModelParent())
+    //         .requiredTextureSlot(TextureSlot.PARTICLE)
+    //         .requiredTextureSlot(TextureSlot.SIDE)
+    //         .requiredTextureSlot(TextureSlot.BOTTOM)
+    //         .requiredTextureSlot(WATER)
+    //         .ambientOcclusion(false);
 
-        template_builder.element(
-            b -> b
-            .from(1, 0, 1)
-            .to(15, 6, 15)
-            .face(Direction.UP, b1 -> b1.texture(WATER).tintindex(0))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(1, 0, 1)
+    //         .to(15, 6, 15)
+    //         .face(Direction.UP, b1 -> b1.texture(WATER).tintindex(0))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(1, 0, 1)
-            .to(15, 6, 15)
-            .face(Direction.DOWN, b1 -> b1.texture(TextureSlot.BOTTOM))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(1, 0, 1)
+    //         .to(15, 6, 15)
+    //         .face(Direction.DOWN, b1 -> b1.texture(TextureSlot.BOTTOM))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 0, 0)
-            .to(16, 8, 1)
-            .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.NORTH))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 0, 0)
+    //         .to(16, 8, 1)
+    //         .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.NORTH))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(15, 0, 0)
-            .to(16, 8, 16)
-            .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.EAST))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(15, 0, 0)
+    //         .to(16, 8, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.EAST))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 0, 15)
-            .to(16, 8, 16)
-            .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.SOUTH))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 0, 15)
+    //         .to(16, 8, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.SOUTH))
+    //     );
 
-        template_builder.element(
-            b -> b
-            .from(0, 0, 0)
-            .to(1, 8, 16)
-            .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.WEST))
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from(0, 0, 0)
+    //         .to(1, 8, 16)
+    //         .allFaces(textureAndCullForDirectionConsumer(TextureSlot.SIDE, Direction.WEST))
+    //     );
 
-        var template = template_builder.build();
+    //     var template = template_builder.build();
 
-        Function<Block, TextureMapping> texture_provider = 
-            block -> new TextureMapping()
-                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
-                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
-                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
-                .put(WATER, dogBathWaterTexture());
+    //     Function<Block, TextureMapping> texture_provider = 
+    //         block -> new TextureMapping()
+    //             .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
+    //             .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
+    //             .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(Blocks.IRON_BLOCK))
+    //             .put(WATER, dogBathWaterTexture());
 
-        var template_provider = TexturedModel.createDefault(texture_provider, template);
+    //     var template_provider = TexturedModel.createDefault(texture_provider, template);
 
-        blockModels.createTrivialBlock(DoggyBlocks.DOG_BATH.get(), template_provider);
-    }
+    //     blockModels.createTrivialBlock(DoggyBlocks.DOG_BATH.get(), template_provider);
+    // }
 
-    private ResourceLocation dogBathWaterTexture() {
-        return blockTextureWithExtent(Blocks.WATER, "_still");
-    }
+    // private ResourceLocation dogBathWaterTexture() {
+    //     return blockTextureWithExtent(Blocks.WATER, "_still");
+    // }
 
-    private void registerFoodBowl(BlockModelGenerators blockModels) {
-        var bb = new AABB(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
-        var block = DoggyBlocks.FOOD_BOWL.get();
-        var template_builder = ExtendedModelTemplateBuilder.builder();
-        template_builder.parent(vanillaBlockModelParent())
-            .requiredTextureSlot(TextureSlot.PARTICLE)
-            .requiredTextureSlot(TextureSlot.BOTTOM)
-            .requiredTextureSlot(TextureSlot.TOP)
-            .requiredTextureSlot(TextureSlot.SIDE);
+    // private void registerFoodBowl(BlockModelGenerators blockModels) {
+    //     var bb = new AABB(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
+    //     var block = DoggyBlocks.FOOD_BOWL.get();
+    //     var template_builder = ExtendedModelTemplateBuilder.builder();
+    //     template_builder.parent(vanillaBlockModelParent())
+    //         .requiredTextureSlot(TextureSlot.PARTICLE)
+    //         .requiredTextureSlot(TextureSlot.BOTTOM)
+    //         .requiredTextureSlot(TextureSlot.TOP)
+    //         .requiredTextureSlot(TextureSlot.SIDE);
         
-        BiConsumer<Direction, FaceBuilder> foreach_face = (dir, builder) -> {
-            builder
-                .cullface(dir == Direction.DOWN ? dir : null)
-                .texture(
-                    dir.getAxis().isHorizontal() ? TextureSlot.SIDE 
-                    : dir == Direction.DOWN ? TextureSlot.BOTTOM 
-                    : TextureSlot.TOP
-                );
-        };
+    //     BiConsumer<Direction, FaceBuilder> foreach_face = (dir, builder) -> {
+    //         builder
+    //             .cullface(dir == Direction.DOWN ? dir : null)
+    //             .texture(
+    //                 dir.getAxis().isHorizontal() ? TextureSlot.SIDE 
+    //                 : dir == Direction.DOWN ? TextureSlot.BOTTOM 
+    //                 : TextureSlot.TOP
+    //             );
+    //     };
 
-        template_builder.element(
-            b -> b
-            .from((float) bb.minX, (float) bb.minY, (float) bb.minZ)
-            .to((float) bb.maxX, (float) bb.maxY, (float) bb.maxZ)
-            .allFaces(foreach_face)
-        );
+    //     template_builder.element(
+    //         b -> b
+    //         .from((float) bb.minX, (float) bb.minY, (float) bb.minZ)
+    //         .to((float) bb.maxX, (float) bb.maxY, (float) bb.maxZ)
+    //         .allFaces(foreach_face)
+    //     );
 
-        var template = template_builder.build();
+    //     var template = template_builder.build();
 
-        Function<Block, TextureMapping> texture_provider = 
-            $ -> new TextureMapping()
-                .put(TextureSlot.PARTICLE, blockTextureWithExtent(block, "_bottom"))
-                .put(TextureSlot.BOTTOM, blockTextureWithExtent(block, "_bottom"))
-                .put(TextureSlot.TOP, blockTextureWithExtent(block, "_top"))
-                .put(TextureSlot.SIDE, blockTextureWithExtent(block, "_side"));
+    //     Function<Block, TextureMapping> texture_provider = 
+    //         $ -> new TextureMapping()
+    //             .put(TextureSlot.PARTICLE, blockTextureWithExtent(block, "_bottom"))
+    //             .put(TextureSlot.BOTTOM, blockTextureWithExtent(block, "_bottom"))
+    //             .put(TextureSlot.TOP, blockTextureWithExtent(block, "_top"))
+    //             .put(TextureSlot.SIDE, blockTextureWithExtent(block, "_side"));
 
-        var template_provider = TexturedModel.createDefault(texture_provider, template);
+    //     var template_provider = TexturedModel.createDefault(texture_provider, template);
 
-        blockModels.createTrivialBlock(block, template_provider);
-    }
+    //     blockModels.createTrivialBlock(block, template_provider);
+    // }
 
-    private void registerDoggyCrops(BlockModelGenerators blockModels, 
-        Supplier<? extends DogCropBlock> block_supplier) {
+    // private void registerDoggyCrops(BlockModelGenerators blockModels, 
+    //     Supplier<? extends DogCropBlock> block_supplier) {
         
-        var crop_block = block_supplier.get();
-        var age_props = crop_block.getAgeProperty();
-        var model = MultiVariantGenerator.dispatch(crop_block)
-            .with(PropertyDispatch.initial(age_props).generate(
-                age -> {
-                    var variant_rl = blockModels.createSuffixedVariant(
-                        crop_block, "/stage_" + age, 
-                        ModelTemplates.CROP.extend()
-                            .renderType(RENDERTYPE_CUTOUT).build(), 
-                        TextureMapping::crop
-                    );
-                    return BlockModelGenerators.plainVariant(variant_rl);
-                }                
-            ));
-        blockModels.blockStateOutput.accept(model);
-    }
+    //     var crop_block = block_supplier.get();
+    //     var age_props = crop_block.getAgeProperty();
+    //     var model = MultiVariantGenerator.dispatch(crop_block)
+    //         .with(PropertyDispatch.initial(age_props).generate(
+    //             age -> {
+    //                 var variant_rl = blockModels.createSuffixedVariant(
+    //                     crop_block, "/stage_" + age, 
+    //                     ModelTemplates.CROP.extend()
+    //                         .renderType(RENDERTYPE_CUTOUT).build(), 
+    //                     TextureMapping::crop
+    //                 );
+    //                 return BlockModelGenerators.plainVariant(variant_rl);
+    //             }                
+    //         ));
+    //     blockModels.blockStateOutput.accept(model);
+    // }
 
-    private void registerParticleOnly(BlockModelGenerators blockModels, Block block, Block particle_block) {
-        Function<Block, TextureMapping> texture_provider = 
-            $ -> new TextureMapping()
-                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(particle_block));
-        var template_provider = TexturedModel.createDefault(texture_provider, ModelTemplates.PARTICLE_ONLY);
-        blockModels.createTrivialBlock(block, template_provider);
-    }
+    // private void registerParticleOnly(BlockModelGenerators blockModels, Block block, Block particle_block) {
+    //     Function<Block, TextureMapping> texture_provider = 
+    //         $ -> new TextureMapping()
+    //             .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(particle_block));
+    //     var template_provider = TexturedModel.createDefault(texture_provider, ModelTemplates.PARTICLE_ONLY);
+    //     blockModels.createTrivialBlock(block, template_provider);
+    // }
     
-    private ResourceLocation blockTextureWithExtent(Block block, String extend) {
-        return blockTextureWithModifyPath(block, x -> x + extend);
-    }
+    // private ResourceLocation blockTextureWithExtent(Block block, String extend) {
+    //     return blockTextureWithModifyPath(block, x -> x + extend);
+    // }
 
-    private ResourceLocation blockTextureWithModifyPath(Block block, 
-        Function<String, String> path_modifier) {
-        var block_texture = TextureMapping.getBlockTexture(block);
-        return Util.modifyPath(block_texture, path_modifier);
-    }
+    // private ResourceLocation blockTextureWithModifyPath(Block block, 
+    //     Function<String, String> path_modifier) {
+    //     var block_texture = TextureMapping.getBlockTexture(block);
+    //     return Util.modifyPath(block_texture, path_modifier);
+    // }
 
-    private ResourceLocation vanillaBlockModelParent() {
-        return ModelLocationUtils.decorateBlockModelLocation(mcLocation("block").toString());
-    }
+    // private ResourceLocation vanillaBlockModelParent() {
+    //     return ModelLocationUtils.decorateBlockModelLocation(mcLocation("block").toString());
+    // }
 
-    private BiConsumer<Direction, FaceBuilder> textureAndCullForDirectionConsumer(
-        TextureSlot texture, Direction cull_direction) {
+    // private BiConsumer<Direction, FaceBuilder> textureAndCullForDirectionConsumer(
+    //     TextureSlot texture, Direction cull_direction) {
         
-        return (dir, builder) -> {
-            builder
-                .cullface(cull_direction == dir ? cull_direction : null)
-                .texture(texture);
-        };
-    }
+    //     return (dir, builder) -> {
+    //         builder
+    //             .cullface(cull_direction == dir ? cull_direction : null)
+    //             .texture(texture);
+    //     };
+    // }
 
-    //Item ===================================
+    // //Item ===================================
 
-    private void registerItem(ItemModelGenerators itemModels) {
-        var item_model_prov = new DTItemModelProvider();
-        item_model_prov.itemGenerators_1_21_5 = itemModels;
-        item_model_prov.registerModels();
-        item_model_prov.itemGenerators_1_21_5 = null;
-    }
+    // private void registerItem(ItemModelGenerators itemModels) {
+    //     var item_model_prov = new DTItemModelProvider();
+    //     item_model_prov.itemGenerators_1_21_5 = itemModels;
+    //     item_model_prov.registerModels();
+    //     item_model_prov.itemGenerators_1_21_5 = null;
+    // }
 
-    public static void generated(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier) {
-        var item = item_supplier.get();
-        if (item instanceof IDyeableArmorItem dyable) {
-            generateSingleDyeable(itemModels, item, dyable);
-            return;
-        }
-        itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
-    }
+    // public static void generated(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier) {
+    //     var item = item_supplier.get();
+    //     if (item instanceof IDyeableArmorItem dyable) {
+    //         generateSingleDyeable(itemModels, item, dyable);
+    //         return;
+    //     }
+    //     itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
+    // }
 
-    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item, String layer0, String layer1) {
-        var layer0_rl = ModelLocationUtils.decorateItemModelLocation(Util.getResource(layer0).toString());
-        var layer1_rl = ModelLocationUtils.decorateItemModelLocation(Util.getResource(layer1).toString());
-        generated2(itemModels, item, layer0_rl, layer1_rl);
-    }
+    // public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item, String layer0, String layer1) {
+    //     var layer0_rl = ModelLocationUtils.decorateItemModelLocation(Util.getResource(layer0).toString());
+    //     var layer1_rl = ModelLocationUtils.decorateItemModelLocation(Util.getResource(layer1).toString());
+    //     generated2(itemModels, item, layer0_rl, layer1_rl);
+    // }
 
-    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier, ResourceLocation layer0, ResourceLocation layer1) {
-        var item = item_supplier.get();
-        if (item instanceof DoubleDyableAccessoryItem dyeable) {
-            generateDoubleDyeable(itemModels, item, dyeable, layer0, layer1);
-            return;
-        }
-        if (item instanceof IDyeableArmorItem dyeable) {
-            boolean dye_override = 
-                item == DoggyItems.CERE_GARB.get() 
-                || item == DoggyItems.MIDI_KEYBOARD.get()
-                || item == DoggyItems.DOG_PLUSHIE_TOY.get();
-            int dye_layer = dye_override ? 1 : 0;
-            generateSingleDyeable(itemModels, item, dyeable, dye_layer, layer0, layer1);
-            return;
-        }
-        var model = itemModels.generateLayeredItem(item, layer0, layer1);
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(model));
-    }
+    // public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier, ResourceLocation layer0, ResourceLocation layer1) {
+    //     var item = item_supplier.get();
+    //     if (item instanceof DoubleDyableAccessoryItem dyeable) {
+    //         generateDoubleDyeable(itemModels, item, dyeable, layer0, layer1);
+    //         return;
+    //     }
+    //     if (item instanceof IDyeableArmorItem dyeable) {
+    //         boolean dye_override = 
+    //             item == DoggyItems.CERE_GARB.get() 
+    //             || item == DoggyItems.MIDI_KEYBOARD.get()
+    //             || item == DoggyItems.DOG_PLUSHIE_TOY.get();
+    //         int dye_layer = dye_override ? 1 : 0;
+    //         generateSingleDyeable(itemModels, item, dyeable, dye_layer, layer0, layer1);
+    //         return;
+    //     }
+    //     var model = itemModels.generateLayeredItem(item, layer0, layer1);
+    //     itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(model));
+    // }
 
-    public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, IDyeableArmorItem dyable) {
-        var item_model = itemModels.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
-        var item_model_tinted = ItemModelUtils.tintedModel(item_model, 
-            new Dye(dyable.getDefaultColor(ItemStack.EMPTY)));
-        itemModels.itemModelOutput.accept(item, item_model_tinted);
-    }
+    // public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, IDyeableArmorItem dyable) {
+    //     var item_model = itemModels.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);
+    //     var item_model_tinted = ItemModelUtils.tintedModel(item_model, 
+    //         new Dye(dyable.getDefaultColor(ItemStack.EMPTY)));
+    //     itemModels.itemModelOutput.accept(item, item_model_tinted);
+    // }
 
-    public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, 
-        IDyeableArmorItem dyable, int dye_layer, ResourceLocation layer0, ResourceLocation layer1) {
+    // public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, 
+    //     IDyeableArmorItem dyable, int dye_layer, ResourceLocation layer0, ResourceLocation layer1) {
         
-        var model = itemModels.generateLayeredItem(item, layer0, layer1);
-        var dye_tint = new Dye(dyable.getDefaultColor(ItemStack.EMPTY));
-        var tints = dye_layer == 0 ?
-            new ItemTintSource[] {dye_tint, ItemModelGenerators.BLANK_LAYER}
-            : new ItemTintSource[] {ItemModelGenerators.BLANK_LAYER, dye_tint};
-        var item_model_tinted = ItemModelUtils.tintedModel(model, tints);
-        itemModels.itemModelOutput.accept(item, item_model_tinted);
-    }
+    //     var model = itemModels.generateLayeredItem(item, layer0, layer1);
+    //     var dye_tint = new Dye(dyable.getDefaultColor(ItemStack.EMPTY));
+    //     var tints = dye_layer == 0 ?
+    //         new ItemTintSource[] {dye_tint, ItemModelGenerators.BLANK_LAYER}
+    //         : new ItemTintSource[] {ItemModelGenerators.BLANK_LAYER, dye_tint};
+    //     var item_model_tinted = ItemModelUtils.tintedModel(model, tints);
+    //     itemModels.itemModelOutput.accept(item, item_model_tinted);
+    // }
 
-    public static void generateDoubleDyeable(ItemModelGenerators itemModels, Item item, 
-        DoubleDyableAccessoryItem dyable, ResourceLocation layer0, ResourceLocation layer1) {
+    // public static void generateDoubleDyeable(ItemModelGenerators itemModels, Item item, 
+    //     DoubleDyableAccessoryItem dyable, ResourceLocation layer0, ResourceLocation layer1) {
 
-        var model = itemModels.generateLayeredItem(item, layer0, layer1);
-        var model_tinted = ItemModelUtils.tintedModel(
-            model,
-            DoubleDyableTint_1_21_5.bg(dyable),
-            DoubleDyableTint_1_21_5.fg(dyable)
-        );
-        itemModels.itemModelOutput.accept(item, model_tinted);
-    }
+    //     var model = itemModels.generateLayeredItem(item, layer0, layer1);
+    //     var model_tinted = ItemModelUtils.tintedModel(
+    //         model,
+    //         DoubleDyableTint_1_21_5.bg(dyable),
+    //         DoubleDyableTint_1_21_5.fg(dyable)
+    //     );
+    //     itemModels.itemModelOutput.accept(item, model_tinted);
+    // }
 
-    public static void handheld(ItemModelGenerators itemModels, Supplier<? extends Item> item) {
-        itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-    }
+    // public static void handheld(ItemModelGenerators itemModels, Supplier<? extends Item> item) {
+    //     itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+    // }
 
-    public static void dogBathItem(ItemModelGenerators itemModels, Supplier<? extends Block> block_supplier) {
-        var block = block_supplier.get();
-        var block_item = block.asItem();
-        var block_model = ModelLocationUtils.getModelLocation(block);
-        var item_model = ItemModelUtils.tintedModel(block_model, new Constant(4159204));
-        itemModels.itemModelOutput.accept(block_item, item_model);
-    }
+    // public static void dogBathItem(ItemModelGenerators itemModels, Supplier<? extends Block> block_supplier) {
+    //     var block = block_supplier.get();
+    //     var block_item = block.asItem();
+    //     var block_model = ModelLocationUtils.getModelLocation(block);
+    //     var item_model = ItemModelUtils.tintedModel(block_model, new Constant(4159204));
+    //     itemModels.itemModelOutput.accept(block_item, item_model);
+    // }
 }
