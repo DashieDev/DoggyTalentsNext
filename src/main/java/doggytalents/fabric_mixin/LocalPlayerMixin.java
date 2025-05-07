@@ -16,7 +16,7 @@ public class LocalPlayerMixin {
         method = "aiStep()V", 
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/player/ClientInput;tick(ZF)V",
+            target = "Lnet/minecraft/client/player/ClientInput;tick()V",
             ordinal = 0,
             shift = At.Shift.AFTER
         )

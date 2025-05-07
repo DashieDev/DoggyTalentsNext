@@ -16,9 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 @Mixin(FarmBlock.class)
 public class FarmBlockMixin {
     
-    @Inject(at = @At("HEAD"), cancellable = true, method = "fallOn(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;F)V")
+    @Inject(at = @At("HEAD"), cancellable = true, method = "fallOn(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;D)V")
     public void dtn__fallOn(Level level, BlockState state, 
-        BlockPos pos, Entity entity, float fallDist, CallbackInfo info) {
+        BlockPos pos, Entity entity, double fallDist, CallbackInfo info) {
         if (level instanceof ServerLevel server_level && entity instanceof Dog dog && !dog.canTrample(server_level, state, pos, fallDist))
             info.cancel();
     }
