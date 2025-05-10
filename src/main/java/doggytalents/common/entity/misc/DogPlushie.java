@@ -1,6 +1,7 @@
 package doggytalents.common.entity.misc;
 
 import doggytalents.DoggyItems;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NetworkUtil;
 import doggytalents.common.variant.DogVariant;

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.entity.model.misc.SamoyedPlushieModel;
 import doggytalents.common.entity.misc.SamoyedPlushie;
 import doggytalents.common.lib.Resources;
@@ -15,7 +16,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class SamoyedPlushieRenderer extends EntityRenderer<SamoyedPlushie> {
+public class SamoyedPlushieRenderer extends EntityRenderer_21_3<SamoyedPlushie> {
 
     private SamoyedPlushieModel model;
 

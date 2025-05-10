@@ -11,6 +11,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.AccessoryModelRenderEntries;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -46,7 +47,7 @@ public class BunnyEars extends Accessory implements IAccessoryHasModel{
             final float chance = 0.15f;
             if (r > chance) return;
             var item = DoggyItems.EASTER_EGG_CANDY.get();
-            dog.spawnAtLocation(new ItemStack(item), 0.0F);
+            dog.spawnAtLocation((ServerLevel)dog.level(), new ItemStack(item), 0.0F);
         }
         
     }
