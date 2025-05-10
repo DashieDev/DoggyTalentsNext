@@ -305,5 +305,27 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     public void setFocused(@Nullable GuiEventListener guiEventListener) {
         getScreen().setFocused(guiEventListener);
     }
-    
+
+
+
+    //1.21.5+ tempFix
+    private boolean mouseClicked_tempfix_1_21_5(double p_94695_, double p_94696_, int p_94697_) {
+        for(var guieventlistener : this.children()) {
+            if (guieventlistener.mouseClicked(p_94695_, p_94696_, p_94697_)) {
+               this.setFocused(guieventlistener);
+               if (p_94697_ == 0) {
+                  this.setDragging(true);
+               }
+   
+               return true;
+            }
+        }
+
+        return false;
+    }
+    @Override
+    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
+        // TODO Auto-generated method stub
+        return mouseClicked_tempfix_1_21_5(p_94695_, p_94696_, p_94697_);
+    }
 }
