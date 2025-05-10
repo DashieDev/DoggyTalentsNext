@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": "minecraft:leather_helmet",
+    "T": "doggytalents:training_treat",
+    "W": "minecraft:white_wool"
+  },
+  "pattern": [
+    "W W",
+    "WLW",
+    " T "
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:bunny_ears"
+  }
+}
