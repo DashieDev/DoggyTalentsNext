@@ -4,19 +4,21 @@ import java.util.List;
 import java.util.Objects;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
+import doggytalents.common.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 
-public class SamoyedPlushieItem extends Item {
+public class SamoyedPlushieItem extends Item implements HoverTextAppender_1_21_5 {
 
     public SamoyedPlushieItem(Properties itemProps) {
         super(itemProps.stacksTo(1));
@@ -41,7 +43,7 @@ public class SamoyedPlushieItem extends Item {
         }
         var plush = DoggyEntityTypes.SAMOYED_PLUSHIE_TOY.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (plush != null) {
@@ -53,7 +55,7 @@ public class SamoyedPlushieItem extends Item {
             stack.shrink(1);
 
         if (player != null)
-            player.getCooldowns().addCooldown(this, 20);
+            PlayerUtil.addCooldown(player, this, 20);
 
         return InteractionResult.SUCCESS;
     }

@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.misc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.backward_imitate.BaseEntityModel_21_3;
 import doggytalents.common.entity.misc.DogPlushie;
 import doggytalents.common.entity.misc.SamoyedPlushie;
 import net.minecraft.client.model.EntityModel;
@@ -14,7 +15,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class SamoyedPlushieModel extends EntityModel<SamoyedPlushie>{
+public class SamoyedPlushieModel extends BaseEntityModel_21_3<SamoyedPlushie>{
 
     public ModelPart root;
 

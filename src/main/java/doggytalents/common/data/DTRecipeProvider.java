@@ -986,7 +986,7 @@ public class DTRecipeProvider extends DTNRecipeProvider_21_3.BaseProv {
             .unlockedBy("has_paper", has(Items.PAPER))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BUNNY_EARS.get(), 1)
+        this.shaped(RecipeCategory.DECORATIONS, DoggyItems.BUNNY_EARS.get(), 1)
             .pattern("W W")    
             .pattern("WLW")
             .pattern(" T ")

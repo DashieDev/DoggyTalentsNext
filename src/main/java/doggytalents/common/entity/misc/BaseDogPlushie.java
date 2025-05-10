@@ -1,6 +1,7 @@
 package doggytalents.common.entity.misc;
 
 import net.minecraft.network.syncher.SynchedEntityData.Builder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -45,7 +46,7 @@ public abstract class BaseDogPlushie extends Entity {
         return true;
     }
     
-    @Override
+    //@Override
     public boolean isInvulnerableTo(DamageSource source) {
         if (this.isRemoved())
             return true;
@@ -72,7 +73,7 @@ public abstract class BaseDogPlushie extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
         mayDropSelf(source);
@@ -89,7 +90,7 @@ public abstract class BaseDogPlushie extends Entity {
         
         var drop = this.getDogPlusieItemDrop();
         if (!drop.isEmpty()) {
-            this.spawnAtLocation(drop);
+            this.spawnAtLocation((ServerLevel)this.level(), drop);
         }
     }
 
