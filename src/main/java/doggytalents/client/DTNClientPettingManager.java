@@ -173,12 +173,12 @@ public class DTNClientPettingManager {
 
     @SubscribeEvent
     public void onMouseInput(InputEvent.MouseButton.Pre event) {
-        var button = event.getButton();
         if (selectedType == null)
             return;
-        if (button != GLFW.GLFW_MOUSE_BUTTON_RIGHT)
-            return;
         var mc = Minecraft.getInstance();
+        var button = event.getButton();
+        if (!mc.options.keyUse.matchesMouse(button))
+            return;
         if (mc.screen != null || mc.getOverlay() != null || mc.player == null)
             return;
         var action = event.getAction();
