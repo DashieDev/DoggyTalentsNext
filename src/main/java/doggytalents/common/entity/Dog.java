@@ -4788,6 +4788,9 @@ public class Dog extends AbstractDog {
         case DANGER_POWDER_SNOW:
         case POWDER_SNOW:
             return -1;
+        case DANGER_TRAPDOOR:
+        case TRAPDOOR:
+            return -1;
         }
         return super.getPathfindingMalus(type);
     }
