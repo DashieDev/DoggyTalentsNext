@@ -202,8 +202,8 @@ public class DogBedMaterialManager {
         }
 
         @Override
-        public Ingredient getIngredient() {
-            return null;
+        public Optional<Ingredient> getIngredient() {
+            return Optional.empty();
         }
 
         public Optional<ResourceLocation> missingLoc() {
@@ -251,8 +251,8 @@ public class DogBedMaterialManager {
         }
 
         @Override
-        public Ingredient getIngredient() {
-            return null;
+        public Optional<Ingredient> getIngredient() {
+            return Optional.empty();
         }
 
         public Optional<ResourceLocation> missingLoc() {

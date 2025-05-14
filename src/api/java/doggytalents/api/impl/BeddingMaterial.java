@@ -1,5 +1,6 @@
 package doggytalents.api.impl;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -7,6 +8,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -65,8 +67,12 @@ public class BeddingMaterial extends IBeddingMaterial {
      * The ingredient used in the crafting recipe of the bed
      */
     @Override
-    public Ingredient getIngredient() {
-        return Ingredient.of(this.block.get());
+    public Optional<Ingredient> getIngredient() {
+        var block = this.block.get();
+        if (block == null || block == Blocks.AIR) {
+            return Optional.empty();
+        }
+        return Optional.of(Ingredient.of(block));
     }
 
     @Override
