@@ -73,7 +73,7 @@ public class DogMouthItemRenderer extends RenderLayer<Dog, DogModel> {
             stack.translate(0.25, 0, 0);
         }
         if (item instanceof BowItem || item instanceof CrossbowItem) {
-            stack.scale(1, 1, -1);
+            stack.scale(1, -1, -1);
             stack.translate(0, 0, -0.1);
         }
         if (item instanceof BlockItem) {
