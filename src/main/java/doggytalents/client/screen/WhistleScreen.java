@@ -232,11 +232,11 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 remove = true;
             }
             text = Component.literal(
-                remove ? "- " : pKey + " "
+                remove ? "- " : (pKey + 1) + " "
             );
         } else if (hotkey_indx >= 0) {
             prefix_color = 0xff6f00;
-            text = Component.literal(hotkey_indx + " ");
+            text = Component.literal((hotkey_indx + 1) + " ");
         } else {
             text = Component.literal("  ");
         }
