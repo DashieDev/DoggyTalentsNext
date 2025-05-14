@@ -622,7 +622,7 @@
    "doggytalents.screen.whistler.heel_by_name.soft_heel.help" : "By default, Dog will always teleport to you upon using this command. If this option is set to true, Dog will stand up (if sitting), run to you as usual and only teleport if it is too far away.",
    "doggytalents.screen.whistler.screen.set_hotkey" : "Set Hotkey",
    "doggytalents.screen.whistler.screen.use_whistle" : "Use Whistle",
-   "doggytalents.screen.whistler.screen.set_hotkey.help" : "Commands can also be issued without opening this menu through keybinds which can be configured via Minecraft's Option Menu. Currently, you can assign up to 4 functions to be triggered using their respective keybinds. Note that these keybinds only become active when you are holding the whistle.",
+   "doggytalents.screen.whistler.screen.set_hotkey.help" : "Commands can also be issued without opening this menu through keybinds which can be configured via Minecraft's Option Menu. Currently, you can assign up to 4 functions to be triggered using their respective keybinds. Note that these keybinds only become active when you are holding the whistle. By default, these keybinds are Shift + {1, 2, 3, 4}.",
    "doggytalents.screen.whistler.target.on_duty": "On Duty",
    "doggytalents.screen.whistler.target.all": "All Dogs",
    "doggytalents.screen.whistler.target.title": "Whistle Target",
