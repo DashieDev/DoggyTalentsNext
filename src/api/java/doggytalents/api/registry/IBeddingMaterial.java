@@ -2,6 +2,9 @@ package doggytalents.api.registry;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.Optional;
+
 import net.minecraft.network.chat.Component;
 
 public abstract class IBeddingMaterial {
@@ -19,7 +22,7 @@ public abstract class IBeddingMaterial {
     /**
      * The ingredient used in the crafting recipe of the bed
      */
-    public abstract Ingredient getIngredient();
+    public abstract Optional<Ingredient> getIngredient();
 
     public abstract ResourceLocation getSaveKey();
 

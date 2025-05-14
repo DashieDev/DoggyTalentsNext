@@ -66,7 +66,7 @@ public class DogBedUtil {
     public static Optional<ICasingMaterial> getCasingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getCasings().entrySet()) {
             var m = e.getValue();
-            if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
+            if (m.getIngredient().isPresent() && m.getIngredient().get().test(stack)) {
                 return Optional.of(m);
             }
         }
@@ -77,7 +77,7 @@ public class DogBedUtil {
     public static Optional<IBeddingMaterial> getBeddingFromStack(ItemStack stack) {
         for (var e : DogBedMaterialManager.getBeddings().entrySet()) {
             var m = e.getValue();
-            if (m.getIngredient() != Ingredient.EMPTY && m.getIngredient().test(stack)) {
+            if (m.getIngredient().isPresent() && m.getIngredient().get().test(stack)) {
                 return Optional.of(m);
             }
         }
