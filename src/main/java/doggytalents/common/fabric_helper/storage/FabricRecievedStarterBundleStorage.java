@@ -12,7 +12,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
@@ -78,7 +77,7 @@ public class FabricRecievedStarterBundleStorage extends SavedData {
     }
 
     // private static SavedData.Factory<FabricRecievedStarterBundleStorage> FACTORY
-    //     = new SavedData.Factory<>(FabricRecievedStarterBundleStorage::new, FabricRecievedStarterBundleStorage::load, DataFixTypes.LEVEL);
+    //     = new SavedData.Factory<>(FabricRecievedStarterBundleStorage::new, FabricRecievedStarterBundleStorage::load, null);
     // public static SavedData.Factory<FabricRecievedStarterBundleStorage> storageFactory() {
     //     return FACTORY;
     // }
