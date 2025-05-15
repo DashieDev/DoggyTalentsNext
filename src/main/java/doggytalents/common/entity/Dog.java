@@ -1563,6 +1563,14 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    protected void checkFallDamage(double fallVelocity, boolean onGround, BlockState state, BlockPos pos) {
+        if (this.fireImmune() && state.getBlock() == Blocks.LAVA) {
+            this.resetFallDistance();
+        }
+        super.checkFallDamage(fallVelocity, onGround, state, pos);
+    }
+
+    @Override
     public boolean canDrownInFluidType(FluidType type) {
         return !alterationProps.canBreatheUnderwater();
     }
