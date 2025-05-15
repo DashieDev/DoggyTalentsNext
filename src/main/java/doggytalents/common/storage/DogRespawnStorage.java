@@ -11,7 +11,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -138,7 +137,7 @@ public class DogRespawnStorage extends SavedData {
     }
 
     private static SavedData.Factory<DogRespawnStorage> FACTORY
-        = new SavedData.Factory<>(DogRespawnStorage::new, DogRespawnStorage::load, DataFixTypes.LEVEL);
+        = new SavedData.Factory<>(DogRespawnStorage::new, DogRespawnStorage::load, null);
     public static SavedData.Factory<DogRespawnStorage> storageFactory() {
         return FACTORY;
     }

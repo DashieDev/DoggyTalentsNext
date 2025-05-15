@@ -14,7 +14,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -211,7 +210,7 @@ public class DogLocationStorage extends SavedData {
     }
 
     private static SavedData.Factory<DogLocationStorage> FACTORY
-        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load, DataFixTypes.LEVEL);
+        = new SavedData.Factory<>(DogLocationStorage::new, DogLocationStorage::load, null);
     public static SavedData.Factory<DogLocationStorage> storageFactory() {
         return FACTORY;
     }
