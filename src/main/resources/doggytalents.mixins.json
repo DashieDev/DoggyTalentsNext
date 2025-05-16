@@ -5,6 +5,7 @@
     "compatibilityLevel": "JAVA_17",
     "mixins": [
         "EntityMixin",
+        "ProjectileMixin",
 
         
         "EntityMixin_1_21_3",
