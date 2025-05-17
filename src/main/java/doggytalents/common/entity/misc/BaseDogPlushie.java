@@ -73,6 +73,11 @@ public abstract class BaseDogPlushie extends Entity {
     }
 
     @Override
+    public boolean canBeHitByProjectile() {
+        return false;
+    }
+
+    @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
