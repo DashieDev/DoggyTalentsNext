@@ -97,6 +97,11 @@ public class Piano extends Entity {
     }
 
     @Override
+    public boolean canBeHitByProjectile() {
+        return false;
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float damage) {
         if (this.isInvulnerableTo(source))
             return false;
