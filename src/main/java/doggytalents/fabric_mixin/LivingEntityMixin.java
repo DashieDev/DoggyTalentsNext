@@ -3,22 +3,16 @@ package doggytalents.fabric_mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
-import org.spongepowered.asm.mixin.injection.modify.LocalVariableDiscriminator.Context.Local;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
-import doggytalents.DoggyAttributes;
-import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.entity.FabricDogKillXPFix;
 import doggytalents.common.fabric_helper.entity.FabricMobKillDropCapture;
-import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.common.fabric_helper.entity.FabricModifyDogSwimSpeedFix;
 import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
-import doggytalents.forge_imitate.event.LootingLevelEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,23 +55,17 @@ public class LivingEntityMixin {
     //     return _gravity;
     // }
 
-    @ModifyArgs(
+    @WrapOperation(
         method = "travel(Lnet/minecraft/world/phys/Vec3;)V",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/entity/LivingEntity;moveRelative(FLnet/minecraft/world/phys/Vec3;)V"
         )
     )
-    private void dtn__travel_modifySwimSpeed(Args args) {
-        var self = (LivingEntity)(Object)this;
-        if (!(self instanceof Dog dog))
-            return;
-        if (!dog.isInWater() || dog.isInLava())
-            return;
-        final int FLOAT_INDX = 0, VEC3_INDEX = 1;
-        float current = (Float) args.get(FLOAT_INDX);
-        current *= dog.getAttributeValue(ForgeMod.SWIM_SPEED.holder());
-        args.set(FLOAT_INDX, current);
+    private void dtn__travel_modifySwimSpeed(LivingEntity entity, float speed, Vec3 moveVec, Operation<Void> original) {
+        var self = (LivingEntity)(Object) this;
+        var result = FabricModifyDogSwimSpeedFix.onModifySwimSpeed(self, speed); 
+        original.call(entity, result.orElse(speed), moveVec);
     }
 
     @Inject(
