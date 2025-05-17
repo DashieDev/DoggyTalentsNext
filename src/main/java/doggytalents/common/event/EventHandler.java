@@ -357,29 +357,10 @@ public class EventHandler {
     }    
 
     private void proccessEntityProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit) {
-        if (detectAndCancelIfProjectileFromDogHitAllies(event, hit))
-            return;
         var entity = hit.getEntity();
         if (entity instanceof Dog dog) {
             proccessDogProjectileHitEvent(event, hit, dog);
         }
-    }
-
-    private boolean detectAndCancelIfProjectileFromDogHitAllies(final ProjectileImpactEvent event, EntityHitResult hit) {
-        var projectile = event.getProjectile();
-        var projectileOnwer = projectile.getOwner();
-        if (!(projectileOnwer instanceof Dog dog))
-            return false;
-        var hitEntity = hit.getEntity();
-        if (hitEntity == null || hitEntity == dog)
-            return false;
-        if (!(hitEntity instanceof LivingEntity living))
-            return false;
-        if (!DogAllyCheck.isAlliedToDog(dog, living))
-            return false;
-        projectile.discard();
-        event.setCanceled(true);
-        return true;
     }
 
     private void proccessDogProjectileHitEvent(final ProjectileImpactEvent event, EntityHitResult hit, Dog dog) {
@@ -398,21 +379,6 @@ public class EventHandler {
                 dog.triggerAction(new DogPlayTagAction(dog, dogOwner));
             return;
         }
-
-        boolean flag = 
-            checkIfArrowShouldNotHurtDog(dog, projectileOnwer, dogOwner);
-        if (!flag) return;
-
-        //Workaround to avoid infinite loop
-        //net.minecraft.world.entity.projectile.AbstractArrow:193
-        //This should not happen by design.
-        if (projectile instanceof AbstractArrow arrow) {
-            if (arrow.getPierceLevel() > 0) {
-                arrow.setPierceLevel((byte) 0);
-            }
-        }
-
-        event.setCanceled(true);
     }
 
     private void proccessBlockProjectileHitEvent(final ProjectileImpactEvent event, BlockHitResult hit) {
@@ -444,21 +410,6 @@ public class EventHandler {
 
         projectile.playSound(SoundEvents.TURTLE_EGG_CRACK, 0.5F, 0.9F + 
             level.random.nextFloat() * 0.2F);
-    }
-
-    private static boolean checkIfArrowShouldNotHurtDog(Dog dog, Entity projectileOnwer, LivingEntity dogOwner) {
-        boolean allPlayerCannotAttackDog = 
-            ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
-
-        if (allPlayerCannotAttackDog && projectileOnwer instanceof Player) {
-            return true;
-        } 
-        
-        if (!dog.canOwnerAttack() && DogAllyCheck.isAlliedToDog(dog, projectileOnwer, dogOwner)) {
-            return true;
-        }
-
-        return false;
     }
 
     public final int COLLECT_RADIUS = 26;
