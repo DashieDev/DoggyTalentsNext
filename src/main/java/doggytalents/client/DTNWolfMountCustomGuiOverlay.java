@@ -38,7 +38,7 @@ public class DTNWolfMountCustomGuiOverlay {
             return false;
         
         int draw_x = graphics.guiWidth() / 2 + 91 - 80;
-        int draw_y = graphics.guiHeight() - gui.rightHeight;
+        int draw_y = graphics.guiHeight() - /*gui.rightHeight*/39;
         RenderSystem.enableBlend();
 
         var mc = Minecraft.getInstance();
@@ -113,7 +113,7 @@ public class DTNWolfMountCustomGuiOverlay {
         }
         
 
-        gui.rightHeight += 20;
+        //gui.rightHeight += 20;
 
         RenderSystem.disableBlend();
         
