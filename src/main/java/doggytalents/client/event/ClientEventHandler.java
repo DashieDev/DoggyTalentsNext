@@ -307,4 +307,20 @@ public class ClientEventHandler {
         return variant.id().toString();
     }
 
+    public static boolean showWolfMountHealth() {
+        if (ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get())
+            return false;
+        var mc = Minecraft.getInstance();
+        var game_mode = mc.gameMode;
+        if (game_mode == null)
+            return false;
+        boolean creative_hide_condition = 
+            !game_mode.canHurtPlayer()
+            && ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS_CREATIVE.get();
+        if (creative_hide_condition)
+            return false;
+        
+        return true;
+    } 
+
 }
