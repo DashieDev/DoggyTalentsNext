@@ -429,8 +429,6 @@ public class ClientSetup {
     }
 
     public static void registerOverlay(RegisterGuiOverlaysEvent e) {
-        e.registerAboveAll("dog_food_level", DogScreenOverlays.FOOD_LEVEL_ELEMENT);
-        e.registerAboveAll("dog_air_evel", DogScreenOverlays.AIR_LEVEL_ELEMENT);
     }
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
