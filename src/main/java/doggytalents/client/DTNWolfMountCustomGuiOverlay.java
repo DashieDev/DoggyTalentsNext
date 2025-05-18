@@ -32,10 +32,7 @@ public class DTNWolfMountCustomGuiOverlay {
             return false;
         var vehicle = vehicle_optional.get();
 
-        if (vehicle.getType() != DoggyEntityTypes.DOG.get()) 
-            return false;
-
-        if (!vehicle.showVehicleHealth())
+        if (!isTargetVehicle(vehicle))
             return false;
 
         if (!(vehicle instanceof Dog dog))
@@ -128,11 +125,7 @@ public class DTNWolfMountCustomGuiOverlay {
         if (!isApplicable())
             return Optional.empty();
 
-        if (vehicle == null)
-            return Optional.empty();
-        if (vehicle.getType() != DoggyEntityTypes.DOG.get())
-            return Optional.empty();
-        if (!vehicle.showVehicleHealth())
+        if (!isTargetVehicle(vehicle))
             return Optional.empty();
         
         //We can take two lines since a standard Dog would require 2 or more lines to render its
@@ -153,6 +146,17 @@ public class DTNWolfMountCustomGuiOverlay {
             return Optional.empty();
         
         return Optional.of(vehicle);
+    }
+
+    private static boolean isTargetVehicle(Entity vehicle) {
+        if (vehicle == null)
+            return false;
+        if (vehicle.getType() != DoggyEntityTypes.DOG.get()) 
+            return false;
+        if (!vehicle.showVehicleHealth())
+            return false;
+
+        return true;
     }
 
     public static boolean isApplicable() {
