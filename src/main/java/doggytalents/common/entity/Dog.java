@@ -1586,6 +1586,11 @@ public class Dog extends AbstractDog {
         return alterationProps.canBreatheUnderwater();
     }
 
+    // @Override
+    // public boolean canDrownInFluidType(FluidType type) {
+    //     return !alterationProps.canBreatheUnderwater();
+    // }
+
     @Override
     protected int decreaseAirSupply(int air) {
         for (IDogAlteration alter : this.alterations) {
