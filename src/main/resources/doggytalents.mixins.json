@@ -10,7 +10,8 @@
     "client": [
       "LivingEntityRendererMixin",
       "PlayerModelMixin",
-      "CameraMixin"
+      "CameraMixin",
+      "GuiMixin"
     ],
     "server": [],
     "injectors": {
