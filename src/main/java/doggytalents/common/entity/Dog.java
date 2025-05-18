@@ -1452,7 +1452,7 @@ public class Dog extends AbstractDog {
     @Override
     public boolean showVehicleHealth() {
         if (this.level().isClientSide) {
-            return !ConfigHandler.CLIENT.HIDE_WOLF_MOUNT_STATUS.get();
+            return ClientEventHandler.showWolfMountHealth(); 
         }
         return super.showVehicleHealth();
     }

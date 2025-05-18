@@ -125,6 +125,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ModConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
+        public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
         public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
         public ModConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ModConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
@@ -296,6 +297,9 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
             HIDE_WOLF_MOUNT_STATUS = builder
                 .comment("Enable this to hide Wolf Mount Dog's Status Overlay when riding it.")
                 .define("hide_wolf_mount_status", false);
+            HIDE_WOLF_MOUNT_STATUS_CREATIVE = builder
+                .comment("Enable this to hide Wolf Mount Dog's Status Overlay when riding it in Creative.")
+                .define("hide_wolf_mount_status_creative", true);
             DTN_WOLF_MOUNT_OVERLAY = builder
                 .comment("Use DTN's Dedicated Wolf Mount Overlay when riding the Dog to show its")
                 .comment("status. This will takes up two health lines and will render where")
