@@ -19,7 +19,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class DTNWolfMountCustomGuiOverlay {
     
