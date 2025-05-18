@@ -386,6 +386,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
+        public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -627,6 +628,11 @@ public class ConfigHandler {
                 .comment("the Pale one only.")
                 .translation("doggytalents.random_var_on_pale")
                 .define("random_var_on_pale", false);
+            SWIMMER_DOG_RIDER_WATER_VISION = builder
+                .comment("By default, players who are riding their Dog with Swimmer Dog Maxed out will be")
+                .comment("able to see well underwater. Set this to false to disable this behaviour.")
+                .translation("doggytalents.dog_riding_water_vision")
+                .define("dog_riding_water_vision", true);
 
             builder.pop();
         }
