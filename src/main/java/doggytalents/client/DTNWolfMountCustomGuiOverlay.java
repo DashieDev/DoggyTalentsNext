@@ -35,9 +35,6 @@ public class DTNWolfMountCustomGuiOverlay {
         if (vehicle.getType() != DoggyEntityTypes.DOG.get()) 
             return false;
 
-        if (!vehicle.showVehicleHealth())
-            return false;
-
         if (!(vehicle instanceof Dog dog))
             return false;
         
@@ -131,8 +128,6 @@ public class DTNWolfMountCustomGuiOverlay {
         if (vehicle == null)
             return Optional.empty();
         if (vehicle.getType() != DoggyEntityTypes.DOG.get())
-            return Optional.empty();
-        if (!vehicle.showVehicleHealth())
             return Optional.empty();
         
         //We can take two lines since a standard Dog would require 2 or more lines to render its
