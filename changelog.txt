@@ -1905,3 +1905,36 @@ the Owner to have fewer Briding/Greeting Dogs at the same time.
 
 **1.18.50 - 5th May 2025**
 * Temporary disable Pack Puppy Collect Kill Loot for now.
+
+**1.18.51 - 5th May 2025**
+Dedicated Wolf Mount Status Gui Overlay:
++ When Mounting a Dog, a dedicated status overlay will be rendered in place of 
+and instead of the vanilla vehicle hearts and take up 2 heart lines.
++ This shows the percentage of the Dog's Health, Hunger and Air.
++ This is also supported on Fabric.
+===
+Dedicated Projectile Ally Check Handler for Dogs:
++ This prevents any projectile (Except Snowball) that is fired from a Dog's Owner or Ally
+from regconizing the Dog as a hit-able target and vice versa.
++ This allows Piercing Arrows to retain their Piercing value after going through an Ally.
+===
+# (Configurable) Wolf Mount Status Overlay won't render in creative.
+# Explicitly make HellHound Dog not taking any fall damage if falling in lava. This
+enables the behaviour on Fabric as well.
+# Whistle Set Hotkey UI Change: Add default keybind hint and rendering keybind ids now starts
+from 1 instead of 0. 
+# Dog Petting now checks based on the keybind of Use instead of explicitly Right Click.
+# Dogs now avoid Trapdoors.
+# Pianos and Plushies cannot be hit by Projectiles.
+# Swimmer Dog who is being ridden now continues to swim upon going low on Air as long as
+the player is still mounted.
+# Changed Max-level Swimmer Dog's Rider Effect from Night Vision to Conduit Power and allowed
+disabling it via config.
+# zh_cn update (@cmd-png)
+- Remove Old Wolf Mount Gui Overlay
+* Fix improper scale when rendering Bow/Crossbow in Dog's Mouth causing the item model
+to be glitched out.
+* (1.21.5+) Fix Dog Bed Recipe affecting other recipes due to Vanilla no longer being
+happy with empty materials.
+* (Fabric only) Fix Crossbow Arrow shot from Dog being able to hit Owner. 
+* (Fabric only) Fix Bed Dogs failed to set their Sleep On Cooldowns upon Sleep Successful.
