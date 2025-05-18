@@ -17,6 +17,7 @@
       "LivingEntityRendererMixin",
       "PlayerModelMixin",
       "CameraMixin",
+      "GuiMixin",
 
 
       "PlayerRendererMixin_1_21_3",

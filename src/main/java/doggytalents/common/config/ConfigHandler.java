@@ -125,6 +125,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ModConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
+        public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
         public ModConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ModConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
@@ -295,6 +296,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
             HIDE_WOLF_MOUNT_STATUS = builder
                 .comment("Enable this to hide Wolf Mount Dog's Status Overlay when riding it.")
                 .define("hide_wolf_mount_status", false);
+            DTN_WOLF_MOUNT_OVERLAY = builder
+                .comment("Use DTN's Dedicated Wolf Mount Overlay when riding the Dog to show its")
+                .comment("status. This will takes up two health lines and will render where")
+                .comment("the Vanilla Vehicle Health is and instead of it.")
+                .define("dtn_wolf_mount_overlay", true);
             MAX_DOG_BED_MODEL_CACHE = builder
                 .comment("Configure the maximum value of Dog Bed variants that will be rendered.")
                 .comment("If the amount of Dog Bed variants rendered exceeds this limit,")
