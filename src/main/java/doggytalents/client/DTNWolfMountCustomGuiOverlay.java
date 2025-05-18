@@ -57,7 +57,7 @@ public class DTNWolfMountCustomGuiOverlay {
         var food_level_str = Component.literal(Integer.toString(dog_hunger_percent) + "%"); 
         
         Optional<MutableComponent> air_level_str = Optional.empty();
-        boolean render_air = dog.canDrownInFluidType(NeoForgeMod.WATER_TYPE.value()) 
+        boolean render_air = !dog.canBreatheUnderwater()
             && (
                 dog.isEyeInFluid(FluidTags.WATER)
                 || dog.getAirSupply() < dog.getMaxAirSupply()
