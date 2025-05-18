@@ -129,7 +129,7 @@ public class DTNWolfMountCustomGuiOverlay {
         
         //We can take two lines since a standard Dog would require 2 or more lines to render its
         //health anyways.
-        return Optional.of(40);
+        return Optional.of(20);
     }
 
     private static Optional<Entity> getPlayerVehicle() {
