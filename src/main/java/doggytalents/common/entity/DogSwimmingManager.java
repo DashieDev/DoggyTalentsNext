@@ -54,7 +54,7 @@ public class DogSwimmingManager {
     private void updateSwimming(Dog dog) {
         if (
             (!dog.isInWater() && dog.onGround())
-            || dog.isLowAirSupply()
+            || !dog.isVehicle() && dog.isLowAirSupply()
             || dog.isDefeated()
         ) {
             this.swimming = false;
