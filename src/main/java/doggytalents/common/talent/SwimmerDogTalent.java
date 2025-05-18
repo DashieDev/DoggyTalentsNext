@@ -11,6 +11,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
@@ -56,8 +57,9 @@ public class SwimmerDogTalent extends TalentInstance {
         if (this.level() >= 5 && abstractDog.isVehicle()) {
             // canBeSteered checks entity is LivingEntity
             var control = abstractDog.getControllingPassenger();
-            if (control != null && control.isInWater()) {
-                control.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 80, 1, true, false));
+            if (control != null && control.isInWater() 
+                && ConfigHandler.SERVER.SWIMMER_DOG_RIDER_WATER_VISION.get()) {
+                control.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 40, 0, true, false));
             }
         }
 
