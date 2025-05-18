@@ -289,6 +289,7 @@ public class DogSleepOnManager {
             if (dog.level() != level)
                 continue;
             notifySleepSuccessDog(dog);
+            stopPlayerSleepOn(dog);
         }
     }
 
