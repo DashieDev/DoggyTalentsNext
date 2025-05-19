@@ -111,4 +111,5 @@ tasks.withType(JavaCompile).configureEach {
 mixin {
     add sourceSets.main, "doggytalents.refmap.json"
     config 'doggytalents.mixins.json'
+    config 'doggytalents.forge_mixins.json'
 }

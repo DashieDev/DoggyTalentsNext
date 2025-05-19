@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "doggytalents.forge_mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [],
+    "client": [],
+    "server": [],
+    "injectors": {
+      "defaultRequire": 1
+    },
+    "refmap": "doggytalents.refmap.json"
+} 
