@@ -386,7 +386,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
-        public ModConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
+        public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
