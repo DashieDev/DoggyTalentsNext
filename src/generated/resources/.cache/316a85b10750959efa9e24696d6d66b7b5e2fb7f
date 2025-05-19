@@ -1,4 +1,4 @@
-// 1.21.5	2025-04-07T01:36:39.1991421	DoggyTalentsNext Recipe Provider
+// 1.21.5	2025-05-10T15:41:16.1297976	DoggyTalentsNext Recipe Provider
 bbca6218af9c6665b272a2b26d607c67d9087527 data/doggytalents/advancement/recipes/building_blocks/dog_bath.json
 06d4b3a9cd262399bbfc6828dc4510f10511ea09 data/doggytalents/advancement/recipes/building_blocks/dog_bed_def.json
 668fa033a5c76698a21e984fa7d3ee54abb9a53a data/doggytalents/advancement/recipes/building_blocks/food_bowl.json
@@ -10,6 +10,7 @@ d3c3d8082bb2cf496c321c456b9b7286e50506c9 data/doggytalents/advancement/recipes/d
 a987917517d82285303d38b5c27721313ee1b8f5 data/doggytalents/advancement/recipes/decorations/beastars_uniform_male.json
 b1e9e23c02cb908bcfed3bf427859ab3fbfc011f data/doggytalents/advancement/recipes/decorations/birthday_hat_alt.json
 12f407f5f5382bf6552dc823870c6fb557839279 data/doggytalents/advancement/recipes/decorations/bowtie.json
+7f1715b32ea754a01c70a2cc71db9b33612bb1b1 data/doggytalents/advancement/recipes/decorations/bunny_ears.json
 710b78b348ebacb0e3a1cb4cd08fc1d91bfeb3b2 data/doggytalents/advancement/recipes/decorations/cape_coloured.json
 deab93dc3a1cb4c23fc89c4ce78520c394103ba5 data/doggytalents/advancement/recipes/decorations/ceremonial_garb.json
 3330625d48b6170819aa0a58318d13d87941ad3a data/doggytalents/advancement/recipes/decorations/chef_hat.json
@@ -134,6 +135,7 @@ c91fb47a9208cf2227d2a35da3cdf404a77fa6e6 data/doggytalents/recipe/beastars_unifo
 ca4486c98986e7dcb50e957813a3ebf06ce46c88 data/doggytalents/recipe/birthday_hat_alt.json
 9bf6e3c1fadbcc07a8060528fa7a7c0e7a68b3b5 data/doggytalents/recipe/bowtie.json
 63c779eba6e757d1162bd93f98e6e1172b09a182 data/doggytalents/recipe/breeding_bone.json
+cd0630e7024a2729449c4d1df894d830518071c3 data/doggytalents/recipe/bunny_ears.json
 75cb0a33f04bd5b60f7efaa998738c0f292d427f data/doggytalents/recipe/canine_tracker.json
 3b5be238d7caead9c6e66425670e5f53c563a8c2 data/doggytalents/recipe/cape_coloured.json
 a18c4e790208f719d2485a6ec14aeb51c4f73acf data/doggytalents/recipe/ceremonial_garb.json
