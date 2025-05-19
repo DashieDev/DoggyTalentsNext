@@ -122,8 +122,8 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RENDER_RADIO_COLLAR;
         public ForgeConfigSpec.BooleanValue TRANSLUCENT_ALL_OVERLAY;
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
-        public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
-        public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
+        public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
+        public ForgeConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
         public ForgeConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
@@ -370,7 +370,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
-        public ModConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
+        public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
