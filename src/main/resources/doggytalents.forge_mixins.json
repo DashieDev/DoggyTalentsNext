@@ -4,7 +4,9 @@
     "package": "doggytalents.forge_mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [],
-    "client": [],
+    "client": [
+        "ForgeGuiMixin"
+    ],
     "server": [],
     "injectors": {
       "defaultRequire": 1
