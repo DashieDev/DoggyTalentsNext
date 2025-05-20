@@ -4,11 +4,14 @@ import doggytalents.DoggyBlocks;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.api.registry.IDogBedMaterial;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
@@ -20,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 
 public class DogBedUtil {
 
@@ -63,26 +67,35 @@ public class DogBedUtil {
         return stack;
     }
 
-    public static Optional<ICasingMaterial> getCasingFromStack(ItemStack stack) {
-        for (var e : DogBedMaterialManager.getCasings().entrySet()) {
-            var m = e.getValue();
-            if (m.getIngredient().isPresent() && m.getIngredient().get().test(stack)) {
-                return Optional.of(m);
-            }
-        }
-
-        return Optional.empty();
+    public static Optional<IBeddingMaterial> getBeddingFromStack(ItemStack stack) {
+        return getBedMaterialFromStack(stack, DogBedMaterialManager::getBedding);
     }
 
-    public static Optional<IBeddingMaterial> getBeddingFromStack(ItemStack stack) {
-        for (var e : DogBedMaterialManager.getBeddings().entrySet()) {
-            var m = e.getValue();
-            if (m.getIngredient().isPresent() && m.getIngredient().get().test(stack)) {
-                return Optional.of(m);
-            }
-        }
+    public static Optional<ICasingMaterial> getCasingFromStack(ItemStack stack) {
+        return getBedMaterialFromStack(stack, DogBedMaterialManager::getCasing);
+    }
 
-        return Optional.empty();
+    public static <T extends IDogBedMaterial> Optional<T> getBedMaterialFromStack(
+        ItemStack stack, Function<ResourceLocation, T> bed_material_getter) {
+        
+        if (stack.isEmpty())
+            return Optional.empty();
+        
+        var item = stack.getItem();
+        if (!(item instanceof BlockItem block_item))
+            return Optional.empty();
+        var block = block_item.getBlock();
+        if (block == null)
+            return Optional.empty();
+        
+        final var id = BuiltInRegistries.BLOCK.getKey(block);
+        final var material = bed_material_getter.apply(id);
+        if (material.isNani())
+            return Optional.empty();
+
+        return material.getIngredient()
+            .filter(ingredient -> ingredient.test(stack))
+            .map(x -> material);
     }
 
     public static ItemStack createItemStackForced(Block casing, Block bedding) {
