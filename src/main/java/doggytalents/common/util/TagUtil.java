@@ -8,6 +8,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
 public class TagUtil {
+
+    public static final TagKey<EntityType<?>> CAPTURING_NOT_SUPPORTED = net.neoforged.neoforge.common.Tags.EntityTypes.CAPTURING_NOT_SUPPORTED;
     
     public static <T> List<T> queryAllValuesForTag(Registry<T> reg, TagKey<T> key) {
         var tag = reg.getTag(key).orElse(null);
@@ -18,9 +20,4 @@ public class TagUtil {
             .collect(Collectors.toList());
         return ret;
     }
-
-    public static TagKey<EntityType<?>> capturingNotSupportedTag() {
-        return net.neoforged.neoforge.common.Tags.EntityTypes.CAPTURING_NOT_SUPPORTED;
-    }
-
 }
