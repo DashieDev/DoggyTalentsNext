@@ -1,4 +1,4 @@
-package doggytalents.api.impl;
+package doggytalents.common.block;
 
 import java.util.Optional;
 import java.util.function.Supplier;
