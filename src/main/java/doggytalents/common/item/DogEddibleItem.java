@@ -24,35 +24,11 @@ import net.minecraft.world.level.Level;
 
 public abstract class DogEddibleItem extends Item implements IDogEddible {
 
-    private static FoodProperties NULL_PROPS = 
-        (new FoodProperties.Builder())
-            .nutrition(0)
-            .build();
-
-    private final FoodProperties nullProps;
-    private final FoodProperties actualFoodProps;
-    private FoodProperties currentFoodProps;
+    private final FoodProperties foodProps;
 
     public DogEddibleItem(Properties itemProps, FoodProperties foodProps) {
         super(itemProps.food(foodProps));
-        if (foodProps != null)
-            actualFoodProps = foodProps;
-        else 
-            actualFoodProps = NULL_PROPS;
-
-        var nullPropsBuilder = (new FoodProperties.Builder())
-            .nutrition(0);
-        boolean changed = false;
-        if (actualFoodProps.canAlwaysEat()) {
-            changed = true;
-            nullPropsBuilder.alwaysEdible();
-        }
-        if (changed)
-            nullProps = nullPropsBuilder.build();
-        else
-            nullProps = NULL_PROPS;
-            
-        currentFoodProps = nullProps;
+        this.foodProps = foodProps;
     }
 
     // public DogEddibleItem(FoodProperties foodProperties) {
@@ -73,12 +49,6 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
         this(itemPropsCreator.apply(itemProps),
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
-
-    // @Override
-    // @Nullable
-    // public FoodProperties getFoodProperties() {
-    //     return this.currentFoodProps;
-    // }
 
     @Override
     public boolean isFood(ItemStack stack) {
@@ -134,22 +104,12 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return actualFoodProps.nutrition() * 5;
+        return this.foodProps.nutrition() * 5;
     }
 
     @Override
     public List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return actualFoodProps.effects();
+        return this.foodProps.effects();
     }
-
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-        if (entity instanceof Player)
-            currentFoodProps = actualFoodProps;
-        var ret = super.finishUsingItem(stack, level, entity);
-        currentFoodProps = nullProps;
-        return ret;
-    }
-    
 }
