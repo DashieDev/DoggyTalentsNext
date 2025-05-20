@@ -31,7 +31,7 @@ public class DTNCompostables {
 
     public static void init() {
         var compostables = getCompostables();
-        ComposterBlock.COMPOSTABLES.putAll(compostables);
+        //ComposterBlock.COMPOSTABLES.putAll(compostables); // Neoforge already uses data gen for thisn
     }
 
 }
