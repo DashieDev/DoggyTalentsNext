@@ -27,35 +27,12 @@ import net.minecraft.world.level.Level;
 
 public abstract class DogEddibleItem extends Item implements IDogEddible, HoverTextAppender_1_21_5 {
 
-    // private static FoodProperties NULL_PROPS = 
-    //     (new FoodProperties.Builder())
-    //         .nutrition(0)
-    //         .build();
-
-    // private final FoodProperties nullProps;
-    // private final FoodProperties actualFoodProps;
-    //private FoodProperties currentFoodProps;
+    private final FoodProperties foodProps;
 
     public DogEddibleItem(Properties itemProps, DogFoodProperties_21_3 foodProps) {
         super(itemProps.food(foodProps.getVanillaProps().build(), foodProps.getVanillaEffects()));
-        // if (foodProps != null)
-        //     actualFoodProps = foodProps;
-        // else 
-        //     actualFoodProps = NULL_PROPS;
+        this.foodProps = foodProps.getVanillaProps().build();
 
-        // var nullPropsBuilder = (new FoodProperties.Builder())
-        //     .nutrition(0);
-        // boolean changed = false;
-        // if (actualFoodProps.canAlwaysEat()) {
-        //     changed = true;
-        //     nullPropsBuilder.alwaysEdible();
-        // }
-        // if (changed)
-        //     nullProps = nullPropsBuilder.build();
-        // else
-        //     nullProps = NULL_PROPS;
-            
-        //currentFoodProps = foodProps;
         init_1_21_3(foodProps);
     }
 
@@ -77,12 +54,6 @@ public abstract class DogEddibleItem extends Item implements IDogEddible, HoverT
         this(itemPropsCreator.apply(itemProps),
             propsCreator.apply(new DogFoodProperties_21_3()));
     }
-
-    // @Override
-    // @Nullable
-    // public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-    //     return this.currentFoodProps;
-    // }
 
     @Override
     public boolean isFood(ItemStack stack) {
@@ -138,7 +109,7 @@ public abstract class DogEddibleItem extends Item implements IDogEddible, HoverT
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return this.vanillaDogProps_21_3.nutrition() * 5;
+        return this.foodProps.nutrition() * 5;
     }
 
     @Override
@@ -147,23 +118,11 @@ public abstract class DogEddibleItem extends Item implements IDogEddible, HoverT
         return this.dogEffects_21_3;
     }
 
-    // @Override
-    // public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-    //     if (entity instanceof Player)
-    //         currentFoodProps = actualFoodProps;
-    //     var ret = super.finishUsingItem(stack, level, entity);
-    //     currentFoodProps = nullProps;
-    //     return ret;
-    // }
-
 
 
     //1_21_3+
     private List<PossibleEffect_1_21_3> dogEffects_21_3;
-    private FoodProperties vanillaDogProps_21_3;
     public void init_1_21_3(DogFoodProperties_21_3 props) {
         this.dogEffects_21_3 = props.dogEffects();
-        this.vanillaDogProps_21_3 = props.getVanillaProps().build();
     }
-    
 }
