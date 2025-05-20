@@ -9,6 +9,7 @@ import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.item.DogEddibleItem;
@@ -28,11 +29,18 @@ public class DogFoodUtil {
             var props = ItemUtil.food_1_21_3(stack);
 
             if (props == null) return false;
-            return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH
+            return isMeat(stack) && stack.getItem() != Items.ROTTEN_FLESH
                 && props.nutrition() >= 6;
         }
         
     };
+
+    public static boolean isMeat(ItemStack stack) {
+        return stack.is(ItemTags.MEAT) || (
+            ConfigHandler.SERVER.DOG_CAN_EAT_ALL_FOOD.get()
+            && stack.getFoodProperties(null) != null
+        );
+    }
 
     public static MeatFoodHandler limitedMeatFoodHandler() {
         return meat_food_handler_limited;
