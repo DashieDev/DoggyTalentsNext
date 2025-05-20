@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.item.DogEddibleItem;
@@ -29,11 +30,18 @@ public class DogFoodUtil {
             var props = stack.getFoodProperties(null);
 
             if (props == null) return false;
-            return props.isMeat() && stack.getItem() != Items.ROTTEN_FLESH
-                && props.getNutrition() >= 6;
+            return isMeat(stack) && stack.getItem() != Items.ROTTEN_FLESH
+                && props.nutrition() >= 6;
         }
         
     };
+
+    public static boolean isMeat(ItemStack stack) {
+        return stack.is(ItemTags.MEAT) || (
+            ConfigHandler.SERVER.DOG_CAN_EAT_ALL_FOOD.get()
+            && stack.getFoodProperties(null) != null
+        );
+    }
 
     public static MeatFoodHandler limitedMeatFoodHandler() {
         return meat_food_handler_limited;
