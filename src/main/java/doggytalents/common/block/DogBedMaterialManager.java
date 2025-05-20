@@ -127,6 +127,8 @@ public class DogBedMaterialManager {
         var blocks = specific.isPresent() ? 
             new ArrayList<>(specific.get()) : fetchBeddingBlocksAuto();
         for (var block : blocks) {
+            if (!(block.asItem() instanceof BlockItem))
+                continue;
             var id = BuiltInRegistries.BLOCK.getKey(block);
             var value = (IBeddingMaterial) new BeddingMaterial(id, () -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
@@ -141,6 +143,8 @@ public class DogBedMaterialManager {
         var blocks = specific.isPresent() ? 
             new ArrayList<>(specific.get()) : fetchCasingBlocksAuto();
         for (var block : blocks) {
+            if (!(block.asItem() instanceof BlockItem))
+                continue;
             var id = BuiltInRegistries.BLOCK.getKey(block);
             var value = (ICasingMaterial) new CasingMaterial(id, () -> block);
             if (cause == UpdateCause.CLIENT_PACKET_RECEIVED) {
@@ -159,8 +163,7 @@ public class DogBedMaterialManager {
         var ret = new ArrayList<Block>(planks.size() + logs.size());
         ret.addAll(planks);
         ret.addAll(logs);
-        return ret.stream().filter(x -> (x.asItem() instanceof BlockItem))
-            .collect(Collectors.toList());
+        return ret;
     }
 
     private static List<Block> fetchBeddingBlocksAuto() {
@@ -168,8 +171,7 @@ public class DogBedMaterialManager {
             BuiltInRegistries.BLOCK, BlockTags.WOOL);
         var ret = new ArrayList<Block>(wools.size());
         ret.addAll(wools);
-        return ret.stream().filter(x -> (x.asItem() instanceof BlockItem))
-            .collect(Collectors.toList());
+        return ret;
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
