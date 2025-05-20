@@ -1906,7 +1906,7 @@ the Owner to have fewer Briding/Greeting Dogs at the same time.
 **1.18.50 - 5th May 2025**
 * Temporary disable Pack Puppy Collect Kill Loot for now.
 
-**1.18.51 - 5th May 2025**
+**1.18.51 - 19th May 2025**
 Dedicated Wolf Mount Status Gui Overlay:
 + When Mounting a Dog, a dedicated status overlay will be rendered in place of 
 and instead of the vanilla vehicle hearts and take up 2 heart lines.
@@ -1938,3 +1938,7 @@ to be glitched out.
 happy with empty materials.
 * (Fabric only) Fix Crossbow Arrow shot from Dog being able to hit Owner. 
 * (Fabric only) Fix Bed Dogs failed to set their Sleep On Cooldowns upon Sleep Successful.
+
+**1.18.52 - 20th May 2025**
+* Improve Dog Bed Recipe perforamnce.
+* Fix edges cases where Dog Bed Recipes can block other recipe from being crafted.
