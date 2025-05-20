@@ -2,6 +2,7 @@ package doggytalents.common.fabric_helper.lootmodifer_imitate;
 
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
+import doggytalents.common.data.DTLootModifierProvider;
 import doggytalents.common.entity.Dog;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -37,7 +38,7 @@ public class DTLootModifiers {
         if (item.is(Items.SHEARS))
             return;
         float r = player.getRandom().nextFloat();
-        if (r > 0.01F)
+        if (r > DTLootModifierProvider.RICE_FROM_GRASS_DROP_CHANCE)
             return;
         var resultEntity = new ItemEntity(
             level, 
@@ -54,7 +55,7 @@ public class DTLootModifiers {
         if (!entity.getType().is(DoggyTags.DROP_SOY_WHEN_DOG_KILL))
             return;
         float r = dog.getRandom().nextFloat();
-        if (r > 0.125F)
+        if (r > DTLootModifierProvider.SOY_FROM_ZOMBIE_DROP_CHANCE)
             return;
         int r2 = 1 + dog.getRandom().nextInt(3);
         var pos = entity.blockPosition();
