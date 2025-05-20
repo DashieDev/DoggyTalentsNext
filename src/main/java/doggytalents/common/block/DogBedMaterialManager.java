@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Maps;
 
 import doggytalents.DoggyTags;
-import doggytalents.api.impl.BeddingMaterial;
-import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;
