@@ -23,6 +23,7 @@ public class DTNCompostables {
                 .put(DoggyItems.SOY_PODS.get(), 0.65f)
                 .put(DoggyItems.SOY_PODS_DRIED.get(), 0.65f)
                 .put(DoggyItems.MISO_PASTE.get(), 0.65f)
+                .put(DoggyItems.KOJI.get(), 0.65f)
                 .build();
         }
         return compostables;
