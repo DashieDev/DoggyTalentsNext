@@ -69,18 +69,6 @@ public class PackPuppyTalent extends TalentInstance {
     private boolean collectKillLoot = true;
 
     private PackPuppyItemHandler packPuppyHandler;
-    private MeatFoodHandler meatFoodHandler = new MeatFoodHandler() {
-
-        @Override
-        public boolean isFood(ItemStack stack) {
-            var props = ItemUtil.food_1_21_3(stack);
-
-            if (props == null) return false;
-            return stack.is(ItemTags.MEAT) && stack.getItem() != Items.ROTTEN_FLESH
-                && props.nutrition() >= 6;
-        }
-        
-    };
 
     public PackPuppyTalent(Talent talentIn, int levelIn) {
         super(talentIn, levelIn);
