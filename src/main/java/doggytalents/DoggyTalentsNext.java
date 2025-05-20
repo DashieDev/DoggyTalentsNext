@@ -22,6 +22,7 @@ import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.data.*;
+import doggytalents.common.data.neoforge_data.DTNNeoForgeDataEntry;
 import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
@@ -209,5 +210,8 @@ public class DoggyTalentsNext {
         }
 
         DTNDataRegistryProvider.start(event);
+
+        //NeoForge
+        DTNNeoForgeDataEntry.onGatherData(event);
     }
 }
