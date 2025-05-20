@@ -183,13 +183,19 @@ public class DogMoodManager {
         return DogSounds.CLASSIC_WHINE.get();
     }
 
-    private static final List<Supplier<SoundEvent>> death_sounds = List.of(
+    private static final List<Supplier<SoundEvent>> death_sounds_non_tremolo = List.of(
         DogSounds.ANGRY_HURT1,
         DogSounds.CLASSIC_DEATH,
         DogSounds.SAD_DEATH
     );
+    private static final List<Supplier<SoundEvent>> death_sounds = List.of(
+        DogSounds.CLASSIC_DEATH,
+        DogSounds.SAD_DEATH
+    );
     public SoundEvent getDeathSound() {
-        return LangUtil.getRandomItem(dog.getRandom(), death_sounds).get().get();
+        return LangUtil.getRandomItem(dog.getRandom(), 
+            chainHurt ? death_sounds : death_sounds_non_tremolo
+        ).get().get();
     }
 
     private static final List<Supplier<SoundEvent>> injured_ambient = List.of(
