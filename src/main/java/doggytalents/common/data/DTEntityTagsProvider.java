@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
