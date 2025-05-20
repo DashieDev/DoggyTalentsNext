@@ -44,7 +44,7 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
         createTag(EntityTypeTags.IMPACT_PROJECTILES, 
             DoggyEntityTypes.DOG_ARROW_PROJ, DoggyEntityTypes.DOG_TRIDENT_PROJ);
         createTag(EntityTypeTags.ARROWS, DoggyEntityTypes.DOG_ARROW_PROJ);
-        createTag(TagUtil.capturingNotSupportedTag(), DoggyEntityTypes.DOG);
+        createTag(TagUtil.CAPTURING_NOT_SUPPORTED, DoggyEntityTypes.DOG);
     }
 
     @SafeVarargs
