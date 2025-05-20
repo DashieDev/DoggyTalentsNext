@@ -1942,3 +1942,15 @@ happy with empty materials.
 **1.18.52 - 20th May 2025**
 * Improve Dog Bed Recipe perforamnce.
 * Fix edges cases where Dog Bed Recipes can block other recipe from being crafted.
+
+**1.18.53 - 21th May 2025**
++ Option to Trust Third Party Storage (see Disclaimer in config). This, when enabled, 
+will allow Mob Catcher mods to work on DTN Dogs.
++ Option to allow DTN Dogs to eat all food (see Disclaimer in config).
+# Some DTN Agricultural Items is now Compostable. 
+[Rice Grains, Uncooked Rice, Soy Bean, Dried Soy Bean, Paddy Rice, Soy Pods, Dried Soy Pods,
+Miso Paste, Koji]
+# Dog Angry Hurt Sound (Re-interpreted as Death sound) will not play if the dog was 
+being rapidly hurt prior to being killed.
+* DTN Dog Eddible Food now properly display their nutrition value.
+* (Fabric only) fix Soy from Dog kills chance being too common and not being the same with Neo/Forge
