@@ -30,9 +30,12 @@ import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 
 public class DTLootModifierProvider /*extends GlobalLootModifierProvider*/ {
 
-    // public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
-    // public static final RegistryObject<Codec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
-    // public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
+    public static final float RICE_FROM_GRASS_DROP_CHANCE = 0.125F;
+    public static final float SOY_FROM_ZOMBIE_DROP_CHANCE = 0.01F;
+
+    // public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
+    // public static final Supplier<MapCodec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
+    // public static final Supplier<MapCodec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
 
     // public DTLootModifierProvider(PackOutput output) {
     //     super(output, Constants.MOD_ID);
