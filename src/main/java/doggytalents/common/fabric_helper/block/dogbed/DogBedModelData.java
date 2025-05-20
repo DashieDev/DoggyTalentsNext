@@ -1,7 +1,5 @@
 package doggytalents.common.fabric_helper.block.dogbed;
 
-import doggytalents.api.impl.BeddingMaterial;
-import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedMaterialManager;

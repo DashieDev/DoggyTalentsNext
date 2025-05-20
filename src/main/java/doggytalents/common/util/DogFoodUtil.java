@@ -38,7 +38,7 @@ public class DogFoodUtil {
     public static boolean isMeat(ItemStack stack) {
         return stack.is(ItemTags.MEAT) || (
             ConfigHandler.SERVER.DOG_CAN_EAT_ALL_FOOD.get()
-            && stack.getFoodProperties(null) != null
+            && ItemUtil.food(stack) != null
         );
     }
 
