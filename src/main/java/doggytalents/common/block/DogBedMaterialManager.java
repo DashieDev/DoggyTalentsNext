@@ -11,8 +11,6 @@ import com.google.common.collect.Maps;
 
 import doggytalents.DoggyTags;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
-import doggytalents.api.impl.BeddingMaterial;
-import doggytalents.api.impl.CasingMaterial;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.event.ClientEventHandler;

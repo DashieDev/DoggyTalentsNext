@@ -1,4 +1,4 @@
-package doggytalents.api.impl;
+package doggytalents.common.block;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
-import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -16,7 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
-public class CasingMaterial extends ICasingMaterial {
+public class BeddingMaterial extends IBeddingMaterial {
 
     private final Supplier<Block> block;
     protected ResourceLocation texture;
@@ -25,19 +25,19 @@ public class CasingMaterial extends ICasingMaterial {
     @Nullable
     private String translationKey;
 
-    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn) {
+    public BeddingMaterial(ResourceLocation id, Supplier<Block> blockIn) {
         this.block = blockIn;
         this.id = id;
     }
 
-    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn, ResourceLocation texture) {
+    public BeddingMaterial(ResourceLocation id, Supplier<Block> blockIn, ResourceLocation texture) {
         this.block = blockIn;
         this.texture = texture;
         this.id = id;
     }
 
     /**
-     * Texture location that for material, eg 'minecraft:block/oak_planks'
+     * Texture location that for material, eg 'minecraft:block/white_wool'
      */
     @Override
     public ResourceLocation getTexture() {
