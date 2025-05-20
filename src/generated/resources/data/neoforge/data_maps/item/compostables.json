@@ -1,0 +1,31 @@
+{
+  "values": {
+    "doggytalents:koji": {
+      "chance": 0.65
+    },
+    "doggytalents:miso_paste": {
+      "chance": 0.65
+    },
+    "doggytalents:rice_grains": {
+      "chance": 0.3
+    },
+    "doggytalents:rice_wheat": {
+      "chance": 0.65
+    },
+    "doggytalents:soy_beans": {
+      "chance": 0.3
+    },
+    "doggytalents:soy_beans_dried": {
+      "chance": 0.3
+    },
+    "doggytalents:soy_pods": {
+      "chance": 0.65
+    },
+    "doggytalents:soy_pods_dried": {
+      "chance": 0.65
+    },
+    "doggytalents:uncooked_rice": {
+      "chance": 0.3
+    }
+  }
+}
