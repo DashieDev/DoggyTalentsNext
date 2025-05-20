@@ -7,6 +7,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogFoodHandler;
 import doggytalents.common.network.packet.ParticlePackets;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.DogFoodUtil;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +25,7 @@ public class MeatFoodHandler implements IDogFoodHandler {
         if (stack.getItem() == Items.ROTTEN_FLESH)
             return false;
 
-        return stack.is(ItemTags.MEAT);
+        return DogFoodUtil.isMeat(stack);
     }
 
     @Override

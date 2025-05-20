@@ -374,6 +374,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
         public ModConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
         public ModConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
+        public ModConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
 
         public Map<String, ModConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -620,6 +621,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("able to see well underwater. Set this to false to disable this behaviour.")
                 .translation("doggytalents.dog_riding_water_vision")
                 .define("dog_riding_water_vision", true);
+            DOG_CAN_EAT_ALL_FOOD = builder
+                .comment("Enable this to allow DTN Dogs to eat all food with the obvious")
+                .comment("exception of Rotten Flesh.")
+                .translation("doggytalents.dog_can_eat_all_food")
+                .define("dog_can_eat_all_food", false);
 
             builder.pop();
         }
