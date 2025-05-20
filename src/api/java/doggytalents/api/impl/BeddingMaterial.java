@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.IBeddingMaterial;
+import doggytalents.common.util.ItemUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.level.block.Blocks;
@@ -69,11 +70,8 @@ public class BeddingMaterial extends IBeddingMaterial {
      */
     @Override
     public Optional<Ingredient> getIngredient() {
-        var block = this.block.get();
-        if (block == null || block == Blocks.AIR) {
-            return Optional.empty();
-        }
-        return Optional.of(Ingredient.of(block));
+        return Optional.ofNullable(this.block.get())
+            .flatMap(block -> ItemUtil.getBlockIngredient(block));
     }
 
     @Override

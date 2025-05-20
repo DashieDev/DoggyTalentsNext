@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.ArmorTrim;
 import net.minecraftforge.items.IItemHandler;
 
@@ -145,6 +146,20 @@ public class ItemUtil {
 
     public static CompoundTag getWrappedTag(ItemStack stack) {
         return getTag(stack);
+    }
+
+    public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
+        var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
+        var holder = reg.getHolder(key);
+        if (!holder.isPresent())
+            return 0;
+        return stack.getEnchantmentLevel(holder.get());
+    }
+
+    public static Optional<Ingredient> getBlockIngredient(Block block) {
+        return Optional.ofNullable(block.asItem())
+            .filter(item -> item != Items.AIR)
+            .map(Ingredient::of);
     }
 
     public static void addCrossbowProj(ItemStack crossbow_stack, List<ItemStack> proj_stacks) {

@@ -23,6 +23,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.TagsUpdatedEvent;
@@ -156,7 +157,8 @@ public class DogBedMaterialManager {
         var ret = new ArrayList<Block>(planks.size() + logs.size());
         ret.addAll(planks);
         ret.addAll(logs);
-        return ret;
+        return ret.stream().filter(x -> (x.asItem() instanceof BlockItem))
+            .collect(Collectors.toList());
     }
 
     private static List<Block> fetchBeddingBlocksAuto() {
@@ -164,7 +166,8 @@ public class DogBedMaterialManager {
             ForgeRegistries.BLOCKS, BlockTags.WOOL);
         var ret = new ArrayList<Block>(wools.size());
         ret.addAll(wools);
-        return ret;
+        return ret.stream().filter(x -> (x.asItem() instanceof BlockItem))
+            .collect(Collectors.toList());
     }
 
     public static void onTagsUpdated(TagsUpdatedEvent event) {
