@@ -7,26 +7,11 @@ import java.util.Optional;
 
 import net.minecraft.network.chat.Component;
 
-public abstract class IBeddingMaterial {
-
-    /**
-     * Texture location that for material, eg 'minecraft:block/white_wool'
-     */
-    public abstract ResourceLocation getTexture();
-
-    /**
-     * The translation key using for the tooltip
-     */
-    public abstract Component getTooltip();
-
-    /**
-     * The ingredient used in the crafting recipe of the bed
-     */
-    public abstract Optional<Ingredient> getIngredient();
-
-    public abstract ResourceLocation getSaveKey();
-
+public abstract class IBeddingMaterial implements IDogBedMaterial {
+    
+    @Override
     public boolean isNani() {
         return false;
     }
+    
 }
