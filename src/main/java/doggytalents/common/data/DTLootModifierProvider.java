@@ -37,6 +37,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
+    public static final float RICE_FROM_GRASS_DROP_CHANCE = 0.125F;
+    public static final float SOY_FROM_ZOMBIE_DROP_CHANCE = 0.01F;
+
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> CODEC = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> RICE_FROM_GRASS_CODEC = CODEC.register("rice_from_grass", RiceFromGrass::getCodec);
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> SOY_FROM_ZOMBIE_CODEC = CODEC.register("soy_from_zombie", SoyFromZombies::getCodec);
@@ -60,7 +63,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
             .invert()
             .build();
         var random_condition =
-            LootItemRandomChanceCondition.randomChance(0.125F)
+            LootItemRandomChanceCondition.randomChance(RICE_FROM_GRASS_DROP_CHANCE)
             .build();
         var conditions = new LootItemCondition[] {
             correct_id_codition,
@@ -87,7 +90,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 )
                 .build();
         var random_condition = 
-            LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.01F, 0.05F)
+            LootItemRandomChanceCondition.randomChance(SOY_FROM_ZOMBIE_DROP_CHANCE)
             .build();
         var conditions = new LootItemCondition[] {
             killed_by_dog_condition,
