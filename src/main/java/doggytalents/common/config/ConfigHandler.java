@@ -623,7 +623,9 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .define("dog_riding_water_vision", true);
             DOG_CAN_EAT_ALL_FOOD = builder
                 .comment("Enable this to allow DTN Dogs to eat all food with the obvious")
-                .comment("exception of Rotten Flesh.")
+                .comment("exception of Rotten Flesh. Note that this might result in DTN Dogs")
+                .comment("being able to eat food that must not be fed to a real life Dog")
+                .comment("e.g. Cookie. Use with caution.")
                 .translation("doggytalents.dog_can_eat_all_food")
                 .define("dog_can_eat_all_food", false);
 
