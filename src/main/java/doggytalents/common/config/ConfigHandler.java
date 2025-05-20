@@ -346,6 +346,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ModConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ModConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
+        public ModConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
         public ModConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ModConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
@@ -478,6 +479,17 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("Other - Do nothing.")
                 .translation("doggytalents.duplication_resolve_strategy")
                 .defineInRange("duplication_resolve_strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            TRUST_THIRD_PARTY_STORAGE = builder
+                .comment("Allow third party storage to store Dog and and load them back. This allow")
+                .comment("Mods which, for example, having an item that can store an entity, to work")
+                .comment("with DTN Dogs. This option requires a world restart to take effect.")
+                .comment("Disclaimer: While the Dog is in third-party storage, we do not")
+                .comment("guarantee any data integrity as it is entirely up to the other Mod to")
+                .comment("maintain the Dog Data. If the other Mod failed to keep the data,")
+                .comment("the Dog cannot be respawned and will be gone forever. You have been warned.")
+                .translation("doggytalents.trust_third_party_storage")
+                .worldRestart()
+                .define("trust_third_party_storage", false);
             DISABLE_TRAIN_UNTAMED_WOLF = builder
                 .comment("By default, you can directly train an untamed wolf to a Dog")
                 .comment("with a Training Treat. Set this to True to disable.")
