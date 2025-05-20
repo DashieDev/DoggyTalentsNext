@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.TagUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -43,7 +44,7 @@ public class DTEntityTagsProvider extends EntityTypeTagsProvider {
         createTag(EntityTypeTags.IMPACT_PROJECTILES, 
             DoggyEntityTypes.DOG_ARROW_PROJ, DoggyEntityTypes.DOG_TRIDENT_PROJ);
         createTag(EntityTypeTags.ARROWS, DoggyEntityTypes.DOG_ARROW_PROJ);
-        createTag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED, DoggyEntityTypes.DOG);
+        createTag(TagUtil.capturingNotSupportedTag(), DoggyEntityTypes.DOG);
     }
 
     @SafeVarargs
