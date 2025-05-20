@@ -14,17 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.Consumable;
-import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
-import net.minecraft.world.item.consume_effects.ConsumeEffect;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.equipment.ArmorMaterial;
-import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.equipment.EquipmentAsset;
-import net.minecraft.world.item.equipment.Equippable;
-import net.minecraft.world.item.equipment.trim.ArmorTrim;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.ArrayList;
@@ -181,6 +171,12 @@ public class ItemUtil {
         if (!holder.isPresent())
             return 0;
         return stack.getEnchantmentLevel(holder.get());
+    }
+
+    public static Optional<Ingredient> getBlockIngredient(Block block) {
+        return Optional.ofNullable(block.asItem())
+            .filter(item -> item != Items.AIR)
+            .map(Ingredient::of);
     }
 
     public static EquipmentSlot getEquipmentSlot(ItemStack stack) {
