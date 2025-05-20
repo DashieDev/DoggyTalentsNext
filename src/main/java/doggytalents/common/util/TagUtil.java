@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 
 public class TagUtil {
     
@@ -16,6 +17,10 @@ public class TagUtil {
             .map(h -> h.value())
             .collect(Collectors.toList());
         return ret;
+    }
+
+    public static TagKey<EntityType<?>> capturingNotSupportedTag() {
+        return net.neoforged.neoforge.common.Tags.EntityTypes.CAPTURING_NOT_SUPPORTED;
     }
 
 }
