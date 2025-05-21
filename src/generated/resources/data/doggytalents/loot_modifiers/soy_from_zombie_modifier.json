@@ -17,8 +17,7 @@
     },
     {
       "chance": 0.01,
-      "condition": "minecraft:random_chance_with_looting",
-      "looting_multiplier": 0.05
+      "condition": "minecraft:random_chance"
     }
   ]
 }
