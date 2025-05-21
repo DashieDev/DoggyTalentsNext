@@ -103,12 +103,12 @@ public abstract class DogEddibleItem extends Item implements IDogEddible {
 
     @Override
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog) {
-        return this.foodProps.nutrition() * 5;
+        return this.foodProps.getNutrition() * 5;
     }
 
     @Override
     public List<Pair<MobEffectInstance, Float>> getAdditionalEffectsWhenDogConsume(ItemStack useStack,
             AbstractDog dog) {
-        return this.foodProps.effects();
+        return this.foodProps.getEffects();
     }
 }

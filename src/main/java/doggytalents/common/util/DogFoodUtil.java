@@ -31,13 +31,13 @@ public class DogFoodUtil {
 
             if (props == null) return false;
             return isMeat(stack) && stack.getItem() != Items.ROTTEN_FLESH
-                && props.nutrition() >= 6;
+                && props.getNutrition() >= 6;
         }
         
     };
 
     public static boolean isMeat(ItemStack stack) {
-        return stack.is(ItemTags.MEAT) || (
+        return Optional.ofNullable(stack.getFoodProperties(null)).filter(x -> x.isMeat()).isPresent() || (
             ConfigHandler.SERVER.DOG_CAN_EAT_ALL_FOOD.get()
             && stack.getFoodProperties(null) != null
         );

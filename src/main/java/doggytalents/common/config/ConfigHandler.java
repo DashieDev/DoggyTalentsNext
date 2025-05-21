@@ -343,7 +343,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ForgeConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ForgeConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
-        public ModConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
+        public ForgeConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
@@ -372,7 +372,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
         public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
-        public ModConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
+        public ForgeConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 

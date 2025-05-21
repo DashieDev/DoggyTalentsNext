@@ -9,6 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
@@ -148,13 +150,13 @@ public class ItemUtil {
         return getTag(stack);
     }
 
-    public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
-        var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
-        var holder = reg.getHolder(key);
-        if (!holder.isPresent())
-            return 0;
-        return stack.getEnchantmentLevel(holder.get());
-    }
+    // public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
+    //     var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
+    //     var holder = reg.getHolder(key);
+    //     if (!holder.isPresent())
+    //         return 0;
+    //     return stack.getEnchantmentLevel(holder.get());
+    // }
 
     public static Optional<Ingredient> getBlockIngredient(Block block) {
         return Optional.ofNullable(block.asItem())
