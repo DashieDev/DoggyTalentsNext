@@ -1,11 +1,13 @@
 package doggytalents.common.talent.doggy_tools.tool_actions;
 
+import java.util.Optional;
+
 import doggytalents.DoggyBlocks;
-import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
+import doggytalents.common.util.RingSearchIterator;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -13,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class DogFarmerAction extends ToolAction {
@@ -26,6 +27,7 @@ public class DogFarmerAction extends ToolAction {
     private int cooldown;
 
     private ItemStack seedTarget = ItemStack.EMPTY;
+    private ItemStack replacementStack = ItemStack.EMPTY;
 
     public DogFarmerAction(Dog dog, DoggyToolsTalent talent) {
         super(dog, talent);
@@ -57,6 +59,9 @@ public class DogFarmerAction extends ToolAction {
             return;
         }
 
+        if (this.tickTillPathRecalc > 0)
+            --this.tickTillPathRecalc;
+
         this.refreshTargetSeed();
 
         if (this.nextFarmBlock == null && --this.tickTillResearch <= 0) {
@@ -87,15 +92,28 @@ public class DogFarmerAction extends ToolAction {
 
     private void refreshTargetSeed() {
         this.seedTarget = ItemStack.EMPTY;
+        this.replacementStack = ItemStack.EMPTY;
         var inv = this.talent.getTools();
+        int harvest_slot_id = 0;
         for (int i = 0; i < inv.getSlots(); ++i) {
             var stack = inv.getStackInSlot(i);
             boolean isDogHarvestable = 
-                stack.is(DoggyItems.RICE_GRAINS.get())
-                || stack.is(Items.WHEAT_SEEDS);
+                this.getCropBlockFromItem(stack).isPresent();
             if (isDogHarvestable) {
                 this.seedTarget = stack.copy();
-                return;
+                harvest_slot_id = i;
+                break;
+            }
+        }
+        if (this.seedTarget.isEmpty())
+            return;
+        int replace_slot_id = harvest_slot_id + 1;
+        if (replace_slot_id < inv.getSlots()) {
+            var stack = inv.getStackInSlot(replace_slot_id);
+            boolean isDogHarvestable = 
+                this.getCropBlockFromItem(stack).isPresent();
+            if (isDogHarvestable && !stack.is(this.seedTarget.getItem())) {
+                this.replacementStack = stack.copy();
             }
         }
     }
@@ -136,7 +154,7 @@ public class DogFarmerAction extends ToolAction {
             return shouldHurtTool;
         }
 
-        if (--tickTillPathRecalc <= 0) {
+        if (tickTillPathRecalc <= 0) {
             tickTillPathRecalc = 20;
             dog_nav.moveTo(
                 this.nextFarmBlock.getX(),
@@ -168,9 +186,8 @@ public class DogFarmerAction extends ToolAction {
             return null;
         var owner = this.dog.getOwner();
         if (owner == null) return null;
-        for (BlockPos pos : BlockPos.betweenClosed(
-            bp.offset(-SEARCH_RADIUS, -4, -SEARCH_RADIUS), 
-            bp.offset(SEARCH_RADIUS, 4, SEARCH_RADIUS))) {
+        
+        for (BlockPos pos : RingSearchIterator.create(bp, 4, SEARCH_RADIUS)) {
             if (this.getFarmState(pos) != FarmState.NONE 
                 && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 < this.talent.getMaxOwnerDistSqr()) { 
                 return pos;
@@ -181,9 +198,8 @@ public class DogFarmerAction extends ToolAction {
 
     private void placeSeed() {
         var wheatState = 
-            seedTarget.is(Items.WHEAT_SEEDS) ?
-            Blocks.WHEAT.defaultBlockState()
-            : DoggyBlocks.RICE_CROP.get().defaultBlockState();
+            getCropBlockFromItem(replacementStack.isEmpty() ? this.seedTarget : replacementStack)
+            .orElse(DoggyBlocks.RICE_CROP.get()).defaultBlockState();
         this.dog.level().setBlockAndUpdate(this.nextFarmBlock.above(), wheatState);
         var soundtype = wheatState.getSoundType(
             this.dog.level(), this.nextFarmBlock.above(), this.dog);
@@ -205,21 +221,25 @@ public class DogFarmerAction extends ToolAction {
         if(state_above.getBlock() == Blocks.AIR) {
             return FarmState.PLACE_SEED;
         }
-        if(
-            this.seedTarget.is(Items.WHEAT_SEEDS)
-            && state_above.getBlock() == Blocks.WHEAT
-            && ((CropBlock) Blocks.WHEAT).isMaxAge(state_above)
-        ) {
-            return FarmState.HARVEST;
-        }
-        if(
-            this.seedTarget.is(DoggyItems.RICE_GRAINS.get())
-            && state_above.getBlock() == DoggyBlocks.RICE_CROP.get()
-            && DoggyBlocks.RICE_CROP.get().isMaxAge(state_above)
-        ) {
+        var crop_block_optional = getCropBlockFromItem(this.seedTarget);
+        if (!crop_block_optional.isPresent())
+            return FarmState.NONE;
+        var crop_block = crop_block_optional.get();
+        if (state_above.getBlock() == crop_block
+            && crop_block.isMaxAge(state_above)) {
             return FarmState.HARVEST;
         }
         return FarmState.NONE;
+    }
+
+    private Optional<CropBlock> getCropBlockFromItem(ItemStack stack) {
+        var item = stack.getItem();
+        if (!(item instanceof BlockItem block_item))
+            return Optional.empty();
+        var block = block_item.getBlock();
+        if (!(block instanceof CropBlock crop_block))
+            return Optional.empty();
+        return Optional.of(crop_block);
     }
 
     private static enum FarmState { NONE, PLACE_SEED, HARVEST }
