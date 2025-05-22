@@ -1400,13 +1400,13 @@ public class Dog extends AbstractDog {
     private boolean ridingAuthorized = false;
 
     @Override
-    public boolean startRiding(Entity entity) {
+    public boolean startRiding(Entity entity, boolean force_ride) {
         var result = false;
         boolean not_authorized = 
             requireRidingAuthorization(entity)
             && !isRidingAuthorized();
         if (!not_authorized) {   
-            result = super.startRiding(entity);
+            result = super.startRiding(entity, force_ride);
         }
         ridingAuthorized = false;
 
