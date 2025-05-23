@@ -3,6 +3,7 @@ package doggytalents.common.talent.doggy_tools.tool_actions;
 import java.util.Optional;
 
 import doggytalents.DoggyBlocks;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
 import doggytalents.common.util.RingSearchIterator;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.phys.Vec3;
@@ -41,16 +43,20 @@ public class DogFarmerAction extends ToolAction {
 
     @Override
     public void tick() {
-
-        var owner = this.dog.getOwner();
-        if (owner == null || dog.distanceToSqr(owner) > this.talent.getMaxOwnerDistSqr()) {
-            this.setState(ActionState.FINISHED);
-            return;
-        }
-
-        if (!owner.isAlive() || owner.isSpectator()) {
-            this.setState(ActionState.FINISHED);
-            return;
+        boolean owner_check = !(
+            ConfigHandler.SERVER.DOGGY_TOOLS_WANDER_FARM.get()
+            && !this.dog.getMode().shouldFollowOwner()
+        );
+        if (owner_check) {
+            var owner = this.dog.getOwner();
+            if (owner == null || dog.distanceToSqr(owner) > this.talent.getMaxOwnerDistSqr()) {
+                this.setState(ActionState.FINISHED);
+                return;
+            }
+            if (!owner.isAlive() || owner.isSpectator()) {
+                this.setState(ActionState.FINISHED);
+                return;
+            }
         }
 
         var stack = this.dog.getItemInHand(InteractionHand.MAIN_HAND);
@@ -186,12 +192,26 @@ public class DogFarmerAction extends ToolAction {
         var bp = this.dog.blockPosition();
         if (this.seedTarget == null || this.seedTarget.isEmpty())
             return null;
-        var owner = this.dog.getOwner();
-        if (owner == null) return null;
         
+        boolean owner_check = !(
+            ConfigHandler.SERVER.DOGGY_TOOLS_WANDER_FARM.get()
+            && !this.dog.getMode().shouldFollowOwner()
+        );
+        LivingEntity owner = null;
+        if (owner_check) {
+            owner = this.dog.getOwner(); 
+            if (owner == null)
+                return null;
+        }
+
         for (BlockPos pos : RingSearchIterator.create(bp, 4, SEARCH_RADIUS, true)) {
-            if (this.getFarmState(pos) != FarmState.NONE 
-                && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 < this.talent.getMaxOwnerDistSqr()) { 
+            if (
+                owner != null
+                && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 >= this.talent.getMaxOwnerDistSqr()
+            ) {
+                continue;
+            }
+            if (this.getFarmState(pos) != FarmState.NONE) { 
                 return pos;
             }
         }

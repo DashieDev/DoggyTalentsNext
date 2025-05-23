@@ -370,6 +370,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_WANDER_FARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_BRIDGING;
         public ForgeConfigSpec.IntValue DOGGY_TOOLS_BRIDGING_LIMIT;
         public ForgeConfigSpec.BooleanValue DOG_PETTING;
@@ -560,6 +561,11 @@ public class ConfigHandler {
                 .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
                 .translation("doggytalents.doggy_tools_projectile_pass_allies")
                 .define("doggy_tools_projectile_pass_allies", true);
+            DOGGY_TOOLS_WANDER_FARM = builder
+                .comment("Allow Non Following Farming Doggy Tools Dogs to farm without the present")
+                .comment("of their Owner in distance.")
+                .translation("doggytalents.doggy_tools_wander_farm")
+                .define("doggy_tools_wander_farm", true);
             DOGGY_TOOLS_BRIDGING = builder
                 .comment("Allow Dogs who have Doggy Tools maxed out to help their owners bridging.")
                 .translation("doggytalents.doggy_tools_bridging")
