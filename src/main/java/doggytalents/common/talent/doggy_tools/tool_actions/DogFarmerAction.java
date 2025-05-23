@@ -187,7 +187,7 @@ public class DogFarmerAction extends ToolAction {
         var owner = this.dog.getOwner();
         if (owner == null) return null;
         
-        for (BlockPos pos : RingSearchIterator.create(bp, 4, SEARCH_RADIUS)) {
+        for (BlockPos pos : RingSearchIterator.create(bp, 4, SEARCH_RADIUS, true)) {
             if (this.getFarmState(pos) != FarmState.NONE 
                 && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 < this.talent.getMaxOwnerDistSqr()) { 
                 return pos;
