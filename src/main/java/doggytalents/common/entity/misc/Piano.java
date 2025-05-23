@@ -141,6 +141,8 @@ public class Piano extends Entity {
             item = DoggyItems.UPRIGHT_PIANO_BLACK.get();
         else if (type == DoggyEntityTypes.UPRIGHT_PIANO_BROWN.get())
             item = DoggyItems.UPRIGHT_PIANO_BROWN.get();
+        else if (type == DoggyEntityTypes.UPRIGHT_PIANO_WHITE.get())
+            item = DoggyItems.UPRIGHT_PIANO_WHITE.get();
         if (item == null)
             return ItemStack.EMPTY;
         return new ItemStack(item);

@@ -395,6 +395,7 @@ public class ClientSetup {
         event.registerEntityRenderer(DoggyEntityTypes.GRAND_PIANO_WHITE.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BLACK.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_BROWN.get(), PianoRenderer::new);
+        event.registerEntityRenderer(DoggyEntityTypes.UPRIGHT_PIANO_WHITE.get(), PianoRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.DOG_PLUSHIE_TOY.get(), DogPlushieRenderer::new);
         event.registerEntityRenderer(DoggyEntityTypes.SAMOYED_PLUSHIE_TOY.get(), SamoyedPlushieRenderer::new);
     }
