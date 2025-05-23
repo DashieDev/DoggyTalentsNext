@@ -174,7 +174,9 @@ public class DogFarmerAction extends ToolAction {
     }
 
     @Override
-    public boolean shouldUse() {
+    public boolean shouldUse(ItemStack stack) {
+        if (!(stack.getItem() instanceof HoeItem))
+            return false;
         if (--this.cooldown > 0) return false;
         this.cooldown = 10;
         this.refreshTargetSeed();

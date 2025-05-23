@@ -21,6 +21,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.Screens;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.misc.DogThrownTrident;
 import doggytalents.common.inventory.DoggyToolsItemHandler;
 import doggytalents.common.talent.PackPuppyTalent;
@@ -192,13 +193,17 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (stack.isEmpty()) continue;
             if (isItemBlacklisted(stack))
                 continue;
-            var item = stack.getItem();
-            var action = TOOL_ACTION_MAP.get(item);
-            if (action == null) continue;
-            if (action.shouldUse()) {
+            TriggerableAction found_action = null;
+            for (var entry : TOOL_ACTION_MAP.entrySet()) {
+                if (entry.getValue().shouldUse(stack)) {
+                    found_action = entry.getValue();
+                    break; 
+                }
+            }
+            if (found_action != null) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
-                dog.triggerAction(action);
-                break; 
+                dog.triggerAction(found_action);
+                break;
             }
         }
     }
