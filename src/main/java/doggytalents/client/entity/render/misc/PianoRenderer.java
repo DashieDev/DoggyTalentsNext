@@ -46,6 +46,8 @@ public class PianoRenderer extends EntityRenderer<Piano> {
                 return Resources.PIANO_UPRIGHT_BLACK;
             case BROWN:
                 return Resources.PIANO_UPRIGHT_BROWN;
+            case WHITE:
+                return Resources.PIANO_UPRIGHT_WHITE;
             }
         }
         return Resources.PIANO_GRAND_BLACK;

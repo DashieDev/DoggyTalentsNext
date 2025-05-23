@@ -73,6 +73,13 @@ public class DoggyEntityTypes {
             .clientTrackingRange(10));
             //.setShouldReceiveVelocityUpdates(false));
 
+    public static final Supplier<EntityType<Piano>> UPRIGHT_PIANO_WHITE = register("upright_piano_white", (type, level) -> new Piano(type, level, PianoType.UPRIGHT, PianoColor.WHITE), MobCategory.MISC,
+        b -> b
+            .sized(3f, 3f)
+            .setUpdateInterval(4)
+            .setTrackingRange(10)
+            .setShouldReceiveVelocityUpdates(false));
+
     public static final RegistryObject<EntityType<DogPlushie>> DOG_PLUSHIE_TOY = register("dog_plushie_toy", (type, level) -> new DogPlushie(type, level), MobCategory.MISC,
         b -> b
             .sized(0.5f, 0.5f)
