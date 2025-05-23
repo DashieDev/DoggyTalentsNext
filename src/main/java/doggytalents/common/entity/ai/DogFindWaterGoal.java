@@ -105,7 +105,7 @@ public class DogFindWaterGoal extends Goal {
     }
 
     private BlockPos searchForWaterPos() {
-        for (var pos : RingSearchIterator.create(this.dog.blockPosition(), 4, SEARCH_RANGE)) {
+        for (var pos : RingSearchIterator.create(this.dog.blockPosition(), 4, SEARCH_RANGE, true)) {
             if (this.isWaterPos(pos)) {
                 return pos;
             }
