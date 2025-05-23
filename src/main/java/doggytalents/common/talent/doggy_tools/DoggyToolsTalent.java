@@ -288,7 +288,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     }
 
     public int getMaxOwnerDistSqr() {
-        return 8*8;
+        return 16 * 16;
     } 
 
     private boolean isItemBlacklisted(ItemStack stack) {
