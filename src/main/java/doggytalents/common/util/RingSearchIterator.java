@@ -11,6 +11,7 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
     private final int range;
     private final BlockPos center;
     private final int yRange;
+    private final boolean inflatingY;
 
     private int inflate = 0;
     private int index = 0;
@@ -24,15 +25,16 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
         new Vec3i(0, 0, -1)
     };
 
-    public static Iterable<BlockPos> create(BlockPos center, int y, int range) {
-        return () -> new RingSearchIterator(center, y, range);
+    public static Iterable<BlockPos> create(BlockPos center, int y, int range, boolean inflatingY) {
+        return () -> new RingSearchIterator(center, y, range, inflatingY);
     }
 
-    private RingSearchIterator(BlockPos center, int y, int range) {
+    private RingSearchIterator(BlockPos center, int y, int range, boolean inflatingY) {
         this.range = range;
         this.yRange = y;
         this.center = center;
-        this.cursor.set(0, -this.yRange, 0);
+        this.inflatingY = inflatingY;
+        this.cursor.set(0, 0, 0);
     }
 
     @Override
@@ -41,19 +43,21 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
             return this.endOfData();
         }
         var ret = this.center.offset(this.cursor.immutable());
-        if (this.cursor.getY() < yRange) {
-            this.cursor.move(0, 1, 0);
+        int y = this.cursor.getY();
+        int max_y = this.inflatingY ? Math.min(yRange, inflate) : yRange;
+        if (y < max_y) {
+            this.cursor.setY(y >= 0 ? -(y + 1) : -y);
             return ret;
         }
 
         int stage = inflate == 0 ? 0 : (this.index) / (inflate * 2);
-        this.cursor.move(STAGE_MOVES[stage]).setY(-yRange);
+        this.cursor.move(STAGE_MOVES[stage]).setY(0);
         ++this.index;
         if (index > maxIndex) {
             inflate += 1;
             index = 0;
             maxIndex = (inflate * 2) * 4 - 1;
-            this.cursor.set(-inflate, -this.yRange, -inflate);
+            this.cursor.set(-inflate, 0, -inflate);
         }
 
         return ret;
