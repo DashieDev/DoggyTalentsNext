@@ -165,11 +165,11 @@ public class RiceMillBlockEntity extends BlockEntity {
         ejectTick(level, mill);
     }
 
-    private int tickTillUpdateWaterSource = 15;
+    private int tickTillUpdateWaterSource = 20;
     private static void updateSpinning(Level level, RiceMillBlockEntity mill) {
         if (--mill.tickTillUpdateWaterSource > 0)
             return;
-        mill.tickTillUpdateWaterSource = 15;
+        mill.tickTillUpdateWaterSource = 20;
         mill.isSpinning = scanIfMillCanSpin(level, mill);
     }
 
