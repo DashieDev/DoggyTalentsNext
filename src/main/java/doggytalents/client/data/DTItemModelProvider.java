@@ -188,6 +188,7 @@ public class DTItemModelProvider {
         generated(DoggyItems.GRAND_PIANO_WHITE);
         generated(DoggyItems.UPRIGHT_PIANO_BLACK);
         generated(DoggyItems.UPRIGHT_PIANO_BROWN);
+        generated(DoggyItems.UPRIGHT_PIANO_WHITE);
         plushieToy(DoggyItems.DOG_PLUSHIE_TOY);
         generated(DoggyItems.SAMOYED_PLUSHIE_TOY);
 

@@ -234,6 +234,8 @@ public class DoggyItems {
         (props) -> new PianoItem(props, DoggyEntityTypes.UPRIGHT_PIANO_BLACK));
     public static final Supplier<PianoItem> UPRIGHT_PIANO_BROWN = register("upright_piano_brown_item", 
         (props) -> new PianoItem(props, DoggyEntityTypes.UPRIGHT_PIANO_BROWN));
+    public static final Supplier<PianoItem> UPRIGHT_PIANO_WHITE = register("upright_piano_white_item", 
+        (props) -> new PianoItem(props, DoggyEntityTypes.UPRIGHT_PIANO_WHITE));
 
     //DTN Debug (Not available via Creative Inventory) ==========================
     public static final Supplier<Item> DOG_ANIM_DEBUG = register("dog_anim_debug_stick", DogAnimDebugItem::new); 
