@@ -3,6 +3,7 @@ package doggytalents.common.talent.doggy_tools.tool_actions;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.talent.doggy_tools.DoggyToolsTalent;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class ToolAction extends TriggerableAction {
 
@@ -26,6 +27,6 @@ public abstract class ToolAction extends TriggerableAction {
         //TODO reset hotslot.
     }
 
-    public abstract boolean shouldUse();
+    public abstract boolean shouldUse(ItemStack stack);
     
 }
