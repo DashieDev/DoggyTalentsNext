@@ -45,5 +45,11 @@ public class RiceMillRenderer implements BlockEntityRenderer<RiceMillBlockEntity
         this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         stack.popPose();
     }
+
+    // Neoforge
+    @Override
+    public net.minecraft.world.phys.AABB getRenderBoundingBox(RiceMillBlockEntity mill) {
+        return mill.getRenderBoundingBox();
+    }
         
 }
