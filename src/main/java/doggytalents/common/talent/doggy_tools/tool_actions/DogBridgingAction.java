@@ -34,7 +34,7 @@ public class DogBridgingAction extends TriggerableAction {
     private int bridgeCooldown;
 
     public DogBridgingAction(Dog dog, LivingEntity owner, float bridgingRot, BlockPos initialPos, DoggyToolsTalent talent) {
-        super(dog, true, false);
+        super(dog, false, false);
         this.owner = owner;
         this.toolsTalent = talent;
         this.initialPos = initialPos;
