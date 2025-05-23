@@ -81,7 +81,7 @@ public class DogFarmerAction extends ToolAction {
 
         boolean hurtTools = moveToAndFarmBlock(farmState);
 
-        if (hurtTools) {
+        if (hurtTools && dog.getRandom().nextInt(3) == 0) {
             var hurtStack = dog.getMainHandItem();
             if (hurtStack != null && hurtStack.getItem() instanceof HoeItem) {
                 hurtStack.hurtAndBreak(1, dog, EquipmentSlot.MAINHAND);
