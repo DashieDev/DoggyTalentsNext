@@ -513,16 +513,16 @@ public class RiceMillBlockEntity extends BlockEntity {
     // public AABB getRenderBoundingBox() {
     //     var pos = this.getBlockPos();
     //     var state = this.getBlockState();
-    //     var aabb = new AABB(pos, pos.offset(1, 1, 1));
+    //     var aabb = new AABB(pos/*, pos.offset(1, 1, 1)*/);
     //     var facing = RiceMillBlock.getFacing(state);
     //     var facing_norm = facing.getNormal();
-    //     var expand_vec = new Vec3(facing_norm.getX(), 1, facing_norm.getZ());
+    //     var expand_vec = new Vec3(facing_norm.getX(), 1.5, facing_norm.getZ());
     //     aabb = aabb.expandTowards(expand_vec);
     //     var side_axis = facing.getClockWise().getAxis();
     //     if (side_axis == Axis.X) {
-    //         aabb = aabb.inflate(1, 0, 0);
+    //         aabb = aabb.inflate(1.5, 0, 0);
     //     } else {
-    //         aabb = aabb.inflate(0, 0, 1);
+    //         aabb = aabb.inflate(0, 0, 1.5);
     //     }
 
     //     return aabb;
