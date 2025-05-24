@@ -20,9 +20,21 @@ public class FabricConfigHandler {
     }
 
     public static class ServerConfig {
+
+        public ForgeConfigSpec.BooleanValue DISABLE_RICE_GRAIN_LOOT;
+        public ForgeConfigSpec.BooleanValue DISABLE_SOY_LOOT;
         
         public ServerConfig(ForgeConfigSpec.Builder builder) {
             builder.push("Fabric Dedicated Config");
+            
+            DISABLE_RICE_GRAIN_LOOT = builder
+                    .comment("Disable DTN Rice Grains randomly drop from Grass.")
+                    .define("disable_rice_loot", false);
+
+            DISABLE_SOY_LOOT = builder
+                    .comment("Disable DTN Soy Beans randomly drop when certain entities is being")
+                    .comment("killed by Dogs.")
+                    .define("disable_soy_loot", false);
 
             builder.pop();
         }

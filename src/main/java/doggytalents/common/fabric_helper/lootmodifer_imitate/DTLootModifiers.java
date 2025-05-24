@@ -4,6 +4,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import doggytalents.common.data.DTLootModifierProvider;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.fabric_helper.config.FabricConfigHandler;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,8 @@ public class DTLootModifiers {
     }
 
     private static void riceFromGrains_onBlockBreak(Level level, Player player, BlockPos pos, BlockState state) {
+        if (FabricConfigHandler.SERVER.DISABLE_RICE_GRAIN_LOOT.get())
+            return;
         if (!state.is(Blocks.SHORT_GRASS))
             return;
         var item = player.getMainHandItem();
@@ -49,6 +52,8 @@ public class DTLootModifiers {
     }
 
     private static void soyFromZombie_onEntityKilled(LivingEntity entity, DamageSource source) {
+        if (FabricConfigHandler.SERVER.DISABLE_SOY_LOOT.get())
+            return;
         var killer = source.getEntity();
         if (!(killer instanceof Dog dog))
             return;
