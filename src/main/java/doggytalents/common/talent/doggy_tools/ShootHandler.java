@@ -197,7 +197,7 @@ public interface ShootHandler {
         }
 
         private AbstractArrow createDogArrow(AbstractDog dog, ArrowItem arrow_item, ItemStack arrow_stack) {
-            if (!ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()) {
+            if (!ConfigHandler.SERVER.DOGGY_TOOLS_BOW_VANILLA_PROJ.get()) {
                 return arrow_item.createArrow(dog.level(), arrow_stack, dog);
             }
             return new DogArrow(dog.level(), dog, arrow_stack.copyWithCount(1));
