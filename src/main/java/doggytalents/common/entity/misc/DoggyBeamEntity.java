@@ -115,26 +115,6 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     }
 
     @Override
-    protected boolean canHitEntity(Entity entity) {
-        if (checkAllyToOwner(entity))
-            return false;
-        return super.canHitEntity(entity);
-    }
-
-    private boolean checkAllyToOwner(Entity entity) {
-        var owner = this.getOwner();
-        if (owner == null)
-            return false;
-        if (entity instanceof TamableAnimal other_dog) {
-            var other_owner_id = EntityUtil_1_21_5.getOwnerUUID(other_dog);
-            var owner_id = owner.getUUID();
-            if (owner_id != null && owner_id.equals(other_owner_id))
-                return true;
-        }
-        return owner.isAlliedTo(entity);
-    }
-
-    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         // TODO Auto-generated method stub
 
