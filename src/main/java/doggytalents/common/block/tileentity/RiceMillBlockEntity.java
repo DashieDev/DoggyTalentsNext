@@ -454,6 +454,8 @@ public class RiceMillBlockEntity extends BlockEntity {
                 return currentStack;
             if (!current_in.isEmpty() && current_in.getCount() >= InventoryUtil.maxStackSizeWithContainer(furnace, furnaceIn, current_in))
                 return currentStack;
+            if (!furnace.canPlaceItem(furnaceIn, currentStack))
+                return currentStack;
             if (current_in.isEmpty()) {
                 current_in = new ItemStack(currentStack.getItem());
             } else {
@@ -494,6 +496,8 @@ public class RiceMillBlockEntity extends BlockEntity {
         if (!targetItem.isEmpty() && !ItemStack.isSameItem(currentStack, targetItem))
             return currentStack;
         if (!targetItem.isEmpty() && targetItem.getCount() >= InventoryUtil.maxStackSizeWithContainer(target, freeSlot, targetItem))
+            return currentStack;
+        if (!target.canPlaceItem(freeSlot, targetItem))
             return currentStack;
         
         if (targetItem.isEmpty()) {
