@@ -41,6 +41,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -180,6 +181,17 @@ public class DoggyToolsTalent extends TalentInstance  {
                 break;
             }
             var shoot_handler = DoggyToolsRangedAttack.getShootHandler(stack, dog);
+            boolean creeper_avoid = 
+                (dog.getTarget() instanceof Creeper)
+                && !(
+                    shoot_handler == ShootHandler.TRIDENT
+                    || (
+                        shoot_handler == ShootHandler.BOW 
+                        && !ConfigHandler.SERVER.DOGGY_TOOLS_BOW_VANILLA_PROJ.get()
+                    )
+                );
+            if (creeper_avoid)
+                shoot_handler = ShootHandler.NONE;
             if (shoot_handler != ShootHandler.NONE) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
