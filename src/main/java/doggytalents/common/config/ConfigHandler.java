@@ -369,7 +369,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.IntValue TRAIN_WOLF_LIMIT;
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_WITH_CHARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_USE_TRIDENT;
-        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_PROJECTILE_PASS_ALLIES;
+        public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_BOW_VANILLA_PROJ;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_WANDER_FARM;
         public ForgeConfigSpec.BooleanValue DOGGY_TOOLS_BRIDGING;
         public ForgeConfigSpec.IntValue DOGGY_TOOLS_BRIDGING_LIMIT;
@@ -553,14 +553,13 @@ public class ConfigHandler {
                 .comment("Allow Doggy Tools Dogs to use Trident")
                 .translation("doggytalents.doggy_tools_trident")
                 .define("doggy_tools_trident", true);
-            DOGGY_TOOLS_PROJECTILE_PASS_ALLIES = builder
-                .comment("Allow Doggy Tools Dogs's projectiles to pass through allies instead of just")
-                .comment("despawning if hit. Notice that this option does not affect Crossbow")
-                .comment("projectile and will cause Dog to interpret any third-party")
-                .comment("arrows as vanilla's arrow. Disable this, if you prefer Dogs to utilize third-party")
-                .comment("Arrows as it is. Regardless, the arrows fired from Dog will do no harm to allies.")
-                .translation("doggytalents.doggy_tools_projectile_pass_allies")
-                .define("doggy_tools_projectile_pass_allies", true);
+            DOGGY_TOOLS_BOW_VANILLA_PROJ = builder
+                .comment("By default, when a Doggy Tools Dog use a bow, DTN will create")
+                .comment("a dedicated Arrow Entity that tries to imitate vanilla's.")
+                .comment("Enable this if you prefer to use the vanilla arrow entity.")
+                .comment("Regardless, the arrows fired from Dog will not hit allies.")
+                .translation("doggytalents.doggy_tools_bow_vanilla_proj")
+                .define("doggy_tools_bow_vanilla_proj", false);
             DOGGY_TOOLS_WANDER_FARM = builder
                 .comment("Allow Non Following Farming Doggy Tools Dogs to farm without the present")
                 .comment("of their Owner in distance.")
