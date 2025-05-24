@@ -210,23 +210,6 @@ public class DogArrow extends AbstractArrow {
     }
 
     @Override
-    protected boolean canHitEntity(Entity target) {
-        if (target instanceof LivingEntity living) {
-            if (checkAlliesToDog(living))
-                return false;
-        }
-        return super.canHitEntity(target);
-    }
-
-    private boolean checkAlliesToDog(LivingEntity target) {
-        var owner = this.getOwner();
-        if (!(owner instanceof Dog dog)) {
-            return false;
-        }
-        return DogAllyCheck.isAlliedToDog(dog, target);
-    }
-
-    @Override
     protected boolean tryPickup(Player picker) {
         if (shouldDogArrowBlockPickup(picker))
             return false;
