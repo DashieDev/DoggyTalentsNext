@@ -11,6 +11,7 @@ import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.fabric_helper.FabricEventCallbackHandler;
+import doggytalents.common.fabric_helper.config.FabricConfigHandler;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.lootmodifer_imitate.DTLootModifiers;
 import doggytalents.common.item.itemgroup.DTNCompostables;
@@ -36,6 +37,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         DTLootModifiers.init();
         registerCommands();
         ConfigHandler.init();
+        FabricConfigHandler.init();
         SyncTypes.init();
 
         //Last
