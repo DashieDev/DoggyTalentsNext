@@ -288,8 +288,7 @@ public class DogThrownTrident extends AbstractArrow {
 
     @Override
     protected boolean canHitEntity(Entity target) {
-        if (ConfigHandler.SERVER.DOGGY_TOOLS_PROJECTILE_PASS_ALLIES.get()
-            && target instanceof LivingEntity living) {
+        if (target instanceof LivingEntity living) {
             if (checkAlliesToDog(living))
                 return false;
         }
