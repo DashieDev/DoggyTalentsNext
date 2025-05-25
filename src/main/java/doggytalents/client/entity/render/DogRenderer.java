@@ -132,9 +132,10 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
-    protected boolean shouldShowName(Dog p_115506_) {
-        return ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get()
-            || super.shouldShowName(p_115506_);
+    protected boolean shouldShowName(Dog dog) {
+        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() && !dog.isVehicle())
+            return true;
+        return super.shouldShowName(dog);
     }
 
     @Override
