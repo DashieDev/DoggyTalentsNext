@@ -160,7 +160,7 @@ public class ItemUtil {
     }
 
     public static FoodProperties food(ItemStack stack) {
-        return stack.get(DataComponents.FOOD);
+        return stack.get(DataComponents.FOOD); // On fabric
     }
     
     public static CustomData getWrappedTag(ItemStack stack) {
