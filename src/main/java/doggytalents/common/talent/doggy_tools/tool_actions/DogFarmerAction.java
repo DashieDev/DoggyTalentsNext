@@ -204,7 +204,7 @@ public class DogFarmerAction extends ToolAction {
                 return null;
         }
 
-        for (BlockPos pos : RingSearchIterator.create(bp, 4, SEARCH_RADIUS, true)) {
+        for (BlockPos pos : RingSearchIterator.createWithRandom(bp, 4, SEARCH_RADIUS, true, dog.getRandom())) {
             if (
                 owner != null
                 && owner.distanceToSqr(Vec3.atBottomCenterOf(pos)) + 1 >= this.talent.getMaxOwnerDistSqr()
