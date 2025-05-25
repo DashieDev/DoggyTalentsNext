@@ -109,7 +109,7 @@ public class DogFoodUtil {
             if (food == null)
                 continue;
                 
-            if (food.nutrition() >= 6)
+            if (food.getNutrition() >= 6)
                 return i;
             if (minor_meat_id < 0) minor_meat_id = i;
         }
