@@ -52,7 +52,7 @@ public class DogBedModel implements BakedModel {
     private final Map<Direction, BakedModel> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
     private final Map<Direction, BakedModel> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
-    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
+    private final static Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, BakedModel> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
     public DogBedModel(ModelBakery modelLoader, BlockModel model, BakedModel defaultModelVariant, int maxCacheSize) {
@@ -60,6 +60,10 @@ public class DogBedModel implements BakedModel {
         this.unbakedModel = model;
         this.defaultModelVariant = defaultModelVariant;
         this.maxCacheSize = maxCacheSize;
+    }
+
+    public static void clearCache() {
+        cache.clear();
     }
 
     public BakedModel getModelVariant(@Nonnull ModelData data) {
