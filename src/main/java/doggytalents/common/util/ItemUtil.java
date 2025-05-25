@@ -146,6 +146,10 @@ public class ItemUtil {
         return ArmorTrim.getTrim(dog.level().registryAccess(), stack);
     }
 
+    public static FoodProperties food(ItemStack stack) {
+        return stack.getFoodProperties(null);
+    }
+
     public static CompoundTag getWrappedTag(ItemStack stack) {
         return getTag(stack);
     }
