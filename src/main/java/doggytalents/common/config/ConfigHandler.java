@@ -128,6 +128,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
         public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
         public ModConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
+        public ModConfigSpec.BooleanValue DOG_BED_CLEAR_CACHE_AUTO;
         public ModConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
 
         public ClientConfig(ModConfigSpec.Builder builder) {
@@ -309,6 +310,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("By default, DTN will render your Dogs' Names through walls. Disable")
                 .comment("this to make Owned Dogs' Names no longer visible through walls.")
                 .define("show_dog_name_thru_wall", true);
+            DOG_BED_CLEAR_CACHE_AUTO = builder
+                .comment("Enable this if you want to automatically clear the Dog Bed Model")
+                .comment("Cache every time Tags is updated on client side.")
+                .define("dog_bed_clear_cache_auto", false);
             MAX_DOG_BED_MODEL_CACHE = builder
                 .comment("Configure the maximum value of Dog Bed variants that will be rendered.")
                 .comment("If the amount of Dog Bed variants rendered exceeds this limit,")
