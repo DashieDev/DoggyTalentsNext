@@ -8,10 +8,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -162,9 +158,9 @@ public class ItemUtil {
     }
 
     public static FoodProperties food(ItemStack stack) {
-        return stack.get(DataComponents.FOOD);
+        return stack.getFoodProperties(null);
     }
-    
+
     public static CustomData getWrappedTag(ItemStack stack) {
         var custom_data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         return custom_data;
