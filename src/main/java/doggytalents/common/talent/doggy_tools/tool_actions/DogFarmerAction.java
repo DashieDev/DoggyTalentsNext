@@ -26,7 +26,7 @@ public class DogFarmerAction extends ToolAction {
     private BlockPos nextFarmBlock;
     private int tickTillPathRecalc;
     private int tickTillResearch;
-    private int cooldown;
+    private int checkAgainTimestamp;
 
     private ItemStack seedTarget = ItemStack.EMPTY;
     private ItemStack replacementStack = ItemStack.EMPTY;
@@ -181,8 +181,8 @@ public class DogFarmerAction extends ToolAction {
     public boolean shouldUse(ItemStack stack) {
         if (!(stack.getItem() instanceof HoeItem))
             return false;
-        if (--this.cooldown > 0) return false;
-        this.cooldown = 10;
+        if (dog.tickCount < this.checkAgainTimestamp) return false;
+        this.checkAgainTimestamp = dog.tickCount + 30;
         this.refreshTargetSeed();
         this.nextFarmBlock = findNextFarmBlock();
         return this.nextFarmBlock != null;
