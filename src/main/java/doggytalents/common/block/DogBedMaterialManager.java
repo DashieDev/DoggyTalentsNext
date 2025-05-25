@@ -12,7 +12,9 @@ import com.google.common.collect.Maps;
 import doggytalents.DoggyTags;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.event.ClientEventHandler;
+import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.TagUtil;
 import doggytalents.common.util.Util;
@@ -117,6 +119,11 @@ public class DogBedMaterialManager {
             Optional.of(specific_beddings) : Optional.empty());
         populateCasing(cause, specific_mode ? 
             Optional.of(specific_casings) : Optional.empty());
+        
+        if (cause == UpdateCause.CLIENT_PACKET_RECEIVED 
+            && ConfigHandler.CLIENT.DOG_BED_CLEAR_CACHE_AUTO.get()) {
+            DogBedModel.clearCache();
+        }
     }
 
     private static void populateBedding(UpdateCause cause, Optional<List<Block>> specific) {
