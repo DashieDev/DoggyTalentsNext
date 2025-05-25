@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-20T16:51:53.3411891	DoggyTalents Item Models
+// 1.21.1	2025-05-23T02:52:38.3956999	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -142,6 +142,7 @@ dbf6c9d6d5424690074e56d4aee155bcc19a4320 assets/doggytalents/models/item/uncooke
 e081fc66cdca04bf058bd612ec5da337f2171fe3 assets/doggytalents/models/item/uncooked_rice_bowl.json
 b14edc33827d1a6a1a7e096d17bff000ff4fd37f assets/doggytalents/models/item/upright_piano_black_item.json
 30cb8ec02f9f5c9def702a9ab527562cc63aa856 assets/doggytalents/models/item/upright_piano_brown_item.json
+2e2b16e0db08a4def470e219b927b12ff796a6d6 assets/doggytalents/models/item/upright_piano_white_item.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
