@@ -22,18 +22,7 @@ import net.minecraft.world.item.Items;
 
 public class DogFoodUtil {
     
-    private static final MeatFoodHandler meat_food_handler_limited = new MeatFoodHandler() {
-
-        @Override
-        public boolean isFood(ItemStack stack) {
-            var props = ItemUtil.food(stack);
-
-            if (props == null) return false;
-            return isMeat(stack) && stack.getItem() != Items.ROTTEN_FLESH
-                && props.nutrition() >= 6;
-        }
-        
-    };
+    private static final MeatFoodHandler meat_food_handler_limited = new MeatFoodHandler();
 
     public static boolean isMeat(ItemStack stack) {
         return stack.is(ItemTags.MEAT) || (
@@ -109,13 +98,22 @@ public class DogFoodUtil {
         if (inventory == null)
             return -1;
 
+        int minor_meat_id = -1;
+
         for (int i = 0; i < inventory.getSlots(); i++) {
             var stack = inventory.getStackInSlot(i);
-            if (meat_food_handler_limited.canConsume(target, stack, finder)) {
+            if (!meat_food_handler_limited.canConsume(target, stack, finder))
+                continue;
+            var food = ItemUtil.food(stack);
+            if (food == null)
+                continue;
+                
+            if (food.nutrition() >= 6)
                 return i;
-            }
+            if (minor_meat_id < 0) minor_meat_id = i;
         }
-        return -1;
+
+        return minor_meat_id;
     }
 
     public static boolean tryFeed(Dog dog, boolean findHealingFood,
