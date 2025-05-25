@@ -5,6 +5,8 @@ import com.google.common.collect.AbstractIterator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 public class RingSearchIterator extends AbstractIterator<BlockPos> {
 
@@ -12,8 +14,10 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
     private final BlockPos center;
     private final int yRange;
     private final boolean inflatingY;
+    private final float startProgress;
 
     private int inflate = 0;
+    private int startIndex = 0;
     private int index = 0;
     private int maxIndex = 0;
     private final MutableBlockPos cursor = new MutableBlockPos();
@@ -26,15 +30,21 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
     };
 
     public static Iterable<BlockPos> create(BlockPos center, int y, int range, boolean inflatingY) {
-        return () -> new RingSearchIterator(center, y, range, inflatingY);
+        return () -> new RingSearchIterator(center, y, range, inflatingY, 0);
     }
 
-    private RingSearchIterator(BlockPos center, int y, int range, boolean inflatingY) {
+    public static Iterable<BlockPos> createWithRandom(BlockPos center, int y, int range, boolean inflatingY, RandomSource rand) {
+        float r = rand.nextFloat();
+        return () -> new RingSearchIterator(center, y, range, inflatingY, r);
+    }
+
+    private RingSearchIterator(BlockPos center, int y, int range, boolean inflatingY, float startProgress) {
         this.range = range;
         this.yRange = y;
         this.center = center;
         this.inflatingY = inflatingY;
         this.cursor.set(0, 0, 0);
+        this.startProgress = startProgress;
     }
 
     @Override
@@ -52,14 +62,35 @@ public class RingSearchIterator extends AbstractIterator<BlockPos> {
 
         int stage = inflate == 0 ? 0 : (this.index) / (inflate * 2);
         this.cursor.move(STAGE_MOVES[stage]).setY(0);
-        ++this.index;
-        if (index > maxIndex) {
+        advanceIndex();
+        if (index == startIndex) {
             inflate += 1;
-            index = 0;
             maxIndex = (inflate * 2) * 4 - 1;
+            this.startIndex = Mth.clamp(
+                Mth.floor(this.startProgress * (maxIndex + 1)),
+                0, maxIndex);
+            index = this.startIndex;
             this.cursor.set(-inflate, 0, -inflate);
+            moveToStartIndex();
         }
 
         return ret;
+    }
+
+    private void moveToStartIndex() {
+        if (startIndex <= 0)
+            return;
+        int stage = startIndex / (inflate * 2);
+        int odd_move = startIndex % (inflate * 2);
+        for (int i = 0; i < stage; ++i) {
+            this.cursor.move(STAGE_MOVES[i].multiply(inflate * 2));
+        }
+        this.cursor.move(STAGE_MOVES[stage].multiply(odd_move));
+    }
+
+    private void advanceIndex() {
+        ++index;
+        if (index > maxIndex)
+            index = 0; 
     }
 }
