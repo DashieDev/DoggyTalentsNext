@@ -65,7 +65,7 @@ public class DogBedModel implements BlockStateModel {
     private final Map<Direction, SimpleModelWrapper> defaultModelVariants = new ConcurrentHashMap<>(Direction.values().length);
     private final Map<Direction, SimpleModelWrapper> missingModelVariant = new ConcurrentHashMap<>(Direction.values().length);
 
-    private final Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, SimpleModelWrapper> cache = Maps.newConcurrentMap();
+    private final static Map<Triple<ICasingMaterial, IBeddingMaterial, Direction>, SimpleModelWrapper> cache = Maps.newConcurrentMap();
     private final int maxCacheSize;
 
     public DogBedModel(ModelBaker modelLoader, BlockModel model, BlockStateModel defaultModelVariant, int maxCacheSize) {
@@ -76,7 +76,11 @@ public class DogBedModel implements BlockStateModel {
         //this.initItemOverride_21_3();
     }
 
-    public SimpleModelWrapper getModelVariant(@Nonnull DogBedModelData data) {
+    public static void clearCache() {
+        cache.clear();
+    }
+
+    public SimpleModelWrapper getModelVariant(@Nonnull ModelData data) {
         return this.getModelVariant(data.casing(), data.bedding(), data.direction());
     }
 
