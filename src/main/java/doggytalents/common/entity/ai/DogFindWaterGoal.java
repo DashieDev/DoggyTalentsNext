@@ -14,12 +14,12 @@ import net.minecraft.world.level.pathfinder.Path;
  * @author DashieDev
  */
 public class DogFindWaterGoal extends Goal {
-    private final int SEARCH_RANGE = 12;
+    private static final int SEARCH_RANGE = 6;
 
     private Dog dog;
 
-    private int tickUntilSearch;
-    private int tickUntilPathRecalc;
+    private int searchAgainAt;
+    private int holdTime;
 
     private BlockPos waterPos;
     private Path tempPath;
@@ -40,9 +40,9 @@ public class DogFindWaterGoal extends Goal {
 
         if (!dog.isOnFire()) return false;
 
-        this.waterPos = null; //This is why sometimes there used to seems to be WaterPos Saving .......
-        if (--this.tickUntilSearch <= 0) {
-            this.tickUntilSearch = 5;
+        this.waterPos = null;
+        if (this.dog.tickCount >= searchAgainAt) {
+            this.searchAgainAt = this.dog.tickCount + 10;
             this.waterPos = this.searchForWaterPos();
         }
         if (this.waterPos == null) return false;
@@ -50,7 +50,7 @@ public class DogFindWaterGoal extends Goal {
         var path = dog.getNavigation().createPath(this.waterPos, 1);
         if (path == null || 
             !DogUtil.canPathReachTargetBlock(dog, path, waterPos, 1, 1)) {
-            this.tickUntilSearch += 10;
+            this.searchAgainAt = this.dog.tickCount + 20;
             return false;
         }
         this.tempPath = path;
@@ -64,43 +64,36 @@ public class DogFindWaterGoal extends Goal {
 
         if (this.waterPos == null) return false;
 
-        return true;
+        return holdTime > 0;
     }
 
     @Override
     public void start() {
         this.dog.getNavigation().moveTo(tempPath, dog.getUrgentSpeedModifier());
-        this.tickUntilPathRecalc = 10;
         this.tempPath = null;
+        this.holdTime = 5;
     }
 
     @Override
     public void stop() {
         this.tempPath = null;
+        this.waterPos = null;
     }
 
     @Override
     public void tick() {
-
-        var dog_bp = dog.blockPosition();
-        var n = dog.getNavigation();
-
-        if (this.isWaterPos(waterPos)) {
-            if (n.isDone() && dog_bp.distSqr(waterPos) <= 1 ) {
+        var nav = dog.getNavigation();
+        if (this.waterPos != null && !isWaterPos(waterPos))
+            this.waterPos = null;
+        if (nav.isDone()) {
+            if (
+                holdTime == 5
+                && this.waterPos != null && nav.isDone() 
+                && dog.blockPosition().distSqr(waterPos) <= 1
+            ) {
                 dog.getMoveControl().setWantedPosition(this.waterPos.getX() + 0.5, this.waterPos.getY(), this.waterPos.getZ() + 0.5, 1.0);
             }
-
-            if (--this.tickUntilPathRecalc <= 0) {
-                this.tickUntilPathRecalc = 10;
-                DogUtil.moveToIfReachOrElse(
-                    dog, waterPos, dog.getUrgentSpeedModifier(), 1, dog.getMaxFallDistance(), 
-                    dog1 -> {
-                        this.waterPos = null;
-                    }    
-                );
-            }
-        } else {
-            this.waterPos = this.searchForWaterPos();
+            --holdTime;
         }
     }
 
