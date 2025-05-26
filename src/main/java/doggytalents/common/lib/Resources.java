@@ -28,6 +28,7 @@ public class Resources {
     public static final ResourceLocation DOG_CLASSICAL = getEntity("dog", "classical/wolf_pale");
     public static final ResourceLocation DOG_MYSTERY = getEntity("dog", "classical/compl/wolf_missing");
     public static final ResourceLocation OKAMI_AMATERASU = getEntity("dog", "custom/ammy_divine_mouthopen");
+    public static final ResourceLocation SOL_HOPE = getEntity("dog", "custom/sol_hope");
 
     public static final ResourceLocation COLLAR_DEFAULT = getEntity("dog", "doggy_collar");
     public static final ResourceLocation COLLAR_THICC = getEntity("dog", "doggy_collar_thicc");

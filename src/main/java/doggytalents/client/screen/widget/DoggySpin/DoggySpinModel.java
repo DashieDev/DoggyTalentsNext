@@ -19,6 +19,7 @@ import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.client.entity.model.dog.AmaterasuModel;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.dog.oina.HopeModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.variant.DogVariant;
@@ -49,7 +50,7 @@ public class DoggySpinModel {
     }
 
 
-    public static enum Style { CHOPIN, BACKFLIP, SIT, AMMY }
+    public static enum Style { CHOPIN, BACKFLIP, SIT, AMMY, HOPE }
     private Style style = Style.CHOPIN;
     private DogVariant variant = DogVariant.PALE;
     private int collarColor = 0xffB02e26;
@@ -78,23 +79,32 @@ public class DoggySpinModel {
 
     private ModelPart rootAmmy;
     private ModelPart tailAmmy;
+
+    private ModelPart rootHope;
+    private ModelPart tailHope;
     
     private DoggySpinModel() {
         this.root = DogModel.createBodyLayer().bakeRoot();
         this.rootAmmy = AmaterasuModel.createBodyLayer().bakeRoot();
+        this.rootHope = HopeModel.createBodyLayer().bakeRoot();
         this.tail = root.getChild("tail");
         this.tailAmmy = rootAmmy.getChild("tail");
+        this.tailHope = rootHope.getChild("tail");
     }
 
     private ModelPart getRootForStyle() {
         if (this.style == Style.AMMY)
             return rootAmmy;
+        if (this.style == Style.HOPE)
+            return rootHope;
         return root;
     }
 
     private ModelPart getTailForStyle() {
         if (this.style == Style.AMMY)
             return tailAmmy;
+        if (this.style == Style.HOPE)
+            return tailHope;
         return tail;
     }
 
@@ -122,10 +132,12 @@ public class DoggySpinModel {
         } else if (r >= 0.04f) {
             selected_style = Style.SIT;
         } else {
-            selected_style = ConfigHandler.CLIENT.AMMY_SPINNA.get() ? Style.AMMY : Style.BACKFLIP;
+            selected_style = ConfigHandler.CLIENT.AMMY_SPINNA.get() ? 
+                (r >= 0.01f ? Style.AMMY : Style.HOPE)
+            : Style.BACKFLIP;
         }
         this.style = selected_style;
-        if (this.style != Style.AMMY) {
+        if (this.style != Style.AMMY && this.style != Style.HOPE) {
             pickCollarColor();
             pickDogVariant();
         }
@@ -147,13 +159,17 @@ public class DoggySpinModel {
             this.rootAmmy.getAllParts().forEach(x -> x.resetPose());
             return;
         }
+        if (this.style == Style.HOPE) {
+            this.rootHope.getAllParts().forEach(x -> x.resetPose());
+            return;
+        }
         this.root.getAllParts().forEach(x -> x.resetPose());
     }
 
     public void prepareRender(long elapsed_millis) {
         resetAllPose();
         
-        if (style == Style.CHOPIN || this.style == Style.AMMY) {
+        if (style == Style.CHOPIN || this.style == Style.AMMY || this.style == Style.HOPE) {
             long len_millis = Mth.ceil(TAIL_CHASE_LOOP.lengthInSeconds() * 1000);
             long passed_millis = elapsed_millis % len_millis;
             var seq = TAIL_CHASE_LOOP;
@@ -185,7 +201,7 @@ public class DoggySpinModel {
         int scale = 70;
         var offset = new Vector3f(0, 0.5f - 0.0625F, 0);
         Quaternionf rotation;
-        if (this.style == Style.CHOPIN || this.style == Style.AMMY) {
+        if (this.style == Style.CHOPIN || this.style == Style.AMMY || this.style == Style.HOPE) {
             rotation = Axis.XP.rotationDegrees(15);
         } else if (this.style == Style.BACKFLIP) {
             rotation = Axis.XP.rotationDegrees(4).mul(Axis.YP.rotationDegrees(20));
@@ -221,6 +237,10 @@ public class DoggySpinModel {
     
     private void doRenderModel(PoseStack stack, MultiBufferSource source) {
         if (this.style == Style.AMMY) {
+            doRenderModelWithTexture(stack, source, true, Resources.OKAMI_AMATERASU, 0xffffffff);
+            return;
+        }
+        if (this.style == Style.HOPE) {
             doRenderModelWithTexture(stack, source, true, Resources.OKAMI_AMATERASU, 0xffffffff);
             return;
         }
