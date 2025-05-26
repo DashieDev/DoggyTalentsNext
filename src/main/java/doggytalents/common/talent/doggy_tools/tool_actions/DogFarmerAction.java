@@ -60,7 +60,7 @@ public class DogFarmerAction extends ToolAction {
         }
 
         var stack = this.dog.getItemInHand(InteractionHand.MAIN_HAND);
-        if (stack == null || stack.getItem() != Items.STONE_HOE) {
+        if (stack == null || !(stack.getItem() instanceof HoeItem)) {
             this.setState(ActionState.FINISHED);
             return;
         }
