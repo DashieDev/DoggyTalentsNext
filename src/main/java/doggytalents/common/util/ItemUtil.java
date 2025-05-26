@@ -8,9 +8,22 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
@@ -158,7 +171,7 @@ public class ItemUtil {
     }
 
     public static FoodProperties food(ItemStack stack) {
-        return stack.getFoodProperties(null);
+        return stack.get(DataComponents.FOOD);
     }
 
     public static CustomData getWrappedTag(ItemStack stack) {

@@ -517,7 +517,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     //     var state = this.getBlockState();
     //     var aabb = new AABB(pos/*, pos.offset(1, 1, 1)*/);
     //     var facing = RiceMillBlock.getFacing(state);
-    //     var facing_norm = facing.getNormal();
+    //     var facing_norm = facing.getUnitVec3i();
     //     var expand_vec = new Vec3(facing_norm.getX(), 1.5, facing_norm.getZ());
     //     aabb = aabb.expandTowards(expand_vec);
     //     var side_axis = facing.getClockWise().getAxis();
