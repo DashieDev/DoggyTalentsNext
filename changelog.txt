@@ -1954,3 +1954,27 @@ Miso Paste, Koji]
 being rapidly hurt prior to being killed.
 * DTN Dog Eddible Food now properly display their nutrition value.
 * (Fabric only) fix Soy from Dog kills chance being too common and not being the same with Neo/Forge
+
+**1.18.54 - 25th May 2025**
++ Added White Variant of Upright Piano.
+Dog Farming Behaviour in Doggy Tools Improvements:
+  # Dog can now harvest/plant any Crops, even modded ones. Any farmable seeds can be placed in the Dog's
+toolbar to signify which Crops you want it to harvest/plant.
+  # You can optionally tell the Dog to plant a different seed from the one it is harvesting by placing that 
+Seed right after the harvesting one in its toolbar.
+  # Any Hoe can now be placed in the Dog's toolbar to signify it to farm.
+  # Dog will now consume less durability from the Hoe when farm.
+  # Farm AI improve: Fixed uneccessary delays between harvest. In other words, they will now harvest quicker.
+  # Farm AI improve: Dogs will now prioritize the nearest farmable blocks when search.
+  # Farm AI improve: Increased the radius that the Owner need to be within for the Dogs to keep
+farming 
+  # Farm AI improve: (Configurable) Allow Wandering Dogs to farm even without Owner in distance.
+===
+# Mob Retriever can now pickup non-tamed Tamable Mobs.
+# Dogs will now also automatically eat raw meat in its inventory and Food Bowl but they will 
+prefer cooked ones.
+# Changed Config option: doggy_tools_projectile_pass_allies -> doggy_tools_bow_vanilla_proj
+# Option to clear the Dog Bed Model cache upon Tag Update on Client Side.
+# Add Hope to Doggy Spin World Load Icon.
+* Fix Dog Owner Push Avoid failed to work.
+* (Neoforge only): Fix Rice Mill render Bounding Box.
