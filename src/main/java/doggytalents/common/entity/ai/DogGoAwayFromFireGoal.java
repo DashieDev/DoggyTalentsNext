@@ -97,14 +97,14 @@ public class DogGoAwayFromFireGoal extends Goal {
         DogUtil.stopAndForceLook(dog, b0.getCenter());
         this.dog.getMoveControl().setWantedPosition(b0.getX() + 0.5f, b0.getY(), b0.getZ() + 0.5f, 
             this.dog.getUrgentSpeedModifier());
-        this.dog.setDogRunningAwayFromFire(true);
+        this.dog.setDogForcePushAvoid(true);
         int tick_since_last = this.dog.tickCount - this.lastGoAwayTimestamp;
         this.walkableUntilStop = tick_since_last >= 20 ? 1 : 2;
     }
 
     @Override
     public void stop() {
-        this.dog.setDogRunningAwayFromFire(false);
+        this.dog.setDogForcePushAvoid(false);
         this.tickUntilSearch = 5;
         this.lastGoAwayTimestamp = this.dog.tickCount;
         proccessEndNode();
