@@ -179,6 +179,8 @@ public class DogFarmerAction extends ToolAction {
 
     @Override
     public boolean shouldUse(ItemStack stack) {
+        if (stack.isEmpty())
+            return false;
         if (!(stack.getItem() instanceof HoeItem))
             return false;
         if (dog.tickCount < this.checkAgainTimestamp) return false;
