@@ -215,6 +215,7 @@ public class Dog extends AbstractDog {
      *     16              65536               REST_BELLY
      *     17              131072              DRUNK_POSE
      *     18              262144              ACTION_FORCED_NONE_ANIM
+     *     19              524288              FORCE_PUSH_AVOID
      *     .
      *     31              2^31                <Reserved>
      */
@@ -321,7 +322,6 @@ public class Dog extends AbstractDog {
     protected float jumpPower;
 
     protected boolean isDogSwimming;
-    protected boolean isDogRunningAwayFromFire;
 
     public int lastOrderedToSitTick;
     private int tickChopinTail;
@@ -4611,7 +4611,7 @@ public class Dog extends AbstractDog {
             return false;
         if (this.alterationProps.resistWaterPush())
             return false;
-        if (this.isDogRunningAwayFromFire())
+        if (this.isDogForcePushAvoid())
             return false;
         for (var alter : this.alterations) {
             var result = alter.canResistPushFromFluidType();
@@ -5051,12 +5051,12 @@ public class Dog extends AbstractDog {
         return this.isDogSwimming;
     }
 
-    public void setDogRunningAwayFromFire(boolean val) {
-        this.isDogRunningAwayFromFire = val;
+    public void setDogForcePushAvoid(boolean val) {
+        this.setDogFlag(524288, val);
     }
 
-    public boolean isDogRunningAwayFromFire() {
-        return this.isDogRunningAwayFromFire;
+    public boolean isDogForcePushAvoid() {
+        return this.getDogFlag(524288);
     }
 
     private boolean isDogCurious;
