@@ -3,6 +3,7 @@ package doggytalents.common.data.neoforge_data;
 import java.util.concurrent.CompletableFuture;
 
 import doggytalents.common.item.itemgroup.DTNCompostables;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -17,7 +18,7 @@ public class DTNNeoForgeComposterProvider extends DataMapProvider {
     }
 
     @Override
-    protected void gather() {
+    protected void gather(HolderLookup.Provider prov) {
         var compostables = DTNCompostables.getCompostables();
         var builder = this.builder(NeoForgeDataMaps.COMPOSTABLES);
         compostables.forEach((item, chance) -> {
