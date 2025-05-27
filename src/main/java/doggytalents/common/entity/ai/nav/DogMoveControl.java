@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DogMoveControl extends MoveControl {
@@ -29,6 +30,11 @@ public class DogMoveControl extends MoveControl {
         if (this.operation == MoveControl.Operation.MOVE_TO) {
             this.operation = MoveControl.Operation.WAIT;
             doDogMoveTo();
+            return;
+        }
+        if (this.operation == MoveControl.Operation.STRAFE) {
+            this.operation = MoveControl.Operation.WAIT;
+            doDogStrafe();
             return;
         }
         super.tick();
@@ -84,6 +90,59 @@ public class DogMoveControl extends MoveControl {
             this.operation = MoveControl.Operation.JUMPING;
         }
         return;
+    }
+
+    private void doDogStrafe() {
+        float speed = (float) this.dog.getAttributeValue(Attributes.MOVEMENT_SPEED);
+        speed *= (float) this.speedModifier;
+        
+        float check_formard = this.strafeForwards;
+        float check_right = this.strafeRight;
+        float check_length = Mth.sqrt(check_formard * check_formard + check_right * check_right);
+
+        //normalize if greater than 1
+        if (check_length > 1) {
+            check_formard /= check_length;
+            check_right /= check_length;
+        }
+
+        check_formard *= speed;
+        check_right *= speed;
+        
+        float yrot_x = Mth.sin(this.dog.getYRot() * Mth.DEG_TO_RAD);
+        float yrot_z = Mth.cos(this.dog.getYRot() * Mth.DEG_TO_RAD);
+        
+        //2d transform the check vector into the Dog view space.
+        float check_x = check_formard * yrot_z + check_right * (-yrot_x);
+        float check_z = check_formard * yrot_x + check_right * yrot_z;
+        
+        if (!this.isWalkableStrafe(check_x, check_z)) {
+            this.dog.setSpeed(0);
+            this.dog.setZza(0);
+            this.dog.setXxa(0);
+            return;
+        }
+
+        this.mob.setSpeed(speed);
+        this.mob.setZza(this.strafeForwards);
+        this.mob.setXxa(this.strafeRight);
+    }
+
+    private boolean isWalkableStrafe(float dx, float dz) {
+        var nav = this.dog.getNavigation();
+        if (nav == null)
+            return false;
+        var node_eval = nav.getNodeEvaluator();
+        if (node_eval == null)
+            return false;
+
+        var check_pos = BlockPos.containing(
+            this.dog.getX() + dx, 
+            this.mob.getBlockY(), 
+            this.mob.getZ() + dz
+        ); 
+        boolean is_walkable = node_eval.getPathType(this.dog, check_pos) == PathType.WALKABLE;
+        return is_walkable;
     }
 
     // private boolean isMovingDiagonallyDownward() {
