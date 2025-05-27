@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DogMoveControl extends MoveControl {
@@ -141,7 +141,7 @@ public class DogMoveControl extends MoveControl {
             this.mob.getBlockY(), 
             this.mob.getZ() + dz
         ); 
-        boolean is_walkable = node_eval.getPathType(this.dog, check_pos) == PathType.WALKABLE;
+        boolean is_walkable = node_eval.getBlockPathType(this.dog.level(), check_pos.getX(), check_pos.getY(), check_pos.getZ()) == BlockPathTypes.WALKABLE;
         return is_walkable;
     }
 
