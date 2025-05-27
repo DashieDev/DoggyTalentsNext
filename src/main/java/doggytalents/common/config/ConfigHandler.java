@@ -370,7 +370,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue ALLOW_TRACK_ANY_DOG;
         public ModConfigSpec.BooleanValue LOG_WHEN_DOG_GO_OFFLINE;
         public ModConfigSpec.BooleanValue BG_MODE_LESS_STRICT;
-        public ModConfigSpec.BooleanValue DOG_DONT_PUSH_OWNER;
+        public ModConfigSpec.BooleanValue DOG_PUSH_OWNER;
         public ModConfigSpec.BooleanValue INJURED_DOG_BLOCK_PORTAL;
         public ModConfigSpec.BooleanValue WANDERING_DOG_WHISTLE;
         public ModConfigSpec.BooleanValue DISABLE_KILL_STATS;
@@ -589,10 +589,12 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("targetting the player a potential danger instead of just 'Enemy'(s)")
                 .translation("doggytalents.besserker_less_strict")
                 .define("b_g_mode_less_strict", false);
-            DOG_DONT_PUSH_OWNER = builder
-                .comment("Enable this to prevent Dogs from pushing their Owners")
-                .translation("doggytalents.dog_dont_push_owner")
-                .define("dog_dont_push_owner", false);
+            DOG_PUSH_OWNER = builder
+                .comment("By default, DTN Dogs don't push their Owners. Set this to true")
+                .comment("to allow them to push their Owners like Vanilla Behaviour.")
+                .comment("Notice that you can still push your Dog even with this option disabled.")
+                .translation("doggytalents.dog_push_owner")
+                .define("dog_push_owner", false);
             INJURED_DOG_BLOCK_PORTAL = builder
                 .comment("By default, Injured Dogs won't block portal, allowing them to")
                 .comment("be brought back from another dimension. Enable this")
