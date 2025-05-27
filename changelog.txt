@@ -1978,3 +1978,7 @@ prefer cooked ones.
 # Add Hope to Doggy Spin World Load Icon.
 * Fix Dog Owner Push Avoid failed to work.
 * (Neoforge only): Fix Rice Mill render Bounding Box.
+
+**1.18.55 - 27th May 2025**
+# (Configurable) Dog no longer push Owner by default. Although, you can still push them.
+* HOTFIX: Ranged Attack Dog continue strafing into area despite already knew that it is a danger spot.
