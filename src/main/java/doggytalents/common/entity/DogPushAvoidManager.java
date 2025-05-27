@@ -54,7 +54,7 @@ public class DogPushAvoidManager {
 
     public boolean checkPushAvoidOwner(Entity target) {
         boolean block_push_owner = 
-            ConfigHandler.SERVER.DOG_DONT_PUSH_OWNER.get()
+            !ConfigHandler.SERVER.DOG_PUSH_OWNER.get()
             || this.dog.isDogForcePushAvoid();
         if (!block_push_owner)
             return false;
