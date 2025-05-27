@@ -80,7 +80,7 @@ public class DogBedModel implements BlockStateModel {
         cache.clear();
     }
 
-    public SimpleModelWrapper getModelVariant(@Nonnull ModelData data) {
+    public SimpleModelWrapper getModelVariant(@Nonnull DogBedModelData data) {
         return this.getModelVariant(data.casing(), data.bedding(), data.direction());
     }
 
