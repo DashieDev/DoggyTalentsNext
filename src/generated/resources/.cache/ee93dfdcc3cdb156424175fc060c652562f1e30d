@@ -1,4 +1,4 @@
-// 1.21.5	2025-05-10T15:41:16.1202119	Model Definitions - doggytalents
+// 1.21.5	2025-05-27T03:02:22.6646615	Model Definitions - doggytalents
 931d77cecd337848a1324fd8839be49fcde904e6 assets/doggytalents/blockstates/dog_bath.json
 2e7db34ce99c53c88c06f263c0ec63c924afb551 assets/doggytalents/blockstates/dog_bed.json
 4907f1b495dda9a8be2bc728ae2f5b8f7c1113da assets/doggytalents/blockstates/food_bowl.json
@@ -148,6 +148,7 @@ e4ac7cdf38d9e73b29c1b77084a60b066635ae21 assets/doggytalents/items/treat_bag.jso
 28819ed93d93edbaa7919c7a37e8c780943c8270 assets/doggytalents/items/uncooked_rice_bowl.json
 0f1333f892a834b69319cf9c5678592e7d665129 assets/doggytalents/items/upright_piano_black_item.json
 2cad91a38e0a66e57cd68be71fdf44065aa64b29 assets/doggytalents/items/upright_piano_brown_item.json
+f8f8365c7fbdc4cc76530e04d391d6a37cced8ec assets/doggytalents/items/upright_piano_white_item.json
 4f2c58065b76d39589a670382419ac9a976e11ab assets/doggytalents/items/whistle.json
 12bd97dde196818af5b13e4c84440f2ac77db2f0 assets/doggytalents/items/wig.json
 fd2455734473662e0ada38ad8c649c7354edf459 assets/doggytalents/items/witch_hat.json
@@ -313,6 +314,7 @@ dbf6c9d6d5424690074e56d4aee155bcc19a4320 assets/doggytalents/models/item/uncooke
 e081fc66cdca04bf058bd612ec5da337f2171fe3 assets/doggytalents/models/item/uncooked_rice_bowl.json
 b14edc33827d1a6a1a7e096d17bff000ff4fd37f assets/doggytalents/models/item/upright_piano_black_item.json
 30cb8ec02f9f5c9def702a9ab527562cc63aa856 assets/doggytalents/models/item/upright_piano_brown_item.json
+2e2b16e0db08a4def470e219b927b12ff796a6d6 assets/doggytalents/models/item/upright_piano_white_item.json
 7463378ef868b9e2a5743e3fc7837c28e1c8222e assets/doggytalents/models/item/whistle.json
 272f446b0708c9066160b62935c82364ebcffd02 assets/doggytalents/models/item/wig.json
 edfc173f2dcf439d7e9a9fb9cc54e18261ca75d6 assets/doggytalents/models/item/witch_hat.json
