@@ -281,6 +281,7 @@ public class DogSleepOnManager {
 
     private void notifySleepSuccesAllDogAndStopSleeping(ServerLevel level) {
         invalidateSleepers();
+        var toRemove = new ArrayList<SleepOnPair>();
         for (var x : sleepingOnPairs.entrySet()) {
             var pair = x.getValue();
             var dog = pair.dog();
@@ -289,7 +290,10 @@ public class DogSleepOnManager {
             if (dog.level() != level)
                 continue;
             notifySleepSuccessDog(dog);
-            stopPlayerSleepOn(dog);
+            toRemove.add(pair);
+        }
+        for (var x : toRemove) {
+            stopPlayerSleepOn(x.dog());
         }
     }
 
