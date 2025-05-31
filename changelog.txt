@@ -1982,3 +1982,6 @@ prefer cooked ones.
 **1.18.55 - 27th May 2025**
 # (Configurable) Dog no longer push Owner by default. Although, you can still push them.
 * HOTFIX: Ranged Attack Dog continue strafing into area despite already knew that it is a danger spot.
+
+**1.18.56 - 31th May 2025**
+* HOTFIX: ConcurrentModificationException when players start waking up while sleeping on Bed Dogs. 
