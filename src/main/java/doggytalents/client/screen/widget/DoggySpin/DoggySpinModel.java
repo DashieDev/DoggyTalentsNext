@@ -241,7 +241,7 @@ public class DoggySpinModel {
             return;
         }
         if (this.style == Style.HOPE) {
-            doRenderModelWithTexture(stack, source, true, Resources.OKAMI_AMATERASU, 0xffffffff);
+            doRenderModelWithTexture(stack, source, true, Resources.SOL_HOPE, 0xffffffff);
             return;
         }
         doRenderModelWithTexture(stack, source, false, this.variant.texture(), 0xffffffff);
