@@ -127,6 +127,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
         public ModConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
         public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
+        public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY_PERCENT;
         public ModConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ModConfigSpec.BooleanValue DOG_BED_CLEAR_CACHE_AUTO;
         public ModConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
@@ -306,6 +307,13 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("status. This will takes up two health lines and will render where")
                 .comment("the Vanilla Vehicle Health is and instead of it.")
                 .define("dtn_wolf_mount_overlay", true);
+            DTN_WOLF_MOUNT_OVERLAY_PERCENT = builder
+                .comment("Force DTN's Dedicated Wolf Mount Overlay to always render Dog")
+                .comment("Health and Dog Hunger in percentages.")
+                .comment("When disabled, these entries will be rendered as their absolute")
+                .comment("values and only if the max values of these entries exceed 3 digits,")
+                .comment("they will be rendered as percentages.")
+                .define("dtn_wolf_mount_overlay_percent", true);
             SHOW_DOG_NAME_THRU_WALL = builder
                 .comment("By default, DTN will render your Dogs' Names through walls. Disable")
                 .comment("this to make Owned Dogs' Names no longer visible through walls.")
