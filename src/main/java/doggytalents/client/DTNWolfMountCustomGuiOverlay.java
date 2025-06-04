@@ -44,16 +44,10 @@ public class DTNWolfMountCustomGuiOverlay {
         var mc = Minecraft.getInstance();
         var font = mc.font;
 
-        float dog_health = dog.getHealth();
-        int dog_health_percent = Mth.ceil((dog_health / dog.getMaxHealth()) * 100f);
-        dog_health_percent = Mth.clamp(dog_health_percent, 0, 100);
-
-        float dog_hunger = dog.getDogHunger();
-        int dog_hunger_percent = Mth.ceil((dog_hunger / dog.getMaxHunger()) * 100f);
-        dog_hunger_percent = Mth.clamp(dog_hunger_percent, 0, 100);
-
-        var health_level_str = Component.literal(Integer.toString(dog_health_percent) + "%"); 
-        var food_level_str = Component.literal(Integer.toString(dog_hunger_percent) + "%"); 
+        var health_level_str = getNumberComponent(
+            dog.getHealth(), dog.getMaxHealth());
+        var food_level_str = getNumberComponent(
+            dog.getDogHunger(), dog.getMaxHunger());
         
         Optional<MutableComponent> air_level_str = Optional.empty();
         boolean render_air = !dog.canBreatheUnderwater()
@@ -118,6 +112,21 @@ public class DTNWolfMountCustomGuiOverlay {
         RenderSystem.disableBlend();
         
         return true;
+    }
+
+    private static MutableComponent getNumberComponent(float val, float max_val) {
+        int val_i = Mth.ceil(val);
+        MutableComponent val_str;
+        if (val_i > 999 || ConfigHandler.CLIENT.DTN_WOLF_MOUNT_OVERLAY_PERCENT.get()) {
+            int percent = Mth.ceil((val / max_val) * 100);
+            percent = Mth.clamp(percent, 0, 100);
+            val_str = Component.literal(
+                Integer.toString(percent) + "%"
+            );
+        } else {
+            val_str = Component.literal(Integer.toString(val_i));
+        }
+        return val_str;
     }
 
     public static Optional<Integer> onGetVehicleMaxHearts(LivingEntity vehicle) {
