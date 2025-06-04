@@ -178,7 +178,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .define("dog_inv_button_in_inv", true);
             builder
                 .comment("Set a custom position for the universal dog inventory access button here.")
-                .comment("Can be utilizedwhen the button overlaps with another mod's GUI feature or you ")
+                .comment("Can be utilized when the button overlaps with another mod's GUI feature or you ")
                 .comment("simply prefer it being in a different position.")
                 .comment("This option only affects the Survival inventory screen.")
                 .comment("The position is the offset of the button is the offset from the top left corner")
