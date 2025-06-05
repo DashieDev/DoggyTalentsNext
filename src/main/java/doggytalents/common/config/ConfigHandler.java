@@ -381,6 +381,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
+        public ModConfigSpec.BooleanValue TAMED_WOLF_NON_MOB_CAP;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
@@ -624,6 +625,10 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("Prevent Wild Wolves from being angry when you accidentally hit them.")
                 .translation("doggytalents.prevent_wild_wolves_angry")
                 .define("prevent_wild_wolves_angry", false);
+            TAMED_WOLF_NON_MOB_CAP = builder
+                .comment("Tamed Wolves don't count towards the creature mob cap.")
+                .translation("doggytalents.tamed_wolf_non_mob_cap")
+                .define("tamed_wolf_non_mob_cap", false); 
             TACTICAL_LIMIT = builder
                 .comment("Set the maxmium number of Tactical Dogs that will reponse")
                 .comment("when a their owner issues a Tactical Command via the Tactical Whistle.")

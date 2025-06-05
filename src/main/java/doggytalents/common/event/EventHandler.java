@@ -566,6 +566,12 @@ public class EventHandler {
         event.setCanceled(true);
     }
 
+    public static void onWolfTame(Wolf wolf) {
+        if (!ConfigHandler.SERVER.TAMED_WOLF_NON_MOB_CAP.get())
+            return;
+        wolf.setPersistenceRequired();
+    }
+
     @SubscribeEvent
     public void canPlayerContinueSleeping(SleepingLocationCheckEvent event) {
         DogSleepOnManager.canPlayerContinueSleeping(event);
