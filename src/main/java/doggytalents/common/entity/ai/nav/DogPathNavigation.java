@@ -6,16 +6,14 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import doggytalents.common.entity.Dog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
@@ -25,7 +23,7 @@ import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 
-public class DogPathNavigation extends GroundPathNavigation implements IDogNavLock {
+public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
     private Dog dog;
     private boolean locked;
@@ -200,7 +198,9 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
 
     @Override
     protected boolean canUpdatePath() {
-        return (super.canUpdatePath()) && !dog.isOnSwitchNavCooldown()
+        final boolean ground_canUpdatePath = 
+            this.mob.onGround() || this.mob.isInLiquid();
+        return ground_canUpdatePath && !dog.isOnSwitchNavCooldown()
             && !locked;
     }
 
@@ -218,18 +218,19 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         return super.moveTo(p_26537_, p_26538_);
     }
 
-    @Override
-    protected boolean hasValidPathType(PathType type) {
-        if (dog.fireImmune()) {
-            if (type == PathType.LAVA)
-                return true;
-            if (type == PathType.DAMAGE_FIRE)
-                return true;
-            if (type == PathType.DANGER_FIRE)
-                return true;
-        }
-        return super.hasValidPathType(type);
-    }
+    // Unused method in GroundPathNavigation
+    // @Override
+    // protected boolean hasValidPathType(PathType type) {
+    //     if (dog.fireImmune()) {
+    //         if (type == PathType.LAVA)
+    //             return true;
+    //         if (type == PathType.DAMAGE_FIRE)
+    //             return true;
+    //         if (type == PathType.DANGER_FIRE)
+    //             return true;
+    //     }
+    //     return super.hasValidPathType(type);
+    // }
 
     @Override
     public boolean isStableDestination(BlockPos pos) {
@@ -278,6 +279,30 @@ public class DogPathNavigation extends GroundPathNavigation implements IDogNavLo
         };
         this.nodeEvaluator.setCanPassDoors(true);
         return new PathFinder(this.nodeEvaluator, p_26453_);
+    }
+
+    @Override
+    protected Vec3 getTempMobPos() {
+        return new Vec3(this.dog.getX(), this.getSurfaceY(), this.dog.getZ());
+    }
+
+    private int getSurfaceY() {
+        boolean do_float_y = 
+            this.dog.isInLiquid() && this.canFloat();
+        if (!do_float_y)
+            return Mth.floor(this.dog.getY() + 0.5);
+
+        int y_block = this.dog.getBlockY();
+        for (int y_offset = 0; y_offset <= 16; ++y_offset) {
+            int check_y = y_block + y_offset;
+            var check_pos = BlockPos.containing(
+                this.mob.getX(), check_y, this.mob.getZ());
+            var check_state = this.level.getBlockState(check_pos);
+            if (check_state.getFluidState().isEmpty())
+                return check_y;
+        }
+
+        return y_block;
     }
 
     @Override
