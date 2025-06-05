@@ -6,6 +6,7 @@
     "mixins": [
         "EntityMixin",
         "ProjectileMixin",
+        "TamableAnimalMixin",
 
         
         "EntityMixin_1_21_3",
