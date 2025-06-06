@@ -99,14 +99,15 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
 
     @Override
     public void onFulfilled() {
-        if (this.owner != null && this.teleportedDog != null)
+        if (this.teleportedDog == null || !this.teleportedDog.isAlive())
+            return;
+        if (this.owner != null)
             this.owner.sendSystemMessage(
                 Component.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_self", 
                     this.teleportedDog.getName().getString()  
                 )
             );
-        if (this.teleportedDog != null)
         this.ownerLevel.sendParticles(
             ParticleTypes.PORTAL, 
             this.teleportedDog.getX(), this.teleportedDog.getY(), this.teleportedDog.getZ(), 
