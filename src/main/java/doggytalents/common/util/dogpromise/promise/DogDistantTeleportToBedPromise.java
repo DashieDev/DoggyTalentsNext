@@ -39,6 +39,11 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
 
     @Override
     public void start() {
+        if (!dog.isAlive()) {
+            this.rejectedMsg = "DOGOFFLINE";
+            this.setState(State.REJECTED);
+            return;
+        }
         if (this.level == null) {
             this.rejectedMsg = "CLIENTLEVEL";
             this.setState(State.REJECTED);
@@ -69,6 +74,11 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             if (--this.tickPersist <= 0) {
                 this.setState(State.FULFILLED);
             }
+            return;
+        }
+        if (!dog.isAlive()) {
+            this.rejectedMsg = "DOGOFFLINE";
+            this.setState(State.REJECTED);
             return;
         }
         var blockState = this.level.getBlockState(bedPos);
