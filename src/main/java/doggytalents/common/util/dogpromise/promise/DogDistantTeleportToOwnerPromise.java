@@ -87,14 +87,15 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
 
     @Override
     public void onFulfilled() {
-        if (this.owner != null && this.teleportedDog != null)
+        if (this.teleportedDog == null || !this.teleportedDog.isAlive())
+            return;
+        if (this.owner != null)
             PlayerUtil.sendSystemMessage(this.owner, 
                 Component.translatable(
                     "item.doggytalents.conducting_bone.fulfilled.tp_self", 
                     this.teleportedDog.getName().getString()  
                 )
             );
-        if (this.teleportedDog != null)
         this.level.sendParticles(
             ParticleTypes.PORTAL, 
             this.teleportedDog.getX(), this.teleportedDog.getY(), this.teleportedDog.getZ(), 
