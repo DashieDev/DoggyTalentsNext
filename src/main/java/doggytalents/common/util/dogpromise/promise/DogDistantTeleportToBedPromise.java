@@ -11,7 +11,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 /**
  * @author DashieDev
@@ -21,8 +20,6 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     private Dog dog; 
     private ServerLevel level;
     private BlockPos bedPos;
-
-    private boolean bedChunkForced;
 
     private boolean dogTeleported = false;
     private int tickPersist = 5;
@@ -63,7 +60,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             return;
         }
 
-        this.setBedChunk(true);
+        this.accquireChunk(this.level, chunkpos);
 
     }
 
@@ -128,22 +125,4 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             );
         }
     }
-
-    @Override
-    public void cleanUp() {
-        if (this.bedChunkForced) this.setBedChunk(false);
-    }
-
-    private void setBedChunk(boolean loaded) {
-        if (this.bedChunkForced == loaded) return;
-        ChunkPos chunkpos = new ChunkPos(bedPos);
-        //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.level, Constants.MOD_ID, 
-            this.dog.getUUID(),
-            chunkpos.x, chunkpos.z, 
-            loaded, true);
-        this.bedChunkForced = loaded;
-    }
-    
 }

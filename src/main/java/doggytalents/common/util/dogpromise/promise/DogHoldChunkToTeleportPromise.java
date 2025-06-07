@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogHoldChunkToTeleportPromise extends AbstractPromise {
 
@@ -22,8 +21,6 @@ public class DogHoldChunkToTeleportPromise extends AbstractPromise {
     private final ServerLevel level;
 
     private int timeOut;
-
-    private final ArrayList<ChunkPos> forcedDogChunk = new ArrayList<>();
 
     public DogHoldChunkToTeleportPromise(List<Dog> dogs, ServerLevel level) {
         this.dogs = dogs;
@@ -52,36 +49,13 @@ public class DogHoldChunkToTeleportPromise extends AbstractPromise {
     public void onRejected() {
     }
 
-    @Override
-    public void cleanUp() {
-        cleanDogChunk();
-    }
-
     private void forceDogChunk() {
         for (var dog : dogs) {
             if (!dog.isDoingFine())
                 continue;
             var chunkpos = new ChunkPos(dog.blockPosition());
-            if (this.forcedDogChunk.contains(chunkpos))
-                continue;
-            this.forcedDogChunk.add(chunkpos);
-            ForgeChunkManager.forceChunk(
-                this.level, Constants.MOD_ID, 
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                true, true);
+            this.accquireChunk(this.level, chunkpos);
         }
-    }
-
-    private void cleanDogChunk() {
-        for (var chunkpos : this.forcedDogChunk) {
-            ForgeChunkManager.forceChunk(
-                this.level, Constants.MOD_ID, 
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                false, true);
-        }
-        this.forcedDogChunk.clear();
     }
     
 }

@@ -36,6 +36,7 @@ import doggytalents.common.util.DogLocationStorageMigration;
 import doggytalents.common.util.LangUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.DogPromiseManager;
+import doggytalents.common.util.dogpromise.chunk.DTNForcedChunkManager;
 import doggytalents.common.util.dogpromise.promise.DogBatchTeleportToDimensionPromise;
 import doggytalents.common.util.dogpromise.promise.DogHoldChunkToTeleportPromise;
 import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
@@ -105,6 +106,7 @@ public class EventHandler {
     //@SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
+        DTNForcedChunkManager.onServerStop();
         var overworld = event.getServer().getLevel(Level.OVERWORLD);
         if (overworld != null)
             DogLocationStorage.get(overworld).onServerStop(event);

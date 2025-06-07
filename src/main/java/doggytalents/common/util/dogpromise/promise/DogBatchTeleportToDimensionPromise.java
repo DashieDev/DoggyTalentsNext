@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
+
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -22,7 +23,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
+import net.neoforged.neoforge.common.ticket.ChunkTicketManager;
+import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
@@ -34,8 +36,6 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
     private int tickTillCheck;
     private int timeOut;
-
-    private final ArrayList<ChunkPos> forcedDogChunk = new ArrayList<>();
 
     public DogBatchTeleportToDimensionPromise(List<Dog> dogs, ServerLevel origin, UUID playerUUID, ResourceKey<Level> dimeansion, Predicate<Dog> dogValidator) {
         this.dogs = dogs;
@@ -112,7 +112,6 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         if (!dogValidator.test(dog0)) return;
 
         dog0.authorizeChangeDimension();
-
         dog0.changeDimension(getDogTransition(targetLevel, dog0, pos));
     }
 
@@ -124,34 +123,12 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     public void onRejected() {
     }
 
-    @Override
-    public void cleanUp() {
-        cleanDogChunk();
-    }
-
     private void forceDogChunk() {
         for (var dog : dogs) {
             if (!dog.isDoingFine())
                 continue;
             var chunkpos = new ChunkPos(dog.blockPosition());
-            if (this.forcedDogChunk.contains(chunkpos))
-                continue;
-            this.forcedDogChunk.add(chunkpos);
-            ForgeChunkManager.forceChunk(
-                this.origin, Constants.MOD_ID, 
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                true, true);
-        }
-    }
-
-    private void cleanDogChunk() {
-        for (var chunkpos : this.forcedDogChunk) {
-            ForgeChunkManager.forceChunk(
-                this.origin, Constants.MOD_ID, 
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                false, true);
+            this.accquireChunk(this.origin, chunkpos);
         }
     }
 
