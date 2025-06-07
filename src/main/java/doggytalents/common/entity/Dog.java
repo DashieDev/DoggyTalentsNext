@@ -2407,19 +2407,19 @@ public class Dog extends AbstractDog {
 
     @Override
     public void remove(Entity.RemovalReason removalReason) {
-        boolean remove_trusted =
-            ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get()
-            && removalReason == RemovalReason.DISCARDED;
-        if (!remove_trusted && removalReason.shouldDestroy()) {
-            if (this.level() != null && !this.level().isClientSide) {       
+        if (this.level() != null && !this.level().isClientSide) {
+            boolean remove_trusted =
+                ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get()
+                && removalReason == RemovalReason.DISCARDED;
+            if (!remove_trusted && removalReason.shouldDestroy()) {     
                 cacheSessionUUID();
                 DogLocationStorage.get(this.level()).remove(this);
                 if (this.getOwnerUUID() != null)
                     DogRespawnStorage.get(this.level()).putData(this);
             }
-        }
-        if (remove_trusted) {
-            DogLocationStorage.get(this.level()).remove(this);
+            if (remove_trusted) {
+                DogLocationStorage.get(this.level()).remove(this);
+            }
         }
         
         super.remove(removalReason);
