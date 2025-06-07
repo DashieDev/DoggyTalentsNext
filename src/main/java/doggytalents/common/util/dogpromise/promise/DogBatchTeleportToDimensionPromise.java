@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 
-import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.DogUtil;
@@ -38,8 +37,6 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
     private int tickTillCheck;
     private int timeOut;
-
-    private final ArrayList<ChunkPos> forcedDogChunk = new ArrayList<>();
 
     public DogBatchTeleportToDimensionPromise(List<Dog> dogs, ServerLevel origin, UUID playerUUID, ResourceKey<Level> dimeansion, Predicate<Dog> dogValidator) {
         this.dogs = dogs;
@@ -127,34 +124,12 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     public void onRejected() {
     }
 
-    @Override
-    public void cleanUp() {
-        cleanDogChunk();
-    }
-
     private void forceDogChunk() {
         for (var dog : dogs) {
             if (!dog.isDoingFine())
                 continue;
             var chunkpos = new ChunkPos(dog.blockPosition());
-            if (this.forcedDogChunk.contains(chunkpos))
-                continue;
-            this.forcedDogChunk.add(chunkpos);
-            DoggyChunkController.get().forceChunk(
-                this.origin, 
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                true, true);
-        }
-    }
-
-    private void cleanDogChunk() {
-        for (var chunkpos : this.forcedDogChunk) {
-            DoggyChunkController.get().forceChunk(
-                this.origin,
-                this.getOwner().getUUID(),
-                chunkpos.x, chunkpos.z, 
-                false, true);
+            this.accquireChunk(this.origin, chunkpos);
         }
     }
 

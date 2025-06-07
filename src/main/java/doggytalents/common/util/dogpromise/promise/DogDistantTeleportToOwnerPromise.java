@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import doggytalents.common.chunk.DoggyChunkController;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationStorage;
@@ -39,8 +38,6 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
 
     private Dog teleportedDog;
     private final LivingEntity owner;
-
-    private boolean dogChunkForced;
 
     public DogDistantTeleportToOwnerPromise(@Nonnull UUID dogUUID, @Nonnull LivingEntity owner,
          @Nonnull BlockPos dogPos) {
@@ -159,26 +156,8 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
             return;
         }
 
-        this.setDogChunk(true);
+        this.accquireChunk(this.level, chunkpos);
 
-    }
-
-    //No Ressurect
-    @Override
-    public void cleanUp() {
-        if (this.dogChunkForced) this.setDogChunk(false);
-    }
-
-    private void setDogChunk(boolean loaded) {
-        if (this.dogChunkForced == loaded) return;
-        ChunkPos chunkpos = new ChunkPos(dogPos);
-        //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        DoggyChunkController.get().forceChunk(
-            this.level,
-            dogUUID,
-            chunkpos.x, chunkpos.z, 
-            loaded, true);
-        this.dogChunkForced = loaded;
     }
 
 }
