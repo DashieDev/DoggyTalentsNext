@@ -2,6 +2,7 @@ package doggytalents.common.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 public class ReflectionUtil {
 
@@ -37,5 +38,32 @@ public class ReflectionUtil {
             // Class not present
             throw new RuntimeException(e);
         }
+    }
+
+    public static <T> Optional<T> getPrivateField(Object inst, String name, Class<T> type) {
+        return getPrivateField(inst.getClass(), inst, name, type);
+    }
+
+    @SuppressWarnings({"unchecked", "deprecation"})
+    public static <T> Optional<T> getPrivateField(Class<?> instClass, Object inst, String name, Class<T> type) {
+        var ret = Optional.<T>empty();
+        try {
+            if (!instClass.isAssignableFrom(inst.getClass()))
+                return ret;
+            var field = instClass.getDeclaredField(name);
+            boolean accessible_0 = field.isAccessible();
+            field.setAccessible(true);
+            try {
+                var val = (T) field.get(inst);
+                ret = Optional.ofNullable(val);
+            } catch (Exception e) {
+
+            }
+            field.setAccessible(accessible_0);
+        } catch (SecurityException | NoSuchFieldException e) {
+            
+        }
+        
+        return ret;
     }
 }
