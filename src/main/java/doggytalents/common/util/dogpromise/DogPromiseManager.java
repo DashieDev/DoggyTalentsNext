@@ -47,7 +47,7 @@ public class DogPromiseManager {
     public static void cleanUp() {
         if (TO_REMOVE.isEmpty()) return;
         for (var p : TO_REMOVE) {
-            p.cleanUp();
+            p.doCleanUp();
             PROMISES.remove(p);
         }
         TO_REMOVE.clear();

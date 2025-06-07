@@ -164,29 +164,11 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
         // );
 
-        this.setDogChunk(true);
+        this.accquireChunk(this.dogLevel, chunkpos);
 
         // ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
         //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
         // );
-    }
-
-    //No Ressurect
-    @Override
-    public void cleanUp() {
-        if (this.dogChunkForced) this.setDogChunk(false);
-    }
-
-    private void setDogChunk(boolean loaded) {
-        if (this.dogChunkForced == loaded) return;
-        ChunkPos chunkpos = new ChunkPos(dogPos);
-        //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.dogLevel, Constants.MOD_ID, 
-            dogUUID,
-            chunkpos.x, chunkpos.z, 
-            loaded, true);
-        this.dogChunkForced = loaded;
     }
 
     private static TeleportTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {

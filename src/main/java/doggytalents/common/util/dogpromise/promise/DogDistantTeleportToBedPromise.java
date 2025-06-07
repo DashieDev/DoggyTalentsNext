@@ -23,8 +23,6 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     private ServerLevel level;
     private BlockPos bedPos;
 
-    private boolean bedChunkForced;
-
     private boolean dogTeleported = false;
     private int tickPersist = 5;
 
@@ -64,7 +62,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             return;
         }
 
-        this.setBedChunk(true);
+        this.accquireChunk(this.level, chunkpos);
 
     }
 
@@ -129,22 +127,4 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             );
         }
     }
-
-    @Override
-    public void cleanUp() {
-        if (this.bedChunkForced) this.setBedChunk(false);
-    }
-
-    private void setBedChunk(boolean loaded) {
-        if (this.bedChunkForced == loaded) return;
-        ChunkPos chunkpos = new ChunkPos(bedPos);
-        //if (this.level.hasChunk(chunkpos.x, chunkpos.z)) return;
-        ForgeChunkManager.forceChunk(
-            this.level, Constants.MOD_ID, 
-            this.dog.getUUID(),
-            chunkpos.x, chunkpos.z, 
-            loaded, true);
-        this.bedChunkForced = loaded;
-    }
-    
 }
