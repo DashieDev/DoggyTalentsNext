@@ -13,6 +13,7 @@ import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -220,7 +221,7 @@ public class DogBeingPetGoal extends Goal {
         var v_dog_owner = owner_pos.subtract(dog_pos);
         v_dog_owner = v_dog_owner.subtract(0, v_dog_owner.y, 0)
             .normalize()
-            .yRot(90)
+            .yRot(90 * Mth.DEG_TO_RAD)
             .add(dog_pos);
         this.dog.getLookControl().setLookAt(v_dog_owner);
     }
