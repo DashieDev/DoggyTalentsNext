@@ -24,7 +24,6 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
 
