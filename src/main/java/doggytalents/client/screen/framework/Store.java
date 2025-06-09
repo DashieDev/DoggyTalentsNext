@@ -35,7 +35,7 @@ public class Store {
         try {   
             var worker = slice.getConstructor().newInstance();
             var storeValue = new StoreValue(worker, worker.getInitalState());
-            this.applicationStates.computeIfAbsent(slice, $ -> storeValue);
+            this.applicationStates.computeIfAbsent(slice, k -> storeValue);
         } catch (Exception e) {
         }
     }
