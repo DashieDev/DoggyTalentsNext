@@ -108,6 +108,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
+        public ModConfigSpec.BooleanValue WORD_LOAD_ICON_R;
+        public ModConfigSpec.IntValue WORD_LOAD_ICON_X;
+        public ModConfigSpec.IntValue WORD_LOAD_ICON_Y;
         public ForgeConfigSpec.BooleanValue AMMY_SPINNA;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
@@ -225,6 +228,17 @@ public class ConfigHandler {
                 .comment("Show a fun icon on world loading screen.")
                 .translation("doggytalents.config.client.world_load_icon")
                 .define("world_load_icon", true);
+            WORD_LOAD_ICON_R = builder
+                .comment("Move the world load icon to the right corner.")
+                .translation("doggytalents.config.client.world_load_icon_r")
+                .define("world_load_icon_r", false);
+            builder.comment("Set the world load icon offset from the corner.");
+            WORD_LOAD_ICON_X = builder
+                .translation("doggytalents.config.client.world_load_icon_x")
+                .defineInRange("world_load_icon_x", 0, -500, 500);
+            WORD_LOAD_ICON_Y = builder
+                .translation("doggytalents.config.client.world_load_icon_y")
+                .defineInRange("world_load_icon_y", 0, -500, 500);
             AMMY_SPINNA = builder
                 .comment("DTN's fun little world loading icon will occasionally")
                 .comment("show Ammy instead of Classical Pale. Disable this")

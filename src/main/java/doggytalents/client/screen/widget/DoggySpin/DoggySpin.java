@@ -65,7 +65,14 @@ public class DoggySpin extends AbstractWidget {
             return;
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
-        spinWidget.setY(event.getScreen().height - spinWidget.getHeight());
+        int x = ConfigHandler.CLIENT.WORD_LOAD_ICON_R.get() ?
+            event.getScreen().width - spinWidget.size
+            : 0;
+        int y = event.getScreen().height - spinWidget.getHeight();
+        x += ConfigHandler.CLIENT.WORD_LOAD_ICON_X.get();
+        y += ConfigHandler.CLIENT.WORD_LOAD_ICON_Y.get();
+        spinWidget.setX(x);
+        spinWidget.setY(y);
         spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
