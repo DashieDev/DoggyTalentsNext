@@ -1,20 +1,20 @@
 package doggytalents.common.entity.ai;
 
+import javax.annotation.Nullable;
+
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * @author DashieDev
  */
-public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
+public class DogRandomStrollGoal extends RandomStrollGoal {
 
     private Dog dog;
 
@@ -62,5 +62,25 @@ public class DogRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         }
     }    
 
-    
+    @Nullable
+    @Override
+    protected Vec3 getPosition() {
+        boolean underwater_random = this.dog.isInWaterOrBubble()
+            && this.dog.canSwimUnderwater()
+            && this.dog.isDogSwimming();
+        if (underwater_random)  
+            return BehaviorUtils.getRandomSwimmablePos(this.dog, 10, 7);
+        
+        return getDogWaterAvoidRandomPos();
+    }
+
+    private Vec3 getDogWaterAvoidRandomPos() {
+        if (this.dog.isInWaterOrBubble()) {
+            Vec3 vec3 = LandRandomPos.getPos(this.dog, 15, 7);
+            return vec3 == null ? super.getPosition() : vec3;
+        } else {
+            return this.dog.getRandom().nextFloat() >= WaterAvoidingRandomStrollGoal.PROBABILITY ? LandRandomPos.getPos(this.dog, 10, 7) : super.getPosition();
+        }
+    }
+
 }
