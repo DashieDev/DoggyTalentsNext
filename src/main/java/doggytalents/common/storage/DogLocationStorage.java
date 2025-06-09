@@ -95,7 +95,7 @@ public class DogLocationStorage extends SavedData {
     public DogLocationData getOrCreateData(Dog dogIn) {
         UUID uuid = dogIn.getUUID();
 
-        return this.locationDataMap.computeIfAbsent(uuid, ($) -> {
+        return this.locationDataMap.computeIfAbsent(uuid, k -> {
             this.setDirty();
             return DogLocationData.from(this, dogIn);
         });

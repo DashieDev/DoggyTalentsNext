@@ -20,7 +20,7 @@ public class NavBarButton extends TextOnlyButton {
 
     public NavBarButton(int x, int y, Component text, Tab tab,
             Font font, Screen screen, Dog dog) {
-        super(x, y, font.width(text), font.lineHeight, text, $ -> {}, font);
+        super(x, y, font.width(text), font.lineHeight, text, b -> {}, font);
         this.tab = tab;
         this.screen = screen;
         this.dog = dog;

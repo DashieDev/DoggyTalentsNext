@@ -70,7 +70,7 @@ public abstract class AbstractPromise {
 
     protected final void accquireChunk(ServerLevel level, ChunkPos pos) {
         var accquireds = this.accquiredChunks
-            .computeIfAbsent(level.dimension(), $ -> new AccquiredChunks(level))
+            .computeIfAbsent(level.dimension(), k -> new AccquiredChunks(level))
             .chunks();
         boolean added = accquireds.add(pos.toLong());
         if (!added) {
