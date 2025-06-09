@@ -3,9 +3,11 @@ package doggytalents.common.entity;
 import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
+import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.neoforged.neoforge.common.NeoForgeMod;
@@ -56,6 +58,7 @@ public class DogSwimmingManager {
             (!dog.isInWater() && dog.onGround())
             || !dog.isVehicle() && dog.isLowAirSupply()
             || dog.isDefeated()
+            || hasNonWaterBreathingPassenger(dog)
         ) {
             this.swimming = false;
             stopSwimming(dog);
@@ -67,6 +70,7 @@ public class DogSwimmingManager {
             dog.isInWater()
             && !dog.isDefeated()
             && readyToBeginSwimming(dog)
+            && !hasNonWaterBreathingPassenger(dog)
             && !dog.isDogSwimming()
         ) {
             this.swimming = true;
@@ -76,6 +80,18 @@ public class DogSwimmingManager {
 
     private boolean readyToBeginSwimming(Dog dog) {
         return dog.getAirSupply() == dog.getMaxAirSupply();
+    }
+
+    private boolean hasNonWaterBreathingPassenger(Dog dog) {
+        if (!dog.isVehicle())
+            return false;
+        var passenger = dog.getFirstPassenger();
+        if (passenger == null)
+            return false;
+        if (!(passenger instanceof LivingEntity living))
+            return false;
+
+        return !EntityUtil.isWaterBreathingEntity(living);
     }
 
     private void applySwimAttributes(Dog dog){
