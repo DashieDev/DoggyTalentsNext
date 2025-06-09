@@ -8,16 +8,16 @@ import net.minecraft.client.Camera;
 @Mixin(Camera.class)
 public interface CameraMixinAccessor {
     
-    @Invoker("setRotation(FF)V")
+    @Invoker("setRotation")
     void dtn__setRotation(float yRot, float xRot);
 
-    @Invoker("setPosition(DDD)V")
+    @Invoker("setPosition")
     void dtn__setPosition(double x, double y, double z);
 
-    @Invoker("move(FFF)V")
+    @Invoker("move")
     void dtn__move(float x, float y, float z);
 
-    @Invoker("getMaxZoom(F)F")
+    @Invoker("getMaxZoom")
     float dtn__getMaxZoom(float distance);
 
 }
