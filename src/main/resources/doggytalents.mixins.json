@@ -19,6 +19,7 @@
       "PlayerModelMixin",
       "CameraMixin",
       "GuiMixin",
+      "ClientLevelMixinAccessor",
 
 
       "PlayerRendererMixin_1_21_3",
