@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -153,7 +152,7 @@ public class EntityUtil {
     }
 
     public static boolean isWaterBreathingEntity(LivingEntity entity) {
-        return !entity.canDrownInFluidType(NeoForgeMod.WATER_TYPE.value());
+        return entity.canBreatheUnderwater();
     }
 
     public static class Sorter implements Comparator<Entity> {

@@ -29,6 +29,7 @@ import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
 import doggytalents.forge_imitate.event.client.RenderArmEvent;
 import doggytalents.forge_imitate.event.client.RenderPlayerEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
+import doggytalents.mixin.CameraMixinAccessor;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -459,15 +460,15 @@ public class DTNClientPettingManager {
         if (camera_entity == null)
             return;
         
-        camera.setRotation(new_yRot, new_xRot);
-        camera.setPosition(
+        ((CameraMixinAccessor)camera).dtn__setRotation(new_yRot, new_xRot);
+        ((CameraMixinAccessor)camera).dtn__setPosition(
             Mth.lerp(pTicks, camera_entity.xo, camera_entity.getX()),
             Mth.lerp(pTicks, camera_entity.yo, camera_entity.getY()) + camera_entity.getEyeHeight(),
             Mth.lerp(pTicks, camera_entity.zo, camera_entity.getZ())
         );
         float scale = (camera_entity instanceof LivingEntity living) ?
             living.getScale() : 1;
-        camera.move(-camera.getMaxZoom(4.0F * scale), 0.0f, 0.0f);
+        ((CameraMixinAccessor)camera).dtn__move(-((CameraMixinAccessor)camera).dtn__getMaxZoom(4.0F * scale), 0.0f, 0.0f);
         
     }
 

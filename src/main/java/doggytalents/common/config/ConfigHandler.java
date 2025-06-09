@@ -108,9 +108,9 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue BLOCK_THIRD_PARTY_NAMETAG;
         public ForgeConfigSpec.BooleanValue USE_VANILLA_RES_FOR_CLASSICAL;
         public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON;
-        public ModConfigSpec.BooleanValue WORD_LOAD_ICON_R;
-        public ModConfigSpec.IntValue WORD_LOAD_ICON_X;
-        public ModConfigSpec.IntValue WORD_LOAD_ICON_Y;
+        public ForgeConfigSpec.BooleanValue WORD_LOAD_ICON_R;
+        public ForgeConfigSpec.IntValue WORD_LOAD_ICON_X;
+        public ForgeConfigSpec.IntValue WORD_LOAD_ICON_Y;
         public ForgeConfigSpec.BooleanValue AMMY_SPINNA;
         public ForgeConfigSpec.BooleanValue RENDER_ARMOR;
         public ForgeConfigSpec.BooleanValue BLOCK_RED_OVERLAY_WHEN_HURT;
@@ -127,7 +127,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS_CREATIVE;
         public ForgeConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY;
-        public ModConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY_PERCENT;
+        public ForgeConfigSpec.BooleanValue DTN_WOLF_MOUNT_OVERLAY_PERCENT;
         public ForgeConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ForgeConfigSpec.BooleanValue DOG_BED_CLEAR_CACHE_AUTO;
         public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
@@ -411,7 +411,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DISABLE_KILL_STATS;
         public ForgeConfigSpec.BooleanValue DISABLE_WOLF_ARMOR_FUNCTION;
         public ForgeConfigSpec.BooleanValue PREVENT_WILD_WOLVES_ANGRY;
-        public ModConfigSpec.BooleanValue TAMED_WOLF_NON_MOB_CAP;
+        public ForgeConfigSpec.BooleanValue TAMED_WOLF_NON_MOB_CAP;
         public ForgeConfigSpec.IntValue TACTICAL_LIMIT;
         public ForgeConfigSpec.BooleanValue CARRY_ME_WHISTLE;
         public ForgeConfigSpec.BooleanValue DOG_MAX_BUILD_Y_CAP;
