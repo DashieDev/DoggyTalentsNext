@@ -12,7 +12,8 @@
       "LivingEntityRendererMixin",
       "PlayerModelMixin",
       "CameraMixin",
-      "GuiMixin"
+      "GuiMixin",
+      "ClientLevelMixinAccessor"
     ],
     "server": [],
     "injectors": {

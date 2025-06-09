@@ -121,6 +121,7 @@ import doggytalents.client.entity.render.misc.DogPlushieRenderer;
 import doggytalents.client.entity.render.misc.DogThrownTridentRenderer;
 import doggytalents.client.entity.render.misc.PianoRenderer;
 import doggytalents.client.entity.render.misc.SamoyedPlushieRenderer;
+import doggytalents.client.entity.versionfix.FixClientTeleportDesync_1_21;
 import doggytalents.client.screen.DogArmorScreen;
 import doggytalents.client.screen.DogInventoriesScreen;
 import doggytalents.client.screen.DoggyToolsScreen;
@@ -409,6 +410,7 @@ public class ClientSetup {
     public static void onClientSetup(FMLClientSetupEvent event) {
         setupCollarRenderers();
         DoggySpinModel.init();
+        FixClientTeleportDesync_1_21.init();
     }
 
     public static void setupCollarRenderers() {
