@@ -17,7 +17,6 @@ import doggytalents.common.backward_imitate.EventRegister_1_21_5;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
-import doggytalents.common.chunk.GarbageChunkCollector;
 //import doggytalents.common.addon.AddonManager;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
@@ -181,4 +180,8 @@ public class DoggyTalentsNext {
     //         gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
     //     }x
     // }
+
+
+    //Fabric TODO
+    //Remove FabricTicketTracker_1_21_5
 }
