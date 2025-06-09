@@ -113,8 +113,8 @@ public class DogMoveControl extends MoveControl {
         float yrot_z = Mth.cos(this.dog.getYRot() * Mth.DEG_TO_RAD);
         
         //2d transform the check vector into the Dog view space.
-        float check_x = check_formard * yrot_z + check_right * (-yrot_x);
-        float check_z = check_formard * yrot_x + check_right * yrot_z;
+        float check_x = check_right * yrot_z + check_formard * (-yrot_x);
+        float check_z = check_right * yrot_x + check_formard * yrot_z;
         
         if (!this.isWalkableStrafe(check_x, check_z)) {
             this.dog.setSpeed(0);
