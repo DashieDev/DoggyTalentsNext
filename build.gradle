@@ -98,6 +98,21 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+        minecraft_version_range: minecraft_version_range,
+        neoforge_version_range : neoforge_version_range,
+        neofml_version_range   : neofml_version_range,
+        file: [
+            jarVersion: version
+        ]
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
 
 task vscodePrintRunClient {
     doFirst {
