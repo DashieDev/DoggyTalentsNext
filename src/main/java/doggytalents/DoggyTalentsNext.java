@@ -17,7 +17,6 @@ import doggytalents.common.backward_imitate.EventRegister_1_21_5;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
-import doggytalents.common.chunk.DoggyChunkController;
 //import doggytalents.common.addon.AddonManager;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
@@ -102,7 +101,6 @@ public class DoggyTalentsNext {
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
         modEventBus.addListener(DTNNetworkHandler::onRegisterPayloadEvent);
-        modEventBus.addListener(DoggyChunkController::onChunkControllerRegistryEvent);
         modEventBus.addListener(ClientSetup::setupScreenManagers);
 
         var forgeEventBus = NeoForge.EVENT_BUS;
