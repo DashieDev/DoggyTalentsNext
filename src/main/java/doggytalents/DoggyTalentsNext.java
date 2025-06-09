@@ -187,6 +187,8 @@ public class DoggyTalentsNext {
         var packOutput = gen.getPackOutput();
         var lookup = event.getLookupProvider();
 
+        DTNPackMetadataProvider.start(event);
+
         // if (event.includeClient()) {
         //     DTBlockstateProvider blockstates = new DTBlockstateProvider(packOutput, event.getExistingFileHelper());
         //     gen.addProvider(true, blockstates);
