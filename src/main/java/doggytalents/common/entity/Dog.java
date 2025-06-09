@@ -80,6 +80,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleType;
@@ -2447,16 +2448,41 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void setPos(double x, double y, double z) {
+    public void setPosRaw(double x, double y, double z) {
+        var current_pos = this.position();
+
+        //Max build height check
         boolean max_build_height_check =
-            ConfigHandler.ServerConfig.getConfigOrDefault(
+            y != current_pos.y
+            && ConfigHandler.ServerConfig.getConfigOrDefault(
                 ConfigHandler.SERVER.DOG_MAX_BUILD_Y_CAP, false);
         if (max_build_height_check) {
             int y_cap = this.level().getMaxBuildHeight();
             if (y > y_cap) y = y_cap;
         }
         
-        super.setPos(x, y, z);
+        //ensure level has chunk BEFORE move
+        mayDogLoadChunkBeforeMoveTo(x, y, z);
+
+        super.setPosRaw(x, y, z);
+    }
+
+    private void mayDogLoadChunkBeforeMoveTo(double x, double y, double z) {
+        var current_pos = this.position(); 
+        boolean changed_chunk = current_pos.x != x || current_pos.z != z;
+        if (!changed_chunk)
+            return;
+        if (!this.isAddedToWorld())
+            return;
+        if (this.level().isClientSide)
+            return;
+        if (this.isRemoved())
+            return;
+        
+        this.level().getChunk(
+            SectionPos.blockToSectionCoord(x),
+            SectionPos.blockToSectionCoord(z)    
+        );
     }
 
     @Override
