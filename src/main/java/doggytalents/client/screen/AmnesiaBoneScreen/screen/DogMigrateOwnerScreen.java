@@ -56,7 +56,7 @@ public class DogMigrateOwnerScreen extends Screen {
         uuidShowButton = new TextOnlyButton(0, 0, 100, 20, 
         Component.translatable("doggui.migrate_owner.show_uuid")
             .withStyle(ChatFormatting.GRAY), 
-            $ -> {}, Minecraft.getInstance().font) {
+            b -> {}, Minecraft.getInstance().font) {
                 @Override
                 public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                     super.renderWidget(graphics, mouseX, mouseY, pTicks);
