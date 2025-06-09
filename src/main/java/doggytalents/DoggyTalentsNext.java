@@ -13,7 +13,6 @@ import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
-import doggytalents.common.chunk.GarbageChunkCollector;
 //import doggytalents.common.addon.AddonManager;
 import doggytalents.common.command.DoggyCommands;
 import doggytalents.common.config.ConfigHandler;
