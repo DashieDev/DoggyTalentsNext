@@ -13,6 +13,7 @@ import com.mojang.math.Axis;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
+import doggytalents.mixin.CameraMixinAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -153,7 +154,7 @@ public class DTNClientDogSleepOnManager {
             return;
         var player = player_optional.get();
         var dog = sleeperMap.get(player.getUUID());
-        camera.setRotation(dog.getSleepOnState().sleep_yrot(), 0.0F);
+        ((CameraMixinAccessor)camera).dtn__setRotation(dog.getSleepOnState().sleep_yrot(), 0.0F);
     }
 
 }

@@ -20,6 +20,8 @@
       "CameraMixin",
       "GuiMixin",
       "ClientLevelMixinAccessor",
+      "CameraMixinAccessor",
+      "ModelBakeryMixinAccessor",
 
 
       "PlayerRendererMixin_1_21_3",
