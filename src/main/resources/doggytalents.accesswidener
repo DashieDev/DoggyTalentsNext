@@ -2,6 +2,7 @@ accessWidener v2 named
 accessible class net/minecraft/server/level/ServerLevel$EntityCallbacks
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 extendable method net/minecraft/world/entity/LivingEntity canBreatheUnderwater ()Z
+extendable method net/minecraft/world/entity/Entity setPosRaw (DDD)V
 accessible method net/minecraft/world/level/block/state/BlockBehaviour getSoundType (Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;
 extendable method net/minecraft/world/entity/LivingEntity getDimensions (Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;
 accessible method net/minecraft/world/entity/projectile/AbstractArrow setPierceLevel (B)V
