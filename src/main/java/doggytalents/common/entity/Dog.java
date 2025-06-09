@@ -20,6 +20,7 @@ import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.entity.versionfix.FixClientTeleportDesync_1_21;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.DogNewInfoScreen.screen.DogCannotInteractWithScreen;
@@ -2439,6 +2440,18 @@ public class Dog extends AbstractDog {
         }
         
         super.setPos(x, y, z);
+    }
+
+    @Override
+    public void lerpTo(double x, double y, double z, float yrot, float xrot,
+            int step) {
+        if (this.level().isClientSide && FixClientTeleportDesync_1_21.onDogLerpTo(this)) {
+            setPos(x, y, z);
+            setRot(yrot, xrot);
+            this.lerpSteps = 0;
+            return;
+        }
+        super.lerpTo(x, y, z, yrot, xrot, step);
     }
     
     private void startShaking() {
