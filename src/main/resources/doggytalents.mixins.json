@@ -13,7 +13,9 @@
       "PlayerModelMixin",
       "CameraMixin",
       "GuiMixin",
-      "ClientLevelMixinAccessor"
+      "ClientLevelMixinAccessor",
+      "CameraMixinAccessor",
+      "ModelBakeryMixinAccessor"
     ],
     "server": [],
     "injectors": {

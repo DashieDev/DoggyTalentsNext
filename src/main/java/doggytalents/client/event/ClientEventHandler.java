@@ -32,6 +32,7 @@ import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
+import doggytalents.mixin.ModelBakeryMixinAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
