@@ -58,7 +58,7 @@ public class DogSwimmingManager {
             (!dog.isInWater() && dog.onGround())
             || !dog.isVehicle() && dog.isLowAirSupply()
             || dog.isDefeated()
-            || hasNonWaterBreathingPassenger(dog)
+            || hasNonControllingNonWaterBreathingPassenger(dog)
         ) {
             this.swimming = false;
             stopSwimming(dog);
@@ -70,7 +70,7 @@ public class DogSwimmingManager {
             dog.isInWater()
             && !dog.isDefeated()
             && readyToBeginSwimming(dog)
-            && !hasNonWaterBreathingPassenger(dog)
+            && !hasNonControllingNonWaterBreathingPassenger(dog)
             && !dog.isDogSwimming()
         ) {
             this.swimming = true;
@@ -82,8 +82,10 @@ public class DogSwimmingManager {
         return dog.getAirSupply() == dog.getMaxAirSupply();
     }
 
-    private boolean hasNonWaterBreathingPassenger(Dog dog) {
+    private boolean hasNonControllingNonWaterBreathingPassenger(Dog dog) {
         if (!dog.isVehicle())
+            return false;
+        if (dog.hasControllingPassenger())
             return false;
         var passenger = dog.getFirstPassenger();
         if (passenger == null)
