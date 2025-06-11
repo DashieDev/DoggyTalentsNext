@@ -102,6 +102,8 @@ public class DogSleepOnManager {
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
             return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();
+        if (!level.dimensionType().bedWorks())
+            return DogSleepOnFailMessage.NO_SLEEP_DIM.asResult();
         if (!dog.getDogSize().largerOrEquals(DogSize.MODERATO))
             return DogSleepOnFailMessage.TOO_SMOL.asResult();
         if (dog.getDogSize().largerOrEquals(DogSize.FORTE))
@@ -408,6 +410,8 @@ public class DogSleepOnManager {
         OTHER("other",
             (dog, locId) -> Component.translatable(locId)),
         CANT_SLEEP_THROUGH_NIGHT("cant_sleep_thru_night",
+            (dog, locId) -> Component.translatable(locId)),
+        NO_SLEEP_DIM("no_sleep_dim", 
             (dog, locId) -> Component.translatable(locId)),
         DOG_LOW_HUNGER("low_hunger",
             (dog, locId) -> Component.translatable(locId, 
