@@ -418,6 +418,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
         public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
         public ForgeConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
+        public ModConfigSpec.BooleanValue SAVE_DOG_RIDING_PLAYER;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -692,6 +693,14 @@ public class ConfigHandler {
                 .comment("e.g. Cookie. Use with caution.")
                 .translation("doggytalents.dog_can_eat_all_food")
                 .define("dog_can_eat_all_food", false);
+            SAVE_DOG_RIDING_PLAYER = builder
+                .comment("This allows DTN Dogs to still save as a seperate entity")
+                .comment("when riding on the player's head. This is to prevent them")
+                .comment("from being corrupted when Minecraft unexpectedly crashes")
+                .comment("without stopping properly while they are still on the")
+                .comment("player's head.")
+                .translation("doggytalents.save_dog_riding_player")
+                .define("save_dog_riding_player", true);
 
             builder.pop();
         }
