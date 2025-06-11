@@ -2431,6 +2431,35 @@ public class Dog extends AbstractDog {
     }
 
     @Override
+    public boolean shouldBeSaved() {
+        if (doDogRidingPlayerSave())
+            return true;
+        return super.shouldBeSaved();
+    }
+
+    @Override
+    public boolean save(CompoundTag compound) {
+        if (doDogRidingPlayerSave()) {
+            return saveAsPassenger(compound);
+        }
+        return super.save(compound);
+    }
+
+    private boolean doDogRidingPlayerSave() {
+        if (!ConfigHandler.SERVER.SAVE_DOG_RIDING_PLAYER.get())
+            return false;
+        var remove_reason = this.getRemovalReason();
+        if (remove_reason != null && !remove_reason.shouldSave())
+            return false;
+        if (!this.isPassenger())
+            return false;
+        if (!(this.getVehicle() instanceof Player))
+            return false;
+        
+        return true;
+    }
+
+    @Override
     public void setPosRaw(double x, double y, double z) {
         var current_pos = this.position();
 
