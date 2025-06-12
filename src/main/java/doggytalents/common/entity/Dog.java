@@ -2499,14 +2499,14 @@ public class Dog extends AbstractDog {
 
     @Override
     public void lerpTo(double x, double y, double z, float yrot, float xrot,
-            int step) {
+            int step, boolean b1_unused) {
         if (this.level().isClientSide && FixClientTeleportDesync_1_21.onDogLerpTo(this)) {
             setPos(x, y, z);
             setRot(yrot, xrot);
             this.lerpSteps = 0;
             return;
         }
-        super.lerpTo(x, y, z, yrot, xrot, step);
+        super.lerpTo(x, y, z, yrot, xrot, step, b1_unused);
     }
     
     private void startShaking() {
@@ -4882,7 +4882,7 @@ public class Dog extends AbstractDog {
             return -1;
         }
         if (this.isInLava()) {
-            if (type == PathType.LAVA || type == PathType.DAMAGE_FIRE)
+            if (type == BlockPathTypes.LAVA || type == BlockPathTypes.DAMAGE_FIRE)
                 return 40;
         }
         return super.getPathfindingMalus(type);

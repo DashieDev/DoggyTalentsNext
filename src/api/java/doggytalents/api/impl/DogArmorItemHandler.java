@@ -11,6 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class DogArmorItemHandler extends ItemStackHandler {

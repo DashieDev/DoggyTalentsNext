@@ -13,6 +13,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -198,7 +199,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
     @Override
     protected boolean canUpdatePath() {
         final boolean ground_canUpdatePath = 
-            this.mob.onGround() || this.mob.isInLiquid();
+            this.mob.onGround() || this.isInLiquid();
         return ground_canUpdatePath && !dog.isOnSwitchNavCooldown()
             && !locked;
     }
@@ -287,7 +288,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
     private int getSurfaceY() {
         boolean do_float_y = 
-            this.dog.isInLiquid() && this.canFloat();
+            this.isInLiquid() && this.canFloat();
         if (!do_float_y)
             return Mth.floor(this.dog.getY() + 0.5);
 

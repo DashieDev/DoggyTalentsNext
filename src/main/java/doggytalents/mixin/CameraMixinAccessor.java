@@ -15,9 +15,9 @@ public interface CameraMixinAccessor {
     void dtn__setPosition(double x, double y, double z);
 
     @Invoker("move")
-    void dtn__move(float x, float y, float z);
+    void dtn__move(double x, double y, double z);
 
     @Invoker("getMaxZoom")
-    float dtn__getMaxZoom(float distance);
+    double dtn__getMaxZoom(double distance);
 
 }

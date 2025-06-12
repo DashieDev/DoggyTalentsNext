@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.util.InclusiveRange;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class DTNPackMetadataProvider {
 
@@ -19,8 +19,8 @@ public class DTNPackMetadataProvider {
         var provider = new PackMetadataGenerator(output)
             .add(PackMetadataSection.TYPE, new PackMetadataSection(
                     Component.literal("Doggy Talents Next Resources."),
-                    DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA),
-                    Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE))));
+                    DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA)/*,
+                    Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE))*/));
         gen.addProvider(true, provider);
     }
 
