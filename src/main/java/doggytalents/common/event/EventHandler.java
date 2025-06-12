@@ -1,5 +1,6 @@
 package doggytalents.common.event;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -85,6 +86,7 @@ import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.neoforged.neoforge.event.entity.player.CanContinueSleepingEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -586,5 +588,25 @@ public class EventHandler {
     public void playerWakeUpEvent(PlayerWakeUpEvent event) {
         if (!event.getEntity().level().isClientSide)
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public void playerLoggedOut(PlayerLoggedOutEvent event) {
+        var player = event.getEntity();
+        if (player.level().isClientSide)
+            return;
+        if (!player.isVehicle())
+            return;
+        var dog_list = new ArrayList<Dog>();
+        for (var passenger : player.getPassengers()) {
+            if (passenger.getType() != DoggyEntityTypes.DOG.get())
+                continue;
+            if (passenger instanceof Dog dog)
+                dog_list.add(dog);
+        }
+
+        for (var dog : dog_list) {
+            dog.stopRiding();
+        }
     }
 }
