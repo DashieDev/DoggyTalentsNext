@@ -74,7 +74,7 @@ public class DogKeyframeAnimations {
             Function<String, Optional<ModelPart>> partGetter,
             Consumer<ModelPart> partReset
         ) {
-            return of(partGetter, partReset, $ -> {});
+            return of(partGetter, partReset, k -> {});
         }
 
         public static AnimationContext of(
