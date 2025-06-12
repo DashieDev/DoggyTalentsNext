@@ -20,6 +20,7 @@ import doggytalents.common.entity.DogPettingManager.DogPettingType;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogPettingData;
 import doggytalents.common.util.EntityUtil;
+import doggytalents.mixin.CameraMixinAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -455,13 +456,13 @@ public class DTNClientPettingManager {
         if (camera_entity == null)
             return;
         
-        camera.setRotation(new_yRot, new_xRot);
-        camera.setPosition(
+        ((CameraMixinAccessor)camera).dtn__setRotation(new_yRot, new_xRot);
+        ((CameraMixinAccessor)camera).dtn__setPosition(
             Mth.lerp(pTicks, camera_entity.xo, camera_entity.getX()),
             Mth.lerp(pTicks, camera_entity.yo, camera_entity.getY()) + camera_entity.getEyeHeight(),
             Mth.lerp(pTicks, camera_entity.zo, camera_entity.getZ())
         );
-        camera.move(-camera.getMaxZoom(4.0D), 0.0D, 0.0D);
+        ((CameraMixinAccessor)camera).dtn__move(-((CameraMixinAccessor)camera).dtn__getMaxZoom(4.0D), 0.0D, 0.0D);
         
     }
 
