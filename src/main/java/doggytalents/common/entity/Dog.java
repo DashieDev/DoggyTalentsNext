@@ -2499,6 +2499,8 @@ public class Dog extends AbstractDog {
         boolean changed_chunk = current_pos.x != x || current_pos.z != z;
         if (!changed_chunk)
             return;
+        if (!ConfigHandler.SERVER.DOG_LOAD_CHUNK_BEFORE_MOVE.get())
+            return;
         if (!this.isAddedToWorld())
             return;
         if (this.level().isClientSide)
