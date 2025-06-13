@@ -7,8 +7,8 @@ import com.mojang.datafixers.util.Pair;
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.forge_imitate.inventory.SlotItemHandler;
-import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.inventory.DogArmorItemHandlerImpl;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.inventory.container.slot.DogInventorySlot;
 import doggytalents.common.talent.DoggyArmorTalent;
@@ -54,7 +54,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
         //TODO 3 -> 4
         for (int i = 0; i < 2; ++i) {  
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
-            var dogSlot = DogArmorItemHandler.DogArmorSlots.byEquipment(equipmentslot);
+            var dogSlot = DogArmorItemHandlerImpl.DogArmorSlots.byEquipment(equipmentslot);
             this.addSlot(new SlotItemHandler(dogArmors, dogSlot.slotId, 17, 27 + i * 18) {
                 public void set(ItemStack p_219985_) {
                     var itemstack = this.getItem();
@@ -76,7 +76,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
 
         for (int i = 2; i < 4; ++i) {  
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
-            var dogSlot = DogArmorItemHandler.DogArmorSlots.byEquipment(equipmentslot);
+            var dogSlot = DogArmorItemHandlerImpl.DogArmorSlots.byEquipment(equipmentslot);
             this.addSlot(new SlotItemHandler(dogArmors, dogSlot.slotId, 138, 27 + (i-2) * 18) {
 
                 @Override
