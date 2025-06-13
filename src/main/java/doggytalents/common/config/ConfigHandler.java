@@ -403,6 +403,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
         public ForgeConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
         public ForgeConfigSpec.BooleanValue SAVE_DOG_RIDING_PLAYER;
+        public ForgeConfigSpec.BooleanValue DOG_LOAD_CHUNK_BEFORE_MOVE;
 
         public Map<String, ForgeConfigSpec.BooleanValue> DISABLED_TALENTS;
 
@@ -685,6 +686,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("player's head.")
                 .translation("doggytalents.save_dog_riding_player")
                 .define("save_dog_riding_player", true);
+            DOG_LOAD_CHUNK_BEFORE_MOVE = builder
+                .comment("This ensures that the target chunk that a Dog is moving to")
+                .comment("is actually loaded BEFORE it actually moves to.")
+                .translation("doggytalents.dog_load_chunk_before_move")
+                .define("dog_load_chunk_before_move", true);                
 
             builder.pop();
         }
