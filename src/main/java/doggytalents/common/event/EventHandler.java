@@ -50,6 +50,7 @@ import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.LootingLevelEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import doggytalents.forge_imitate.event.PlayerLoggedInEvent;
+import doggytalents.forge_imitate.event.PlayerLoggedOutEvent;
 import doggytalents.forge_imitate.event.PlayerWakeUpEvent;
 import doggytalents.forge_imitate.event.ProjectileImpactEvent;
 import doggytalents.forge_imitate.event.ServerStoppedEvent;
@@ -582,7 +583,7 @@ public class EventHandler {
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void playerLoggedOut(PlayerLoggedOutEvent event) {
         var player = event.getEntity();
         if (player.level().isClientSide)

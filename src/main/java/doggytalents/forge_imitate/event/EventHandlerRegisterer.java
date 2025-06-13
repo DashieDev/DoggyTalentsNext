@@ -146,6 +146,12 @@ public class EventHandlerRegisterer {
                 )
         );
         EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, PlayerLoggedOutEvent>
+                (handlerIst, PlayerLoggedOutEvent.class,
+                    (x, y) -> x.playerLoggedOut(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<EventHandler, LivingDropsEvent>
                 (handlerIst, LivingDropsEvent.class,
                     (x, y) -> x.onLivingDeath(y)
