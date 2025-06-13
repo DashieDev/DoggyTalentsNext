@@ -11,7 +11,6 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.IDog;
-import doggytalents.api.impl.DogArmorItemHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
