@@ -9,8 +9,8 @@ import com.mojang.datafixers.util.Pair;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyTalents;
-import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.inventory.DogArmorItemHandler;
 import doggytalents.common.inventory.PackPuppyItemHandler;
 import doggytalents.common.inventory.container.slot.DogInventorySlot;
 import doggytalents.common.talent.DoggyArmorTalent;

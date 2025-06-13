@@ -1,7 +1,8 @@
-package doggytalents.api.impl;
+package doggytalents.common.inventory;
 
 import org.jetbrains.annotations.NotNull;
 
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.HolderLookup;
