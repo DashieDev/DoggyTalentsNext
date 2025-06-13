@@ -1,6 +1,6 @@
 package doggytalents.api.inferface;
 
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 public abstract class DogArmorItemHandler extends ItemStackHandler {
 
