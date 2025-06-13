@@ -1,9 +1,10 @@
-package doggytalents.api.impl;
+package doggytalents.common.inventory;
 
 import org.jetbrains.annotations.NotNull;
 
-import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
+import doggytalents.api.impl.DogAlterationProps;
 import doggytalents.api.inferface.AbstractDog;
+import doggytalents.api.inferface.DogArmorItemHandler;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -14,13 +15,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 
-public class DogArmorItemHandler extends ItemStackHandler {
-    
-    private AbstractDog dog;
+public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
 
-    public DogArmorItemHandler(AbstractDog dog) {
-        super(4);
-        this.dog = dog;
+    public DogArmorItemHandlerImpl(AbstractDog dog) {
+        super(dog);
     }
 
     @Override
