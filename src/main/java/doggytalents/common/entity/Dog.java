@@ -8,7 +8,6 @@ import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
 import doggytalents.api.impl.DogAlterationProps;
-import doggytalents.api.impl.DogArmorItemHandler;
 import doggytalents.api.impl.IDogRangedAttackManager;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
@@ -53,6 +52,7 @@ import doggytalents.common.entity.serializers.Dimension2BlockPosMap;
 import doggytalents.common.entity.stats.StatsTracker;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.inventory.DogArmorItemHandlerImpl;
 import doggytalents.common.item.DoggyArtifactItem;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.ParticlePackets;
@@ -274,7 +274,7 @@ public class Dog extends AbstractDog {
     private IDogRangedAttackManager dogRangedAttackManager
         = IDogRangedAttackManager.NONE;
 
-    private final DogArmorItemHandler dogArmors = new DogArmorItemHandler(this);
+    private final DogArmorItemHandlerImpl dogArmors = new DogArmorItemHandlerImpl(this);
     private ItemStack mouthStack = ItemStack.EMPTY;
     private ItemStack wolfArmorStack = ItemStack.EMPTY;
 
@@ -4951,7 +4951,7 @@ public class Dog extends AbstractDog {
         return this.alterationProps.canUseTools();
     }
 
-    public DogArmorItemHandler dogArmors() {
+    public DogArmorItemHandlerImpl dogArmors() {
         return this.dogArmors;
     }
 
