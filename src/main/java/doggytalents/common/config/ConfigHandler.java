@@ -693,6 +693,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("This ensures that the target chunk that a Dog is moving to")
                 .comment("is actually loaded BEFORE it actually moves to.")
                 .translation("doggytalents.dog_load_chunk_before_move")
+                .worldRestart()
                 .define("dog_load_chunk_before_move", true);                
 
             builder.pop();
