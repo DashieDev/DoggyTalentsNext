@@ -1988,3 +1988,43 @@ prefer cooked ones.
 
 **1.18.57 - 2nd June 2025**
 * Fix Hope World Load Icon
+
+**1.18.58 - 13th June 2025**
++ Option to make Tamed Wolves don't count towards the mob cap.
+===
+Changes to protect Dog against occasional Corruption bug when crashing/conflicting 
+with third parties or crashing without proper stop especially when the is dog riding
+on a player's head (Hopefully):  
+# (Configurable) Ensure target chunk is loaded Before the Dog actually updates its posiiton 
+into that chunk. 
+# (Configurable) Allow the dog to still save as a seperate entity when riding on the player's
+head. Since Minecraft don't load passengers from players, any crash or shutdown that resulted in
+the Dog, while riding on the player, being unable to dismount upon player disconnect 
+(expected behaviour) and then saving as a seperated entity will result in the Dog being omitted
+when loading entities in the next restart. Therefore causing the Dog to be lost forever.
+# (Configurable) Ensure that dogs never leave the build height limit.
+===
+# Improve Dog's Swimming: They now swim over/below obstacles better.
+===
+Improve Dog's Ground Navigation: 
+# Removed the "Float target to nearest ground" behaviour when pathfind.
+# Allow Dog to escape lava easier.
+===
+# New Dedicated Chunk Ownership Management system for Dog Long Teleport Actions.
+# Config to allow DTN Wolf Mount Overlay to show health and hunger as absolute value
+instead of percentage.
+===
+Allow users to configure the Position of the World Load Icon
+# you can now make it stay at the right corner instead of the left
+# you can now move it with an offset that you specified.
+===
+# Dogs who are being belly rubbed now face exactly perpendicular to their owner.
+# Remove Unsafe Acess Transformers to Camera, use Mixin's Accessor/Invoker instead.
+This allow compatability with mods that override the Camera class for something. 
+# Swimmer Dogs + Wolf Mount Dogs now floats when carrying Non Controlling,
+Non Water-Breathing Entities.
+# Improve random stroll logic of swimmer dogs when being underwater.
+# Prevent Dogs from wearing Depth Strider boots for now.
+# Bed Dogs no longer allow sleeping on in non sleeping dimension.
+* Fix potential illegal clientside access to DogLocationStorage.
+* (1.21.1 only) Added fix for 1.21.1 vanilla teleportation desync.
