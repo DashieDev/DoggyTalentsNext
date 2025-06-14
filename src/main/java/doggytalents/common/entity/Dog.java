@@ -2525,17 +2525,17 @@ public class Dog extends AbstractDog {
         );
     }
 
-    @Override
-    public void lerpTo(double x, double y, double z, float yrot, float xrot,
-            int step) {
-        if (this.level().isClientSide && FixClientTeleportDesync_1_21.onDogLerpTo(this)) {
-            setPos(x, y, z);
-            setRot(yrot, xrot);
-            this.lerpSteps = 0;
-            return;
-        }
-        super.lerpTo(x, y, z, yrot, xrot, step);
-    }
+    // @Override
+    // public void lerpTo(double x, double y, double z, float yrot, float xrot,
+    //         int step) {
+    //     if (this.level().isClientSide && FixClientTeleportDesync_1_21.onDogLerpTo(this)) {
+    //         setPos(x, y, z);
+    //         setRot(yrot, xrot);
+    //         this.lerpSteps = 0;
+    //         return;
+    //     }
+    //     super.lerpTo(x, y, z, yrot, xrot, step);
+    // }
     
     private void startShaking() {
         if (this.isShaking) return; // don't shake if already shaking

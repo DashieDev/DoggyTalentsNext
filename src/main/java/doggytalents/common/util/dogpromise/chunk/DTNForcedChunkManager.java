@@ -3,6 +3,7 @@ package doggytalents.common.util.dogpromise.chunk;
 import java.util.HashSet;
 import java.util.Set;
 
+import doggytalents.common.backward_imitate.TicketTypeUtil_1_21_5;
 import doggytalents.common.util.Util;
 import doggytalents.common.util.dogpromise.promise.AbstractPromise;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -14,8 +15,8 @@ import net.minecraft.world.level.ChunkPos;
 
 public class DTNForcedChunkManager {
 
-    private static final TicketType<Unit> CHUNK_TASK = 
-        TicketType.create(Util.getResource("chunk_task").toString(), (a, b) -> 0);
+    private static final TicketType CHUNK_TASK = 
+        TicketTypeUtil_1_21_5.CHUNK_TASK;
 
     private static final Long2ObjectMap<Set<AbstractPromise>> accquiredChunkMap = 
         new Long2ObjectOpenHashMap<>();   
@@ -23,7 +24,7 @@ public class DTNForcedChunkManager {
     public static final void accquireChunk(ServerLevel level, AbstractPromise chunkTask, ChunkPos pos) {
         var tickets = accquiredChunkMap.computeIfAbsent(pos.toLong(), k -> new HashSet<>());
         if (tickets.isEmpty())
-            level.getChunkSource().addRegionTicket(CHUNK_TASK, pos, 2, Unit.INSTANCE);
+            TicketTypeUtil_1_21_5.addRegionTicket(level, CHUNK_TASK, pos, 2, Unit.INSTANCE);
         tickets.add(chunkTask);
     }
 
@@ -33,7 +34,7 @@ public class DTNForcedChunkManager {
             return;
         tickets.remove(chunkTask);
         if (tickets.isEmpty())
-            level.getChunkSource().removeRegionTicket(CHUNK_TASK, pos, 2, Unit.INSTANCE);
+            TicketTypeUtil_1_21_5.removeRegionTicket(level, CHUNK_TASK, pos, 2, Unit.INSTANCE);
     }
 
     public static final void onServerStop() {

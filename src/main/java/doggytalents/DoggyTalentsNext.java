@@ -15,6 +15,7 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.backward_imitate.EventRegister_1_21_5;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
+import doggytalents.common.backward_imitate.TicketTypeUtil_1_21_5;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 //import doggytalents.common.addon.AddonManager;
@@ -184,4 +185,5 @@ public class DoggyTalentsNext {
 
     //Fabric TODO
     //Remove FabricTicketTracker_1_21_5
+    //+ TicketTypeUtil_1_21_5.init(modEventBus);
 }

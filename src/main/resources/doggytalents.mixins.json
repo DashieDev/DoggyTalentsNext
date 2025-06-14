@@ -12,7 +12,8 @@
         "EntityMixin_1_21_3",
 
 
-        "ItemStackMixin_1_21_5"
+        "ItemStackMixin_1_21_5",
+        "ServerChunkCacheAccessorMixin_1_21_5"
     ],
     "client": [
       "LivingEntityRendererMixin",
