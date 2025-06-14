@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import doggytalents.common.event.EventHandler;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 
 @Mixin(TamableAnimal.class)
