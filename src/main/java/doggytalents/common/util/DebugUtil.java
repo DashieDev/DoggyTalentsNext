@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.Ticket;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.TicketStorage;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -25,14 +26,24 @@ public class DebugUtil {
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/debug");
     
     @SuppressWarnings("unchecked")
-    public static List<Pair<ChunkPos, Ticket<?>>> getAllTicketsOfType(ServerLevel level, TicketType<?> type) {
+    public static List<Pair<ChunkPos, Ticket>> getAllTicketsOfType(ServerLevel level, TicketType type) {
         var chunk_source = (ServerChunkCache) level.getChunkSource();
         var distance_manager = ReflectionUtil.getPrivateField(ServerChunkCache.class, chunk_source, 
             "distanceManager", DistanceManager.class).get();
-        var tickets = (Long2ObjectOpenHashMap<Set<Ticket<?>>>)
-            ReflectionUtil.getPrivateField(DistanceManager.class, distance_manager, 
-            "tickets", Long2ObjectOpenHashMap.class).get();
-        var tickets_selected = new ArrayList<Pair<ChunkPos, Ticket<?>>>();
+        //1.21.5
+        // var tickets = (Long2ObjectOpenHashMap<Set<Ticket>>)
+        //     ReflectionUtil.getPrivateField(DistanceManager.class, distance_manager, 
+        //     "tickets", Long2ObjectOpenHashMap.class).get();
+        var tickets = (Long2ObjectOpenHashMap<List<Ticket>>)
+            ReflectionUtil.getPrivateField(DistanceManager.class, distance_manager,
+                "ticketStorage", TicketStorage.class)
+                .flatMap(ticket_storage -> 
+                    ReflectionUtil.getPrivateField(TicketStorage.class, ticket_storage, 
+                        "tickets", Long2ObjectOpenHashMap.class)
+                )
+                .get();
+        //
+        var tickets_selected = new ArrayList<Pair<ChunkPos, Ticket>>();
         var entry_set = tickets.long2ObjectEntrySet();
         for (var entry : entry_set) {
             var chunk = new ChunkPos(entry.getLongKey());
