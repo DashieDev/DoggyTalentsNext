@@ -2368,6 +2368,7 @@ public class Dog extends AbstractDog {
     }
 
     private boolean changeDimensionAuthorized = false;
+    private boolean DTN_dogChangingDim = false;
 
     public void authorizeChangeDimension() {
         changeDimensionAuthorized = true;
@@ -2440,7 +2441,7 @@ public class Dog extends AbstractDog {
                 ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get()
                 && removalReason == RemovalReason.DISCARDED;
             if (!remove_trusted && removalReason.shouldDestroy()) {     
-                cacheSessionUUID();
+                this.dogDuplicateDetection.cacheSessionUUID();
                 DogLocationStorage.get(this.level()).remove(this);
                 if (this.getOwnerUUID() != null)
                     DogRespawnStorage.get(this.level()).putData(this);
@@ -2915,9 +2916,9 @@ public class Dog extends AbstractDog {
             var ownerUUID = this.getOwnerUUID();
             if (uuid != null && ownerUUID != null) {
                 var backupUUIDTag = new CompoundTag();
-                CompoundTag_1_21_5.wrap(backupUUIDTag).putUUID("dtn_uuid_owner", ownerUUID);
-                CompoundTag_1_21_5.wrap(backupUUIDTag).putUUID("dtn_uuid_self", uuid);
-                writeSessionUUIDToCompound(uuid, backupUUIDTag);
+                backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
+                backupUUIDTag.putUUID("dtn_uuid_self", uuid);
+                this.dogDuplicateDetection.writeSessionUUIDToCompound(uuid, backupUUIDTag);
                 compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
             }
         }
@@ -3165,7 +3166,7 @@ public class Dog extends AbstractDog {
         boolean duplicate_detected = false;
         if (!this.level().isClientSide) {
             try {
-                duplicate_detected = detectDuplicate(compound);
+                duplicate_detected = dogDuplicateDetection.detectDuplicate(compound);
             } catch (Exception e) {
 
             }
@@ -3188,12 +3189,17 @@ public class Dog extends AbstractDog {
                 );
             return;
         } else {
-            detectedDuplicateVertified = true;
+            dogDuplicateDetection.detectedDuplicateVertified = true;
         }
 
         if (!this.level().isClientSide) {
             try {
-                checkAndRecorrectOwner(compound);
+                dogDuplicateDetection.checkAndRecorrectOwner(compound, new_owner_uuid -> {
+                    boolean prevAuthorized = this.authorizedChangingOwner;
+                    this.authorizedChangingOwner = true;
+                    this.setOwnerUUID(new_owner_uuid);
+                    this.authorizedChangingOwner = prevAuthorized;
+                } );
             } catch (Exception e) {
             }
         }
@@ -3242,143 +3248,7 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private boolean detectedDuplicateVertified = false;
-    private boolean DTN_dogChangingDim = false;
-    private boolean detectDuplicate(CompoundTag_1_21_5 tag) {
-        if (detectedDuplicateVertified)
-            return false; 
-        if (ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get())
-            return false;
-        if (ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get())
-            return false;
-        if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
-            return false;
-        if (tag.contains("DTN_DupeDetect_marked"))
-            return tag.getBoolean("DTN_DupeDetect_marked");
-        var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
-        var uuid = backupUUIDTag.getUUID("dtn_uuid_self");
-        var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
-        UUID sessionUUID = null;
-        if (backupUUIDTag.hasUUID("session_uuid")) {
-            sessionUUID = backupUUIDTag.getUUID("session_uuid");
-        }
-        if (uuid == null || ownerUUID == null)
-            return false;
-
-        // Only detect if dog is not added to world while having the same uuid
-        // for now. This is a pretty unlikely case though.
-        if (this.isAddedToWorld() && uuid.equals(this.getUUID())) {
-            return false;
-        }
-        
-        boolean isDuplicate = false;
-        
-        if (!isDuplicate && checkRespawnStorageForDuplicate(uuid, ownerUUID))
-            isDuplicate = true;
-        if (!isDuplicate && checkLocationStorageForDuplicate(uuid, ownerUUID, sessionUUID))
-            isDuplicate = true;
-        if (!isDuplicate)
-            return false;
-        
-        DoggyTalentsNext.LOGGER.warn(
-            "Duplicated Dog Detected! dog_uuid=[" 
-            + uuid.toString()
-            + "] owner_uuid=["
-            + ownerUUID.toString()
-            + "]"
-        );
-        return true;
-    }
-
-    private boolean checkRespawnStorageForDuplicate(UUID uuid, UUID ownerUUID) {
-        var storage = DogRespawnStorage.get(this.level());
-        if (storage == null)
-            return false;
-        var data = storage.getData(uuid);
-        if (data == null)
-            return false;
-        var ownerUUID0 = data.getOwnerId();
-        if (ownerUUID0 == null)
-            return false;
-
-        if (ObjectUtils.notEqual(ownerUUID0, ownerUUID))        
-            return false;
-        
-        return true;
-    }
-
-    private boolean checkLocationStorageForDuplicate(UUID uuid, UUID ownerUUID, UUID sessionUUID) {
-        var storage = DogLocationStorage.get(this.level());
-        if (storage == null) 
-            return false;
-        var data = storage.getData(uuid);
-        if (data == null)
-            return false;
-        var ownerUUID0 = data.getOwnerId();
-        if (ownerUUID0 == null) 
-            return false;
-        
-        if (ObjectUtils.notEqual(ownerUUID0, ownerUUID))        
-            return false;
-        
-        var correctSessionUUID = data.getSessionUUID();
-        if (correctSessionUUID == null)
-            return false;
-        return ObjectUtils.notEqual(correctSessionUUID, sessionUUID);
-    }
-
-    private UUID cachedSessionUUID = null;
-
-    private void writeSessionUUIDToCompound(UUID uuid, CompoundTag tag) {
-        if (cachedSessionUUID != null) {
-            CompoundTag_1_21_5.wrap(tag).putUUID("session_uuid", cachedSessionUUID);
-            cachedSessionUUID = null;
-            return;
-        }
-        var level = this.level();
-        if (level == null)
-            return;
-        var storage = DogLocationStorage.get(level);
-        if (storage == null) 
-            return;
-        var data = storage.getData(uuid);
-        if (data == null)
-            return;
-        var sessionUUID = data.getSessionUUID();
-        if (sessionUUID == null)
-            return;
-        CompoundTag_1_21_5.wrap(tag).putUUID("session_uuid", sessionUUID);
-    }
-
-    private void cacheSessionUUID() {
-        var uuid = this.getUUID();
-        var level = this.level();
-        if (level == null)
-            return;
-        var storage = DogLocationStorage.get(level);
-        if (storage == null) 
-            return;
-        var data = storage.getData(uuid);
-        if (data == null)
-            return;
-        var sessionUUID = data.getSessionUUID();
-        if (sessionUUID == null)
-            return;
-        this.cachedSessionUUID = sessionUUID;
-    }
-
-    private void checkAndRecorrectOwner(CompoundTag_1_21_5 tag) {
-        if (!tag.contains("DTN_DupeDetect_UUID", Tag.TAG_COMPOUND))
-            return;
-        var backupUUIDTag = tag.getCompound("DTN_DupeDetect_UUID");
-        var ownerUUID = backupUUIDTag.getUUID("dtn_uuid_owner");
-        if (!ObjectUtils.notEqual(ownerUUID, this.getOwnerUUID()))
-            return;
-        boolean prevAuthorized = this.authorizedChangingOwner;
-        this.authorizedChangingOwner = true;
-        this.setOwnerUUID(ownerUUID);
-        this.authorizedChangingOwner = prevAuthorized;
-    }
+    private final DogDuplicationDetection dogDuplicateDetection = new DogDuplicationDetection(this);
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
