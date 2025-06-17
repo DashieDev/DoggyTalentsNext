@@ -2419,6 +2419,8 @@ public class Dog extends AbstractDog {
             
             if (data != null) data.update(this);
             storage.getOnlineDogsManager().onDogGoOnline(this);
+            
+            DogDuplicationDetection.afterDogJoinLevel(this, data);
         }
         //super.onAddedToWorld();
     }
@@ -2430,7 +2432,6 @@ public class Dog extends AbstractDog {
                 ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get()
                 && removalReason == RemovalReason.DISCARDED;
             if (!remove_trusted && removalReason.shouldDestroy()) {     
-                this.dogDuplicateDetection.cacheSessionUUID();
                 DogLocationStorage.get(this.level()).remove(this);
                 if (this.getOwnerUUID() != null)
                     DogRespawnStorage.get(this.level()).putData(this);
@@ -2901,15 +2902,7 @@ public class Dog extends AbstractDog {
 
         //Duplication Detection
         if (!this.level().isClientSide && !DTN_dogChangingDim) {
-            var uuid = this.getUUID();
-            var ownerUUID = this.getOwnerUUID();
-            if (uuid != null && ownerUUID != null) {
-                var backupUUIDTag = new CompoundTag();
-                backupUUIDTag.putUUID("dtn_uuid_owner", ownerUUID);
-                backupUUIDTag.putUUID("dtn_uuid_self", uuid);
-                this.dogDuplicateDetection.writeSessionUUIDToCompound(uuid, backupUUIDTag);
-                compound.put("DTN_DupeDetect_UUID", backupUUIDTag);
-            }
+            this.dogDuplicateDetection.save(compound);
         }
     }
 
@@ -3153,43 +3146,14 @@ public class Dog extends AbstractDog {
         }
 
         //Duplication Detection
-        boolean duplicate_detected = false;
         if (!this.level().isClientSide) {
             try {
-                duplicate_detected = dogDuplicateDetection.detectDuplicate(compound);
-            } catch (Exception e) {
-
-            }
-        }
-        if (duplicate_detected) {
-            int strategy = ConfigHandler.SERVER.DUPLICATION_RESOLVE_STRATEGY.get();
-            if (strategy == 0 || strategy == 1) {
-                this.untame();  
-
-                if (!this.isAddedToWorld()) {
-                    this.setRemoved(RemovalReason.DISCARDED);
-                } else {
-                    this.remove(RemovalReason.DISCARDED);
-                }
-            }
-            compound.putBoolean("DTN_DupeDetect_marked", true);
-            if (strategy == 0)
-                throw new IllegalStateException(
-                    "This dog has been restored from third-party storage which may leads to duplications. Please restore this Dog via its Dog Bed, by using a Totem of Undying on an Unlinked Dog Bed or via [ /dog revive ] instead. This Exception usually wouldn't cause a Crash and instead silently prevent the Dog to be restored, although if a Game Breaking Crash does happen, set duplication_resolve_strategy = 1 in serverconfig to prevent this Exception to be thrown again."
-                );
-            return;
-        } else {
-            dogDuplicateDetection.detectedDuplicateVertified = true;
-        }
-
-        if (!this.level().isClientSide) {
-            try {
-                dogDuplicateDetection.checkAndRecorrectOwner(compound, new_owner_uuid -> {
+                this.dogDuplicateDetection.load(compound, new_owner_uuid -> {
                     boolean prevAuthorized = this.authorizedChangingOwner;
                     this.authorizedChangingOwner = true;
                     this.setOwnerUUID(new_owner_uuid);
                     this.authorizedChangingOwner = prevAuthorized;
-                } );
+                });
             } catch (Exception e) {
             }
         }
@@ -3239,6 +3203,10 @@ public class Dog extends AbstractDog {
     }
 
     private final DogDuplicationDetection dogDuplicateDetection = new DogDuplicationDetection(this);
+
+    public DogDuplicationDetection getDogDuplicationDetection() {
+        return this.dogDuplicateDetection;
+    }
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {

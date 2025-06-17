@@ -372,7 +372,6 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.IntValue MAX_HEEL_LIMIT;
         public ModConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ModConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
-        public ModConfigSpec.IntValue DUPLICATION_RESOLVE_STRATEGY;
         public ModConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
         public ModConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ModConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
@@ -500,16 +499,6 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("and when they respawn on bed. This also allows Duplication Detection.")
                 .translation("doggytalents.preserve_uuid")
                 .define("disable_preserve_uuid", false);
-            DUPLICATION_RESOLVE_STRATEGY = builder
-                .comment("Duplication Detection")
-                .comment("Specify what to do when a Duplication is detected when third parties are trying")
-                .comment("to load the dog from their own copy.")
-                .comment("Option are specified via the following Integer values")
-                .comment("0 - Throw an exception out, this may produce a crash. However, this is the recommended way.")
-                .comment("1 - Silently remove the dog.")
-                .comment("Other - Do nothing.")
-                .translation("doggytalents.duplication_resolve_strategy")
-                .defineInRange("duplication_resolve_strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
             TRUST_THIRD_PARTY_STORAGE = builder
                 .comment("Allow third party storage to store Dog and and load them back. This allow")
                 .comment("Mods which, for example, having an item that can store an entity, to work")
