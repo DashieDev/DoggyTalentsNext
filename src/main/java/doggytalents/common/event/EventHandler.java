@@ -21,6 +21,7 @@ import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogAllyCheck;
+import doggytalents.common.entity.DogDuplicationDetection;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.ai.WolfBegAtTreatGoal;
 import doggytalents.common.entity.ai.triggerable.DogBackFlipAction;
@@ -599,5 +600,10 @@ public class EventHandler {
         for (var dog : dog_list) {
             dog.stopRiding();
         }
+    }
+
+    @SubscribeEvent
+    public void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        DogDuplicationDetection.beforeEntityJoinLevel(event);
     }
 }

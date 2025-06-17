@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogDuplicationDetection;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.forge_imitate.event.ServerStoppedEvent;
@@ -194,6 +195,7 @@ public class DogLocationStorage extends SavedData {
         if (data == null)
             return;
         data.setSessionUUID(sessionUUID);
+        DogDuplicationDetection.onSessionUUIDUpdate(dog, sessionUUID);
     }
 
     public OnlineDogLocationManager getOnlineDogsManager() {

@@ -8,6 +8,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.DogDuplicationDetection;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
@@ -99,7 +100,7 @@ public class DogRespawnData implements IDogData {
         this.data.remove("LoveCause");
 
         //Duplication Detection
-        this.data.remove("DTN_DupeDetect_UUID");
+        this.data.remove(DogDuplicationDetection.DUPE_DETECT_TAG_ID);
     }
 
     private void writeAlldataAndRemoveSpecific(Dog dog, CompoundTag target) {
@@ -223,6 +224,8 @@ public class DogRespawnData implements IDogData {
             dog.maxHealth();
         }
 
+        DogDuplicationDetection.onAboutToRespawn(dog);
+        
         worldIn.addFreshEntityWithPassengers(dog);
         DogLocationStorage.setSessionUUIDFor(dog, uuid);
         
