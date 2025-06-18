@@ -373,6 +373,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ModConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ModConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
+        public ModConfigSpec.BooleanValue THIRD_PARTY_STORE_WARN;
         public ModConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ModConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
@@ -510,6 +511,11 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .translation("doggytalents.trust_third_party_storage")
                 .worldRestart()
                 .define("trust_third_party_storage", false);
+            THIRD_PARTY_STORE_WARN = builder
+                .comment("Allow DTN to log and warn when detected a Dog being restored from")
+                .comment("third party storage when trust_third_party_storage is disabled.")
+                .translation("doggytalents.third_party_store_warn")
+                .define("third_party_store_warn", true);
             DISABLE_TRAIN_UNTAMED_WOLF = builder
                 .comment("By default, you can directly train an untamed wolf to a Dog")
                 .comment("with a Training Treat. Set this to True to disable.")
