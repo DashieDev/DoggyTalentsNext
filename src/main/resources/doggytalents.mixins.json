@@ -23,6 +23,7 @@
       "ClientLevelMixinAccessor",
       "CameraMixinAccessor",
       "ModelBakeryMixinAccessor",
+      "PackSelectionScreenMixin",
 
 
       "PlayerRendererMixin_1_21_3",
