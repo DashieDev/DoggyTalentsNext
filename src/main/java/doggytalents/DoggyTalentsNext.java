@@ -24,6 +24,7 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.event.PackHandler;
 import doggytalents.common.item.ChopinRecordItem;
 import doggytalents.common.item.itemgroup.DTNCompostables;
 import doggytalents.common.item.itemgroup.DTNItemCategory;
@@ -114,6 +115,7 @@ public class DoggyTalentsNext {
             modEventBus.addListener(ClientSetup::setupEntityRenderers);
             modEventBus.addListener(ClientSetup::addClientReloadListeners);
             modEventBus.addListener(ClientSetup::registerOverlay);
+            modEventBus.addListener(PackHandler::onAddPackFinder);
             forgeEventBus.register(new ClientEventHandler());
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
@@ -194,5 +196,8 @@ public class DoggyTalentsNext {
             gen.addProvider(true, new DTLootModifierProvider(packOutput));
             gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
         }
+
+        DTNDatapackProvider.start(event);
+        //DTNDataRegistryProvider.start(event);
     }
 }

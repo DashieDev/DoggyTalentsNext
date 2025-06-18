@@ -15,7 +15,8 @@
       "GuiMixin",
       "ClientLevelMixinAccessor",
       "CameraMixinAccessor",
-      "ModelBakeryMixinAccessor"
+      "ModelBakeryMixinAccessor",
+      "PackSelectionScreenMixin"
     ],
     "server": [],
     "injectors": {
