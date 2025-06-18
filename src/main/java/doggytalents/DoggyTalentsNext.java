@@ -28,6 +28,7 @@ import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
+import doggytalents.common.event.PackHandler;
 import doggytalents.common.item.ChopinRecordItem;
 import doggytalents.common.item.itemgroup.DTNCompostables;
 import doggytalents.common.item.itemgroup.DTNItemCategory;
@@ -49,7 +50,7 @@ public class DoggyTalentsNext {
             
     
     public static void init() {
-        
+       
     }
 
     // //TODO AUTOMATION CURSEFORGE !!!x
