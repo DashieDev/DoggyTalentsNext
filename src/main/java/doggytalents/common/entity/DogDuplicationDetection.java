@@ -142,13 +142,13 @@ public class DogDuplicationDetection {
         if (!isDuplicate)
             return false;
 
-        LOGGER.warn(
-            "Duplicated Dog Detected! dog_uuid=[" 
-            + uuid_self.toString()
-            + "] owner_uuid=["
-            + uuid_owner.toString()
-            + "]"
-        );
+        if (ConfigHandler.SERVER.THIRD_PARTY_STORE_WARN.get()) {
+            LOGGER.error(
+                "Dog [ uuid = " + uuid_self + " owner_uuid = " + uuid_owner + " ] "
+                + "has been restored from third-party storage which may leads to duplications. Please restore this Dog via its Dog Bed, by using a Totem of Undying on an Unlinked Dog Bed or via [ /dog revive ] instead. To allow the Dog to be restored from third-party storage, set trust_third_party_storage=true. To disable this message, set third_party_store_warn=false"
+            );
+        }
+        
         return true;
     }
 
