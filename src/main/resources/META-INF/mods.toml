@@ -7,7 +7,7 @@ logoFile="dtn_icon.png"
 [[mods]] #mandatory
     modId="doggytalents"
     version="${file.jarVersion}"
-    updateJSONURL="https://raw.githubusercontent.com/DashieDev/DoggyTalentsNext/0d05eaff7c4b588831ca6480f737187f44dda820/check_for_update/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/DashieDev/DoggyTalentsNext/refs/heads/1.21-master/check_for_update/update.json"
     displayName="Doggy Talents Next"
     credits="stefanbech and the DTN Discord Server."
     authors="dashiedev, mashxp"
