@@ -9,6 +9,7 @@ public class Resources {
     public static final ResourceLocation GUI_PACK_PUPPY = getGui("pack_puppy");
     public static final ResourceLocation GUI_TREAT_BAG = getGui("treat_bag");
     public static final ResourceLocation GUI_RADAR = getGui("radar");
+    public static final ResourceLocation DTN_PACK_ICON = Util.getResource("dtn_pack_icon.png");
 
     public static final ResourceLocation DOG_INVENTORY = getGui("dog_inventory");
     public static final ResourceLocation INVENTORY_BUTTON = getGui("dog_button");
