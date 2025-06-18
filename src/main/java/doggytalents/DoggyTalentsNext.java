@@ -97,6 +97,7 @@ public class DoggyTalentsNext {
 
         modEventBus.addListener(DoggyRegistries::newRegistry);
         modEventBus.addListener(DoggyEntityTypes::addEntityAttributes);
+        modEventBus.addListener(PackHandler::onAddPackFinder);
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
@@ -115,7 +116,6 @@ public class DoggyTalentsNext {
             modEventBus.addListener(ClientSetup::setupEntityRenderers);
             modEventBus.addListener(ClientSetup::addClientReloadListeners);
             modEventBus.addListener(ClientSetup::registerOverlay);
-            modEventBus.addListener(PackHandler::onAddPackFinder);
             forgeEventBus.register(new ClientEventHandler());
             forgeEventBus.addListener(BedFinderRenderer::onWorldRenderLast);
             forgeEventBus.addListener(CanineTrackerLocateRenderer::onWorldRenderLast);
