@@ -24,8 +24,7 @@ public class ActiveTabSlice implements AbstractSlice {
 
     @Override
     public Object reducer(Object oldData, UIAction action) {
-        if (action.type == CommonUIActionTypes.CHANGE_TAB 
-            || action.type == CommonUIActionTypes.SWITCH_TAB) {
+        if (isChangeTabAction(action.type)) {
             if (action.payload instanceof ChangeTabPayload tabPayload) {
                 return tabPayload.getTab();
             }
@@ -45,6 +44,10 @@ public class ActiveTabSlice implements AbstractSlice {
         }
 
         return new UIAction(type, payload);
+    }
+
+    public static boolean isChangeTabAction(String type) {
+        return type == CommonUIActionTypes.CHANGE_TAB || type == CommonUIActionTypes.SWITCH_TAB;
     }
 
     public static Tab getPrevTab(Tab tab) {
