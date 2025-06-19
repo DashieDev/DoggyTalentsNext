@@ -1,5 +1,6 @@
 package doggytalents.common.entity;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.scores.Team;
 
 public class DogAllyCheck {
     
@@ -44,29 +46,33 @@ public class DogAllyCheck {
     private static boolean checkOwnerAvailable(Dog dog, Entity entity, UUID owner_uuid, LivingEntity owner) {
         if (entity == owner)
             return true;
-        if (owner.isAlliedTo(entity))
+        //Avoid triggering the mixin and unecessarily calling isAlliedToDog again here.
+        if (entity.getType() != DoggyEntityTypes.DOG.get() 
+            && owner.isAlliedTo(entity))
             return true;
 
-        if (entity instanceof TamableAnimal other_dog) {
+        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
+
             var owner_other = other_dog.getOwner();
             if (owner_other != null)
                 return owner.isAlliedTo(owner_other);
-            else if (entity instanceof Dog other_dog_actual)
+            if (other_dog instanceof Dog other_dog_actual)
                 return checkSameTeamWithOfflineOwner(other_dog_actual, owner);
-            else
-                return false;
+            var other_team = findOwnerTeam(other_dog);
+            if (other_team.isPresent())
+                return owner.isAlliedTo(other_team.get());
+            return false;
         }
         return false;
     }
 
     private static boolean checkOwnerNotAvailable(Dog dog, Entity entity, UUID owner_uuid) {        
-        if (entity instanceof TamableAnimal other_dog) {
+        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
-            var owner_other = other_dog.getOwner();
-            return owner_other != null && checkSameTeamWithOfflineOwner(dog, owner_other);
+            return checkSameTeamWithOfflineOwnerTamable(dog, other_dog);
         }
         
         if (checkSameTeamWithOfflineOwner(dog, entity))
@@ -76,6 +82,36 @@ public class DogAllyCheck {
     }
 
     private static boolean checkSameTeamWithOfflineOwner(Dog dog, Entity entity) {
+        return checkSameTeamWithOfflineOwner(dog, entity.getTeam());
+    }
+
+    private static boolean checkSameTeamWithOfflineOwnerTamable(Dog dog, TamableAnimal entity) {
+        return checkSameTeamWithOfflineOwner(dog, findTamableTeam(entity));
+    }
+
+    private static Team findTamableTeam(TamableAnimal other_dog) {
+        return findOwnerTeam(other_dog).orElseGet(other_dog::getTeam);
+    }
+
+    private static Optional<Team> findOwnerTeam(TamableAnimal other_dog) {
+        var uuid = other_dog.getOwnerUUID();
+        if (uuid == null)
+            return Optional.empty();
+        var server = other_dog.level().getServer();
+        if (server == null)
+            return Optional.empty();
+        var player = server.getPlayerList().getPlayer(uuid);
+        if (player == null)
+            return Optional.empty();
+        var scoreboard = server.getScoreboard();
+        var ret = scoreboard.getPlayersTeam(player.getScoreboardName());
+        return Optional.ofNullable(ret);
+    }
+
+    private static boolean checkSameTeamWithOfflineOwner(Dog dog, Team other_team) {
+        if (other_team == null)
+            return false;
+        
         var owner_name_optional = dog.getOwnersName();
         if (!owner_name_optional.isPresent())
             return false;
@@ -83,10 +119,7 @@ public class DogAllyCheck {
         if (owner_name == null || owner_name.isEmpty())
             return false;
 
-        var team = entity.getTeam();
-        if (team == null)
-            return false;
-        return team.getPlayers().contains(owner_name);
+        return other_team.getPlayers().contains(owner_name);
     }
 
     private static boolean checkSameOwnerUUIDWithDog(UUID dog_owner_uuid, TamableAnimal entity) {
