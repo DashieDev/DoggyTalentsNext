@@ -11,6 +11,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.SkinListSlice;
+import doggytalents.client.screen.DogNewInfoScreen.store.slice.SkinListSlice.SkinListData;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
@@ -73,7 +75,9 @@ public class SkinView extends AbstractElement {
 
     @Override
     public AbstractElement init() {
-        this.textureList = DogTextureManager.INSTANCE.getAll();
+        this.textureList = 
+            this.getStateAndSubscribesTo(
+                SkinListSlice.class, SkinListData.class, SkinListData.EMPTY).skins;
         this.textureList = filterValidDogSkin(textureList);
         var searchMsg = this.filterBox.getValue();
         if (!searchMsg.isEmpty())
