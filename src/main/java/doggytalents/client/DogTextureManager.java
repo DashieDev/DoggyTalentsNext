@@ -94,10 +94,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     @Override
     protected DogTextureManager.DogSkinLoadResult prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         var prep = new DogTextureManager.DogSkinLoadResult();
-        profiler.startTick();
         this.getSkinFromSkinJsonAllPack(resourceManager, prep);
-        profiler.pop();
-        profiler.endTick();
         return prep;
     }
 
