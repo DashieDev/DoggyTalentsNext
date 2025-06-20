@@ -357,6 +357,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         }
 
         public void addDogSkin(DogSkin skin, String hash) {
+            if (skin == null || hash == null)
+                return;
             this.dogSkinsAndHash.add(Pair.of(skin, hash));
             registeredHash.add(hash);
         }
