@@ -26,10 +26,12 @@ public class PackHandler {
     public static final String ALT_RECIPE_1 = "alt_recipe_1";
     
     public static void onAddPackFinder(AddPackFindersEvent event) {
-        event.addRepositorySource(PackHandler::onRegisterPack);
+        if (event.getPackType() == PackType.SERVER_DATA) {
+            event.addRepositorySource(PackHandler::onRegisterServerPack);
+        }
     }
 
-    private static void onRegisterPack(Consumer<Pack> pack_consumer) {
+    private static void onRegisterServerPack(Consumer<Pack> pack_consumer) {
         findAndCreatePack(PackType.SERVER_DATA, ALT_RECIPE_1,
             Component.literal("DTN Recipe Pack I."), 
             PackSource.FEATURE, false, Position.TOP)
