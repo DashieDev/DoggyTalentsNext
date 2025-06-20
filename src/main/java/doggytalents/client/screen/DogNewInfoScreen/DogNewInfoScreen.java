@@ -368,7 +368,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             StatsViewPanelSlice.class,
             MainPanelSlice.class,
             TalentChangeHandlerSlice.class,
-            GroupChangeHandlerSlice.class
+            GroupChangeHandlerSlice.class,
+            SkinListSlice.class
         );
     }
 

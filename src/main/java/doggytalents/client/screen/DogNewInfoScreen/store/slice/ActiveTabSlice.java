@@ -41,6 +41,8 @@ public class ActiveTabSlice implements AbstractSlice {
             setupStats(dog);
         } else if (tab == Tab.HOME) {
             setupGroups(dog);
+        } else if (tab == Tab.STYLE) {
+            payload.initData = SkinListSlice.initSkinData();
         }
 
         return new UIAction(type, payload);
