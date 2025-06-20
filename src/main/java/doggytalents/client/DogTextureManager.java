@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.entity.skin.DogSkinHolder;
