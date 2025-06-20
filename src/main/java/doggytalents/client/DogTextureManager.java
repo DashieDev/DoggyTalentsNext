@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.entity.skin.DogSkinHolder;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
@@ -35,18 +36,20 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     public static final DogTextureManager INSTANCE = new DogTextureManager();
     private static final Gson GSON = new Gson();
 
-    protected final Map<String, DogSkin> skinHashToLoc = Maps.newHashMap();
+    protected final Map<String, DogSkinHolder> skinHashToLoc = Maps.newHashMap();
     protected final Map<DogSkin, String> locToSkinHash = Maps.newHashMap();
-    protected final List<DogSkin> customSkinLoc = new ArrayList<>(20);
+    private List<DogSkinHolder> dogSkinHolders = List.of();
+    private List<DogSkin> dogSkins = List.of(); 
+    private DogSkinHolder missingHolder = DogSkinHolder.resolved(DogSkin.MISSING);
 
     public List<DogSkin> getAll() {
-        return Collections.unmodifiableList(this.customSkinLoc);
+        return dogSkins;
     }
 
-    public DogSkin getDogSkin(String hash) {
+    public DogSkinHolder getDogSkin(String hash) {
         if (hash == null || hash.isEmpty())
-            return DogSkin.CLASSICAL;
-        return this.skinHashToLoc.getOrDefault(hash, DogSkin.MISSING); 
+            return DogSkinHolder.getNone();
+        return this.skinHashToLoc.getOrDefault(hash, missingHolder); 
     }
 
     public String getHash(DogSkin loc) {
@@ -267,13 +270,21 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     @Override
     protected void apply(DogTextureManager.DogSkinLoadResult loadResult, ResourceManager resourceManager, ProfilerFiller profiler) {
-        this.customSkinLoc.clear();
+        
+        this.dogSkinHolders.forEach(DogSkinHolder::invalidate);
+        this.dogSkinHolders = List.of();
+
+        this.missingHolder.invalidate();
+        this.missingHolder = DogSkinHolder.resolved(DogSkin.MISSING);
+
+        this.dogSkins = List.of();
         this.locToSkinHash.clear();
         this.skinHashToLoc.clear();
         int skipping_cnt = 0;
 
         var filter_skin_map = Maps.<DogSkin, String>newHashMap();
-        var filter_skin_map_1 = Maps.<String, DogSkin>newHashMap();
+        var filter_skin_map_1 = Maps.<String, DogSkinHolder>newHashMap();
+        var holder_list = new ArrayList<DogSkinHolder>();
         var skin_list = new ArrayList<DogSkin>();
 
         skin_list.add(DogSkin.CLASSICAL);
@@ -285,12 +296,15 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 ++skipping_cnt;
                 continue;
             }
+            var holder = DogSkinHolder.resolved(skin);
             filter_skin_map.put(skin, hash);
-            filter_skin_map_1.put(hash, skin);
+            filter_skin_map_1.put(hash, holder);
+            holder_list.add(holder);
             skin_list.add(skin);
         }
         
-        this.customSkinLoc.addAll(skin_list);
+        this.dogSkinHolders = List.copyOf(holder_list);
+        this.dogSkins = List.copyOf(skin_list);
         this.locToSkinHash.putAll(filter_skin_map);
         this.skinHashToLoc.putAll(filter_skin_map_1);
 
