@@ -1,5 +1,6 @@
 package doggytalents.client;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
@@ -36,8 +37,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     public static final DogTextureManager INSTANCE = new DogTextureManager();
     private static final Gson GSON = new Gson();
 
-    protected final Map<String, DogSkinHolder> skinHashToLoc = Maps.newHashMap();
-    protected final Map<DogSkin, String> locToSkinHash = Maps.newHashMap();
+    private Map<String, DogSkinHolder> hashToSkinHolder = ImmutableMap.of();
+    private Map<DogSkin, String> skinToHash = ImmutableMap.of();
     private List<DogSkinHolder> dogSkinHolders = List.of();
     private List<DogSkin> dogSkins = List.of(); 
     private DogSkinHolder missingHolder = DogSkinHolder.resolved(DogSkin.MISSING);
@@ -49,13 +50,13 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     public DogSkinHolder getDogSkin(String hash) {
         if (hash == null || hash.isEmpty())
             return DogSkinHolder.getNone();
-        return this.skinHashToLoc.getOrDefault(hash, missingHolder); 
+        return this.hashToSkinHolder.getOrDefault(hash, missingHolder); 
     }
 
     public String getHash(DogSkin loc) {
         if (loc == null || !loc.isCustom())
             return "";
-        return this.locToSkinHash.getOrDefault(loc, "");
+        return this.skinToHash.getOrDefault(loc, "");
     }
 
     public ResourceLocation getTexture(Dog dog) {
@@ -278,8 +279,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         this.missingHolder = DogSkinHolder.resolved(DogSkin.MISSING);
 
         this.dogSkins = List.of();
-        this.locToSkinHash.clear();
-        this.skinHashToLoc.clear();
+        this.skinToHash = ImmutableMap.of();
+        this.hashToSkinHolder = ImmutableMap.of();
         int skipping_cnt = 0;
 
         var filter_skin_map = Maps.<DogSkin, String>newHashMap();
@@ -305,9 +306,8 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         
         this.dogSkinHolders = List.copyOf(holder_list);
         this.dogSkins = List.copyOf(skin_list);
-        this.locToSkinHash.putAll(filter_skin_map);
-        this.skinHashToLoc.putAll(filter_skin_map_1);
-
+        this.skinToHash = ImmutableMap.copyOf(filter_skin_map);
+        this.hashToSkinHolder = ImmutableMap.copyOf(filter_skin_map_1);
         
         if (skipping_cnt > 0) {
             DogTextureManager.LOGGER.info(
