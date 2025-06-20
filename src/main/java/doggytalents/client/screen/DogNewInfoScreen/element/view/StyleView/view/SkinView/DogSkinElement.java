@@ -10,6 +10,7 @@ import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.client.entity.skin.DogSkin;
+import doggytalents.client.entity.skin.DogSkinHolder;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.store.slice.ActiveSkinSlice;
 import doggytalents.client.screen.DogNewInfoScreen.widget.AccessoryStatusHover;
@@ -289,27 +290,27 @@ public class DogSkinElement extends AbstractElement {
 
     private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 
         int mouseY, int e_mX, int e_mY, int size, boolean useDummy) {
-        var oldSkin = dog.getClientSkin();
+        var oldSkin = dog.getClientSkinHolder();
         var manifestSkin = this.locList.get(indx);
         if (manifestSkin.mystery()) {
             manifestSkin = DogSkin.MYSTERY;
             renderMysteriousKanji(graphics, e_mX, e_mY);
-            dummyDog.setClientSkin(manifestSkin);
+            dummyDog.setClientSkinHolder(DogSkinHolder.resolved(manifestSkin));
             DogStatusViewBoxElement.renderDogInside(graphics, 
                 dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else if (useDummy && dummyDog != null) {
-            dummyDog.setClientSkin(manifestSkin);
+            dummyDog.setClientSkinHolder(DogSkinHolder.resolved(manifestSkin));
             DogStatusViewBoxElement.renderDogInside(graphics, 
                 dummyDog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
         } else {   
-            dog.setClientSkin(manifestSkin);
+            dog.setClientSkinHolder(DogSkinHolder.resolved(manifestSkin));
             DogStatusViewBoxElement.renderDogInside(graphics, dog, e_mX, e_mY, size, 
                 followMouse ? e_mX - mouseX : -64, followMouse ? e_mY - mouseY : -64);
-            dog.setClientSkin(oldSkin);
+            dog.setClientSkinHolder(oldSkin);
         }
-        if (oldSkin == manifestSkin) {
+        if (oldSkin.getOrElse(DogSkin.CLASSICAL) == manifestSkin) {
             var font = Minecraft.getInstance().font;
             var c1 = Component.translatable("doggui.style.skins.selected");
             c1.setStyle(
