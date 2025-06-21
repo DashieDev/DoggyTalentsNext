@@ -187,6 +187,12 @@ public class DogLocationStorage extends SavedData {
         return compound;
     }
 
+    @Override
+    public boolean isDirty() {
+        //Always save with the latest Dog info if Dog is online. 
+        return true;
+    }
+
     public static void setSessionUUIDFor(Dog dog, UUID sessionUUID) {
         var storage = DogLocationStorage.get(dog.level());
         if (storage == null)

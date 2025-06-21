@@ -45,6 +45,8 @@ public class DogLocationData implements IDogData {
     private boolean hasRadarCollar;
     private int locateColor;
 
+    private Optional<Dog> cachedDog = Optional.empty();
+
     protected DogLocationData(DogLocationStorage storageIn, UUID uuid) {
         this.storage = storageIn;
         this.uuid = uuid;
@@ -81,6 +83,8 @@ public class DogLocationData implements IDogData {
     }
 
     public void update(Dog dogIn) {
+        this.setCachedDog(dogIn);
+
         this.ownerId = dogIn.getOwnerUUID();
         this.position = dogIn.position();
         this.dimension = dogIn.level().dimension();
@@ -142,8 +146,10 @@ public class DogLocationData implements IDogData {
     }
 
     public CompoundTag write(CompoundTag compound) {
-        NBTUtil.putUniqueId(compound, "ownerId", this.ownerId);
-        NBTUtil.putVector3d(compound, this.position);
+        NBTUtil.putUniqueId(compound, "ownerId", 
+            getCachedDog().map(Dog::getOwnerUUID).orElse(this.ownerId));
+        NBTUtil.putVector3d(compound, 
+            getCachedDog().map(Dog::position).orElse(this.position));
         NBTUtil.putResourceLocation(compound, "dimension", this.dimension.location());
         NBTUtil.putTextComponent(compound, "name_text_component", this.name);
         if (this.gender != null) {
@@ -169,18 +175,27 @@ public class DogLocationData implements IDogData {
         return this.hasRadarCollar || playerIn.isCreative() || playerIn.getItemInHand(handIn).getItem() == DoggyItems.CREATIVE_CANINE_TRACKER.get();
     }
 
-    public Optional<Dog> getOnlineDog() {
-        return this.storage.getOnlineDogsManager().getOnlineDog(this.uuid);
-    }
-
     @Nullable
-    public Component getName(@Nullable Level worldIn) {
-        return this.getOnlineDog().map(Dog::getDisplayName).orElse(this.name);
+    public Component getName() {
+        return this.getCachedDog().map(Dog::getDisplayName).orElse(this.name);
     }
 
     @Nullable
     public Vec3 getPos(@Nullable ServerLevel worldIn) {
-        return this.getOnlineDog().map(Dog::position).orElse(this.position);
+        return this.getCachedDog().map(Dog::position).orElse(this.position);
+    }
+
+    public void invalidateCachedDog() {
+        this.cachedDog = Optional.empty();
+    }
+
+    public Optional<Dog> getCachedDog() {
+        this.cachedDog = this.cachedDog.filter(Dog::isAlive);
+        return this.cachedDog;
+    }
+
+    public void setCachedDog(Dog dog) {
+        this.cachedDog = Optional.ofNullable(dog).filter(Dog::isAlive);
     }
 
     @Nullable
