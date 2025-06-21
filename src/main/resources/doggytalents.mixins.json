@@ -7,6 +7,7 @@
         "EntityMixin",
         "ProjectileMixin",
         "TamableAnimalMixin",
+        "ServerLevel_EntityCallbackMixin",
 
         
         "EntityMixin_1_21_3",
