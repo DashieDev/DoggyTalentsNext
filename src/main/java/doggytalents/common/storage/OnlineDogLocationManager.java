@@ -107,28 +107,20 @@ public class OnlineDogLocationManager {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/dogOnlineTracker");
     public static void logOfflineDog(Dog dog) {
+        if (dog.getOwnerUUID() == null)
+            return;
+        if (dog.locationUpdatedUponRemove == null)
+            return;
         var remove_reason = dog.getRemovalReason();
+        var pos = dog.blockPosition();
+        var name_str = dog.getName().getString();
+        var pos_str = pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
         var type_str = remove_reason == null ? "WHAT?"
             : remove_reason.toString();
-        var pos = dog.blockPosition();
-        var pos_str = pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
-        if (!dog.locationUpdatedUponRemove) {
-            var error_str = "Dog [ "
-                + dog.getName().getString()
-                + " ] failed to update location upon going offline at [ "
-                + pos_str
-                + " ] with type [ "
-                + type_str + " ]";
-            LOGGER.error(error_str);
-            return;
-        }
-        var log_str = "Dog [ "
-            + dog.getName().getString()
-            + " ] has gone Offline at [ "
-            + pos_str
-            + " ] with type [ "
-            + type_str + " ]";
-        LOGGER.debug(log_str);
+        
+        var log_msg = dog.locationUpdatedUponRemove
+            .getFormattedLog(name_str, pos_str, type_str);
+        LOGGER.debug(log_msg);
     }
 
     private void unrideAllDogOnPlayer() {
@@ -142,6 +134,26 @@ public class OnlineDogLocationManager {
             if (vehicle instanceof Player) {
                 dog.unRide();
             }
+        }
+    }
+
+    public static enum RemoveState {
+        NONE("Dog [ %s ] failed to update location upon going offline at [ %s ] with type [ %s ]"), 
+        UPDATED("Dog [ %s ] has gone Offline at [ %s ] with type [ %s ]"), 
+        UNLOADED_TO_RESPAWN("Dog [ %s ] has been unloaded to Respawn Storage"), 
+        REMOVED("Untamed Dog [ %s ] has been removed."),
+        REMOVE_TRUSTED("Dog [ %s ] has been trustfully removed at [ %s ] with type [ %s ]"); 
+        
+        private final String unformattedLog;
+        private RemoveState(String unformattedLog) {
+            this.unformattedLog = unformattedLog;
+        }
+
+        public String getFormattedLog(String name, String pos, String type) {
+            if (name == null) name = "??";
+            if (pos == null) pos = "??";
+            if (type == null) type = "??";
+            return String.format(this.unformattedLog, name, pos, type);
         }
     }
     
