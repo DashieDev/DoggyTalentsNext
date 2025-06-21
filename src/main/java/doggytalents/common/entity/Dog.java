@@ -2383,7 +2383,8 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    public boolean locationUpdatedUponRemove = false;
+    public OnlineDogLocationManager.RemoveState locationUpdatedUponRemove 
+        = OnlineDogLocationManager.RemoveState.NONE;
     @Override
     public void onRemovedFromWorld() {
         if (this.level() instanceof ServerLevel serverLevel && this.isAlive()) {
@@ -2392,7 +2393,7 @@ public class Dog extends AbstractDog {
             var data = DogLocationStorage.get(serverLevel).getData(this);
             
             if (data != null) data.update(this);
-            locationUpdatedUponRemove = true;
+            locationUpdatedUponRemove = OnlineDogLocationManager.RemoveState.UPDATED;
         }
         super.onRemovedFromWorld();
     }
@@ -2419,11 +2420,19 @@ public class Dog extends AbstractDog {
                 && removalReason == RemovalReason.DISCARDED;
             if (!remove_trusted && removalReason.shouldDestroy()) {     
                 DogLocationStorage.get(this.level()).remove(this);
-                if (this.getOwnerUUID() != null)
+                if (this.getOwnerUUID() != null) {
                     DogRespawnStorage.get(this.level()).putData(this);
+                    this.locationUpdatedUponRemove = 
+                        OnlineDogLocationManager.RemoveState.UNLOADED_TO_RESPAWN;
+                } else {
+                    this.locationUpdatedUponRemove =
+                        OnlineDogLocationManager.RemoveState.REMOVED;
+                }
             }
             if (remove_trusted) {
                 DogLocationStorage.get(this.level()).remove(this);
+                this.locationUpdatedUponRemove =
+                    OnlineDogLocationManager.RemoveState.REMOVE_TRUSTED;
             }
         }
         
