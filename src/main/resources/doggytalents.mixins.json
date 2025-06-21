@@ -6,7 +6,8 @@
     "mixins": [
       "EntityMixin",
       "ProjectileMixin",
-      "TamableAnimalMixin"
+      "TamableAnimalMixin",
+      "ServerLevel_EntityCallbackMixin"
     ],
     "client": [
       "LivingEntityRendererMixin",

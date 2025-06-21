@@ -252,6 +252,8 @@ public class Dog extends AbstractDog {
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogDataSyncManager dogSyncedDataManager
         = new DogDataSyncManager(this);
+    public final DogTrackingTracker dogTrackingTracker =
+        new DogTrackingTracker();
     public final DogOwnerDistanceManager dogOwnerDistanceManager 
         = new DogOwnerDistanceManager(this);
     public final DogAvoidGoingInFrontOfOwnerManager avoidGoInFrontOfOwnerManager
@@ -2432,6 +2434,12 @@ public class Dog extends AbstractDog {
             DogDuplicationDetection.afterDogJoinLevel(this, data);
         }
         //super.onAddedToWorld();
+    }
+
+    public void onDogStartTracking() {
+    }
+
+    public void onDogStopTracking() {
     }
 
     @Override
