@@ -2435,6 +2435,7 @@ public class Dog extends AbstractDog {
     }
 
     public void onDogStartTracking() {
+        locationUpdatedUponRemove = OnlineDogLocationManager.RemoveState.NONE;
     }
 
     public void onDogStopTracking() {
@@ -2526,7 +2527,7 @@ public class Dog extends AbstractDog {
             return;
         if (!ConfigHandler.SERVER.DOG_LOAD_CHUNK_BEFORE_MOVE.get())
             return;
-        if (!this.isAddedToWorld())
+        if (!this.dogTrackingTracker.isTracking())
             return;
         if (this.level().isClientSide)
             return;
