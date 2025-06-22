@@ -91,6 +91,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
             if (!this.dog.isMode(DogMode.GUARD_MINOR))
                 return false;
+            if (this.dog.isLowHunger())
+                return false;
 
             this.owner = this.dog.getOwner();
         
@@ -217,6 +219,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
             
             if (!this.dog.isMode(DogMode.GUARD, DogMode.GUARD_FLAT))
+                return false;
+            if (this.dog.isLowHunger())
                 return false;
 
             this.owner = this.dog.getOwner();
