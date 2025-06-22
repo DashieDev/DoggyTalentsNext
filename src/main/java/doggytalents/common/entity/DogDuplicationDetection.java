@@ -105,6 +105,9 @@ public class DogDuplicationDetection {
     public void save(CompoundTag compound) {
         if (!isEffective(dog.level()))
             return;
+        //In case Dog failed to accquire session_uuid (when addedToLevel is not called.)
+        if (!this.detectDuplicateContext.isEmpty())
+            return;
         var ctx = DetectDuplicateContext.of(dog.getUUID(), dog.getOwnerUUID(), this.sessionUUID);
         if (ctx.isEmpty())
             return;
