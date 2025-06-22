@@ -402,6 +402,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
         public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
         public ForgeConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
+        public ForgeConfigSpec.BooleanValue WANDERING_DOG_NON_HUNGER;
         public ForgeConfigSpec.BooleanValue SAVE_DOG_RIDING_PLAYER;
         public ForgeConfigSpec.BooleanValue DOG_LOAD_CHUNK_BEFORE_MOVE;
 
@@ -673,6 +674,11 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
                 .comment("e.g. Cookie. Use with caution.")
                 .translation("doggytalents.dog_can_eat_all_food")
                 .define("dog_can_eat_all_food", false);
+            WANDERING_DOG_NON_HUNGER = builder
+                .comment("Enable this to make all non following docile Dogs to not loose hunger")
+                .comment("when standing.")
+                .translation("doggytalents.wandering_dog_non_hunger")
+                .define("wandering_dog_non_hunger", false);
             SAVE_DOG_RIDING_PLAYER = builder
                 .comment("This allows DTN Dogs to still save as a seperate entity")
                 .comment("when riding on the player's head. This is to prevent them")

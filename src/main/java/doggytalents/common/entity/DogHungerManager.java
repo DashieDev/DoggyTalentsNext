@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import java.util.UUID;
 
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -34,6 +35,9 @@ public class DogHungerManager {
 
     private void handleHunger() {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
+            return;
+        if (dog.getMode() == DogMode.WANDERING 
+            && ConfigHandler.SERVER.WANDERING_DOG_NON_HUNGER.get())
             return;
         if (dog.isDogInAnimDebug())
             return;
