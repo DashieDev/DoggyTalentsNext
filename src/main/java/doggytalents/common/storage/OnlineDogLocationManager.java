@@ -75,6 +75,8 @@ public class OnlineDogLocationManager {
             var dog = entry.getValue();
             if (dog.isRemoved())
                 continue;
+            if (!dog.dogTrackingTracker.isTracking())
+                continue;
             syncDataToStorage(storage, dog);
         }
     }
