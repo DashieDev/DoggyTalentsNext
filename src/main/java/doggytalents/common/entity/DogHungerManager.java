@@ -2,6 +2,7 @@ package doggytalents.common.entity;
 
 import java.util.UUID;
 
+import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.Util;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +37,9 @@ public class DogHungerManager {
 
     private void handleHunger() {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
+            return;
+        if (dog.getMode() == DogMode.WANDERING 
+            && ConfigHandler.SERVER.WANDERING_DOG_NON_HUNGER.get())
             return;
         if (dog.isDogInAnimDebug())
             return;
