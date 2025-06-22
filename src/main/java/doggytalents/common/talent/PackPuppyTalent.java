@@ -173,7 +173,7 @@ public class PackPuppyTalent extends TalentInstance {
             tryFeed(dog, dog, false);
             return;
         }
-        if (target.isBusy())
+        if (!target.readyForNonTrivialAction())
             return;
         if (target.isInSittingPose())
             return;
