@@ -2524,7 +2524,13 @@ public class Dog extends AbstractDog {
 
     private void mayDogLoadChunkBeforeMoveTo(double x, double y, double z) {
         var current_pos = this.position(); 
-        boolean changed_chunk = current_pos.x != x || current_pos.z != z;
+        boolean changed_xz = current_pos.x != x || current_pos.z != z;
+        if (!changed_xz)
+            return;
+        var current_chunk_pos = this.chunkPosition();
+        boolean changed_chunk = 
+            SectionPos.blockToSectionCoord(x) != current_chunk_pos.x 
+            || SectionPos.blockToSectionCoord(z) != current_chunk_pos.z;
         if (!changed_chunk)
             return;
         if (!ConfigHandler.SERVER.DOG_LOAD_CHUNK_BEFORE_MOVE.get())
