@@ -96,7 +96,7 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     }
 
     private boolean shouldFeed(Dog target) {
-        if (target.isBusy())
+        if (!target.readyForNonTrivialAction())
             return false;
         if (target.isInSittingPose())
             return false;
