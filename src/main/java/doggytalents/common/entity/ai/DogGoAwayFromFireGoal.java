@@ -161,13 +161,13 @@ public class DogGoAwayFromFireGoal extends Goal {
             if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
                 return 1;
             }
-        }
 
-        var pos_below = DogUtil.getSurfaceStandingInPos(dog, pos.x, pos.z).below();
-        var state_below = dog.level().getBlockState(pos_below);
-        if (WalkNodeEvaluator.isBurningBlock(state_below)
-            && state_below.isCollisionShapeFullBlock(dog.level(), pos_below))
-            return 1;
+            var pos_below = DogUtil.getSurfaceStandingInPos(dog, x.getX(), x.getZ()).below();
+            var state_below = dog.level().getBlockState(pos_below);
+            if (WalkNodeEvaluator.isBurningBlock(state_below)
+                && state_below.isCollisionShapeFullBlock(dog.level(), pos_below))
+                return 1;
+        }
 
         // {
         //     var x = new BlockPos(pos.x, pos.y-1, pos.z);
