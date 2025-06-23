@@ -287,8 +287,8 @@ public class Dog extends AbstractDog {
     private ItemStack mouthStack = ItemStack.EMPTY;
     private ItemStack wolfArmorStack = ItemStack.EMPTY;
 
-    protected final PathNavigation defaultNavigation;
-    protected final MoveControl defaultMoveControl;
+    protected final DogPathNavigation defaultNavigation;
+    protected final DogMoveControl defaultMoveControl;
     protected @Nullable IDogNavLock navigationLock;
     protected PathNavigation currentNavigation;
     
@@ -340,8 +340,8 @@ public class Dog extends AbstractDog {
         this.moveControl = new DogMoveControl(this);
         this.jumpControl = new DogJumpControl(this);
 
-        this.defaultNavigation = this.navigation;
-        this.defaultMoveControl = this.moveControl;
+        this.defaultNavigation = (DogPathNavigation) this.navigation;
+        this.defaultMoveControl = (DogMoveControl) this.moveControl;
 
         this.dogAi = new DogAiManager(this, Profiler::get);
         this.dogAi.init();
@@ -4699,12 +4699,12 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public PathNavigation getDefaultNavigation() {
+    public DogPathNavigation getDefaultNavigation() {
         return this.defaultNavigation;
     }
 
     @Override
-    public MoveControl getDefaultMoveControl() {
+    public DogMoveControl getDefaultMoveControl() {
         return this.defaultMoveControl;
     }
 
@@ -4713,7 +4713,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected PathNavigation createNavigation(Level p_21480_) {
+    protected DogPathNavigation createNavigation(Level p_21480_) {
         var dogPathNav = new DogPathNavigation(this, p_21480_);
         this.currentNavigation = dogPathNav;
         this.navigationLock = dogPathNav;
