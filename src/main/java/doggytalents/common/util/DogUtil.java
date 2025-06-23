@@ -686,6 +686,14 @@ public class DogUtil {
         dog.getNavigation().stop();
         dog.breakMoveControl();
     }
+    
+    public static BlockPos getSurfaceStandingOnPos(Dog dog, double x, double z) {
+        return BlockPos.containing(x, dog.getY() + 0.5, z);
+    }
+
+    public static int getSurfaceStandingY(Dog dog) {
+        return Mth.floor(dog.getY() + 0.5);
+    }
 
     public static boolean playerCanTrainTalent(Player player, Talent talent) {
         if (player != null && player.hasPermissions(Constants.OPERATOR_PERMISSION))
