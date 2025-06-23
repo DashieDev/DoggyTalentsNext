@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -52,5 +53,9 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
             }  
         } 
         return retType;
+    }
+
+    public static PathType dogGetPathTypeFromState(BlockGetter getter, BlockPos pos) {
+        return WalkNodeEvaluator.getPathTypeFromState(getter, pos);
     }
 }
