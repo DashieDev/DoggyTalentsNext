@@ -244,9 +244,13 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
     @Override
     protected PathFinder createPathFinder(int p_26453_) {
-        this.nodeEvaluator = new DogNodeEvaluator(dog);
+        this.nodeEvaluator = new DogNodeEvaluator(this::getDog);
         this.nodeEvaluator.setCanPassDoors(true);
         return new PathFinder(this.nodeEvaluator, p_26453_);
+    }
+
+    private Dog getDog() {
+        return this.dog;
     }
 
     @Override
