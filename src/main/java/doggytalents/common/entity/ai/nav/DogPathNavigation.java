@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -250,21 +251,29 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
     @Override
     protected Vec3 getTempMobPos() {
-        return new Vec3(this.dog.getX(), this.getSurfaceY(), this.dog.getZ());
+        return getTempDogPos(dog, this);
     }
 
-    private int getSurfaceY() {
-        boolean do_float_y = 
-            this.dog.isInLiquid() && this.canFloat();
-        if (!do_float_y)
-            return Mth.floor(this.dog.getY() + 0.5);
+    public static Vec3 getTempDogPos(Dog dog) {
+        return getTempDogPos(dog, dog.getNavigation());
+    }
 
-        int y_block = this.dog.getBlockY();
+    public static Vec3 getTempDogPos(Dog dog, PathNavigation nav) {
+        return new Vec3(dog.getX(), getSurfaceY(dog, nav), dog.getZ());
+    }
+
+    private static int getSurfaceY(Dog dog, PathNavigation nav) {
+        boolean do_float_y = 
+            dog.isInLiquid() && nav.canFloat();
+        if (!do_float_y)
+            return DogUtil.getSurfaceStandingY(dog);
+
+        int y_block = dog.getBlockY();
         for (int y_offset = 0; y_offset <= 16; ++y_offset) {
             int check_y = y_block + y_offset;
             var check_pos = BlockPos.containing(
-                this.mob.getX(), check_y, this.mob.getZ());
-            var check_state = this.level.getBlockState(check_pos);
+                dog.getX(), check_y, dog.getZ());
+            var check_state = dog.level().getBlockState(check_pos);
             if (check_state.getFluidState().isEmpty())
                 return check_y;
         }
