@@ -3,6 +3,7 @@ package doggytalents.common.util.CachedSearchUtil;
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
+import doggytalents.common.entity.ai.nav.DogNodeEvaluator;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -45,8 +46,8 @@ public class CachedSearchUtil {
         for (int i = 0; i <= maxXZ; ++i) {
             for (int j = 0; j <= maxY; ++j) {
                 for (int k = 0; k <= maxXZ; ++k) {
-                    var type = WalkNodeEvaluatorDelegate
-                        .getTypeDelegate(dog.level(), bMin.offset(i, j, k));
+                    var type = DogNodeEvaluator
+                        .dogGetPathTypeFromState(dog.level(), bMin.offset(i, j, k));
                     byte val = inferType(dog, type, infer_ctx);
                     pool.setPoolValue(dog.level(), i, j, k, val);
                 }
@@ -62,8 +63,8 @@ public class CachedSearchUtil {
         for (int i = 0; i <= maxXZ; ++i) {
             for (int j = 0; j <= maxY; ++j) {
                 for (int k = 0; k <= maxXZ; ++k) {
-                    var type = WalkNodeEvaluatorDelegate
-                        .getTypeDelegate(level, bMin.offset(i, j, k));
+                    var type = DogNodeEvaluator
+                        .dogGetPathTypeFromState(level, bMin.offset(i, j, k));
                     byte val = inferType(dogs, type);
                     pool.setPoolValue(level, i, j, k, val);
                 }
@@ -426,13 +427,5 @@ public class CachedSearchUtil {
         //     if (dog.getPathfindingMalus(type) < 0) return DANGER;
         // }
         return DANGER;
-    }
-
-    private static class WalkNodeEvaluatorDelegate extends WalkNodeEvaluator {
-
-        public static PathType getTypeDelegate(BlockGetter getter, BlockPos pos) {
-            return WalkNodeEvaluator.getPathTypeFromState(getter, pos);
-        }
-
     }
 }
