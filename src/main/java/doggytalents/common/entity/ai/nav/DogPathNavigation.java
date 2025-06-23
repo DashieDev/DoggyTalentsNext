@@ -243,40 +243,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
     @Override
     protected PathFinder createPathFinder(int p_26453_) {
-        this.nodeEvaluator = new WalkNodeEvaluator() {
-            @Override
-            protected double getFloorLevel(BlockPos pos) {
-                if (dog.fireImmune()) {
-                    if (this.level.getFluidState(pos).is(FluidTags.LAVA)) {
-                        return pos.getY();
-                    }
-                }
-                return super.getFloorLevel(pos);
-            }
-
-            @Override
-            @Nullable
-            protected Node findAcceptedNode(int x, int y, int z, int floorLevel,
-                    double maxUpStep, Direction dir, BlockPathTypes centerType) {
-                if (centerType == BlockPathTypes.DOOR_WOOD_CLOSED && dog.canDogPassGate()) {
-                    centerType = BlockPathTypes.WALKABLE;
-                }
-                return super.findAcceptedNode(x, y, z, floorLevel, maxUpStep, dir, centerType);
-            }
-
-            @Override
-            public BlockPathTypes getBlockPathType(BlockGetter getter, int x, int y, int z) {
-                var retType =  super.getBlockPathType(getter, x, y, z);
-                
-                if (retType == BlockPathTypes.FENCE && dog.canDogPassGate()) {
-                    var state = getter.getBlockState(new BlockPos(x, y, z));
-                    if (state.getBlock() instanceof FenceGateBlock) {
-                        retType = BlockPathTypes.WALKABLE;
-                    }  
-                } 
-                return retType;
-            }
-        };
+        this.nodeEvaluator = new DogNodeEvaluator(dog);
         this.nodeEvaluator.setCanPassDoors(true);
         return new PathFinder(this.nodeEvaluator, p_26453_);
     }
