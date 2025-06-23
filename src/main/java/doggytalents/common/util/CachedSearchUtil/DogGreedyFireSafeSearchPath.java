@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.nav.DogNodeEvaluator;
+import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.pathfinder.Node;
@@ -46,7 +48,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
     }
 
     private static Optional<Node> getStartNode(Dog dog) {
-        var dog_b0 = dog.blockPosition();
+        var dog_b0 = BlockPos.containing(DogPathNavigation.getTempDogPos(dog));
         if (isValidStart(dog, dog_b0))
             return blockPosToNodeOptional(dog_b0);
         
@@ -67,8 +69,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     private static boolean isValidStart(Dog dog, BlockPos pos) {
         var pos_below = pos.below();
-        var state_under = dog.level().getBlockState(pos_below);
-        return state_under.isCollisionShapeFullBlock(dog.level(), pos_below);
+        var state_below = dog.level().getBlockState(pos_below);
+        return state_below.isCollisionShapeFullBlock(dog.level(), pos_below) 
+            || DogNodeEvaluator.dogGetPathTypeFromState(
+                dog.level(), pos_below) == PathType.BLOCKED;
     }
 
     private static Optional<Node> blockPosToNodeOptional(BlockPos pos) {
