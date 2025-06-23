@@ -308,19 +308,27 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     private boolean findSniffPos() {
         int offset = this.dog.getRandom().nextBoolean() ? 1 : -1;
         boolean offsetX = this.dog.getRandom().nextBoolean();
-        var currentPos = this.dog.blockPosition();
+        var currentPos = getSniffCurrentPos(this.dog);
         var sniffPos = offsetX ?
             currentPos.offset(offset, 0, 0)
             : currentPos.offset(0, 0, offset);
         var sniffState = this.dog.level().getBlockState(sniffPos);
         if (!isBlockSniffable(sniffPos, sniffState))
             return false;
-        var sniffPosUnder = sniffPos.below();
+        var sniffPosUnder = getSniffPosUnder(dog, sniffPos.getX(), sniffPos.getZ());
         var sniffStateUnder = this.dog.level().getBlockState(sniffPosUnder);
         if (!isBlockBelowSniffable(sniffPosUnder, sniffStateUnder))
             return false;
         populateSniffPos(currentPos, sniffPos, sniffState, sniffPosUnder, sniffStateUnder);
         return true;
+    }
+
+    private BlockPos getSniffCurrentPos(Dog dog) {
+        return dog.blockPosition();
+    }
+
+    private BlockPos getSniffPosUnder(Dog dog, int sniffX, int sniffZ) {
+        return BlockPos.containing(sniffX, dog.getY() - 0.1, sniffZ);
     }
 
     private boolean isBlockSniffable(BlockPos pos, BlockState state) {
