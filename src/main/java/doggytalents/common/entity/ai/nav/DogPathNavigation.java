@@ -270,7 +270,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
         boolean do_float_y = 
             dog.isInLiquid() && nav.canFloat();
         if (!do_float_y)
-            return DogUtil.getSurfaceStandingY(dog);
+            return DogUtil.getSurfaceStandingInY(dog);
 
         int y_block = dog.getBlockY();
         for (int y_offset = 0; y_offset <= 16; ++y_offset) {

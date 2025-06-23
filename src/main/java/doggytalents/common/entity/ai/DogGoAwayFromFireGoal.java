@@ -163,7 +163,7 @@ public class DogGoAwayFromFireGoal extends Goal {
             }
         }
 
-        var pos_below = DogUtil.getSurfaceStandingOnPos(dog, pos.x, pos.z);
+        var pos_below = DogUtil.getSurfaceStandingInPos(dog, pos.x, pos.z).below();
         var state_below = dog.level().getBlockState(pos_below);
         if (WalkNodeEvaluator.isBurningBlock(state_below)
             && state_below.isCollisionShapeFullBlock(dog.level(), pos_below))
