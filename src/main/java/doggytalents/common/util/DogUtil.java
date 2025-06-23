@@ -686,11 +686,11 @@ public class DogUtil {
         dog.breakMoveControl();
     }
     
-    public static BlockPos getSurfaceStandingOnPos(Dog dog, double x, double z) {
+    public static BlockPos getSurfaceStandingInPos(Dog dog, double x, double z) {
         return BlockPos.containing(x, dog.getY() + 0.5, z);
     }
 
-    public static int getSurfaceStandingY(Dog dog) {
+    public static int getSurfaceStandingInY(Dog dog) {
         return Mth.floor(dog.getY() + 0.5);
     }
 
