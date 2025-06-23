@@ -15,8 +15,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DogMoveControl extends MoveControl {
 
-    private final float SNEAK_SPEED_1 = 0.35f;
-    private final float SNEAK_SPEED_2 = 0.25f;
+    private static final float SNEAK_SPEED_1 = 0.35f;
+    private static final float SNEAK_SPEED_2 = 0.25f;
 
     private Dog dog;
 
