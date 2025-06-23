@@ -1,5 +1,7 @@
 package doggytalents.common.entity.ai.nav;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nullable;
 
 import doggytalents.common.entity.Dog;
@@ -16,14 +18,15 @@ import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class DogNodeEvaluator extends WalkNodeEvaluator {
 
-    private final Dog dog;
+    private final Supplier<Dog> dogGetter;
 
-    public DogNodeEvaluator(Dog dog) {
-        this.dog = dog;
+    public DogNodeEvaluator(Supplier<Dog> dogGetter) {
+        this.dogGetter = dogGetter;
     }
 
     @Override
     protected double getFloorLevel(BlockPos pos) {
+        var dog = dogGetter.get();
         if (dog.fireImmune()) {
             if (dog.level().getFluidState(pos).is(FluidTags.LAVA)) {
                 return pos.getY();
@@ -36,16 +39,18 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
     @Nullable
     protected Node findAcceptedNode(int x, int y, int z, int floorLevel,
             double maxUpStep, Direction dir, PathType centerType) {
-        if (centerType == PathType.DOOR_WOOD_CLOSED && dog.canDogPassGate()) {
+        
+        if (centerType == PathType.DOOR_WOOD_CLOSED && dogGetter.get().canDogPassGate()) {
             centerType = PathType.WALKABLE;
         }
         return super.findAcceptedNode(x, y, z, floorLevel, maxUpStep, dir, centerType);
     }
 
     @Override
-    public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mon) {
-        var retType =  super.getPathTypeOfMob(context, x, y, z, dog);
+    public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mob) {
+        var retType =  super.getPathTypeOfMob(context, x, y, z, mob);
         
+        var dog = dogGetter.get();
         if (retType == PathType.FENCE && dog.canDogPassGate()) {
             var state = dog.level().getBlockState(new BlockPos(x, y, z));
             if (state.getBlock() instanceof FenceGateBlock) {
