@@ -82,6 +82,11 @@ public class DogBathBlockEntity extends BlockEntity {
         }
 
         @Override
+        public boolean shouldStopAndFollowOwner() {
+            return true;
+        }
+
+        @Override
         public void tick() {
             if (!this.stillValidTarget()) {
                 setState(ActionState.FINISHED);

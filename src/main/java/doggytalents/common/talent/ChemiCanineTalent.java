@@ -326,6 +326,16 @@ public class ChemiCanineTalent extends TalentInstance {
         }
 
         @Override
+        public boolean shouldStopAndFollowOwner() {
+            return true;
+        }
+
+        @Override
+        public float getDistanceForFollowOwner() {
+            return 20;
+        }
+
+        @Override
         public void tick() {
             if (!this.talentInst.stillValidTarget(dog, target)) {
                 this.setState(ActionState.FINISHED); return;
