@@ -597,7 +597,7 @@ public class DogAiManager {
                 shouldTick = true;
             }
             if (shouldTick)
-                action.tick();
+                action.doTick();
             
             state = action.getState();
             if (state == ActionState.FINISHED)
