@@ -1,10 +1,12 @@
 package doggytalents.common.entity.ai.triggerable;
 
+import java.util.Optional;
+
 import doggytalents.common.entity.Dog;
 
 public abstract class TriggerableAction {
     
-    protected Dog dog;
+    protected final Dog dog;
     private ActionState state = ActionState.PENDING;
     private final boolean isTrivial;
     private final boolean canPause;
@@ -18,13 +20,33 @@ public abstract class TriggerableAction {
 
     public final void start() {
         onStart();
-        started = true;
+        started = this.getState() == ActionState.RUNNING;
     }
 
     public final void stop() {
         onStop();
         started = false;
         this.dog.getNavigation().stop();
+    }
+
+    public final void doTick() {
+        if (checkOwnerDistanceStop()) {
+            this.setState(ActionState.FINISHED);
+            return;
+        }
+        tick();
+    }
+
+    private boolean checkOwnerDistanceStop() {
+        if (!this.dog.getMode().shouldFollowOwner())
+            return false;
+        if (!this.shouldStopAndFollowOwner())
+            return false;
+        float max_owner_dist = this.getDistanceForFollowOwner();
+        var owner = this.dog.getOwner();
+        if (owner == null)
+            return false;
+        return owner.distanceToSqr(this.dog) > max_owner_dist * max_owner_dist;
     }
 
     public boolean isStarted() {
@@ -68,6 +90,14 @@ public abstract class TriggerableAction {
 
     public final boolean canPause() {
         return this.canPause;
+    }
+
+    public boolean shouldStopAndFollowOwner() {
+        return false;
+    }
+
+    public float getDistanceForFollowOwner() {
+        return 16;
     }
 
     public void onDogGoesOfflineWhileActive() {}
