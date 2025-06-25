@@ -69,13 +69,12 @@ public class DogMoveControl extends MoveControl {
         if (forceSneak > 0)
             speed = Math.min(speed, forceSneak);
         
-        float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
-        if (speed < 0.39f) {
-            float apporaching_yrot = this.rotlerp(this.dog.getYRot(), target_yrot, 90f);
-            target_yrot = apporaching_yrot;
-        }
+        final float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
+        float apporaching_yrot = speed < 0.39f ? 
+            this.rotlerp(this.dog.getYRot(), target_yrot, 90f)
+            : target_yrot;
         
-        this.dog.setYRot(target_yrot);
+        this.dog.setYRot(apporaching_yrot);
         this.dog.setSpeed((float) speed);
         
         var b0 = this.dog.blockPosition();
@@ -94,6 +93,7 @@ public class DogMoveControl extends MoveControl {
             dyRequiresJump
             || collisionRequireJump;
         if (shouldJump) {
+            this.dog.setYRot(target_yrot);
             this.dog.getJumpControl().jump();
             this.operation = MoveControl.Operation.JUMPING;
         }
