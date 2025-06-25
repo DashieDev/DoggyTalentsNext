@@ -4538,6 +4538,12 @@ public class Dog extends AbstractDog {
             return false;
         if (this.isDogForcePushAvoid())
             return false;
+        if (
+            this.getDefaultNavigationIfActive()
+            .map(DogPathNavigation::shouldDogBlockFluidPush)
+            .orElse(false)
+        )
+            return false;
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType();
 
