@@ -56,8 +56,38 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
             if (state.getBlock() instanceof FenceGateBlock) {
                 retType = PathType.WALKABLE;
             }  
-        } 
+        }
+        if (retType == PathType.DANGER_FIRE && !dog.isInLava()) {
+            var check_pos = new BlockPos(x, y - 1, z);
+            var state = dog.level().getBlockState(check_pos);
+            if (!state.isCollisionShapeFullBlock(dog.level(), check_pos)) {
+                retType = PathType.DAMAGE_FIRE;
+            }
+        }
         return retType;
+    }
+
+    @Override
+    public Node tryFindFirstGroundNodeBelow(int x, int y, int z) {
+        // Override to avoid unecessary overriding and polluting the 
+        // Node cache and potentially the building Path with blocked Nodes 
+        for (int y_check = y - 1; y_check >= this.mob.level().getMinBuildHeight(); y_check--) {
+            if (y - y_check > this.mob.getMaxFallDistance()) {
+                return null;
+            }
+
+            var type = this.getCachedPathType(x, y_check, z);
+            var cost = this.mob.getPathfindingMalus(type);
+            if (type != PathType.OPEN) {
+                if (cost >= 0.0F) {
+                    return this.getNodeAndUpdateCostToMax(x, y_check, z, type, cost);
+                }
+
+                return null;
+            }
+        }
+
+        return null;
     }
 
     public static PathType dogGetPathTypeFromState(BlockGetter getter, BlockPos pos) {
