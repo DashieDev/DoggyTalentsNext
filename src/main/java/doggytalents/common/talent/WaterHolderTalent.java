@@ -400,6 +400,16 @@ public class WaterHolderTalent extends TalentInstance {
         }
 
         @Override
+        public boolean shouldStopAndFollowOwner() {
+            return true;
+        }
+
+        @Override
+        public float getDistanceForFollowOwner() {
+            return 20;
+        }
+
+        @Override
         public void onStart() {
             //this.dog.getLookControl().setLookAt(target, 10.0F, this.dog.getMaxHeadXRot());
             ticksUntilPathRecalc = 0;
