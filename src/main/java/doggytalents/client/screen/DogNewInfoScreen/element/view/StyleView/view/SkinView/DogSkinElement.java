@@ -241,8 +241,6 @@ public class DogSkinElement extends AbstractElement {
         }
 
         
-        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
-            mouseX, mouseY, e_mX, e_mY + 36, 64, false);
         
         int prevId = this.activeSkinId - 1;
         int nextId = this.activeSkinId + 1;
@@ -256,6 +254,9 @@ public class DogSkinElement extends AbstractElement {
             this.renderSkinAndDogModel(prevId, false, graphics, 
                 mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, true);
         }
+
+        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
+            mouseX, mouseY, e_mX, e_mY + 36, 64, false);
     }
 
     private void renderShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
