@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -114,7 +115,12 @@ public class DogFetchAction extends TriggerableAction {
             this.setState(ActionState.FINISHED); return true;
         }
         if (this.tickTillPathRecalc > 0) return false;
-        this.dog.getNavigation().moveTo(this.owner, 1);
+        DogUtil.moveToOwnerOrTeleportIfFarAway(
+            dog, owner, this.dog.getUrgentSpeedModifier(),
+            400, 
+            false, false, 
+            400,
+            dog.getMaxFallDistance());
         return false;
     }
 
