@@ -4712,6 +4712,12 @@ public class Dog extends AbstractDog {
         return this.defaultNavigation == this.getNavigation();
     }
 
+    public Optional<DogPathNavigation> getDefaultNavigationIfActive() {
+        if (this.isDefaultNavigation())
+            return Optional.of(this.defaultNavigation);
+        return Optional.empty();
+    }
+
     @Override
     protected DogPathNavigation createNavigation(Level p_21480_) {
         var dogPathNav = new DogPathNavigation(this, p_21480_);
