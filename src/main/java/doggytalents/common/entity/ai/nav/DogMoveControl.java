@@ -19,6 +19,7 @@ public class DogMoveControl extends MoveControl {
     private static final float SNEAK_SPEED_2 = 0.25f;
 
     private Dog dog;
+    private float forceSneak = -1;
 
     public DogMoveControl(Dog dog) {
         super(dog);
@@ -30,6 +31,7 @@ public class DogMoveControl extends MoveControl {
         if (this.operation == MoveControl.Operation.MOVE_TO) {
             this.operation = MoveControl.Operation.WAIT;
             doDogMoveTo();
+            forceSneak = -1;
             return;
         }
         if (this.operation == MoveControl.Operation.STRAFE) {
@@ -38,6 +40,10 @@ public class DogMoveControl extends MoveControl {
             return;
         }
         super.tick();
+    }
+
+    public void forceSneak(float val) {
+        this.forceSneak = val;
     }
 
     private void doDogMoveTo() {
@@ -60,6 +66,8 @@ public class DogMoveControl extends MoveControl {
         if (this.dog.isDogCurious()) {
             speed = Math.min(speed, SNEAK_SPEED_2);
         }
+        if (forceSneak > 0)
+            speed = Math.min(speed, forceSneak);
         
         float target_yrot = (float)( Mth.atan2(dz, dx) * Mth.RAD_TO_DEG - 90f );
         if (speed < 0.39f) {

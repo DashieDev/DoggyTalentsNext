@@ -3,6 +3,7 @@ package doggytalents.common.entity;
 import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.common.config.ConfigHandler;
+import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.world.entity.Entity;
 
 public class DogPushAvoidManager {
@@ -93,6 +94,8 @@ public class DogPushAvoidManager {
             return true;
         if (checkBlockPushResistingDogWhileNav(dog1, dog2))
             return true;
+        if (checkIfEitherDogApproachingDanger(dog1, dog2))
+            return true;
         
         return false;
     }
@@ -122,6 +125,19 @@ public class DogPushAvoidManager {
             return false;
         Dog not_nav_dog = !dog1_nav ? dog1 : dog2;
         return not_nav_dog.isDogResistingPush();
+    }
+
+    private static boolean checkIfEitherDogApproachingDanger(Dog dog1, Dog dog2) {
+        return
+            checkDogApproachingDanger(dog1)
+            || checkDogApproachingDanger(dog2);
+    }
+
+    private static boolean checkDogApproachingDanger(Dog dog) {
+        return dog.getDefaultNavigationIfActive()
+            .flatMap(DogPathNavigation::getNodesUntilDogApproachDanger)
+            .filter(x -> x.getLeft() <= 1)
+            .isPresent();
     }
 
     private static boolean isTeammateDogs(Dog dog1, Dog dog2) {
