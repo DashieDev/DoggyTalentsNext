@@ -1,11 +1,15 @@
 package doggytalents.common.entity.ai.nav;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
@@ -42,6 +46,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
             if (this.path != null && this.path.isDone())
                 this.stop();
         }
+        setSneakIfNextNodesHasDanger();
     }
 
     @Override
@@ -163,6 +168,57 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
         var node = new Node(target.getX(), target.getY(), target.getZ());
         node.type = type;
         this.path = new Path(List.of(node), target, true);
+    }
+
+    private void setSneakIfNextNodesHasDanger() {
+        
+        var result_optional = getNodesUntilDogApproachDanger();
+        if (!result_optional.isPresent())
+            return;
+
+        if (this.dog.isInLiquid())
+            return;
+
+        var result = result_optional.get();
+        int danger = result.getLeft();
+
+        float speed_cap;
+        if (danger > 1) speed_cap = 0.4f;
+        else if (danger == 1) speed_cap = 0.3f; 
+        else speed_cap = 0.2f;
+
+        this.dog.getDefaultMoveControl().forceSneak(
+            speed_cap);
+    }
+
+    public Optional<Pair<Integer, Node>> getNodesUntilDogApproachDanger() {
+        if (this.isDone())
+            return Optional.empty();
+        var path = this.getPath();
+        if (path == null)
+            return Optional.empty();
+        if (path.getNextNodeIndex() >= path.getNodeCount())
+            return Optional.empty();
+        Pair<Integer, Node> ret = null;
+        int start = path.getNextNodeIndex();
+        int end = Math.min(start + 2, path.getNodeCount() - 1);
+        int prev_node_y = dog.blockPosition().getY();
+        for (int i = start; i <= end; ++i) {
+            var node = path.getNode(i);
+            if (prev_node_y == node.y && i < end)
+                continue;
+            prev_node_y = node.y;
+            var type = node.type;
+            if (type == null)
+                continue;
+            type = dog.inferType(type, InferTypeContext.getDefault());
+            if (!DogUtil.isDangerPathType(type))
+                continue;
+            int danger = i - start;
+            ret = danger >= 0 ? Pair.of(danger, node) : null;
+            break;
+        }
+        return Optional.ofNullable(ret);
     }
 
     public void setDogMoveInTargetNode() {
