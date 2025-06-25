@@ -221,6 +221,24 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
         return Optional.ofNullable(ret);
     }
 
+    public Optional<Node> getDogNextNode() {
+        if (this.isDone())
+            return Optional.empty();
+        var path = this.getPath();
+        if (path == null)
+            return Optional.empty();
+        int next_indx = path.getNextNodeIndex();
+        if (next_indx >= path.getNodeCount())
+            return Optional.empty();
+        return Optional.of(path.getNode(next_indx));
+    }
+
+    public boolean shouldDogBlockFluidPush() {
+        if (this.dog.onGround())
+            return false;
+        return getDogNextNode().isPresent();
+    }
+
     public void setDogMoveInTargetNode() {
         this.moveInTargetNode = true;
     }
