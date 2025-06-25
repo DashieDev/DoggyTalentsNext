@@ -327,6 +327,16 @@ public class RescueDogTalent extends TalentInstance {
         }
 
         @Override
+        public boolean shouldStopAndFollowOwner() {
+            return true;
+        }
+
+        @Override
+        public float getDistanceForFollowOwner() {
+            return 20;
+        }
+
+        @Override
         public void tick() {
             if (this.dog.getMode().shouldAttack()) {
                 this.setState(ActionState.FINISHED); return;
