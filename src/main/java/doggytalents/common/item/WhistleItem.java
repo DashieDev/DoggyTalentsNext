@@ -232,7 +232,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
             return;
         case HEEL:
             if (world.isClientSide) return;
-            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 20);
+            PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 40);
             int max_heel_count = ConfigHandler.ServerConfig.getConfig(
                 ConfigHandler.SERVER.MAX_HEEL_LIMIT
             );
@@ -245,7 +245,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
                         return false;
                     if (!filter_dog.getMode().shouldFollowOwner())
                         return false;
-                    return filter_dog.distanceToSqr(filter_dog.getOwner()) > 9;
+                    return filter_dog.distanceToSqr(player) > 9;
                 })
                 .collect(Collectors.toList());
             if (max_heel_count > 0) {
@@ -255,6 +255,10 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
                 }
             }
             if (heel_list.isEmpty()) return;
+
+            for (var dog : heel_list) {
+                dog.clearTriggerableAction();
+            }
 
             DogUtil.dynamicSearchAndTeleportToOwnwerInBatch(
                 world, heel_list, player, 3);
@@ -558,7 +562,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
     private void catchUp(Level level, Player player, List<Dog> dogs, boolean dogOnDutyOnly) {
         if (level.isClientSide)
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
         int max_heel_count = ConfigHandler.ServerConfig.getConfig(
             ConfigHandler.SERVER.MAX_HEEL_LIMIT
         );
@@ -571,7 +575,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
                     return false;
                 if (!filter_dog.getMode().shouldFollowOwner())
                     return false;
-                return filter_dog.distanceToSqr(filter_dog.getOwner()) > 4;
+                return filter_dog.distanceToSqr(player) > 4;
             })
             .collect(Collectors.toList());
         if (max_heel_count > 0) {
