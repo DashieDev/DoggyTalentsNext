@@ -27,6 +27,8 @@ public class DogRandomStrollGoal extends RandomStrollGoal {
     public boolean canUse() {
         if (!dog.isDoingFine())
             return false;
+        if (this.dog.randomStrollCooldown > 0)
+            return false;
         if (this.dog.isOnFire() && this.dog.getRandom().nextFloat() < 0.1f) {
             this.forceTrigger = true;
         }

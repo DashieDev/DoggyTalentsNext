@@ -94,6 +94,7 @@ public class DogFollowOwnerGoal extends Goal {
         this.owner = null;
         this.dog.getNavigation().stop();
         this.dog.setDogFollowingSomeone(false);
+        dog.randomStrollCooldown = 40;
     }
 
     @Override

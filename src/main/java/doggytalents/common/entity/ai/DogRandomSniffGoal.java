@@ -49,6 +49,8 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         if (!dog.canDoIdileAnim()) return false;
         if (dog.getAnim() != DogAnimation.NONE)
             return false;
+        if (this.dog.randomStrollCooldown > 0)
+            return false;
         if (dog.isOnFire()) return false;
         if (dog.isLowHunger()) return false;
         if (!this.dog.onGround()) return false;
