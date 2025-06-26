@@ -299,7 +299,6 @@ public class Dog extends AbstractDog {
 
     private int healingTick;
     //private int wanderRestTime = 0;
-    private int wanderCooldown = 0;
     private int drunkTickLeft = 0;
     private int silentTickLeft = 0;
 
@@ -323,6 +322,7 @@ public class Dog extends AbstractDog {
     protected boolean isDogSwimming;
 
     public int lastOrderedToSitTick;
+    public int randomStrollCooldown;
     private int tickChopinTail;
     private boolean dogAnimHurtImpules = false;
     private int idleAnimHurtCooldown = 0;
@@ -935,6 +935,10 @@ public class Dog extends AbstractDog {
 
         if (this.tickChopinTail > 0) {
             --this.tickChopinTail;
+        }
+
+        if (this.randomStrollCooldown > 0) {
+            --this.randomStrollCooldown;
         }
 
         if (this.switchNavCooldown > 0) {
