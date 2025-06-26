@@ -5482,4 +5482,7 @@ public class Dog extends AbstractDog {
     public Vec3 calcDogViewVec(float xrot, float yrot) {
         return this.calculateViewVector(xrot, yrot);
     }
+    public boolean isInLiquid() {
+        return this.isInWaterOrBubble() || this.isInLava();
+    }
 }

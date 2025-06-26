@@ -72,7 +72,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         var state_below = dog.level().getBlockState(pos_below);
         return state_below.isCollisionShapeFullBlock(dog.level(), pos_below) 
             || DogNodeEvaluator.dogGetPathTypeFromState(
-                dog.level(), pos_below) == PathType.BLOCKED;
+                dog.level(), pos_below) == BlockPathTypes.BLOCKED;
     }
 
     private static Optional<Node> blockPosToNodeOptional(BlockPos pos) {

@@ -11,9 +11,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 public class DogNodeEvaluator extends WalkNodeEvaluator {
@@ -38,30 +37,30 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
     @Override
     @Nullable
     protected Node findAcceptedNode(int x, int y, int z, int floorLevel,
-            double maxUpStep, Direction dir, PathType centerType) {
+            double maxUpStep, Direction dir, BlockPathTypes centerType) {
         
-        if (centerType == PathType.DOOR_WOOD_CLOSED && dogGetter.get().canDogPassGate()) {
-            centerType = PathType.WALKABLE;
+        if (centerType == BlockPathTypes.DOOR_WOOD_CLOSED && dogGetter.get().canDogPassGate()) {
+            centerType = BlockPathTypes.WALKABLE;
         }
         return super.findAcceptedNode(x, y, z, floorLevel, maxUpStep, dir, centerType);
     }
 
     @Override
-    public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob mob) {
-        var retType =  super.getPathTypeOfMob(context, x, y, z, mob);
+    public BlockPathTypes getBlockPathType(BlockGetter getter, int x, int y, int z) {
+        var retType =  super.getBlockPathType(getter, x, y, z);
         
         var dog = dogGetter.get();
-        if (retType == PathType.FENCE && dog.canDogPassGate()) {
+        if (retType == BlockPathTypes.FENCE && dog.canDogPassGate()) {
             var state = dog.level().getBlockState(new BlockPos(x, y, z));
             if (state.getBlock() instanceof FenceGateBlock) {
-                retType = PathType.WALKABLE;
+                retType = BlockPathTypes.WALKABLE;
             }  
         }
-        if (retType == PathType.DANGER_FIRE && !dog.isInLava()) {
+        if (retType == BlockPathTypes.DANGER_FIRE && !dog.isInLava()) {
             var check_pos = new BlockPos(x, y - 1, z);
             var state = dog.level().getBlockState(check_pos);
             if (!state.isCollisionShapeFullBlock(dog.level(), check_pos)) {
-                retType = PathType.DAMAGE_FIRE;
+                retType = BlockPathTypes.DAMAGE_FIRE;
             }
         }
         return retType;
@@ -74,7 +73,7 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
         return null;
     }
 
-    public static PathType dogGetPathTypeFromState(BlockGetter getter, BlockPos pos) {
-        return WalkNodeEvaluator.getPathTypeFromState(getter, pos);
+    public static BlockPathTypes dogGetPathTypeFromState(BlockGetter getter, BlockPos pos) {
+        return WalkNodeEvaluator.getBlockPathTypeRaw(getter, pos);
     }
 }
