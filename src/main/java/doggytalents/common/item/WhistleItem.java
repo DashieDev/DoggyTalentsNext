@@ -546,9 +546,23 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
 
+        int on_duty_count = 0;
+        int not_on_duty_count = 0;
         for (var dog : dogs) {
+            boolean on_duty_0 = dog.dogOnDuty();
             dog.setDogOnDuty(!dog.isOrderedToSit());
+            boolean on_duty = dog.dogOnDuty();
+            if (on_duty != on_duty_0) {
+                if (on_duty) 
+                    ++on_duty_count;
+                else
+                    ++not_on_duty_count;
+            }
         }
+
+        if (on_duty_count > 0 || not_on_duty_count > 0)
+            player.sendSystemMessage(Component.translatable("dogcommand.on_duty", 
+                on_duty_count, not_on_duty_count));
     }
 
     private boolean canShh(Player player, Dog dog) {
