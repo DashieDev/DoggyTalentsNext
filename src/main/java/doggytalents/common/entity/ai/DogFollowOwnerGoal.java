@@ -3,6 +3,7 @@ package doggytalents.common.entity.ai;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.ai.DogAiManager.IHasTickNonRunning;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 
 import java.util.EnumSet;
 
-public class DogFollowOwnerGoal extends Goal {
+public class DogFollowOwnerGoal extends Goal implements IHasTickNonRunning {
 
     private final Dog dog;
     private final Level world;
@@ -30,6 +31,7 @@ public class DogFollowOwnerGoal extends Goal {
     private int timeToRecalcPath;
     private int tickTillSearchForTp = 0;
     private float oldWaterCost;
+    private int followRequest = 0;
 
     public DogFollowOwnerGoal(Dog dogIn, double speedIn, float minDistIn, float maxDistIn) {
         this.dog = dogIn;
@@ -51,7 +53,8 @@ public class DogFollowOwnerGoal extends Goal {
             return false;
         } else if (this.dog.isInSittingPose()) {
             return false;
-        } else if (!this.dog.hasBone() && this.dog.distanceToSqr(owner) < this.getMinStartDistanceSq()) {
+        } else if (!this.dog.hasBone() && this.dog.distanceToSqr(owner) < this.getMinStartDistanceSq()
+            && this.followRequest <= 0) {
             return false;
         } else if (this.dog.getDogSitOverridePos().isPresent()) {
             return false;
@@ -95,6 +98,7 @@ public class DogFollowOwnerGoal extends Goal {
         this.owner = null;
         this.dog.getNavigation().stop();
         this.dog.setDogFollowingSomeone(false);
+        this.followRequest = 0;
         dog.randomStrollCooldown = 40;
     }
 
@@ -120,5 +124,15 @@ public class DogFollowOwnerGoal extends Goal {
         // }
 
         return this.startDist * this.startDist;
+    }
+
+    @Override
+    public void tickDogWhenNotRunning() {
+        if (this.followRequest > 0)
+            --this.followRequest;
+    }
+
+    public void requestFollow() {
+        this.followRequest = 20;
     }
 }
