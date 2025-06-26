@@ -51,6 +51,7 @@
    "item.doggytalents.whistle.19": "Duty Whistle",
    "item.doggytalents.whistle.20": "Carry Me Whistle",
    "item.doggytalents.whistle.21": "Dog Bridging Whistle",
+   "item.doggytalents.whistle.22": "Whistle: Command Catch Up",
    "item.doggytalents.whistle.0.help": "Command All (only On Duty if opted in) Following Sitting Dogs to Stand.",
    "item.doggytalents.whistle.1.help": "Command All (only On Duty if opted in) Follwing Standing Dogs to teleport near you.",
    "item.doggytalents.whistle.2.help": "Command All (only On Duty if opted in) Following Standing Dogs to Sit if Standing.",
@@ -73,6 +74,7 @@
    "item.doggytalents.whistle.19.help": "Set All Dogs who are Standing to be On Duty and vice versa.",
    "item.doggytalents.whistle.20.help": "Command a nearby Wolf Mount Dog to come and force you on its back.",
    "item.doggytalents.whistle.21.help": "Whistle for the Doggy Tools Talent. See the talent page for help.",
+   "item.doggytalents.whistle.22.help": "Command All (only On Duty if opted in) Follwing Standing Dogs to start following you.",
 
    "item.doggytalents.treat_bag": "Treat Bag",
    "item.doggytalents.energizer_stick": "Energizer Stick",
@@ -612,6 +614,7 @@
    "dogcommand.cross_origin.unset": "All Standing Dogs avoid Cross Origin Teleport!",
    "dogcommand.bridging": "%s, start bridging here!",
    "dogcommand.bridging.limit_exceeded": "You can only have %d Dog(s) bridging at once!",
+   "dogcommand.catchup": "Come here!",
 
    "doggytalents.screen.general.entry_select.help": "To select an entry, you can either use your mouse or keyboard. For the keyboard, use the Movement Keys to highlight the entry and then press Jump (while not holding Sneak) or Enter to select. Pressing Jump while holding Sneak focuses the search bar allowing you to start typing to search. Left-Clicking anywhere unfocuses the search bar. Esc to cancel.",
    "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
