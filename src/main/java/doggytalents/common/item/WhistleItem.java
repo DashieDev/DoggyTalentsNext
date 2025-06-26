@@ -83,7 +83,8 @@ public class WhistleItem extends Item implements IDogItem {
         BED_DOG_WHISTLE(18, WhistleSound.NONE),
         DUTY_WHISTLE(19, WhistleSound.SHORT),
         CARRY_ME(20, WhistleSound.NONE),
-        BRIDING(21, WhistleSound.NONE);
+        BRIDING(21, WhistleSound.NONE),
+        CATCH_UP(22, WhistleSound.SHORT);
         
         public static final WhistleMode[] VALUES = 
             Arrays.stream(WhistleMode.values())
@@ -420,6 +421,9 @@ public class WhistleItem extends Item implements IDogItem {
         case BRIDING:
             DogBridging.useBridgingWhistle(this, player, world);
             return;
+        case CATCH_UP:
+            catchUp(world, player, dogsList, dogOnDutyOnly);
+            return;
         }
     }
 
@@ -547,6 +551,45 @@ public class WhistleItem extends Item implements IDogItem {
         if (dog.distanceToSqr(player) > 16 * 16)
             return false;
         return true;
+    }
+
+    private void catchUp(Level level, Player player, List<Dog> dogs, boolean dogOnDutyOnly) {
+        if (level.isClientSide)
+            return;
+        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        int max_heel_count = ConfigHandler.ServerConfig.getConfig(
+            ConfigHandler.SERVER.MAX_HEEL_LIMIT
+        );
+
+        var heel_list = dogs.stream()
+            .filter(filter_dog -> {
+                if (dogOnDutyOnly && !filter_dog.dogOnDuty())
+                    return false;
+                if (filter_dog.isOrderedToSit()) 
+                    return false;
+                if (!filter_dog.getMode().shouldFollowOwner())
+                    return false;
+                return filter_dog.distanceToSqr(filter_dog.getOwner()) > 4;
+            })
+            .collect(Collectors.toList());
+        if (max_heel_count > 0) {
+            if (heel_list.size() > max_heel_count) {
+                Collections.sort(heel_list, new EntityUtil.Sorter(player));
+                heel_list = heel_list.subList(0, max_heel_count);
+            }
+        }
+        if (heel_list.isEmpty()) return;
+
+        for (var dog : dogs) {
+            if (dog.isOrderedToSit())
+                continue;
+            if (!dog.getMode().shouldFollowOwner())
+                continue;
+            dog.dogAi.clearTriggerableAction();
+            dog.dogAi.requestFollow();
+        }
+
+        player.sendSystemMessage(Component.translatable("dogcommand.catchup"));
     }
 
     public static boolean isDogOnDutyOnly(ItemStack stack) {

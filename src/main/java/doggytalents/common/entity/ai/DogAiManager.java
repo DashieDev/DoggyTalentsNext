@@ -34,6 +34,7 @@ public class DogAiManager {
 
     private DogSitWhenOrderedGoal sitGoal;
     private DogBeingPetGoal beingPetGoal;
+    private DogFollowOwnerGoal followOwnerGoal;
     private WrappedGoal sitGoalWrapped;
     private DogActionExecutorGoal nonTrivialActionGoal;
     private DogActionExecutorGoal trivialActionGoal;
@@ -81,7 +82,7 @@ public class DogAiManager {
         initTriggerableActionGoals(true, p);
         //registerDogGoal(p, new FetchGoal(this.dog, 1.0D, 32.0F));
         registerDogGoal(p, new DogFollowOwnerGoalDefeated(this.dog));
-        registerDogGoal(p, new DogFollowOwnerGoal(this.dog, 1.0D, 10.0F, 2.0F));
+        initFollowOwnerGoal(p);
         ++p;
         registerDogGoal(p, new DogGoBackToSitAfterFinishAction(dog));
         registerDogGoal(p, new DogMoveBackToRestrictGoal(this.dog));
@@ -130,6 +131,11 @@ public class DogAiManager {
     private void initBeingPetGoal(int priority) {
         this.beingPetGoal = new DogBeingPetGoal(dog);
         registerDogGoal(priority, beingPetGoal);
+    }
+
+    private void initFollowOwnerGoal(int priority) {
+        this.followOwnerGoal = new DogFollowOwnerGoal(this.dog, 1.0D, 10.0F, 2.0F);
+        registerDogGoal(priority, this.followOwnerGoal);
     }
 
     private WrappedGoal registerDogGoal(int priority, Goal goal) {
@@ -496,6 +502,10 @@ public class DogAiManager {
         if (this.sitGoalWrapped == null)
             return false;
         return this.sitGoalWrapped.isRunning();
+    }
+
+    public void requestFollow() {
+        this.followOwnerGoal.requestFollow();
     }
 
     public static interface IHasTickNonRunning {
