@@ -615,6 +615,7 @@
    "dogcommand.bridging": "%s, start bridging here!",
    "dogcommand.bridging.limit_exceeded": "You can only have %d Dog(s) bridging at once!",
    "dogcommand.catchup": "Come here!",
+   "dogcommand.on_duty": "Commanded %d Dogs to be On Duty and %d not to.",
 
    "doggytalents.screen.general.entry_select.help": "To select an entry, you can either use your mouse or keyboard. For the keyboard, use the Movement Keys to highlight the entry and then press Jump (while not holding Sneak) or Enter to select. Pressing Jump while holding Sneak focuses the search bar allowing you to start typing to search. Left-Clicking anywhere unfocuses the search bar. Esc to cancel.",
    "doggytalents.screen.whistler.screen.help_title" : "Whistle Mode Select",
