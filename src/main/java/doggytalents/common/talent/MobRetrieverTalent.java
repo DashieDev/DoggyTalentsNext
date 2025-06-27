@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -86,7 +87,7 @@ public class MobRetrieverTalent extends TalentInstance {
         boolean onlyDog = ConfigHandler.SERVER.MOB_RETRIEVER_ONLY_CARRY_DOG.get();
         if (onlyDog && !(target instanceof Dog))
             return false;
-        if (!(target instanceof LivingEntity))
+        if (!(target instanceof Mob))
             return false;
         if (target instanceof Player)
             return false;
@@ -119,7 +120,7 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (!dog.isDoingFine())
             return false;
-        if (!(target instanceof LivingEntity))
+        if (!(target instanceof Mob))
             return false;
         if (target instanceof Enemy)
             return false;
