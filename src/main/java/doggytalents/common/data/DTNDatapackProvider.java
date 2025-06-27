@@ -1,6 +1,7 @@
 package doggytalents.common.data;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import doggytalents.DoggyItems;
 import doggytalents.common.event.PackHandler;
@@ -11,8 +12,8 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstan
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.network.chat.Component;
@@ -54,7 +55,7 @@ public class DTNDatapackProvider {
 
         private PackRecipeProvider(PackOutput output, CompletableFuture<Provider> prov,
             PackRecipeBuilder recipeBuilder) {
-            super(output, prov);
+            super(output);
             this.recipeBuilder = recipeBuilder;
         }
 
@@ -64,11 +65,11 @@ public class DTNDatapackProvider {
         }
 
         @Override
-        protected void buildRecipes(RecipeOutput output) {
+        protected void buildRecipes(Consumer<FinishedRecipe> output) {
             this.recipeBuilder.buildRecipes(output, new RecipeProviderAccessor() {
 
                 @Override
-                public Criterion<TriggerInstance> has(ItemLike item) {
+                public InventoryChangeTrigger.TriggerInstance has(ItemLike item) {
                     return RecipeProvider.has(item);
                 }
                 
@@ -78,13 +79,13 @@ public class DTNDatapackProvider {
         @FunctionalInterface
         public static interface PackRecipeBuilder {
         
-            void buildRecipes(RecipeOutput output, RecipeProviderAccessor recipe_prov);
+            void buildRecipes(Consumer<FinishedRecipe> output, RecipeProviderAccessor recipe_prov);
             
         }
 
         public static interface RecipeProviderAccessor {
             
-            Criterion<InventoryChangeTrigger.TriggerInstance> has(ItemLike item);
+            InventoryChangeTrigger.TriggerInstance has(ItemLike item);
             
         }
     }
