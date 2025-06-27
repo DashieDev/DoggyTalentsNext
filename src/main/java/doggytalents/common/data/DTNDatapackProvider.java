@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import doggytalents.DoggyItems;
+import doggytalents.common.data.forge_data.ForgeDatapackProviderUtil;
 import doggytalents.common.event.PackHandler;
 import doggytalents.common.lib.Constants;
 import net.minecraft.advancements.Criterion;
@@ -19,7 +20,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class DTNDatapackProvider {
  
@@ -27,7 +28,7 @@ public class DTNDatapackProvider {
         var gen = event.getGenerator();    
         var prov = event.getLookupProvider();
 
-        var pack_gen = gen.getBuiltinDatapack(event.includeServer(), 
+        var pack_gen = ForgeDatapackProviderUtil.getBuiltinDatapack(gen, event.includeServer(), 
             Constants.MOD_ID, PackHandler.ALT_RECIPE_1);
         pack_gen.addProvider(pack_output -> {
             return PackMetadataGenerator.forFeaturePack(pack_output, 
