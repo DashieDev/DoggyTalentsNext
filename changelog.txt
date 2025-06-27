@@ -2028,3 +2028,64 @@ Non Water-Breathing Entities.
 # Bed Dogs no longer allow sleeping on in non sleeping dimension.
 * Fix potential illegal clientside access to DogLocationStorage.
 * (1.21.1 only) Added fix for 1.21.1 vanilla teleportation desync.
+
+**1.18.59 - 27th June 2025**
++ Added DTN Built-in Pack that provides a cheaper conducting bone recipe. It can be accessed
+and enabled at the Datapack Menu of the Create World Screen or via the /datapack command.
++ Dog Ally Check is now able to detect ally for other Tamables having their owner allied to
+the Dog's owner but is in a different dimension.
++ Option to allow Standing Non-Following Docile (Wander Mode) Dogs to not loose hunger.
++ New Whistle Mode: Catch up.
+===
+Dog Navigation Improvments:
+# Drastically reduced cases where Dogs might accidentally "Crash" into lava while navigating near it:
+  Dog now begin "Sneaking" while pathing when it is approaching certain Nodes that:
+Contains Danger Type
+  Either is the End Node of the Path or its y is different than the previous Node (or the Dog's
+y block if it is the First Node).
+  The closer it is from the Node, the slower it sneaks.
+  While it is sneaking, it won't push and be pushed by other Allied Dogs.
+
+# Dog Go Away From Fire logic now checks for burning block for every block bellow the dog that its
+Bounding Box touches.
+# Dogs are now able to start Going Away From Fire on non full-collision block like Soul Sand.
+ 
+# Dog don't float in liquid when pathing to a Node that is below it.    
+# Dog now bypass liquid push if Path-ing
+# More accurate jumping
+
+# Dog will not go to a position that is next to a burning block and the block below it is not a full
+collision block (e.g A position next to lava with Soul Sand as the block below)
+
+# Fix Dog occasioally stops path-ing due to the path being unecessary polluted with BLOCKED Nodes.
+===
+# Dog Skins now properly invalidate and reload when resource reload.
+# Guard Dogs now eat from Food Bowl/Pack Puppy when hungry, they will also stop guarding if
+their hunger is too low.
+===
+Dog Location Tracking improvement
+# DogLocationData now keep a cache of its Dog as long as it is online and invalidate it
+when it is offline.
+# When saving the storage, if the dog is present, the storage will directly get the position From
+the cached Dog and save it instead of its last updated Position.
+# This decrease chance of outdated position if the Server have a Crash.
+===
+Revamp Duplication Detection:
+# The system now only check when a Dog is about to join the world and not when reading its nbt. 
+# No longer throw if detected a Dog is being restored from third-party instead we just silently
+block the Dog from joining the world.
+# Prevented unwanted crashes when attempting to restore the dog from third party
+# allow the Dog Data to be easily migratable.
+# Removed Config "duplication_detection_strategy", the option "trust_third_party_storage" now dictate
+if the system is enabled or not.
+# Refined Log Msg and allow disable. 
+===
+# Returing Fetching Dogs now teleport to Owner if necessary.
+# For Follwing Dogs, some Actions now stop if its Owner gets too far away. 
+# Dogs now refrain from doing any Random Stroll for a short period after follwing Owner.
+# On Duty Whistle now states how many Dogs it set to be onDuty or to not.
+* Sniffing Dog now identify below sniff Position more properly, especially when it is standing on
+non-full-collision block like Soul Sand.
+* Fixes Dog Standing on Soul Sand still tries to go away despite that the only fire block is under
+the Soul Sand.
+* Fix Render Order in Skin Tab. 
