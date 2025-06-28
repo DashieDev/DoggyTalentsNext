@@ -2089,3 +2089,6 @@ non-full-collision block like Soul Sand.
 * Fixes Dog Standing on Soul Sand still tries to go away despite that the only fire block is under
 the Soul Sand.
 * Fix Render Order in Skin Tab. 
+
+**1.18.60 - 28th June 2025**
+* Fixed some Dog Pathfinding Bugs.
