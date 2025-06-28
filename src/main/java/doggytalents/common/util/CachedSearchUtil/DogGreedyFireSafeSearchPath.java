@@ -102,6 +102,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
     public boolean tryAppendPath() {
         if (this.getNextNodeIndex() >= this.maxLength)
             return false;
+        if (this.nodes.isEmpty())
+            return false;
+        
+        var old_end = this.nodes.get(this.nodes.size() - 1);
         
         var node_optional = scanSurroundingForNextPos(this);
         if (!node_optional.isPresent())
@@ -113,6 +117,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
         this.nodes.add(node);
         if (node.type == PathType.WALKABLE)
             ++this.walkableCount;
+
+        if (old_end.y == node.y) {
+            node.type = PathType.WALKABLE;
+        }
         return true;
     }
 
