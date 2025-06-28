@@ -4780,10 +4780,6 @@ public class Dog extends AbstractDog {
         case TRAPDOOR:
             return -1;
         }
-        if (this.isInLava()) {
-            if (type == PathType.LAVA || type == PathType.DAMAGE_FIRE)
-                return 40;
-        }
         return super.getPathfindingMalus(type);
     }
 
