@@ -71,7 +71,21 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
     public Node getBlockedNode(int x, int y, int z) {
         // Override to avoid unecessary overriding and polluting the 
         // Node cache and potentially the building Path with blocked Nodes 
-        return null;
+        
+        // We return a new Node entirely solely for the Diagonal Check 
+        // and overrided the isNeighborValid check to ensure that this never
+        // get polluted in the pathfinding context.
+        var ret = new Node(x, y, z);
+        ret.type = PathType.OPEN; // we don't want OPEN as a valid neighbor anyawys.  
+        ret.costMalus = -1;
+        return ret;
+    }
+
+    @Override
+    protected boolean isNeighborValid(@Nullable Node neighbor, Node center) {
+        if (neighbor != null && neighbor.type == PathType.OPEN)
+            return false;
+        return super.isNeighborValid(neighbor, center);
     }
 
     public static PathType dogGetPathTypeFromState(BlockGetter getter, BlockPos pos) {
