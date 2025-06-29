@@ -6,7 +6,7 @@ import java.util.List;
 import doggytalents.api.events.RegisterCustomDogModelsEvent;
 import doggytalents.api.events.RegisterDogSkinJsonPathEvent;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
-import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 
 public class DogModelConfiguationRegistry {
@@ -31,7 +31,7 @@ public class DogModelConfiguationRegistry {
         var skinJsonEvent = new RegisterDogSkinJsonPathEvent(skinJsonPaths);
         var propsEvent = new RegisterCustomDogModelsEvent(entries);
         var ctx = new Context(propsEvent, skinJsonEvent);
-        var containers = FabricLoaderImpl.INSTANCE
+        var containers = FabricLoader.getInstance()
             .getEntrypointContainers(ENTRY_ID, DogModelConfigurationEntry.class);
         if (containers.isEmpty())
             return;

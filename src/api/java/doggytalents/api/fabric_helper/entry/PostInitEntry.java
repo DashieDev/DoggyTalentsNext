@@ -1,6 +1,6 @@
 package doggytalents.api.fabric_helper.entry;
 
-import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.fabricmc.loader.api.FabricLoader;
 
 public interface PostInitEntry {
         
@@ -9,7 +9,7 @@ public interface PostInitEntry {
     public void afterDTNInit();
 
     public static void firePosInitEntry() {
-        var containers = FabricLoaderImpl.INSTANCE
+        var containers = FabricLoader.getInstance()
             .getEntrypointContainers(ENTRY_ID, PostInitEntry.class);
         if (containers.isEmpty())
             return;
