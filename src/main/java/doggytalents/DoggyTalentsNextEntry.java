@@ -14,6 +14,7 @@ import doggytalents.common.fabric_helper.FabricEventCallbackHandler;
 import doggytalents.common.fabric_helper.config.FabricConfigHandler;
 import doggytalents.common.fabric_helper.entity.network.SyncTypes;
 import doggytalents.common.fabric_helper.lootmodifer_imitate.DTLootModifiers;
+import doggytalents.common.fabric_helper.pack_handler.FabricPackHandler;
 import doggytalents.common.item.itemgroup.DTNCompostables;
 import doggytalents.common.item.itemgroup.DTNItemCategory;
 import doggytalents.common.network.PacketHandler;
@@ -39,6 +40,7 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         ConfigHandler.init();
         FabricConfigHandler.init();
         SyncTypes.init();
+        FabricPackHandler.init();
 
         //Last
         ForgeCommonSetup.init();
