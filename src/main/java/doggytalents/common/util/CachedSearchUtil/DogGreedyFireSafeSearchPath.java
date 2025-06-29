@@ -119,7 +119,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
             ++this.walkableCount;
 
         if (old_end.y == node.y) {
-            node.type = PathType.WALKABLE;
+            node.type = BlockPathTypes.WALKABLE;
         }
         return true;
     }
@@ -164,16 +164,16 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
                 if (!canAddNodeToPath(path, node))
                     continue;
-                if (require_jump && pathtype_above == PathType.BLOCKED)
+                if (require_jump && pathtype_above == BlockPathTypes.BLOCKED)
                     continue;
                 boolean clear_walkable =
-                    node.type == PathType.WALKABLE
-                    && !(require_jump && pathtype_above != PathType.OPEN);
+                    node.type == BlockPathTypes.WALKABLE
+                    && !(require_jump && pathtype_above != BlockPathTypes.OPEN);
                 if (clear_walkable) {
                     return Optional.of(node);
                 }
                 boolean is_last_resort = 
-                    require_jump && pathtype_above != PathType.BLOCKED;
+                    require_jump && pathtype_above != BlockPathTypes.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
                 }
@@ -201,16 +201,16 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 
                 if (!canAddNodeToPath(path, node))
                     continue;
-                if (require_jump && pathtype_above == PathType.BLOCKED)
+                if (require_jump && pathtype_above == BlockPathTypes.BLOCKED)
                     continue;
                 boolean clear_walkable =
-                    node.type == PathType.WALKABLE
-                    && !(require_jump && pathtype_above != PathType.OPEN);
+                    node.type == BlockPathTypes.WALKABLE
+                    && !(require_jump && pathtype_above != BlockPathTypes.OPEN);
                 if (clear_walkable) {
                     return Optional.of(node);
                 }
                 boolean is_last_resort = 
-                    require_jump && pathtype_above != PathType.BLOCKED;
+                    require_jump && pathtype_above != BlockPathTypes.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
                 }
@@ -233,7 +233,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     private static Node findDogNode(Dog dog, BlockPos pos) {
         var b1 = pos.mutable();
-        var b1_type = WalkNodeEvaluator.getPathTypeStatic(dog, b1.mutable());
+        var b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), b1.mutable());
         int offsetY = 0;
         if (b1_type == BlockPathTypes.BLOCKED) {
                 offsetY= 1;
@@ -242,7 +242,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         }
         if (offsetY != 0) {
             b1.move(0, offsetY, 0);
-            b1_type = WalkNodeEvaluator.getPathTypeStatic(dog, b1.mutable());
+            b1_type = WalkNodeEvaluator.getBlockPathTypeStatic(dog.level(), b1.mutable());
         }
         var ret_node = new Node(b1.getX(), b1.getY(), b1.getZ());
         ret_node.type = b1_type;
@@ -254,7 +254,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
             path.containNode(node) || path.startNode.equals(node);
         if (already_in_path)
             return false;
-        if (node.type == PathType.OPEN)
+        if (node.type == BlockPathTypes.OPEN)
             return false;
         if (path.dog.getPathfindingMalus(node.type) < 0)
             return false;

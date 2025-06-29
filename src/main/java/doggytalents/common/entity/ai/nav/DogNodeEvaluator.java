@@ -75,14 +75,14 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
         // and overrided the isNeighborValid check to ensure that this never
         // get polluted in the pathfinding context.
         var ret = new Node(x, y, z);
-        ret.type = PathType.OPEN; // we don't want OPEN as a valid neighbor anyawys.  
+        ret.type = BlockPathTypes.OPEN; // we don't want OPEN as a valid neighbor anyawys.  
         ret.costMalus = -1;
         return ret;
     }
 
     @Override
     protected boolean isNeighborValid(@Nullable Node neighbor, Node center) {
-        if (neighbor != null && neighbor.type == PathType.OPEN)
+        if (neighbor != null && neighbor.type == BlockPathTypes.OPEN)
             return false;
         return super.isNeighborValid(neighbor, center);
     }
