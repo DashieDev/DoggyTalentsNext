@@ -152,6 +152,12 @@ public class EventHandlerRegisterer {
                 )
         );
         EventCallbacksRegistry.registerCallback(
+            new InstanceEventCallBack<EventHandler, EntityJoinLevelEvent>
+                (handlerIst, EntityJoinLevelEvent.class,
+                    (x, y) -> x.onEntityJoinLevel(y)
+                )
+        );
+        EventCallbacksRegistry.registerCallback(
             new InstanceEventCallBack<EventHandler, LivingDropsEvent>
                 (handlerIst, LivingDropsEvent.class,
                     (x, y) -> x.onLivingDeath(y)

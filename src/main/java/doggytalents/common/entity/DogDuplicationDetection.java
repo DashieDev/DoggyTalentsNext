@@ -18,12 +18,12 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.storage.DogRespawnStorage;
+import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 public class DogDuplicationDetection {
 

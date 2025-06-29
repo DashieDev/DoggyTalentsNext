@@ -602,7 +602,7 @@ public class EventHandler {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onEntityJoinLevel(EntityJoinLevelEvent event) {
         DogDuplicationDetection.beforeEntityJoinLevel(event);
     }
