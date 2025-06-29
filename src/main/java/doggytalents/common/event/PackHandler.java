@@ -19,12 +19,11 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.Pack.Position;
 import net.minecraft.server.packs.repository.PackSource;
 
-public class PackHandler {
+public class PackHandler { // Reflect change in FabricPackHandler
 
     public static final String BUILTIN_PREFIX = "mod/" + Util.getResource("builtin");
     public static final String ALT_RECIPE_1 = "alt_recipe_1";
 
-    // Reflect Adding/Removing Pack change in FabricPackHandler
     // public static void onAddPackFinder(AddPackFindersEvent event) {
     //     if (event.getPackType() == PackType.SERVER_DATA) {
     //         event.addRepositorySource(PackHandler::onRegisterServerPack);
