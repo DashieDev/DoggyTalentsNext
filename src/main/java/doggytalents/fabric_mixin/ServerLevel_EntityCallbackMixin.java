@@ -9,10 +9,10 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 
-@Mixin(ServerLevel.EntityCallbacks.class)
+@Mixin(targets = "net/minecraft/server/level/ServerLevel$EntityCallbacks")
 public class ServerLevel_EntityCallbackMixin {
 
-    @Inject(at = @At("RETURN"),  method = "onTrackingEnd(Lnet/minecraft/world/entity/Entity;)V")
+    @Inject(at = @At("HEAD"),  method = "onTrackingEnd(Lnet/minecraft/world/entity/Entity;)V")
     public void dtn__onTrackingEnd(Entity entity, 
         CallbackInfo info) {
         if (entity instanceof Dog dog) {
