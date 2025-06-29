@@ -1,6 +1,7 @@
 package doggytalents.forge_imitate.event;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 
 public class EntityJoinLevelEvent extends Event {
     
@@ -18,5 +19,9 @@ public class EntityJoinLevelEvent extends Event {
 
     public boolean loadedFromDisk() {
         return loadedFromDisk;
+    }
+
+    public Level getLevel() {
+        return this.entity.level();
     }
 }
