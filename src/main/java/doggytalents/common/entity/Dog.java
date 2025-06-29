@@ -3258,9 +3258,9 @@ public class Dog extends AbstractDog {
         //     this.refreshDimensions();
         // }
 
-        if (this.level().isClientSide && CUSTOM_SKIN.equals(key)) {
-            this.clientSkin = DogSkinHolder.pendingResolve();
-        }
+        // if (this.level().isClientSide && CUSTOM_SKIN.equals(key)) {
+        //     this.clientSkin = DogSkinHolder.pendingResolve();
+        // }
 
         if (ANIMATION.equals(key)) {
             this.animationManager.onAnimationChange(getAnim());
@@ -5498,10 +5498,7 @@ public class Dog extends AbstractDog {
         }
 
         if (this.level().isClientSide && type == SyncTypes.DOG_SKIN) {
-            this.setClientSkin(
-                DogTextureManager.INSTANCE
-                    .getDogSkin(
-                        this.getSkinData().getHash()));
+            this.clientSkin = DogSkinHolder.pendingResolve();
         }
 
         if (!this.level().isClientSide && type == SyncTypes.DOG_MODE) {

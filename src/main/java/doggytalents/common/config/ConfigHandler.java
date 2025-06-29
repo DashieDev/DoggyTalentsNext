@@ -386,7 +386,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.DoubleValue HUNGER_MODIFIER;
         public ForgeConfigSpec.BooleanValue DISABLE_PRESERVE_UUID;
         public ForgeConfigSpec.BooleanValue TRUST_THIRD_PARTY_STORAGE;
-        public ModConfigSpec.BooleanValue THIRD_PARTY_STORE_WARN;
+        public ForgeConfigSpec.BooleanValue THIRD_PARTY_STORE_WARN;
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
@@ -418,7 +418,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue RANDOM_VAR_ON_PALE;
         public ForgeConfigSpec.BooleanValue SWIMMER_DOG_RIDER_WATER_VISION;
         public ForgeConfigSpec.BooleanValue DOG_CAN_EAT_ALL_FOOD;
-        public ModConfigSpec.BooleanValue WANDERING_DOG_NON_HUNGER;
+        public ForgeConfigSpec.BooleanValue WANDERING_DOG_NON_HUNGER;
         public ForgeConfigSpec.BooleanValue SAVE_DOG_RIDING_PLAYER;
         public ForgeConfigSpec.BooleanValue DOG_LOAD_CHUNK_BEFORE_MOVE;
 
