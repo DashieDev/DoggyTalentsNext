@@ -178,6 +178,3 @@ public class DoggyTalentsNext {
     //     }
     // }x
 }
-
-//FABRIC_TODO
-//Implement PackHandler::onAddPackFinder on Entry init;
