@@ -1,5 +1,4 @@
 accessWidener v2 named
-accessible class net/minecraft/server/level/ServerLevel$EntityCallbacks
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible method net/minecraft/client/renderer/block/model/ItemOverrides <init> ()V
 accessible field net/minecraft/client/renderer/block/model/BlockModel parentLocation Lnet/minecraft/resources/ResourceLocation;

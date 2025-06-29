@@ -16,17 +16,24 @@ import net.minecraft.world.level.entity.PersistentEntitySectionManager;
 @Mixin(PersistentEntitySectionManager.class)
 public class PersistentEntitySectionManagerMixin {
     
+    @Inject(at = @At("HEAD"),  method = "addEntity(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z")
+    public void dtn__addEntity_head(EntityAccess entity, boolean loadedFromWorld, CallbackInfoReturnable<Boolean> info) {
+        if (!(entity instanceof LivingEntity living))
+            return;
+        var event = new EntityJoinLevelEvent(living, loadedFromWorld);
+        EventCallbacksRegistry.postEvent(event);
+        if (event.isCanceled())
+            info.setReturnValue(false);
+    }
+
     @Inject(at = @At("RETURN"),  method = "addEntity(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z")
-    public void dtn__addEntity(EntityAccess entity, boolean x, CallbackInfoReturnable<Boolean> info) {
+    public void dtn__addEntity_ret(EntityAccess entity, boolean loadedFromWorld, CallbackInfoReturnable<Boolean> info) {
         var retVal = info.getReturnValue();
         if (!retVal)
             return;
         if (entity instanceof Dog dog) {
             dog.setAddedToWorld(true);
             dog.onAddedToWorld();
-        }
-        if (entity instanceof LivingEntity living) {
-            EventCallbacksRegistry.postEvent(new EntityJoinLevelEvent(living));
         }
     }
 
