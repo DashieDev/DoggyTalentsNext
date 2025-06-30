@@ -13,6 +13,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.DoggyEntityTypes;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.storage.DogLocationData;
@@ -82,13 +83,13 @@ public class DogDuplicationDetection {
         detector.detectDuplicateContext = DetectDuplicateContext.EMPTY;
     }
 
-    public void load(CompoundTag compound, Consumer<UUID> owner_setter) {
+    public void load(CompoundTag_1_21_5 compound, Consumer<UUID> owner_setter) {
         if (!isEffective(dog.level()))
             return;
         if (!compound.contains(DUPE_DETECT_TAG_ID, Tag.TAG_COMPOUND))
             return;
         var tag = compound.getCompound(DUPE_DETECT_TAG_ID);
-        this.detectDuplicateContext = DetectDuplicateContext.load(tag);
+        this.detectDuplicateContext = DetectDuplicateContext.load(tag.wrapped());
         this.checkAndRecorrectOwner(owner_setter);
     }
 

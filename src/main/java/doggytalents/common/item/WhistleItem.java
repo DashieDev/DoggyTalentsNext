@@ -563,7 +563,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
         }
 
         if (on_duty_count > 0 || not_on_duty_count > 0)
-            player.sendSystemMessage(Component.translatable("dogcommand.on_duty", 
+            PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.on_duty", 
                 on_duty_count, not_on_duty_count));
     }
 
@@ -576,7 +576,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
     private void catchUp(Level level, Player player, List<Dog> dogs, boolean dogOnDutyOnly) {
         if (level.isClientSide)
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+        PlayerUtil.addCooldown(player, DoggyItems.WHISTLE.get(), 40);
         int max_heel_count = ConfigHandler.ServerConfig.getConfig(
             ConfigHandler.SERVER.MAX_HEEL_LIMIT
         );
@@ -609,7 +609,7 @@ public class WhistleItem extends Item implements IDogItem, HoverTextAppender_1_2
             dog.dogAi.requestFollow();
         }
 
-        player.sendSystemMessage(Component.translatable("dogcommand.catchup"));
+        PlayerUtil.sendSystemMessage(player, Component.translatable("dogcommand.catchup"));
     }
 
     public static boolean isDogOnDutyOnly(ItemStack stack) {

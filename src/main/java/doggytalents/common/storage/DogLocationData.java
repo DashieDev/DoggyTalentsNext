@@ -149,7 +149,7 @@ public class DogLocationData implements IDogData {
     }
 
     public CompoundTag write(CompoundTag compound) {
-        NBTUtil.putUniqueId(compound, "ownerId", 
+        NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(compound), "ownerId", 
             getCachedDog().map(Dog::getOwnerUUID).orElse(this.ownerId));
         NBTUtil.putVector3d(compound, 
             getCachedDog().map(Dog::position).orElse(this.position));
