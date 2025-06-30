@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:bone",
+    "D": "minecraft:diamond",
+    "S": "minecraft:netherite_scrap",
+    "T": "doggytalents:training_treat"
+  },
+  "pattern": [
+    " D ",
+    "SBS",
+    " T "
+  ],
+  "result": {
+    "count": 1,
+    "id": "doggytalents:conducting_bone"
+  }
+}
