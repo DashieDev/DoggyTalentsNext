@@ -52,7 +52,7 @@ public class DogAllyCheck {
             && owner.isAlliedTo(entity))
             return true;
 
-        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
+        if (entity instanceof TamableAnimal other_dog && EntityUtil_1_21_5.getOwnerUUID(other_dog) != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
 
@@ -70,7 +70,7 @@ public class DogAllyCheck {
     }
 
     private static boolean checkOwnerNotAvailable(Dog dog, Entity entity, UUID owner_uuid) {        
-        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
+        if (entity instanceof TamableAnimal other_dog && EntityUtil_1_21_5.getOwnerUUID(other_dog) != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
             return checkSameTeamWithOfflineOwnerTamable(dog, other_dog);
@@ -95,7 +95,7 @@ public class DogAllyCheck {
     }
 
     private static Optional<Team> findOwnerTeam(TamableAnimal other_dog) {
-        var uuid = other_dog.getOwnerUUID();
+        var uuid = EntityUtil_1_21_5.getOwnerUUID(other_dog);
         if (uuid == null)
             return Optional.empty();
         var server = other_dog.level().getServer();
