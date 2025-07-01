@@ -4,12 +4,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import doggytalents.api.inferface.AbstractDog;
 
@@ -63,5 +66,13 @@ public class ScreenUtil {
     }
     public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int a, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y) {
         graphics.blit(RenderType::guiTextured, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_size_x, tex_size_y);
+    }
+
+    //1.21.5+
+    public static void renderComponentTooltip_21_5(GuiGraphics graphics, Font font, List<Component> list, int i, int j) {
+        var client_components = list.stream()
+            .map(Component::getVisualOrderText)
+            .map(ClientTooltipComponent::create).collect(Collectors.toList());
+        graphics.renderTooltip(font, client_components, i, j, DefaultTooltipPositioner.INSTANCE, null);
     }
 }

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.UIAction;
@@ -121,7 +122,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         );
                     }
                 }
-                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

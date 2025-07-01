@@ -60,7 +60,7 @@ public class CarryMeScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, CarryMeScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
         

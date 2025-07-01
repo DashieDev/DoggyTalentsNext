@@ -83,7 +83,7 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, CanineTrackerScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
 
@@ -138,7 +138,7 @@ public class CanineTrackerScreen extends StringEntrySelectScreen {
             int tY = mY + getSelectAreaSize()/2 + 23;
             graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            ScreenUtil.renderComponentTooltip_21_5(graphics, font, 
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }

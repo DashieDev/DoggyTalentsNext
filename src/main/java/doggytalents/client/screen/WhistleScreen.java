@@ -77,7 +77,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.screen.set_hotkey.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
         pY += setKey.getHeight() + 2;
@@ -106,7 +106,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.target.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
 
@@ -123,7 +123,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, WhistleScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
 
@@ -183,7 +183,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
         } else {
             var mode_name = Component.translatable(mode.getUnlocalisedTitle())
                 .withStyle(Style.EMPTY.withBold(true));
-            graphics.renderComponentTooltip(font, 
+            ScreenUtil.renderComponentTooltip_21_5(graphics, font, 
                 List.of(mode_name, mode_help_c1), mouseX, mouseY);
         }
     }
