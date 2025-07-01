@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
@@ -61,7 +62,7 @@ public class DogMigrateOwnerScreen extends Screen {
                 public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
                     super.renderWidget(graphics, mouseX, mouseY, pTicks);
                     if (!this.isHovered) return;
-                    graphics.renderComponentTooltip(font, List.of(
+                    ScreenUtil.renderComponentTooltip_21_5(graphics, font, List.of(
                         Component.literal(migrateTo == null ? "UUID_ZERO" : migrateTo.toString())
                     ), mouseX, mouseY);
                 }
@@ -205,7 +206,7 @@ public class DogMigrateOwnerScreen extends Screen {
                         return;
                     }
                 }
-                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

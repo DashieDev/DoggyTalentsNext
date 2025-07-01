@@ -120,7 +120,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
         softHeel.setX(mX - 100 - softHeel.getWidth() - 2);
@@ -138,7 +138,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 String additional_help = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
                 list.addAll(ScreenUtil.splitInto(additional_help, 150, HeelByNameScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, list, mouseX, mouseY);
             }
         };
         help.setX(mX - 100 - help.getWidth() - 2);
@@ -195,7 +195,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
             int tY = mY + getSelectAreaSize()/2 + 23;
             graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            ScreenUtil.renderComponentTooltip_21_5(graphics, font, 
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }

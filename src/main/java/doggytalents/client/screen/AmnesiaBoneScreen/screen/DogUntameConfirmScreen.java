@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.DogNewInfoScreen.DogNewInfoScreen;
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.widget.CustomButton;
@@ -143,7 +144,7 @@ public class DogUntameConfirmScreen extends Screen {
                         return;
                     }
                 }
-                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;

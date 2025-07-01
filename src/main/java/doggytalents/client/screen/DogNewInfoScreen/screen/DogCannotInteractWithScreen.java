@@ -61,7 +61,7 @@ public class DogCannotInteractWithScreen extends Screen {
                 if (!this.isHovered) return;
                 var msg = dog.incapacitatedMananger.getIncapMsg();
                 var msgList = ScreenUtil.splitInto(msg, 150, font);
-                graphics.renderComponentTooltip(font, msgList, mouseX, mouseY);
+                ScreenUtil.renderComponentTooltip_21_5(graphics, font, msgList, mouseX, mouseY);
             }
         };
         this.addRenderableWidget(this.showIncapStrButton);
