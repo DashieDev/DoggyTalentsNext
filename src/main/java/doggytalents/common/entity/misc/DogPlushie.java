@@ -12,6 +12,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
 public class DogPlushie extends BaseDogPlushie implements IEntityWithComplexSpawn {
@@ -49,7 +50,7 @@ public class DogPlushie extends BaseDogPlushie implements IEntityWithComplexSpaw
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound_1_21_5) {
+    protected void readAdditionalSaveData(ValueInput compound_1_21_5) {
         var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
 
         if (compound.contains("PlushCollarColor", Tag.TAG_INT))
