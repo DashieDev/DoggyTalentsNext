@@ -5,16 +5,21 @@ import java.util.function.Supplier;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 public class ValueOutputUtil_1_21_7 {
+
+    public static void outputTagTo(ValueOutput output, String key, Tag tag) {
+        output.store(key, ExtraCodecs.NBT, tag);
+    }
     
     public static void outputTagTo(ValueOutput output, CompoundTag tag) {
         for (var entry : tag.entrySet()) {
-            output.store(entry.getKey(), ExtraCodecs.NBT, entry.getValue());
+            outputTagTo(output, entry.getKey(), entry.getValue());
         }
     }
 
