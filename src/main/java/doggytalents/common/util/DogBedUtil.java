@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import doggytalents.DoggyBlocks;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.api.registry.IDogBedMaterial;
@@ -59,8 +60,8 @@ public class DogBedUtil {
         ItemStack stack = new ItemStack(DoggyBlocks.DOG_BED.get(), 1);
 
         CompoundTag tag = new CompoundTag();
-        NBTUtil.putRegistryValue(tag, "casingId", DogBedMaterialManager.getKey(casingId));
-        NBTUtil.putRegistryValue(tag, "beddingId", DogBedMaterialManager.getKey(beddingId));
+        NBTUtil_1_21_7.putRegistryValue(tag, "casingId", DogBedMaterialManager.getKey(casingId));
+        NBTUtil_1_21_7.putRegistryValue(tag, "beddingId", DogBedMaterialManager.getKey(beddingId));
         var maintag = new CompoundTag();
         maintag.put("doggytalents", tag);
         ItemUtil.putTag(stack, CompoundTag_1_21_5.wrap(maintag));
@@ -103,8 +104,8 @@ public class DogBedUtil {
         ItemStack stack = new ItemStack(DoggyBlocks.DOG_BED.get(), 1);
 
         CompoundTag tag = new CompoundTag();
-        NBTUtil.putRegistryValue(tag, "casingId", BuiltInRegistries.BLOCK.getKey(casing));
-        NBTUtil.putRegistryValue(tag, "beddingId", BuiltInRegistries.BLOCK.getKey(bedding));
+        NBTUtil_1_21_7.putRegistryValue(tag, "casingId", BuiltInRegistries.BLOCK.getKey(casing));
+        NBTUtil_1_21_7.putRegistryValue(tag, "beddingId", BuiltInRegistries.BLOCK.getKey(bedding));
         var maintag = new CompoundTag();
         maintag.put("doggytalents", tag);
         ItemUtil.putTag(stack, CompoundTag_1_21_5.wrap(maintag));

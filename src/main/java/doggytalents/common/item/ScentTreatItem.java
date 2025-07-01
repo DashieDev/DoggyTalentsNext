@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -75,7 +76,7 @@ public class ScentTreatItem extends Item implements HoverTextAppender_1_21_5 {
 
         var block = state.getBlock();
         var id = BuiltInRegistries.BLOCK.getKey(block);
-        NBTUtil.putResourceLocation(tag, SCENT_BLOCK_ID, id);
+        NBTUtil_1_21_7.putResourceLocation(tag, SCENT_BLOCK_ID, id);
 
         ItemUtil.putTag(stack, CompoundTag_1_21_5.wrap(tag));
 

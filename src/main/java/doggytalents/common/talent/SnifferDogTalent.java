@@ -10,6 +10,7 @@ import doggytalents.DoggyItems;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
@@ -237,7 +238,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (this.detectingBlock == null)
             this.detectingBlock = Blocks.AIR;
         var id = BuiltInRegistries.BLOCK.getKey(this.detectingBlock);
-        NBTUtil.putResourceLocation(compound, "snifferDog_detectingBlock", id);
+        NBTUtil_1_21_7.putResourceLocation(compound, "snifferDog_detectingBlock", id);
     }
 
     @Override

@@ -10,6 +10,7 @@ import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
@@ -2860,7 +2861,7 @@ public class Dog extends AbstractDog {
         compound.putFloat("dogHunger", this.getDogHunger());
         compound.putInt("dogIncapacitatedValue", this.getDogIncapValue());
         this.getOwnersName().ifPresent((comp) -> {
-            NBTUtil.putTextComponent(compound, "lastKnownOwnerName", comp);
+            NBTUtil_1_21_7.putTextComponent(compound, "lastKnownOwnerName", comp);
         });
 
         this.getSkinData().save(compound);
@@ -2890,8 +2891,8 @@ public class Dog extends AbstractDog {
 
             for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
-                NBTUtil.putResourceLocation(bedNBT, "dim", entry.getKey().location());
-                NBTUtil.putBlockPos(bedNBT, "pos", entry.getValue());
+                NBTUtil_1_21_7.putResourceLocation(bedNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putBlockPos(bedNBT, "pos", entry.getValue());
                 bedsList.add(bedNBT);
             }
 
@@ -2905,8 +2906,8 @@ public class Dog extends AbstractDog {
 
             for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
-                NBTUtil.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
-                NBTUtil.putBlockPos(bowlsNBT, "pos", entry.getValue());
+                NBTUtil_1_21_7.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putBlockPos(bowlsNBT, "pos", entry.getValue());
                 bowlsList.add(bowlsNBT);
             }
 

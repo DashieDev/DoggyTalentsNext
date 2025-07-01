@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,7 +39,7 @@ public class StatsTracker {
         ListTag killList = new ListTag();
         for (Entry<EntityType<?>, Integer> entry : this.ENTITY_KILLS.entrySet()) {
             CompoundTag stats = new CompoundTag();
-            NBTUtil.putRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey()));
+            NBTUtil_1_21_7.putRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey()));
             stats.putInt("count", entry.getValue());
             killList.add(stats);
         }

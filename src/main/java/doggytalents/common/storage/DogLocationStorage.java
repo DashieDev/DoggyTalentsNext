@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import doggytalents.api.backward_imitate.LegacyNbtCodec_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.entity.Dog;
@@ -180,7 +181,7 @@ public class DogLocationStorage extends SavedData {
             CompoundTag locationCompound = new CompoundTag();
 
             DogLocationData locationData = entry.getValue();
-            NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(locationCompound), "uuid", entry.getKey());
+            NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(locationCompound), "uuid", entry.getKey());
             locationData.write(locationCompound);
 
             list.add(locationCompound);

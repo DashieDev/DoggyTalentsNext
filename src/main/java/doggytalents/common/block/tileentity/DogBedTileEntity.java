@@ -4,6 +4,8 @@ import doggytalents.DoggyRegistries;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedBlock;
@@ -64,12 +66,12 @@ public class DogBedTileEntity extends PlacedTileEntity {
     public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
         super.saveAdditional(compound, prov);
 
-        NBTUtil.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
-        NBTUtil.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );
+        NBTUtil_1_21_7.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
+        NBTUtil_1_21_7.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );
 
-        NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(compound), "ownerId", this.dogUUID);
-        NBTUtil.putTextComponent(compound, "name", this.name);
-        NBTUtil.putTextComponent(compound, "ownerName", this.ownerName);
+        NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(compound), "ownerId", this.dogUUID);
+        NBTUtil_1_21_7.putTextComponent(compound, "name", this.name);
+        NBTUtil_1_21_7.putTextComponent(compound, "ownerName", this.ownerName);
     }
 
     public void setCasing(ICasingMaterial casingType) {
