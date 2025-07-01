@@ -268,12 +268,12 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private boolean almostOutOfRestrict() {
-        if (!this.dog.hasRestriction())
+        if (!this.dog.hasDogRestriction())
             return false;
-        var restrict_b0 = this.dog.getRestrictCenter();
+        var restrict_b0 = this.dog.getDogRestrictCenter();
         if (restrict_b0 == null)
             return false;
-        var restrict_r = this.dog.getRestrictRadius();
+        var restrict_r = this.dog.getDogRestrictRadius();
         var restrict_d0_sqr = this.dog.distanceToSqr(Vec3.atBottomCenterOf(restrict_b0));
         var d_inside_sqr = restrict_r * restrict_r - restrict_d0_sqr;
         return d_inside_sqr <= 1;
@@ -289,9 +289,9 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private BlockPos findMoveToPos() {
-        if (dog.hasRestriction() && dog.getRestrictCenter() != null) {
-            var restrict_b0 = dog.getRestrictCenter();
-            var restrict_r = dog.getRestrictRadius();
+        if (dog.hasDogRestriction() && dog.getDogRestrictCenter() != null) {
+            var restrict_b0 = dog.getDogRestrictCenter();
+            var restrict_r = dog.getDogRestrictRadius();
             int explore_r = Mth.floor(restrict_r) - 1;
             if (explore_r <= 0)
                 return this.dog.blockPosition();

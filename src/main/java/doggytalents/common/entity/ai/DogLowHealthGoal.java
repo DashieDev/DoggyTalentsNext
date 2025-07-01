@@ -192,9 +192,9 @@ public class DogLowHealthGoal {
             } else {
                 if (!this.dog.getMode().canWander())
                     return false;
-                if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
+                if (!this.dog.hasDogRestriction() || this.dog.getDogRestrictCenter() == null)
                     return false;
-                this.restrictPos = this.dog.getRestrictCenter();
+                this.restrictPos = this.dog.getDogRestrictCenter();
                 this.type = Type.RESTRICT;
             }
             
@@ -223,9 +223,9 @@ public class DogLowHealthGoal {
             } else {
                 if (!this.dog.getMode().canWander())
                     return false;
-                if (!this.dog.hasRestriction() || this.dog.getRestrictCenter() == null)
+                if (!this.dog.hasDogRestriction() || this.dog.getDogRestrictCenter() == null)
                     return false;
-                if (!this.restrictPos.equals(dog.getRestrictCenter()))
+                if (!this.restrictPos.equals(dog.getDogRestrictCenter()))
                     return false;
             }
 

@@ -221,10 +221,10 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
 
 
     //1.21.7+
-    public boolean hasRestriction() { return this.hasHome(); }
-    public BlockPos getRestrictCenter() { return this.getHomePosition(); }
-    public int getRestrictRadius() { return this.getHomeRadius(); }
-    public void restrictTo(BlockPos pos, int radius) { this.setHomeTo(pos, radius); }
-    public void clearRestriction() { this.clearHome(); }
-    public boolean isWithinRestriction(BlockPos pos) { return this.isWithinHome(pos); }
+    public boolean hasDogRestriction() { return this.hasHome(); }
+    public BlockPos getDogRestrictCenter() { return this.getHomePosition(); }
+    public int getDogRestrictRadius() { return this.getHomeRadius(); }
+    public void restrictDogTo(BlockPos pos, int radius) { this.setHomeTo(pos, radius); }
+    public void clearDogRestriction() { this.clearHome(); }
+    public boolean isDogWithinRestriction(BlockPos pos) { return this.isWithinHome(pos); }
 }
