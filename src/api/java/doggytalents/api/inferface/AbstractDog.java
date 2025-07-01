@@ -12,6 +12,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.IDog;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -217,4 +218,13 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     //1.21.5+
     public abstract void setOwnerUUID(UUID uuid);
     public abstract @Nullable UUID getOwnerUUID();
+
+
+    //1.21.7+
+    public boolean hasRestriction() { return this.hasHome(); }
+    public BlockPos getRestrictCenter() { return this.getHomePosition(); }
+    public int getRestrictRadius() { return this.getHomeRadius(); }
+    public void restrictTo(BlockPos pos, int radius) { this.setHomeTo(pos, radius); }
+    public void clearRestriction() { this.clearHome(); }
+    public boolean isWithinRestriction(BlockPos pos) { return this.isWithinHome(pos); }
 }
