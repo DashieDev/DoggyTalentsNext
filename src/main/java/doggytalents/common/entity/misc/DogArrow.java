@@ -30,6 +30,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class DogArrow extends AbstractArrow {
 
@@ -229,7 +230,7 @@ public class DogArrow extends AbstractArrow {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         this.dogOwnerUUID.ifPresent(x -> {
             CompoundTag_1_21_5.wrap(tag).putUUID("dtn_dog_owner_id", x);
