@@ -167,7 +167,7 @@ public class DogKeyframeAnimations {
             return Optional.of(root.getChild(name));
         if (check_root && name.equals("root"))
             return Optional.of(root);
-        var partOptional = root.getAllParts()
+        var partOptional = root.getAllParts().stream()
             .filter(part -> part.hasChild(name))
             .findFirst();
         return partOptional.map(part -> part.getChild(name));
