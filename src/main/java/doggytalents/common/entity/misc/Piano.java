@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
 
 public class Piano extends Entity {
@@ -47,7 +48,7 @@ public class Piano extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
+    protected void readAdditionalSaveData(ValueInput compound) {
         boolean bigLidClosed = CompoundTag_1_21_5.wrap(compound).getBoolean("pianoFallboardClosed");
         this.setFallboardClosed(bigLidClosed);
     }

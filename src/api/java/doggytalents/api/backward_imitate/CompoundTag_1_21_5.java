@@ -4,10 +4,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.mojang.serialization.MapCodec;
+
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NumericTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.storage.ValueInput;
 
 public class CompoundTag_1_21_5 {
     
@@ -21,6 +24,16 @@ public class CompoundTag_1_21_5 {
     public static CompoundTag_1_21_5 wrap(Optional<CompoundTag> wrappedOptional) {
         Objects.requireNonNull(wrappedOptional, "Optional Wrapped Compound Tag must not be null");
         return new CompoundTag_1_21_5(wrappedOptional.orElse(new CompoundTag()));
+    }
+
+    //1.21.7+
+    @SuppressWarnings("deprecation")
+    public static CompoundTag_1_21_5 wrap(ValueInput valueInput_1_21_7) {
+        Objects.requireNonNull(valueInput_1_21_7, "Wrapped ValueInput must not be null");
+        var wrapped = valueInput_1_21_7
+            .read(MapCodec.assumeMapUnsafe(CompoundTag.CODEC))
+            .orElseThrow();
+        return new CompoundTag_1_21_5(wrapped);
     }
 
     public static CompoundTag_1_21_5 createEmpty() {

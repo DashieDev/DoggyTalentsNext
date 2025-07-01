@@ -10,6 +10,7 @@ import doggytalents.api.backward_imitate.HurtSuperCall;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.enu.WetSource;
 import doggytalents.api.feature.*;
 import doggytalents.api.feature.DogLevel.Type;
@@ -178,6 +179,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -2105,7 +2108,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean canHaveALeashAttachedToIt() {
+    public boolean canBeLeashed() {
         return false;
     }
 
@@ -2494,7 +2497,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean save(CompoundTag compound) {
+    public boolean save(ValueOutput compound) {
         if (doDogRidingPlayerSave()) {
             return saveAsPassenger(compound);
         }
@@ -2822,10 +2825,10 @@ public class Dog extends AbstractDog {
     // }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
+    public void addAdditionalSaveData(ValueOutput compound_1_21_7) {
+        super.addAdditionalSaveData(compound_1_21_7);
 
-        addDTNAdditionalSavedData(compound);
+        ValueOutputUtil_1_21_7.outputTagTo(compound_1_21_7, (compound) -> addDTNAdditionalSavedData(compound));
     }
 
     public void addDTNAdditionalSavedData(CompoundTag compound) {
@@ -2951,12 +2954,12 @@ public class Dog extends AbstractDog {
         }
     }
 
-    public void addNonDTNAdditionalData(CompoundTag tag) {
+    public void addNonDTNAdditionalData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
     }
 
     @Override
-    public void load(CompoundTag compound) {
+    public void load(ValueInput compound) {
 
         this.authorizedChangingOwner = true;
         this.authorizedChangingName = true;
@@ -2968,7 +2971,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound_1_21_5) {
+    public void readAdditionalSaveData(ValueInput compound_1_21_5) {
         super.readAdditionalSaveData(compound_1_21_5);
         var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
 
