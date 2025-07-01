@@ -6,6 +6,7 @@ import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -145,7 +146,7 @@ public class DogRespawnData implements IDogData {
             if (extraTagsToKeep == null || extraTagsToKeep.isEmpty())
                 return;
             var nonDTNTags = new CompoundTag();
-            dog.addNonDTNAdditionalData(nonDTNTags);
+            ValueOutputUtil_1_21_7.outputValueOutputTo(nonDTNTags, dog.registryAccess(), nonDTNTags_1_21_7 -> dog.addNonDTNAdditionalData(nonDTNTags_1_21_7));
             for (var toKeepStr : extraTagsToKeep) {
                 if (!nonDTNTags.contains(toKeepStr))
                     continue;
