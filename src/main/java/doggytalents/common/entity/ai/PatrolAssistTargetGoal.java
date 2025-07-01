@@ -27,7 +27,7 @@ public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
                 return false;
             if (targetDog.patrolTargetLock())
                 return false;
-            return dog.isWithinRestriction(targetDog.blockPosition());
+            return dog.isDogWithinRestriction(targetDog.blockPosition());
         });
         this.dog = dog;
     }

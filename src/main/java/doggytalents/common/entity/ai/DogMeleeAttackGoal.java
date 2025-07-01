@@ -94,7 +94,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          return false;
       } else if (this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
          return false; 
-      } else if (restriction && !this.dog.isWithinRestriction(target.blockPosition())) {
+      } else if (restriction && !this.dog.isDogWithinRestriction(target.blockPosition())) {
          return false;
       }
 
@@ -167,7 +167,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          return false;
       } else if (livingentity.getY() >= dog.level().getMaxY()) {
          return false;
-      } else if (restriction && !this.dog.isWithinRestriction(livingentity.blockPosition())) {
+      } else if (restriction && !this.dog.isDogWithinRestriction(livingentity.blockPosition())) {
          return false;
       } else {
          return !(livingentity instanceof Player)

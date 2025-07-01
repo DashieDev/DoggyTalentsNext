@@ -125,10 +125,10 @@ public class DogRangedAttackGoal extends Goal {
     }
 
     private boolean checkRestriction(LivingEntity target, Dog dog) {
-        var restrict_pos = dog.getRestrictCenter();
+        var restrict_pos = dog.getDogRestrictCenter();
         if (restrict_pos == null)
             return false;
-        var restrict_r = dog.getRestrictRadius();
+        var restrict_r = dog.getDogRestrictRadius();
         if (restrict_r < 0)
             return false;
         var max_dist = getAttackRadius(target) - 2 + restrict_r; 

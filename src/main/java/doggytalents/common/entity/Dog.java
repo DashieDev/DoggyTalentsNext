@@ -2924,9 +2924,9 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             this.incapacitatedMananger.save(compound);
 
-        if (this.getMode().canWander() && this.hasRestriction()) {
-            var restrict = this.getRestrictCenter();
-            int restrict_r = (int) this.getRestrictRadius();
+        if (this.getMode().canWander() && this.hasDogRestriction()) {
+            var restrict = this.getDogRestrictCenter();
+            int restrict_r = (int) this.getDogRestrictRadius();
             if (restrict != null) {
                 var wanderTg = new CompoundTag();
                 wanderTg.putInt("wanderX", restrict.getX());
@@ -3176,7 +3176,7 @@ public class Dog extends AbstractDog {
                 );
                 int restrict_r = wanderTg.getInt("wanderR");
                 restrict_r = Math.max(0, restrict_r);
-                this.restrictTo(restrictPos, restrict_r);
+                this.restrictDogTo(restrictPos, restrict_r);
             }
         } catch (Exception e) {
             
@@ -3333,7 +3333,7 @@ public class Dog extends AbstractDog {
 
     private void updateWanderState(DogMode mode) {
         if (!mode.canWander()) {
-            this.clearRestriction();
+            this.clearDogRestriction();
             return;
         }
         var restrictPos = this.blockPosition();
@@ -3346,17 +3346,17 @@ public class Dog extends AbstractDog {
                 restrictPos = bowlPos;
             }
         }
-        this.restrictTo(restrictPos, restrictRadius);
+        this.restrictDogTo(restrictPos, restrictRadius);
     }
 
     private boolean invalidateWanderCenter(int distanceSqr) {
-        if (!this.hasRestriction())
+        if (!this.hasDogRestriction())
             return false;
-        var restrict_pos = this.getRestrictCenter();
+        var restrict_pos = this.getDogRestrictCenter();
         if (restrict_pos == null)
             return false;
         if (restrict_pos.distSqr(this.blockPosition()) >= distanceSqr) {
-            this.clearRestriction();
+            this.clearDogRestriction();
             return true;
         }
         return false;
