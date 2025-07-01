@@ -1,6 +1,7 @@
 package doggytalents.common.block.tileentity;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,7 @@ public class PlacedTileEntity extends BlockEntity {
     @Override
     public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
         super.saveAdditional(compound, prov);
-        NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(compound), "placerId", this.placerUUID);
+        NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(compound), "placerId", this.placerUUID);
     }
 
     public void setPlacer(@Nullable LivingEntity placer) {

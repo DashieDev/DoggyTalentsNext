@@ -3,6 +3,7 @@ package doggytalents.common.storage;
 import com.google.common.collect.Maps;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import doggytalents.api.backward_imitate.LegacyNbtCodec_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.entity.Dog;
@@ -129,7 +130,7 @@ public class DogRespawnStorage extends SavedData {
             CompoundTag respawnCompound = new CompoundTag();
 
             DogRespawnData respawnData = entry.getValue();
-            NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(respawnCompound), "uuid", entry.getKey());
+            NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(respawnCompound), "uuid", entry.getKey());
             respawnData.write(respawnCompound);
 
             list.add(respawnCompound);

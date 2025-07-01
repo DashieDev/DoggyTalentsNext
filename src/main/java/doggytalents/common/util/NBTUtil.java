@@ -2,6 +2,7 @@ package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
@@ -30,7 +31,7 @@ public class NBTUtil {
     /**
      * Writes the UUID to the CompoundNBT under the given key if it is not null
      */
-    public static void putUniqueId(CompoundTag_1_21_5 compound, String key, @Nullable UUID uuid) {
+    public static void putUniqueId(CompoundTag_1_21_7 compound, String key, @Nullable UUID uuid) {
         if (uuid != null) {
             compound.putUUID(key, uuid);
         }
@@ -63,7 +64,7 @@ public class NBTUtil {
         compound.remove(key + "Least");
     }
 
-    public static void putResourceLocation(CompoundTag compound, String key, @Nullable ResourceLocation rl) {
+    public static void putResourceLocation(CompoundTag_1_21_7 compound, String key, @Nullable ResourceLocation rl) {
         if (rl != null) {
             compound.putString(key, rl.toString());
         }
@@ -78,7 +79,7 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putVector3d(CompoundTag compound, @Nullable Vec3 vec3d) {
+    public static void putVector3d(CompoundTag_1_21_7 compound, @Nullable Vec3 vec3d) {
         if (vec3d != null) {
             compound.putDouble("x", vec3d.x());
             compound.putDouble("y", vec3d.y());
@@ -96,7 +97,7 @@ public class NBTUtil {
     }
 
 
-    public static void putTextComponent(CompoundTag compound, String key, @Nullable Component component) {
+    public static void putTextComponent(CompoundTag_1_21_7 compound, String key, @Nullable Component component) {
         if (component != null) {
             compound.putString(key, serializeComponentToJsonStr(component));
         }
@@ -159,7 +160,7 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putRegistryValue(CompoundTag compound, String key, ResourceLocation value) {
+    public static void putRegistryValue(CompoundTag_1_21_7 compound, String key, ResourceLocation value) {
         if (value != null) {
             NBTUtil.putResourceLocation(compound, key, value);
         }
@@ -183,7 +184,7 @@ public class NBTUtil {
     }
 
 
-    public static void putBlockPos(CompoundTag compound, String key, Optional<BlockPos> vec3d) {
+    public static void putBlockPos(CompoundTag_1_21_7 compound, String key, Optional<BlockPos> vec3d) {
         if (vec3d.isPresent()) {
             CompoundTag posNBT = new CompoundTag();
             putBlockPos(posNBT, vec3d.get());
@@ -199,7 +200,7 @@ public class NBTUtil {
         return Optional.empty();
     }
 
-    public static void putBlockPos(CompoundTag compound, String key, @Nullable BlockPos vec3d) {
+    public static void putBlockPos(CompoundTag_1_21_7 compound, String key, @Nullable BlockPos vec3d) {
         if (vec3d != null) {
             CompoundTag posNBT = new CompoundTag();
             putBlockPos(posNBT, vec3d);

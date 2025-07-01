@@ -4,6 +4,8 @@ import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
+import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.api.feature.DogGender;
 import doggytalents.api.registry.AccessoryType;
 import doggytalents.common.config.ConfigHandler;
@@ -149,14 +151,14 @@ public class DogLocationData implements IDogData {
     }
 
     public CompoundTag write(CompoundTag compound) {
-        NBTUtil.putUniqueId(CompoundTag_1_21_5.wrap(compound), "ownerId", 
+        NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(compound), "ownerId", 
             getCachedDog().map(Dog::getOwnerUUID).orElse(this.ownerId));
-        NBTUtil.putVector3d(compound, 
+        NBTUtil_1_21_7.putVector3d(compound, 
             getCachedDog().map(Dog::position).orElse(this.position));
         var dimension = this.dimension;
         if (dimension != null)
-            NBTUtil.putResourceLocation(compound, "dimension", dimension.location());
-        NBTUtil.putTextComponent(compound, "name_text_component", this.name);
+            NBTUtil_1_21_7.putResourceLocation(compound, "dimension", dimension.location());
+        NBTUtil_1_21_7.putTextComponent(compound, "name_text_component", this.name);
         if (this.gender != null) {
             compound.putString("gender", this.gender.getSaveName());
         }
