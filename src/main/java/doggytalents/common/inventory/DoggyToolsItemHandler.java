@@ -1,6 +1,7 @@
 package doggytalents.common.inventory;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ItemStackHandler_1_21_7;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -9,7 +10,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class DoggyToolsItemHandler extends ItemStackHandler {
+public class DoggyToolsItemHandler extends ItemStackHandler_1_21_7 {
     public DoggyToolsItemHandler() {
         super(5);
     }
