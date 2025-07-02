@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
-import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
+import doggytalents.common.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.common.util.Cache;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
