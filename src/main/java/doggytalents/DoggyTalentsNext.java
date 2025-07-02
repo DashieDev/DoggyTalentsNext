@@ -14,6 +14,7 @@ import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.backward_imitate.EventRegister_1_21_5;
+import doggytalents.common.backward_imitate.EventRegister_1_21_7;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
 import doggytalents.common.backward_imitate.TicketTypeUtil_1_21_5;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
@@ -145,6 +146,9 @@ public class DoggyTalentsNext {
         //1.21.5+
         EventRegister_1_21_5.registerEvent(modEventBus, forgeEventBus);
         TicketTypeUtil_1_21_5.init(modEventBus);
+
+        //1.21.7+
+        EventRegister_1_21_7.registerEvent(modEventBus, forgeEventBus);
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {
