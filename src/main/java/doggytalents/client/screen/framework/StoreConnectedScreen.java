@@ -87,8 +87,8 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     @Override
-    protected void renderBlurredBackground() {
-        super.renderBlurredBackground();
+    protected void renderBlurredBackground(GuiGraphics graphics) {
+        super.renderBlurredBackground(graphics);
     }
 
     @Override

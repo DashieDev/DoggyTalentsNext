@@ -3,6 +3,8 @@ package doggytalents.client.screen.DogNewInfoScreen.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Matrix3x2fStack;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
@@ -147,7 +149,7 @@ public class CombatReturnSwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY) {
+    public void setOverlayToolTip(Matrix3x2fStack stack, int mouseX, int mouseY) {
         List<Component> list = new ArrayList<>();
         String str = I18n.get(dog.getCombatReturnStrategy().getUnlocalisedInfo());
         list.addAll(ScreenUtil.splitInto(str, 150, this.font));

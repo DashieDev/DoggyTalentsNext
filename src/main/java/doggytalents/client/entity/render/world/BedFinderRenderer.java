@@ -13,15 +13,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 
 import java.util.Optional;
 
 public class BedFinderRenderer {
 
-    public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_PARTICLES) 
-            return;
+    public static void onWorldRenderLast(RenderLevelStageEvent.AfterParticles event) {
+        // if (event.getStage() != Stage.AFTER_PARTICLES) 
+        //     return;
         Player player = Minecraft.getInstance().player;
         for (Entity passenger : player.getPassengers()) {
             if (passenger instanceof Dog) {

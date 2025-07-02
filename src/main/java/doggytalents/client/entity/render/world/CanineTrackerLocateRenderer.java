@@ -36,7 +36,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
@@ -51,9 +50,9 @@ public class CanineTrackerLocateRenderer {
 
     private static WeakReference<Dog> cachedDog = new WeakReference<Dog>(null);
     
-    public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
-            return;
+    public static void onWorldRenderLast(RenderLevelStageEvent.AfterTranslucentBlocks event) {
+        // if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
+        //     return;
         if (!locating) return;
         var player = Minecraft.getInstance().player;
         if (player != null && player.isSpectator()) return;
