@@ -100,10 +100,10 @@ public class DogMigrateOwnerScreen extends Screen {
         );
         var help = font.split(Component.translatable("doggui.migrate_owner.help.subtitle"), 300);
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
-        stack.pushPose();
+        stack.pushMatrix();
         stack.scale(1.2f, 1.2f, 1.2f);
         graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
-        stack.popPose();
+        stack.popMatrix();
         pY += 40;
         for (var line : help) {
             graphics.drawString(font, line, mX - font.width(line)/2, pY, 0xffffffff);
@@ -145,10 +145,10 @@ public class DogMigrateOwnerScreen extends Screen {
         );
         var costStr = I18n.get("doggui.talents.cost") + AmnesiaBoneItem.getMigrateOwnerXPCost();
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
-        stack.pushPose();
+        stack.pushMatrix();
         stack.scale(1.2f, 1.2f, 1.2f);
         graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
-        stack.popPose();
+        stack.popMatrix();
         pY += 40;
         graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;

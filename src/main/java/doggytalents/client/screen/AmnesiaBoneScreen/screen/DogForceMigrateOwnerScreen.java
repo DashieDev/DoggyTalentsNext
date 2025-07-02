@@ -73,10 +73,10 @@ public class DogForceMigrateOwnerScreen extends Screen {
             this.dog.getOwnersName().orElse(Component.literal("")).getString()
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
-        stack.pushPose();
+        stack.pushMatrix();
         stack.scale(1.2f, 1.2f, 1.2f);
         graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
-        stack.popPose();
+        stack.popMatrix();
         pY += 40;
         graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;

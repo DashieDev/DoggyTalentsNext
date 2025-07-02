@@ -339,11 +339,11 @@ public class DogSkinElement extends AbstractElement {
         ScreenUtil.blit_21_3(graphics, Resources.KANJI_MYSTERY_BKG, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
         var stack = graphics.pose();
-        stack.pushPose();
+        stack.pushMatrix();
         stack.translate(0, 0, 400);
         ScreenUtil.blit_21_3(graphics, Resources.KANJI_MYSTERY, x - imgeSize/2, 
             y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        stack.popPose();
+        stack.popMatrix();
         //RenderSystem.disableBlend();
     }
 }
