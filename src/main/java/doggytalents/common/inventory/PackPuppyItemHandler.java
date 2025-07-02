@@ -2,6 +2,7 @@ package doggytalents.common.inventory;
 
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.ItemStackHandler_1_21_7;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.core.HolderLookup;
@@ -10,7 +11,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 
-public class PackPuppyItemHandler extends ItemStackHandler {
+public class PackPuppyItemHandler extends ItemStackHandler_1_21_7 {
 
     private PackPuppyTalent inst;
 
