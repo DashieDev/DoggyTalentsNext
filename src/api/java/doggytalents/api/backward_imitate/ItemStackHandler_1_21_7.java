@@ -1,6 +1,6 @@
 package doggytalents.api.backward_imitate;
 
-import doggytalents.DoggyTalentsNext;
+import doggytalents.api.DoggyTalentsAPI;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
@@ -27,7 +27,7 @@ public class ItemStackHandler_1_21_7 extends ItemStackHandler {
         var value_input = TagValueInput.create(reporter, prov, compound);
         this.deserialize(value_input);
         if (!reporter.isEmpty()) {
-            DoggyTalentsNext.LOGGER.error("Failed to populate Value Output: " + reporter.getReport());
+            DoggyTalentsAPI.LOGGER.error("Failed to populate Value Output: " + reporter.getReport());
         }
     }
 
