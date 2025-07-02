@@ -6,6 +6,7 @@ import java.util.UUID;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalents;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogAllyCheck;
@@ -233,7 +234,7 @@ public class DogArrow extends AbstractArrow {
     public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         this.dogOwnerUUID.ifPresent(x -> {
-            CompoundTag_1_21_5.wrap(tag).putUUID("dtn_dog_owner_id", x);
+            CompoundTag_1_21_7.wrap(tag).putUUID("dtn_dog_owner_id", x);
         });
     }
 
