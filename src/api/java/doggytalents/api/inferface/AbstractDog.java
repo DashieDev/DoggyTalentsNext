@@ -7,16 +7,20 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
 
+import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.feature.DogGender;
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.feature.IDog;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -33,6 +37,7 @@ import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueInput;
 
 public abstract class AbstractDog extends TamableAnimal implements IDog {
 
@@ -222,4 +227,17 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     public void restrictDogTo(BlockPos pos, int radius) { this.setHomeTo(pos, radius); }
     public void clearDogRestriction() { this.clearHome(); }
     public boolean isDogWithinRestriction(BlockPos pos) { return this.isWithinHome(pos); }
+    public CompoundTag saveWithoutId(CompoundTag compound) { 
+        ValueOutputUtil_1_21_7.outputValueOutputTo(compound, this.registryAccess(), 
+            compound_1_21_7 -> this.saveWithoutId(compound_1_21_7));
+        return compound;
+    }
+    public void load(CompoundTag compoundTag) {
+        var reporter = new ProblemReporter.Collector();
+        var value_input = TagValueInput.create(reporter, this.registryAccess(), compoundTag);
+        this.load(value_input);
+        if (!reporter.isEmpty()) {
+            DoggyTalentsAPI.LOGGER.error("Failed to load Dog: " + reporter.getReport());
+        }
+    }
 }
