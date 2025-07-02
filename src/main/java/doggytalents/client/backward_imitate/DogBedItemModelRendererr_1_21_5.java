@@ -1,5 +1,8 @@
 package doggytalents.client.backward_imitate;
 
+import java.util.Arrays;
+import java.util.Set;
+
 import javax.annotation.Nullable;
 
 import org.joml.Vector3f;
@@ -42,6 +45,13 @@ public class DogBedItemModelRendererr_1_21_5 implements SpecialModelRenderer<Ite
     @Nullable
     public ItemStack extractArgument(ItemStack itemStack) {
         return itemStack;
+    }
+
+
+    //1.21.7+
+    @Override
+    public void getExtents(Set<Vector3f> extents) {
+        extents.addAll(Arrays.asList(DefaultExtent_1_21_7.EXTENTS));
     }
     
 }
