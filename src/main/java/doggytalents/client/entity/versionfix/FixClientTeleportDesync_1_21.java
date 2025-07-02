@@ -17,7 +17,7 @@ public class FixClientTeleportDesync_1_21 {
 
     private static boolean isTargetMcVersion() {
         return Optional.ofNullable(DetectedVersion.BUILT_IN)
-            .map(x -> x.getName())
+            .map(x -> x.name())
             .filter(x -> "1.21.1".equals(x))
             .isPresent();
     }

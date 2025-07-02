@@ -19,10 +19,9 @@ import java.util.Optional;
 
 public class BedFinderRenderer {
 
-    public static void onWorldRenderLast(RenderLevelStageEvent event) {
-
-        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
-            return;
+    public static void onWorldRenderLast(RenderLevelStageEvent.AfterParticles event) {
+        // if (event.getStage() != Stage.AFTER_PARTICLES) 
+        //     return;
         Player player = Minecraft.getInstance().player;
         for (Entity passenger : player.getPassengers()) {
             if (passenger instanceof Dog) {

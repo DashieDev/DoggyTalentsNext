@@ -3,6 +3,8 @@ package doggytalents.client.screen.DogNewInfoScreen.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Matrix3x2fStack;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.ScreenUtil;
@@ -160,7 +162,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY, boolean showModeName) {
+    public void setOverlayToolTip(Matrix3x2fStack stack, int mouseX, int mouseY, boolean showModeName) {
         List<Component> list = new ArrayList<>();
         if (showModeName) {
             var msg = this.getMessage();
