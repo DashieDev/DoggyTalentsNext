@@ -61,13 +61,13 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     @Override
     public void loadAdditional(ValueInput compound) {
         super.loadAdditional(compound);
-        this.inventory.deserializeNBT(compound.lookup(), compound);
+        this.inventory.deserialize(compound);
     }
 
     @Override
     public void saveAdditional(ValueOutput compound) {
         super.saveAdditional(compound);
-        compound.merge(this.inventory.serializeNBT(ValueOutputUtil_1_21_7.getRegistriesFromLevel(this.level)));
+        this.inventory.serialize(compound);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {

@@ -536,14 +536,14 @@ public class RiceMillBlockEntity extends BlockEntity {
     @Override
     public void loadAdditional(ValueInput tag) {
         super.loadAdditional(tag);
-        container.deserializeNBT(tag, tag.lookup());
+        container.deserializeNBT(CompoundTag_1_21_5.wrap(tag).wrapped(), tag.lookup());
         this.grindingTime = CompoundTag_1_21_5.wrap(tag).getInt("grindingTime");
     }
 
     @Override
     protected void saveAdditional(ValueOutput tag) {
         super.saveAdditional(tag);
-        container.serializeNBT(tag, ValueOutputUtil_1_21_7.getRegistriesFromLevel(this.level));
+        ValueOutputUtil_1_21_7.outputTagTo(tag, tag_1_21_7 -> container.serializeNBT(tag_1_21_7, ValueOutputUtil_1_21_7.getRegistriesFromLevel(this.level)));
         tag.putInt("grindingTime", this.grindingTime);
     }
 
