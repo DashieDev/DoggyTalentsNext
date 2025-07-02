@@ -108,10 +108,10 @@ public class DogCannotInteractWithScreen extends Screen {
 
         int pY = mY - 72;
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
-        stack.pushPose();
+        stack.pushMatrix();
         stack.scale(1.2f, 1.2f, 1.2f);
         graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
-        stack.popPose();
+        stack.popMatrix();
         pY += 40;
         graphics.drawString(font, help, mX - font.width(help)/2, pY, 0xffffffff);
         pY += 40;
@@ -152,10 +152,10 @@ public class DogCannotInteractWithScreen extends Screen {
         pY = this.height/2 - sizeYtotal/2 + 1;
         
         for (var line : lines1) {
-            stack.pushPose();
+            stack.pushMatrix();
             stack.scale(1.2f, 1.2f, 1.2f);
             graphics.drawString(font, line, Mth.floor(pX/1.2f), Mth.floor(pY/1.2f), 0xffffffff);
-            stack.popPose();
+            stack.popMatrix();
             pY += 14;
         }
         pY += 7;

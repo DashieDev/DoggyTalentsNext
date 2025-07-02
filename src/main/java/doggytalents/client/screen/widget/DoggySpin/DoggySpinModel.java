@@ -222,7 +222,7 @@ public class DoggySpinModel {
         Quaternionf rot
     ) {
         
-        graphics.pose().pushPose();
+        graphics.pose().pushMatrix();
         graphics.pose().translate((double)mid_x, (double)mid_y, 50.0);
         graphics.pose().scale(scale, scale, -scale);
         graphics.pose().translate(offset.x, offset.y, offset.z);
@@ -231,7 +231,7 @@ public class DoggySpinModel {
         Lighting.setupForEntityInInventory();
         graphics.drawSpecial(buf -> this.doRenderModel(graphics.pose(), buf));
         graphics.flush();
-        graphics.pose().popPose();
+        graphics.pose().popMatrix();
         Lighting.setupFor3DItems();
     }
     
