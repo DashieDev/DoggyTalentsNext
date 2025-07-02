@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import doggytalents.DoggyTalentsNext;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -38,8 +39,9 @@ public class ValueOutputUtil_1_21_7 {
         var reporter = new ProblemReporter.Collector();
         var tag_value_output = TagValueOutput.createWithContext(reporter, prov);
         valueOutputPopulator.accept(tag_value_output);
-        if (!reporter.isEmpty())
-            throw new IllegalArgumentException("Failed to populate Value Output: " + reporter.getReport());
+        if (!reporter.isEmpty()) {
+            DoggyTalentsNext.LOGGER.error("Failed to populate Value Output: " + reporter.getReport());
+        }
         
         var tag_output = tag_value_output.buildResult();
         for (var entry : tag_output.entrySet()) {
