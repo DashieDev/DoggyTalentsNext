@@ -7,7 +7,6 @@ import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -15,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -24,10 +24,9 @@ public class DTItemTagsProvider extends ItemTagsProvider {
 
     public DTItemTagsProvider(
         PackOutput p_275204_,
-        CompletableFuture<HolderLookup.Provider> p_275194_,
-        CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_
+        CompletableFuture<HolderLookup.Provider> p_275194_
      ) {
-        super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID);
+        super(p_275204_, p_275194_, Constants.MOD_ID);
     }
 
     @Override

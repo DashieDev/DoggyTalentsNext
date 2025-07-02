@@ -210,7 +210,7 @@ public class DoggyTalentsNext {
             
             DTBlockTagsProvider blockTagProvider = new DTBlockTagsProvider(packOutput, lookup);
             gen.addProvider(true, blockTagProvider);
-            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup ,blockTagProvider.contentsGetter()));
+            gen.addProvider(true, new DTItemTagsProvider(packOutput, lookup/* ,blockTagProvider.contentsGetter()*/));
             gen.addProvider(true, new DTNRecipeProvider_21_3(packOutput, lookup));
             gen.addProvider(true, new DTLootTableProvider(packOutput, lookup));
             gen.addProvider(true, new DTLootModifierProvider(packOutput, lookup));

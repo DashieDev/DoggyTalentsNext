@@ -19,7 +19,7 @@ public class DTNPackMetadataProvider {
         var provider = new PackMetadataGenerator(output)
             .add(PackMetadataSection.TYPE, new PackMetadataSection(
                     Component.literal("Doggy Talents Next Resources."),
-                    DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA),
+                    DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA),
                     Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE))));
         gen.addProvider(true, provider);
     }
