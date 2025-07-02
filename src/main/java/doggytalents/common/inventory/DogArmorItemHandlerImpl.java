@@ -3,6 +3,7 @@ package doggytalents.common.inventory;
 import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.forge_imitate.inventory.ItemStackHandler;
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_3;
 import doggytalents.api.backward_imitate.ItemUtil_1_21_5;
@@ -34,7 +35,7 @@ public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              itemsList.add(stack.save(prov, itemTag));
+              itemsList.add(CodecUtil_1_21_7.saveItemStack(stack, prov, itemTag));
            }
         }
 
@@ -54,7 +55,7 @@ public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
                 CompoundTag_1_21_5 itemTag = tagList.getCompound(i);
                 int slot = itemTag.getInt("Slot");
 
-                var stack = ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY);
+                var stack = CodecUtil_1_21_7.parseItemStack(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY);
                 setArmorInSlot(stack);
                 
             }

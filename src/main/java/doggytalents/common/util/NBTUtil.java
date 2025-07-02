@@ -1,6 +1,7 @@
 package doggytalents.common.util;
 
 import doggytalents.DoggyTalentsNext;
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import net.minecraft.core.BlockPos;
@@ -219,14 +220,14 @@ public class NBTUtil {
 
     public static void writeItemStack(HolderLookup.Provider prov, CompoundTag compound, String key, ItemStack stackIn) {
         if (!stackIn.isEmpty()) {
-            compound.put(key, stackIn.save(prov, new CompoundTag()));
+            compound.put(key, CodecUtil_1_21_7.saveItemStack(stackIn, prov, new CompoundTag()));
         }
     }
 
     @Nonnull
     public static ItemStack readItemStack(HolderLookup.Provider prov, CompoundTag_1_21_5 compound, String key) {
         if (compound.contains(key, Tag.TAG_COMPOUND)) {
-            return ItemStack.parse(prov, compound.getCompound(key).wrapped()).orElse(ItemStack.EMPTY);
+            return CodecUtil_1_21_7.parseItemStack(prov, compound.getCompound(key).wrapped()).orElse(ItemStack.EMPTY);
         }
 
         return ItemStack.EMPTY;

@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.forge_imitate.inventory.ContainerWrapper;
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
@@ -634,7 +635,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                 if (!stack.isEmpty()) {
                     CompoundTag itemTag = new CompoundTag();
                     itemTag.putByte("Slot", (byte) i);
-                    itemsList.add(stack.save(prov, itemTag));
+                    itemsList.add(CodecUtil_1_21_7.saveItemStack(stack, prov, itemTag));
                 }
             }
 
@@ -651,7 +652,7 @@ public class RiceMillBlockEntity extends BlockEntity {
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.getContainerSize()) {
-                        this.setItem(slot, ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
+                        this.setItem(slot, CodecUtil_1_21_7.parseItemStack(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
                     }
                 }
             }
