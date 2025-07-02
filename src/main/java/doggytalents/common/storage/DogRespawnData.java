@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.feature.DogMode;
@@ -134,7 +135,7 @@ public class DogRespawnData implements IDogData {
         }
         var custom_name = dog.getCustomName();
         if (custom_name != null) {
-            target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name, dog.registryAccess()));
+            target.putString(STORAGE_NAME_TAG, CodecUtil_1_21_7.encodeComponentToStr(custom_name, dog.registryAccess()));
         }
         keepAdditionalTag(target, dog);
     }
@@ -179,7 +180,7 @@ public class DogRespawnData implements IDogData {
         if (tag.contains(STORAGE_NAME_TAG)) {
             try {
                 var name_c1_str = tag.getString(STORAGE_NAME_TAG);
-                dog.setDogCustomName(Component.Serializer.fromJson(name_c1_str, dog.registryAccess()));
+                dog.setDogCustomName(CodecUtil_1_21_7.parseComponentFromStr(name_c1_str, dog.registryAccess()));
             } catch (Exception e) {
     
             }

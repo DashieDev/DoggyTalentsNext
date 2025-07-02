@@ -1,5 +1,6 @@
 package doggytalents.common.inventory;
 
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ItemStackHandler_1_21_7;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
@@ -29,7 +30,7 @@ public class PackPuppyItemHandler extends ItemStackHandler_1_21_7 {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              itemsList.add(stack.save(prov, itemTag));
+              itemsList.add(CodecUtil_1_21_7.saveItemStack(stack, prov, itemTag));
            }
         }
 
@@ -51,7 +52,7 @@ public class PackPuppyItemHandler extends ItemStackHandler_1_21_7 {
                     int slot = itemTag.getInt("Slot");
 
                     if (slot >= 0 && slot < this.stacks.size()) {
-                        ItemStack.parse(prov, itemTag.wrapped()).ifPresent(stack -> stacks.set(slot, stack));
+                        CodecUtil_1_21_7.parseItemStack(prov, itemTag.wrapped()).ifPresent(stack -> stacks.set(slot, stack));
                     }
                 }
                 this.onLoad();
@@ -65,7 +66,7 @@ public class PackPuppyItemHandler extends ItemStackHandler_1_21_7 {
                 int slot = itemTag.getInt("Slot");
 
                 if (slot >= 0 && slot < this.stacks.size()) {
-                    ItemStack.parse(prov, itemTag.wrapped()).ifPresent(stack -> stacks.set(slot, stack));
+                    CodecUtil_1_21_7.parseItemStack(prov, itemTag.wrapped()).ifPresent(stack -> stacks.set(slot, stack));
                 }
             }
             this.onLoad();
