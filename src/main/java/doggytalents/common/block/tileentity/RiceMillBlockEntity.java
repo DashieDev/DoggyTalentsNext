@@ -9,6 +9,7 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTileEntityTypes;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.common.block.RiceMillBlock;
 import doggytalents.common.inventory.container.RiceMillMenu;
 import doggytalents.common.util.InventoryUtil;
@@ -44,6 +45,8 @@ import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
@@ -531,16 +534,16 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider prov) {
-        super.loadAdditional(tag, prov);
-        container.deserializeNBT(tag, prov);
+    public void loadAdditional(ValueInput tag) {
+        super.loadAdditional(tag);
+        container.deserializeNBT(tag, tag.lookup());
         this.grindingTime = CompoundTag_1_21_5.wrap(tag).getInt("grindingTime");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider prov) {
-        super.saveAdditional(tag, prov);
-        container.serializeNBT(tag, prov);
+    protected void saveAdditional(ValueOutput tag) {
+        super.saveAdditional(tag);
+        container.serializeNBT(tag, ValueOutputUtil_1_21_7.getRegistriesFromLevel(this.level));
         tag.putInt("grindingTime", this.grindingTime);
     }
 

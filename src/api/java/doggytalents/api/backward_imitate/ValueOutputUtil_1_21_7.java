@@ -3,11 +3,14 @@ package doggytalents.api.backward_imitate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -42,6 +45,10 @@ public class ValueOutputUtil_1_21_7 {
         for (var entry : tag_output.entrySet()) {
             tag.put(entry.getKey(), entry.getValue());
         }
+    }
+
+    public static HolderLookup.Provider getRegistriesFromLevel(@Nullable Level level) {
+        return level != null ? level.registryAccess() : net.minecraft.core.RegistryAccess.EMPTY;
     }
 
 }

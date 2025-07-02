@@ -22,6 +22,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.model.data.ModelProperty;
 
@@ -49,8 +51,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound_1_21_5, HolderLookup.Provider prov) {
-        super.loadAdditional(compound_1_21_5, prov);
+    public void loadAdditional(ValueInput compound_1_21_5) {
+        super.loadAdditional(compound_1_21_5);
         var compound = CompoundTag_1_21_5.wrap(compound_1_21_5); // 1.21.5+
 
         this.casingType = DogBedMaterialManager.getCasing(compound, "casingId");
@@ -63,8 +65,8 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.saveAdditional(compound, prov);
+    public void saveAdditional(ValueOutput compound) {
+        super.saveAdditional(compound);
 
         NBTUtil_1_21_7.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
         NBTUtil_1_21_7.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );

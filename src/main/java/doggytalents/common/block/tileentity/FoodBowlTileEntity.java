@@ -2,6 +2,7 @@ package doggytalents.common.block.tileentity;
 
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyTileEntityTypes;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.api.feature.FoodHandler;
 import doggytalents.common.block.FoodBowlBlock;
 import doggytalents.common.entity.Dog;
@@ -24,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -56,15 +59,15 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.loadAdditional(compound, prov);
-        this.inventory.deserializeNBT(prov, compound);
+    public void loadAdditional(ValueInput compound) {
+        super.loadAdditional(compound);
+        this.inventory.deserializeNBT(compound.lookup(), compound);
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.saveAdditional(compound, prov);
-        compound.merge(this.inventory.serializeNBT(prov));
+    public void saveAdditional(ValueOutput compound) {
+        super.saveAdditional(compound);
+        compound.merge(this.inventory.serializeNBT(ValueOutputUtil_1_21_7.getRegistriesFromLevel(this.level)));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {

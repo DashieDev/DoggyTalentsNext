@@ -2,6 +2,7 @@ package doggytalents.common.block.tileentity;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.core.BlockPos;
@@ -13,6 +14,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -27,15 +30,15 @@ public class PlacedTileEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.loadAdditional(compound, prov);
+    public void loadAdditional(ValueInput compound) {
+        super.loadAdditional(compound);
 
         this.placerUUID = NBTUtil.getUniqueId(CompoundTag_1_21_5.wrap(compound), "placerId");
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.saveAdditional(compound, prov);
+    public void saveAdditional(ValueOutput compound) {
+        super.saveAdditional(compound);
         NBTUtil.putUniqueId(CompoundTag_1_21_7.wrap(compound), "placerId", this.placerUUID);
     }
 
@@ -64,12 +67,12 @@ public class PlacedTileEntity extends BlockEntity {
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider prov) {
         CompoundTag compound = new CompoundTag();
-        this.saveAdditional(compound, prov);
+        ValueOutputUtil_1_21_7.outputValueOutputTo(compound, prov, compound_1_21_7 -> this.saveAdditional(compound_1_21_7));
         return compound;
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider prov) {
-        this.loadAdditional(pkt.getTag(), prov);
+    public void onDataPacket(Connection net, ValueInput compound_1_21_7) {
+        this.loadAdditional(compound_1_21_7);
     }
 }
