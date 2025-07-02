@@ -223,11 +223,11 @@ public class DoggySpinModel {
     ) {
         
         graphics.pose().pushMatrix();
-        graphics.pose().translate((double)mid_x, (double)mid_y, 50.0);
+        graphics.pose().translate(mid_x, mid_y/*, 50.0*/);
         graphics.pose().scale(scale, scale, -scale);
-        graphics.pose().translate(offset.x, offset.y, offset.z);
+        graphics.pose().translate(offset.x, offset.y/*, offset.z*/);
         graphics.pose().mulPose(rot);
-        graphics.pose().translate(0.0F, -1.501F, 0.0F);
+        graphics.pose().translate(0.0F, -1.501F/*, 0.0F*/);
         Lighting.setupForEntityInInventory();
         graphics.drawSpecial(buf -> this.doRenderModel(graphics.pose(), buf));
         graphics.flush();

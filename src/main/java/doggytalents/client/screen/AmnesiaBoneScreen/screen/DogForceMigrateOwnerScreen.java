@@ -74,7 +74,7 @@ public class DogForceMigrateOwnerScreen extends Screen {
         );
         var escToReturn= I18n.get("doggui.invalid_dog.esc_to_return");
         stack.pushMatrix();
-        stack.scale(1.2f, 1.2f, 1.2f);
+        stack.scale(1.2f, 1.2f);
         graphics.drawString(font, title, Mth.floor(mX/1.2f -font.width(title)/2 ), Mth.floor(pY/1.2f), 0xffffffff);
         stack.popMatrix();
         pY += 40;
