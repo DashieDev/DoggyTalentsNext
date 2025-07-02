@@ -1,10 +1,11 @@
-package doggytalents.api.backward_imitate;
+package doggytalents.common.backward_imitate;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import doggytalents.api.backward_imitate.CompoundTag_1_21_7;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

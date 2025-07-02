@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
-import doggytalents.api.backward_imitate.NBTUtil_1_21_7;
+import doggytalents.common.backward_imitate.NBTUtil_1_21_7;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
