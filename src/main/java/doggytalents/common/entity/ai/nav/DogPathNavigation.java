@@ -384,4 +384,11 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
         //     throw new IllegalStateException(dog.getName().getString() + ": Someone trying to create path from outside!");
         // }
     }
+
+    
+    //1.21.7+
+    @Override
+    public boolean canNavigateGround() {
+        return true;
+    }
 }
