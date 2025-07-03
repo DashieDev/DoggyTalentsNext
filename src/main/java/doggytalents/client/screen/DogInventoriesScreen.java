@@ -77,8 +77,8 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int par1, int par2) {
-        graphics.drawString(font, this.title.getString(), 8, 6, 4210752, false);
-        graphics.drawString(font, this.playerInventoryTitle, 8, this.imageHeight - 96 + 2, 4210752, false);
+        graphics.drawString(font, this.title.getString(), 8, 6, -12566464, false);
+        graphics.drawString(font, this.playerInventoryTitle, 8, this.imageHeight - 96 + 2, -12566464, false);
     }
 
     @Override
