@@ -34,7 +34,7 @@ public class FoodBowlScreen extends AbstractContainerScreen<FoodBowlContainer> {
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         ScreenUtil.blit_21_3(graphics, Resources.GUI_FOOD_BOWL, x, y, 0, 0, this.imageWidth, this.imageHeight);

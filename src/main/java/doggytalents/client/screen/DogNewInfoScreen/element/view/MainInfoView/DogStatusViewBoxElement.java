@@ -87,7 +87,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
 
     private void drawDogLevelKanji(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
         //RenderSystem.enableBlend();
         //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -274,7 +274,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         var iconLoc = variant.icon().orElse(null);
         if (iconLoc == null)
             return;
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.enableBlend();
         //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 16;
