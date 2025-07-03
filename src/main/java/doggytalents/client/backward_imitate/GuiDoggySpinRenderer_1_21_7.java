@@ -57,10 +57,11 @@ public class GuiDoggySpinRenderer_1_21_7 extends PictureInPictureRenderer<DoggyS
         Quaternionf rot,
         BiConsumer<PoseStack, MultiBufferSource> renderer
     ) {
-        int x0 = (int)(mid_x - scale/2);
-        int x1 = (int)(mid_x + scale/2); 
-        int y0 = (int)(mid_y - scale/2);
-        int y1 = (int)(mid_y + scale/2);
+        final int box_size = 128;
+        int x0 = (int)(mid_x - box_size/2);
+        int x1 = (int)(mid_x + box_size/2); 
+        int y0 = (int)(mid_y - box_size/2);
+        int y1 = (int)(mid_y + box_size/2);
 
         Function<ScreenRectangle, DoggySpinModelRenderState_1_21_7> creator = 
             scissor -> new DoggySpinModelRenderState_1_21_7(renderer, offset, rot, 
