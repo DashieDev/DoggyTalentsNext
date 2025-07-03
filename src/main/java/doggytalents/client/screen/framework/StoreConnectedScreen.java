@@ -65,8 +65,9 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
             reRenderRoot();
             this.isResizing = false;
         }
-        if (doRenderBackground())
-            this.renderBackground(graphics, mouseX, mouseY, pTicks);
+        // 1.21.7+: vanilla moved renderBackground call to the caller of this method, calling it again crashes the client.
+        // if (doRenderBackground()) 
+        //     this.renderBackground(graphics, mouseX, mouseY, pTicks);
 
         // 1.21 only
         renderDarkBackground_1_21_1_above(graphics);
