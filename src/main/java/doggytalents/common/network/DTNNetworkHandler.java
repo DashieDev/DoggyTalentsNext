@@ -133,7 +133,7 @@ public class DTNNetworkHandler {
         IPayloadHandler<DTNNetworkPayload<?>> payload_handler = 
             DTNNetworkHandler::handlePayload;
 
-        registerer.commonBidirectional(CHANNEL_ID, rw_stream_codec, payload_handler);
+        registerer.commonBidirectional(CHANNEL_ID, rw_stream_codec, payload_handler, payload_handler);
     }
 
     private static final DTNNetworkPayload<Object> ERROR_DATA = new DTNNetworkPayload<Object>(null, null);
