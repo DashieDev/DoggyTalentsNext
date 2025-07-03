@@ -181,7 +181,7 @@ public class DogCannotInteractWithScreen extends Screen {
 
     private void drawDefeatedKanji(GuiGraphics graphics, int x, int y, int size)  {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
         //RenderSystem.enableBlend();
         //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

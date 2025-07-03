@@ -35,7 +35,7 @@ public class PackPuppyScreen extends AbstractContainerScreen<PackPuppyContainer>
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int xMouse, int yMouse) {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int l = (this.width - this.imageWidth) / 2;
         int i1 = (this.height - this.imageHeight) / 2;
         ScreenUtil.blit_21_3(graphics, Resources.GUI_PACK_PUPPY, l, i1, 0, 0, this.imageWidth, this.imageHeight);
