@@ -55,7 +55,7 @@ public class PacketDistributor<T> {
 
         @Override
         public void sendPacket(CustomPacketPayload payload) {
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(payload);
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload);
         }
 
         @Override
