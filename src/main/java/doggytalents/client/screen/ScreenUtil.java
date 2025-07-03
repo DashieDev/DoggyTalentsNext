@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,5 +76,15 @@ public class ScreenUtil {
             .map(Component::getVisualOrderText)
             .map(ClientTooltipComponent::create).collect(Collectors.toList());
         graphics.renderTooltip(font, client_components, i, j, DefaultTooltipPositioner.INSTANCE, null);
+    }
+
+    //1.21.7+
+    public static void blitColored_1_21_7(GuiGraphics graphics, ResourceLocation texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y, float[] color) {
+        int color_i = ARGB.colorFromFloat(color[3], color[0], color[1], color[2]);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_to_x, tex_to_y, tex_size_x, tex_size_y, color_i);
+    }
+    public static void blitColored_1_21_7(GuiGraphics graphics, ResourceLocation texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, float[] color) {
+        int color_i = ARGB.colorFromFloat(color[3], color[0], color[1], color[2]);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_to_x, tex_to_y, 256, 256, color_i);
     }
 }

@@ -95,9 +95,9 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
             }
 
             var slot_color = getSlotShaderColor(slot.getDog());
-            RenderSystem.setShaderColor(slot_color[0], slot_color[1], slot_color[2], 1);
+            float[] color_arr_1_21_7 = new float[]{slot_color[0], slot_color[1], slot_color[2], 1}; //1.21.7+
 
-            ScreenUtil.blit_21_3(graphics, Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
+            ScreenUtil.blitColored_1_21_7(graphics, Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18, color_arr_1_21_7);
         }
         //RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
