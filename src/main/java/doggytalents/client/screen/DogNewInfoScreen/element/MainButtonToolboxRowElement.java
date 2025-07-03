@@ -56,11 +56,11 @@ public class MainButtonToolboxRowElement extends AbstractElement {
                 int mY = this.getY() + this.height/2;
 
                 //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+                float[] color_arr_1_21_7 = new float[]{1.0F, 1.0F, 1.0F, this.alpha}; //1.21.7+
                 //RenderSystem.enableBlend();
                 //RenderSystem.defaultBlendFunc();
                 //RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-                ScreenUtil.blit_21_3(graphics, Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20);
+                ScreenUtil.blitColored_1_21_7(graphics, Resources.HAMBURGER, mX - 10, mY - 10, 0, 0, 20, 20, color_arr_1_21_7);
             }
         };
         totalWidth += editInfoButton.getWidth();
