@@ -26,7 +26,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class DTNDatapackProvider {
  
-    public static void start(GatherDataEvent.Client event) {
+    public static void start(GatherDataEvent event) {
         var gen = event.getGenerator();    
         var prov = event.getLookupProvider();
 
