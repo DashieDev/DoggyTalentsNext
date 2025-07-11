@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogHoldChunkToTeleportPromise extends AbstractPromise {
 

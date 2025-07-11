@@ -9,12 +9,11 @@ import net.minecraft.server.level.Ticket;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.TicketStorage;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import doggytalents.forge_imitate.registry.DeferredRegister;
 
 public class TicketTypeUtil_1_21_5 {
     
-    public static final DeferredRegister<TicketType> TICKET_TYPE = DeferredRegister.create(BuiltInRegistries.TICKET_TYPE, Constants.MOD_ID);
+    public static final DeferredRegister<TicketType> TICKET_TYPE = DeferredRegister.create(() -> BuiltInRegistries.TICKET_TYPE, Constants.MOD_ID);
     public static final TicketType CHUNK_TASK = register("chunk_task", new TicketType(0L, false, TicketType.TicketUse.LOADING_AND_SIMULATION));
 
     private static TicketType register(String id, TicketType type) {
@@ -22,8 +21,8 @@ public class TicketTypeUtil_1_21_5 {
         return type;
     }
 
-    public static void init(IEventBus mod_bus) {
-        TICKET_TYPE.register(mod_bus);
+    public static void init() {
+        TICKET_TYPE.initAll();
     }
 
     public static void addRegionTicket(ServerLevel level, TicketType type, ChunkPos pos, 

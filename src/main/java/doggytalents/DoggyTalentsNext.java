@@ -180,11 +180,6 @@ public class DoggyTalentsNext {
     //         gen.addProvider(true, new DTLootTableProvider(packOutput));
     //         gen.addProvider(true, new DTLootModifierProvider(packOutput));
     //         gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
-    //     }x
-    // }
-
-
-    //Fabric TODO
-    //Remove FabricTicketTracker_1_21_5
-    //+ TicketTypeUtil_1_21_5.init(modEventBus);
+    //     }
+    // }x
 }

@@ -19,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 /**
  * @author DashieDev

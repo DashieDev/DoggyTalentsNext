@@ -1,8 +1,8 @@
 package doggytalents.forge_imitate.event;
 
+import doggytalents.common.backward_imitate.TicketTypeUtil_1_21_5;
 import doggytalents.common.backward_imitate.fabric_util.FabricEventRegisterer_1_21_3;
 import doggytalents.common.backward_imitate.fabric_util.FabricEventRegisterer_1_21_5;
-import doggytalents.common.backward_imitate.fabric_util.FabricTicketTracker_1_21_5;
 import doggytalents.common.network.DTNNetworkHandler;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 
@@ -19,7 +19,7 @@ public class ForgeCommonSetup {
 
         //1_21_5+
         FabricEventRegisterer_1_21_5.init();
-        FabricTicketTracker_1_21_5.init();
+        TicketTypeUtil_1_21_5.init();
     }
 
     public static void fireAttributeEvent() {

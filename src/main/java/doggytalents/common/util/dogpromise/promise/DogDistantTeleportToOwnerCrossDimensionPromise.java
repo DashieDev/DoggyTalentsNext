@@ -24,7 +24,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
-import doggytalents.forge_imitate.chunk.ForgeChunkManager;
 
 public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
     
