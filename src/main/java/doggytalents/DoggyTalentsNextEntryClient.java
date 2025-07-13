@@ -8,8 +8,9 @@ import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.network.DTNNetworkHandler
 ;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 
 public class DoggyTalentsNextEntryClient implements ClientModInitializer {
 
@@ -23,8 +24,8 @@ public class DoggyTalentsNextEntryClient implements ClientModInitializer {
     }
 
     private void registerBlockRenderTypes() {
-        BlockRenderLayerMap.INSTANCE.putBlock(DoggyBlocks.RICE_CROP.get(), RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DoggyBlocks.SOY_CROP.get(), RenderType.cutout());
+        BlockRenderLayerMap.putBlock(DoggyBlocks.RICE_CROP.get(), ChunkSectionLayer.CUTOUT);
+        BlockRenderLayerMap.putBlock(DoggyBlocks.SOY_CROP.get(), ChunkSectionLayer.CUTOUT);
     }
     
 }
