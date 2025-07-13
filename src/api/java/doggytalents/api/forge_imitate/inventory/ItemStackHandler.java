@@ -1,5 +1,6 @@
 package doggytalents.api.forge_imitate.inventory;
 
+import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -30,7 +31,7 @@ public class ItemStackHandler extends SimpleContainer {
            if (!stack.isEmpty()) {
               CompoundTag itemTag = new CompoundTag();
               itemTag.putByte("Slot", (byte) i);
-              itemsList.add(stack.save(prov, itemTag));
+              itemsList.add(CodecUtil_1_21_7.saveItemStack(stack, prov, itemTag));
            }
         }
 
@@ -49,7 +50,7 @@ public class ItemStackHandler extends SimpleContainer {
             int slot = itemTag.getInt("Slot");
 
             if (slot >= 0 && slot < this.stacks.size()) {
-                this.stacks.set(slot, ItemStack.parse(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
+                this.stacks.set(slot, CodecUtil_1_21_7.parseItemStack(prov, itemTag.wrapped()).orElse(ItemStack.EMPTY));
             }
         }
         this.onLoad();

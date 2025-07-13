@@ -52,9 +52,9 @@ public class CanineTrackerLocateRenderer {
 
     private static WeakReference<Dog> cachedDog = new WeakReference<Dog>(null);
     
-    public static void onWorldRenderLast(RenderLevelStageEvent.AfterTranslucentBlocks event) {
-        // if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
-        //     return;
+    public static void onWorldRenderLast(RenderLevelStageEvent event) {
+        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
+            return;
         if (!locating) return;
         var player = Minecraft.getInstance().player;
         if (player != null && player.isSpectator()) return;
