@@ -3,6 +3,7 @@ package doggytalents.api.forge_imitate.inventory;
 import doggytalents.api.backward_imitate.CodecUtil_1_21_7;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.ListTag_1_21_5;
+import doggytalents.api.backward_imitate.ValueOutputUtil_1_21_7;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -13,6 +14,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class ItemStackHandler extends SimpleContainer {
 
@@ -89,6 +92,18 @@ public class ItemStackHandler extends SimpleContainer {
     @Override
     public boolean canTakeItem(Container container, int i, ItemStack itemStack) {
         return false;
+    }
+
+
+
+    //1.21.7+
+    public void serialize_1_21_7(ValueOutput output, HolderLookup.Provider prov) {
+        ValueOutputUtil_1_21_7.outputTagTo(output, compound_1_21_7 -> {
+            compound_1_21_7.merge(this.serializeNBT(prov));
+        });
+    }
+    public void deserialize_1_21_7(ValueInput input, HolderLookup.Provider prov) {
+        this.deserializeNBT(prov, CompoundTag_1_21_5.wrap(input).wrapped());
     }
 
 }
