@@ -184,7 +184,3 @@ public class DoggyTalentsNext {
     //     }
     // }
 }
-
-
-// FABRIC TODO:
-// Port EventRegister_1_21_7
