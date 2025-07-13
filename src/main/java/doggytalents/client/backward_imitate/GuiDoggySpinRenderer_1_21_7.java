@@ -10,12 +10,12 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.common.lib.Constants;
+import doggytalents.forge_imitate.event.client.RegisterPictureInPictureRenderersEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent;
 
 public class GuiDoggySpinRenderer_1_21_7 extends PictureInPictureRenderer<DoggySpinModelRenderState_1_21_7> {
     

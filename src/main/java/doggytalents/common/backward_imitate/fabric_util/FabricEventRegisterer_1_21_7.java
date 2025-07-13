@@ -7,12 +7,13 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBa
 public class FabricEventRegisterer_1_21_7 {
     
     public static void init() {
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<RegisterPictureInPictureRenderersEvent>(
-                RegisterPictureInPictureRenderersEvent.class,
-                GuiDoggySpinRenderer_1_21_7::onRegisterPIPRenderers
-            )
-        );
+        // Fabric 1.21.7+: We directly invoke this callback in the mixin for now.
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<RegisterPictureInPictureRenderersEvent>(
+        //         RegisterPictureInPictureRenderersEvent.class,
+        //         GuiDoggySpinRenderer_1_21_7::onRegisterPIPRenderers
+        //     )
+        // );
     }
 
 }

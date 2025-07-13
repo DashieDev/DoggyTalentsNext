@@ -28,7 +28,11 @@
         "MouseHandlerMixin",
 
         
-        "LivingEntityRendererMixin_21_3"
+        "LivingEntityRendererMixin_21_3",
+
+
+        "GameRendererMixin_1_21_7",
+        "GuiGraphicsAccessorMixin_1_21_7"
     ],
     "server": [],
     "injectors": {
