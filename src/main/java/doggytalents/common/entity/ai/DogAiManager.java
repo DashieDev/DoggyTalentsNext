@@ -84,6 +84,8 @@ public class DogAiManager {
         registerDogGoal(p, new DogFollowOwnerGoalDefeated(this.dog));
         initFollowOwnerGoal(p);
         ++p;
+        registerDogGoal(p, new DogScaredGoal(this.dog));
+        ++p;
         registerDogGoal(p, new DogGoBackToSitAfterFinishAction(dog));
         registerDogGoal(p, new DogMoveBackToRestrictGoal(this.dog));
         registerDogGoal(p, new DogBreedGoal(this.dog, 1.0D));
