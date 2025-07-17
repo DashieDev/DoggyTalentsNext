@@ -100,7 +100,8 @@ public enum DogAnimation {
     SPLASH(90, 140),
     LIE_SIDEWAY_START(91, 40, p -> p.holdOnLastTick()),
     LIE_SIDEWAY_LOOP(92, 40, p -> p.looping()),
-    LIE_SIDEWAY_END(93, 80);
+    LIE_SIDEWAY_END(93, 80),
+    SCARED(94, 180);
 
     private final int id;
     private final int lengthTicks;

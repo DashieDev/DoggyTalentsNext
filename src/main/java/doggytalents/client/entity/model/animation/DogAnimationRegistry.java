@@ -115,6 +115,7 @@ public class DogAnimationRegistry {
         register(DogAnimation.LIE_SIDEWAY_START, DogLieSideWayAnimationSequences.LIE_SIDEWAY_START);
         register(DogAnimation.LIE_SIDEWAY_LOOP, DogLieSideWayAnimationSequences.LIE_SIDEWAY_LOOP);
         register(DogAnimation.LIE_SIDEWAY_END, DogLieSideWayAnimationSequences.LIE_SIDEWAY_END);
+        register(DogAnimation.SCARED, DogScaredAnimations.SCARE);
     }
     
 }
