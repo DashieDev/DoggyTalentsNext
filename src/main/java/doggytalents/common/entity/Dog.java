@@ -43,6 +43,7 @@ import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
+import doggytalents.common.entity.dog_fear.DogFearManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
 import doggytalents.common.entity.DogIncapacitatedMananger.DefeatedType;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
@@ -154,6 +155,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -175,6 +177,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -271,12 +274,15 @@ public class Dog extends AbstractDog {
         = new DogAttackManager(this);
     public final DogAiManager dogAi;
     public final DogMoodManager dogMood = new DogMoodManager(this);
+    public final DogFearManager dogFear = new DogFearManager(this);
     public final DogSoundManager dogSoundManager
         = new DogSoundManager(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
     private IDogRangedAttackManager dogRangedAttackManager
         = IDogRangedAttackManager.NONE;
+
+    private final DynamicGameEventListener<DogGameEventListener> dogGameEventListener;
 
     private final DogArmorItemHandlerImpl dogArmors = new DogArmorItemHandlerImpl(this);
     private ItemStack mouthStack = ItemStack.EMPTY;
@@ -340,6 +346,9 @@ public class Dog extends AbstractDog {
 
         this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
         this.dogAi.init();
+
+        this.dogGameEventListener =
+            new DynamicGameEventListener<>(new DogGameEventListener(this));
     }
 
     @Override
@@ -888,6 +897,7 @@ public class Dog extends AbstractDog {
 
         if (!this.level().isClientSide) {
             this.dogMood.tickServer();
+            this.dogFear.tickServer();
             this.dogPushAvoidManager.tickServer();
             this.dogAttackManager.tickServer();
         }
@@ -3317,6 +3327,13 @@ public class Dog extends AbstractDog {
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.dogSyncedDataManager.onStartBeingSeenBy(player);
+    }
+
+    @Override
+    public void updateDynamicGameEventListener(BiConsumer<DynamicGameEventListener<?>, ServerLevel> listener_updater) {
+        if (this.level() instanceof ServerLevel serverlevel) {
+            listener_updater.accept(dogGameEventListener, serverlevel);
+        }
     }
 
     private void updateWanderState(DogMode mode) {
