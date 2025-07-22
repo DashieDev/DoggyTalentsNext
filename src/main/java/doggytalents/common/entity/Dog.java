@@ -220,6 +220,7 @@ public class Dog extends AbstractDog {
     private static final EntityDataAccessor<Integer> INCAP_VAL = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIMATION = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> ANIM_SYNC_TIME = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> SCARED = SynchedEntityData.defineId(Dog.class, EntityDataSerializers.INT);
 
     private static final EntityDataAccessor<DogVariant> DOG_VARIANT = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_VARIANT_SERIALIZER);
     private static final EntityDataAccessor<DogLevel> DOG_LEVEL = SynchedEntityData.defineId(Dog.class, DoggySerializers.DOG_LEVEL_SERIALIZER);
@@ -371,6 +372,7 @@ public class Dog extends AbstractDog {
         builder.define(INCAP_VAL, 0);
         builder.define(ANIMATION, 0);
         builder.define(ANIM_SYNC_TIME, 0);
+        builder.define(SCARED, 0);
         builder.define(DOG_ANIM_DEBUG_STATE, DogAnimDebugState.NONE);
         builder.define(DOG_PETTING_STATE, DogPettingState.NULL);
         builder.define(DOG_SLEEP_ON_STATE, DogSleepOnState.NULL);
@@ -5255,6 +5257,14 @@ public class Dog extends AbstractDog {
 
     public int getAnimSyncTime() {
         return this.entityData.get(ANIM_SYNC_TIME);
+    }
+
+    public void setScared(int val) {
+        this.entityData.set(SCARED, Mth.clamp(val, 0, 5));
+    }
+
+    public int getScared() {
+        return this.entityData.get(SCARED);
     }
 
     private AnimationAction animAction;

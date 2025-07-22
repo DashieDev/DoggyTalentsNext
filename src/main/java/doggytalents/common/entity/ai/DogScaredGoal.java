@@ -17,18 +17,12 @@ public class DogScaredGoal extends Goal implements IHasTickNonRunning {
 
     public DogScaredGoal(Dog dog) {
         this.dog = dog;
-        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
     @Override
     public boolean canUse() {
         if (this.cooldown > 0)
             return false;
-        if (!dog.canDoIdileAnim()) return false;
-        
-        if (dog.isOnFire()) return false;
-        if (dog.isLowHunger()) return false;
-        if (!this.dog.onGround()) return false;
         if (!this.dog.dogFear.hasAnyFear())
             return false;
         return true;
@@ -36,14 +30,13 @@ public class DogScaredGoal extends Goal implements IHasTickNonRunning {
 
     @Override
     public boolean canContinueToUse() {
-        if (!dog.canContinueDoIdileAnim()) return false;
         return this.dog.tickCount < this.stopTick;
     }
 
     @Override
     public void start() {
         this.stopTick = dog.tickCount + DogAnimation.SCARED.getLengthTicks();
-        this.dog.setAnimForIdle(DogAnimation.SCARED);
+        this.dog.setScared(1);
         animTick = 0;
         this.dog.dogSoundManager.playInterruptible(DogSounds.SAD_WHINE.get(), this.dog.getSoundVolume(), this.dog.getVoicePitch());
         this.dog.dogSoundManager.setAmbientLocked(true);
@@ -56,9 +49,8 @@ public class DogScaredGoal extends Goal implements IHasTickNonRunning {
 
     @Override
     public void stop() {
-        if (!dog.getAnim().interupting())
-            dog.setAnim(DogAnimation.NONE);
-        this.cooldown = 100;
+        //this.cooldown = 100;
+        this.dog.setScared(0);
         
         this.dog.dogSoundManager.setAmbientLocked(false);
     }

@@ -51,7 +51,7 @@ public class DogFollowOwnerGoal extends Goal implements IHasTickNonRunning {
         } else if (owner.isSpectator()) {
             return false;
         } else if (this.dog.isInSittingPose()) {
-            return false;
+            return false; 
         } else if (!this.dog.hasBone() && this.dog.distanceToSqr(owner) < this.getMinStartDistanceSq()
             && this.followRequest <= 0) {
             return false;

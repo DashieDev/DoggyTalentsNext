@@ -20,6 +20,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.entity.model.animation.DogScaredShakingAnimation;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -506,6 +507,9 @@ public class DogModel extends EntityModel<Dog> {
             this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, ageInTicks);
         }
 
+        if (dog.getScared() > 0)
+            animateScaredDog(dog, dog.getScared(), ageInTicks);
+
         var animState = animationManager.animationState;
         var anim = dog.getAnim();
         if (anim == DogAnimation.NONE) return;
@@ -517,7 +521,7 @@ public class DogModel extends EntityModel<Dog> {
             realHeadZRot0 = this.realHead.zRot;
         } else if (pose.freeHead && anim.freeHeadXRotOnly()) {
             headXRot0 = this.head.xRot;
-        }
+        }        
 
         anim.rootRotation().ifPresent(x -> {
             this.root.yRot += x * Mth.DEG_TO_RAD;
@@ -527,6 +531,21 @@ public class DogModel extends EntityModel<Dog> {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
             DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
+    }
+
+    private void animateScaredDog(Dog dog, int scared, float ageInTicks) {
+        var animLenMillis = (long)DogScaredShakingAnimation.ROOT.lengthInSeconds() * 1000;
+        var offset = (dog.getId() % 6) * (20 * 0.5);
+        float speed = 0.9f + scared * 0.1f;
+        float amplifier = 1f + scared * 0.2f;
+        var timeLine = (offset + speed*ageInTicks) 
+            % Util.millisToTickMayWithPartial(animLenMillis);
+        var timeLineMillis = Util.tickMayWithPartialToMillis(timeLine);
+        if (dog.getId() % 2 == 0) {
+            timeLineMillis = animLenMillis - timeLineMillis;
+        }
+        
+        DogKeyframeAnimations.animate(this, dog, DogScaredShakingAnimation.ROOT, timeLineMillis, amplifier, this.vecObj);
     }
 
     private void setDogUpDebugAnim(Dog dog) {
@@ -567,25 +586,25 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void resetPart(ModelPart part, Dog dog) {
-        if (part == this.tail && dog.getAnim().freeTail()) {
-            this.tail.resetPose();
-            this.tail.xRot = dog.getTailRotation();
-            return;
-        }
-        if (part == this.head && dog.getAnim().freeHead() && dog.getDogPose().freeHead) {
-            this.head.resetPose();
-            this.head.xRot = headXRot0;
-            this.head.yRot = headYRot0;
-            this.realHead.resetPose();
-            this.realHead.zRot = realHeadZRot0;
-            return;
-        }
-        if (part == this.head && dog.getAnim().convertHeadZRot()) {
-            this.head.resetPose();
-            this.head.xRot = headXRot0;
-            return;
-        }
-        part.resetPose();
+        // if (part == this.tail && dog.getAnim().freeTail()) {
+        //     this.tail.resetPose();
+        //     this.tail.xRot = dog.getTailRotation();
+        //     return;
+        // }
+        // if (part == this.head && dog.getAnim().freeHead() && dog.getDogPose().freeHead) {
+        //     this.head.resetPose();
+        //     this.head.xRot = headXRot0;
+        //     this.head.yRot = headYRot0;
+        //     this.realHead.resetPose();
+        //     this.realHead.zRot = realHeadZRot0;
+        //     return;
+        // }
+        // if (part == this.head && dog.getAnim().convertHeadZRot()) {
+        //     this.head.resetPose();
+        //     this.head.xRot = headXRot0;
+        //     return;
+        // }
+        // part.resetPose();
     }
 
     public void adjustAnimatedPart(ModelPart part, Dog dog) {
