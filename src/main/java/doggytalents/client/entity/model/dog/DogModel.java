@@ -64,24 +64,21 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
 
     public DogModel(ModelPart box) {
         super(box);
-        this.root = box;
-        this.head = box.getChild("head");
-        this.realHead = this.head.getChild("real_head");
-        this.body = box.getChild("body");
-        this.mane = box.getChild("upper_body");
-        this.legBackRight = box.getChild("right_hind_leg");
-        this.legBackLeft = box.getChild("left_hind_leg");
-        this.legFrontRight = box.getChild("right_front_leg");
-        this.legFrontLeft = box.getChild("left_front_leg");
-        this.tail = box.getChild("tail");
-        this.realTail = this.tail.getChild("real_tail");
-
-        this.addOptionalParts(box);
-        this.correctInitalPose();
+        initDogModel(box);
     }
 
     public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
         super(box, renderType);
+        initDogModel(box);
+    }
+
+    protected void initDogModel(ModelPart box) {
+        populateMandatoryParts(box);
+        this.addOptionalParts(box);
+        this.correctInitalPose();
+    }
+
+    private final void populateMandatoryParts(ModelPart box) {
         this.root = box;
         this.head = box.getChild("head");
         this.realHead = this.head.getChild("real_head");
@@ -93,9 +90,6 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         this.legFrontLeft = box.getChild("left_front_leg");
         this.tail = box.getChild("tail");
         this.realTail = this.tail.getChild("real_tail");
-        
-        this.addOptionalParts(box);
-        this.correctInitalPose();
     }
 
     protected void addOptionalParts(ModelPart box) {
@@ -109,12 +103,14 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         return Optional.of(box.getChild(name));
     }
 
-    public static LayerDefinition createBodyLayer() {
-        return createBodyLayerInternal(CubeDeformation.NONE);
+    protected void correctInitalPose() {
+        var tailPose = this.tail.getInitialPose();
+        float tailX = tailPose.x, tailY = tailPose.y, tailZ = tailPose.z;
+        this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
     }
 
-    public boolean useDefaultModelForAccessories() {
-        return false;
+    public static LayerDefinition createBodyLayer() {
+        return createBodyLayerInternal(CubeDeformation.NONE);
     }
 
     private static LayerDefinition createBodyLayerInternal(CubeDeformation scale) {
@@ -433,7 +429,7 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
 
         this.legBackLeft.offsetRotation(KeyframeAnimations.degreeVec(0, 0, 0));
         this.legBackLeft.offsetPos(KeyframeAnimations.posVec(0, 0, -3.5f));
-
+        
         this.legFrontRight.offsetRotation(KeyframeAnimations.degreeVec(0, 0, 0));
         this.legFrontRight.offsetPos(KeyframeAnimations.posVec(0, 2, 0));
 
@@ -605,10 +601,8 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         return DogKeyframeAnimations.searchForPartWithName(this.root, name);
     }
 
-    protected void correctInitalPose() {
-        var tailPose = this.tail.getInitialPose();
-        float tailX = tailPose.x(), tailY = tailPose.y(), tailZ = tailPose.z();
-        this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
+    public boolean useDefaultModelForAccessories() {
+        return false;
     }
 
     public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
