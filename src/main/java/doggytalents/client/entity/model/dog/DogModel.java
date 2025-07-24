@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import com.google.common.collect.ImmutableList;
@@ -448,25 +449,9 @@ public class DogModel extends EntityModel<Dog> {
             pivot = custom_pivot;
         }
         p_102034_.pushPose();
-        p_102034_.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        p_102034_.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
-        if (root.zRot != 0.0F) {
-            p_102034_.mulPose(Axis.ZP.rotation(root.zRot));
-        }
+        applyRootTransformWithPivotedRotation(this.root, p_102034_, pivot);
 
-        if (root.yRot != 0.0F) {
-            p_102034_.mulPose(Axis.YP.rotation(root.yRot));
-        }
-
-        if (root.xRot != 0.0F) {
-            p_102034_.mulPose(Axis.XP.rotation(root.xRot));
-        }
-        float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
-        float x0 = root.x, y0 = root.y, z0 = root.z;
-        root.xRot = 0; root.yRot = 0; root.zRot = 0;
-        root.x = 0; root.y = 0; root.z = 0;
-        p_102034_.pushPose();
-        p_102034_.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
+        var stashed_root = RootRotationTranslationStash.stash(root);
         
         if (this.young && this.scaleBabyDog()) {
 
@@ -492,8 +477,37 @@ public class DogModel extends EntityModel<Dog> {
         }
 
         p_102034_.popPose();
-        p_102034_.popPose();
-        root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
-        root.x = x0; root.y = y0; root.z = z0;
+        stashed_root.restore(this.root);
+    }
+
+    private void applyRootTransformWithPivotedRotation(ModelPart root, PoseStack stack, Vector3f pivot) {
+        //Translation
+        stack.translate(root.x / 16f, root.y / 16f, root.z / 16f);
+        
+        //Rotation with pivot
+        stack.translate(pivot.x / 16f, pivot.y / 16f, pivot.z / 16f);
+        if (root.xRot != 0.0F || root.yRot != 0.0F || root.zRot != 0.0F) {
+            stack.mulPose(new Quaternionf().rotationZYX(root.zRot, root.yRot, root.xRot));
+        }
+        stack.translate(-pivot.x / 16f, -pivot.y / 16f, -pivot.z / 16f);
+    }
+
+    private static record RootRotationTranslationStash(
+        float x, float y, float z, 
+        float xRot, float yRot, float zRot) {
+
+        public static RootRotationTranslationStash stash(ModelPart root) {
+            var ret = new RootRotationTranslationStash(
+                root.x, root.y, root.z,
+                root.xRot, root.yRot, root.zRot);
+            root.x = 0; root.y = 0; root.z = 0;
+            root.xRot = 0; root.yRot = 0; root.zRot = 0;
+            return ret;
+        }
+
+        public void restore(ModelPart root) {
+            root.x = this.x; root.y = this.y; root.z = this.z;
+            root.xRot = this.xRot; root.yRot = this.yRot; root.zRot = this.zRot;
+        }
     }
 }
