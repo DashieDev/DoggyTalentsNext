@@ -66,41 +66,15 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
     }
 
     public void startRenderFromRoot(PoseStack stack, Renderer actualRendering) {
-        stack.pushPose();
-        stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
-        if (root.zRot != 0.0F) {
-            stack.mulPose(Axis.ZP.rotation(root.zRot));
-        }
+        DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(actualRendering));
+    }
 
-        if (root.yRot != 0.0F) {
-            stack.mulPose(Axis.YP.rotation(root.yRot));
-        }
-
-        if (root.xRot != 0.0F) {
-            stack.mulPose(Axis.XP.rotation(root.xRot));
-        }
-        float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
-        float x0 = root.x, y0 = root.y, z0 = root.z;
-        root.xRot = 0; root.yRot = 0; root.zRot = 0;
-        root.x = 0; root.y = 0; root.z = 0;
-
-        stack.pushPose();
-        stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
-        
-        if (this.young) {
-            stack.pushPose();
-            stack.scale(2, 2, 2);
-            stack.translate(0, -0.5, 0.15);
-            startRenderItemFromHead(stack, actualRendering);
-            stack.popPose();  
-        } else
-        startRenderItemFromHead(stack, actualRendering);
-
-        stack.popPose();
-        stack.popPose();
-        root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
-        root.x = x0; root.y = y0; root.z = z0;
+    public DogModel.DogModelRenderContext createDogRenderContext(Renderer actualRendering) {
+        DogModel.AddtionalHeadRenderer additional_head_renderer = 
+            (stack, part_ctx) -> {
+                this.startRenderItemFromHead(stack, actualRendering);
+            };
+        return new DogModel.DogModelRenderContext(this.root, this.pivot, SyncedAccessoryModel.getDogModelBabyHead(head, young), Optional.empty(), Optional.of(additional_head_renderer));
     }
 
     public void startRenderItemFromHead(PoseStack matrixStack, Renderer renderer) {
