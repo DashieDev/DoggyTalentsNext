@@ -365,6 +365,10 @@ public class DogModel extends EntityModel<Dog> {
         return true;
     }
 
+    public boolean renderDogWetShade() {
+        return true;
+    }
+
     public boolean warnAccessory(Dog dog, Accessory inst)  {
         return false;
     }
@@ -436,8 +440,10 @@ public class DogModel extends EntityModel<Dog> {
 
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
-        int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
-        color_overlay = FastColor.ARGB32.multiply(color_overlay, wet_color);
+        if (renderDogWetShade()) {
+            int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
+            color_overlay = FastColor.ARGB32.multiply(color_overlay, wet_color);
+        }
         
         var ctx = DogModelRenderContext.forDogModelRendering(this, vertex_consumer, light, overlay, color_overlay, this.getDogModelAdditionalHeadRenderer());
         renderDogModelFromRootWithPivot(stack, ctx);
