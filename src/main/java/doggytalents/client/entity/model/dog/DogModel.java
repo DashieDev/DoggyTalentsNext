@@ -436,51 +436,105 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int color_overlay) {
-        // p_102038_ *= this.wetShade;
-        // p_102039_ *= this.wetShade;
-        // p_102040_ *= this.wetShade;
+    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
         int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
-        int render_color = FastColor.ARGB32.multiply(color_overlay, wet_color);
+        color_overlay = FastColor.ARGB32.multiply(color_overlay, wet_color);
         
-        var pivot = DEFAULT_ROOT_PIVOT;
-        var custom_pivot = getCustomRootPivotPoint();
-        if (custom_pivot != null) {
-            pivot = custom_pivot;
-        }
-        p_102034_.pushPose();
-        applyRootTransformWithPivotedRotation(this.root, p_102034_, pivot);
+        var ctx = DogModelRenderContext.forDogModelRendering(this, vertex_consumer, light, overlay, color_overlay, this.getDogModelAdditionalHeadRenderer());
+        renderDogModelFromRootWithPivot(stack, ctx);
+    }
+
+    protected Optional<AddtionalHeadRenderer> getDogModelAdditionalHeadRenderer() {
+        return Optional.empty();
+    }
+    
+    private Optional<ModelPart> getDogModelBabyHead() {
+        return this.doScaleBabyHead() ? Optional.of(this.head) : Optional.empty();
+    }
+
+    protected boolean doScaleBabyHead() {
+        return this.young && this.scaleBabyDog();
+    }
+    
+    public static void renderDogModelFromRootWithPivot(PoseStack stack, DogModelRenderContext ctx) {
+        
+        var root = ctx.root();
+        var pivot = ctx.pivot();
+        var head_baby = ctx.headBaby();
+        var part_ctx = ctx.renderPartContext().orElse(null);
+        var addtional_head = ctx.additionalHeadRenderer().orElse(null);
+        
+        stack.pushPose();
+        applyRootTransformWithPivotedRotation(root, stack, pivot);
 
         var stashed_root = RootRotationTranslationStash.stash(root);
         
-        if (this.young && this.scaleBabyDog()) {
+        if (head_baby.isPresent()) {
+            var head = head_baby.get();
 
-            boolean headVisible0 = this.head.visible;
-            
-            this.head.visible = false;
-            p_102034_.pushPose();
-            //float f1 = 1.0F / 2f;
-            //p_102034_.scale(f1, f1, f1);
-            //p_102034_.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
-            p_102034_.popPose();
-            
-            this.head.visible = headVisible0;
-            p_102034_.pushPose();
-            //p_102034_.translate(0.0D, (double)(5f / 16.0F), (double)(2f / 16.0F));
-            p_102034_.scale(2, 2, 2);
-            p_102034_.translate(0, -0.5, 0.15);
-            this.head.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
-            p_102034_.popPose();            
+            boolean headVisible0 = head.visible;
+            head.visible = false;
+            stack.pushPose();
+            if (part_ctx != null)
+                part_ctx.renderPart(stack, root);
+            stack.popPose();
+            head.visible = headVisible0;
+
+            stack.pushPose();
+            stack.scale(2, 2, 2);
+            stack.translate(0, -0.5, 0.15);
+            if (part_ctx != null)
+                part_ctx.renderPart(stack, head);
+            if (addtional_head != null)
+                addtional_head.render(stack, ctx.renderPartContext());
+            stack.popPose();             
         } else {
-            this.root.render(p_102034_, p_102035_, p_102036_, p_102037_, render_color);
+            if (part_ctx != null)
+                part_ctx.renderPart(stack, root);
+            if (addtional_head != null)
+                addtional_head.render(stack, ctx.renderPartContext());
         }
 
-        p_102034_.popPose();
-        stashed_root.restore(this.root);
+        stack.popPose();
+        stashed_root.restore(root);
     }
 
-    private void applyRootTransformWithPivotedRotation(ModelPart root, PoseStack stack, Vector3f pivot) {
+    public static record DogModelRenderContext(
+        ModelPart root, Vector3f pivot, Optional<ModelPart> headBaby, 
+        Optional<DogRenderPartContext> renderPartContext,
+        Optional<AddtionalHeadRenderer> additionalHeadRenderer
+    ) {
+        public static DogModelRenderContext forDogModelRendering(DogModel model, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay, 
+            Optional<AddtionalHeadRenderer> addtionalHeadRenderer) {
+            var pivot = DEFAULT_ROOT_PIVOT;
+            var custom_pivot = model.getCustomRootPivotPoint();
+            if (custom_pivot != null) {
+                pivot = custom_pivot;
+            }
+            var render_part_ctx = new DogRenderPartContext(vertex_consumer, light, overlay, color_overlay);
+            return new DogModelRenderContext(model.root, 
+                pivot, model.getDogModelBabyHead(), Optional.of(render_part_ctx), addtionalHeadRenderer);
+        }
+    }
+
+    public static record DogRenderPartContext(VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
+        
+        public void renderPart(PoseStack stack, ModelPart part) {
+            part.render(stack, vertex_consumer(), light(), overlay(), color_overlay());
+        }
+
+        public void renderGlowingPart(PoseStack stack, ModelPart part) {
+            part.render(stack, vertex_consumer(), 15728880, overlay(), color_overlay());
+        }
+
+    }
+    
+    @FunctionalInterface
+    public static interface AddtionalHeadRenderer {
+        void render(PoseStack stack, Optional<DogRenderPartContext> part_ctx);
+    }
+
+    private static void applyRootTransformWithPivotedRotation(ModelPart root, PoseStack stack, Vector3f pivot) {
         //Translation
         stack.translate(root.x / 16f, root.y / 16f, root.z / 16f);
         
