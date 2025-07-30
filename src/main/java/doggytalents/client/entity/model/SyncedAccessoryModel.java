@@ -68,58 +68,16 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
 
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
-        stack.pushPose();
-        stack.translate((double)(root.x / 16.0F), (double)(root.y / 16.0F), (double)(root.z / 16.0F));
-        stack.translate((double)(pivot.x / 16.0F), (double)(pivot.y / 16.0F), (double)(pivot.z / 16.0F));
-        if (root.zRot != 0.0F) {
-            stack.mulPose(Axis.ZP.rotation(root.zRot));
-        }
+        DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(p_103014_, p_103015_, p_103016_, color_overlay));
+    }
 
-        if (root.yRot != 0.0F) {
-            stack.mulPose(Axis.YP.rotation(root.yRot));
-        }
-
-        if (root.xRot != 0.0F) {
-            stack.mulPose(Axis.XP.rotation(root.xRot));
-        }
-        float xRot0 = root.xRot, yRot0 = root.yRot, zRot0 = root.zRot;
-        float x0 = root.x, y0 = root.y, z0 = root.z;
-        root.xRot = 0; root.yRot = 0; root.zRot = 0;
-        root.x = 0; root.y = 0; root.z = 0;
-
-        stack.pushPose();
-        stack.translate((double)(-pivot.x / 16.0F), (double)(-pivot.y / 16.0F), (double)(-pivot.z / 16.0F));
-        
-        if (this.young) {
-            boolean headSync = this.head.isPresent();
-            boolean headVisible0 = false;
-
-            if (headSync) {
-                headVisible0 = this.head.get().visible;
-                this.head.get().visible = false;
-            }
-            
-            stack.pushPose();
-            // float f1 = 1.0F / 2f;
-            // stack.scale(f1, f1, f1);
-            // stack.translate(0.0D, (double)(24 / 16.0F), 0.0D);
-            this.root.render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
-            stack.popPose();
-            if (headSync) {
-                this.head.get().visible = headVisible0;
-                stack.pushPose();
-                stack.scale(2, 2, 2);
-                stack.translate(0, -0.5, 0.15);
-                this.head.get().render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
-                stack.popPose();  
-            }
-        } else
-        this.root.render(stack, p_103014_, p_103015_, p_103016_, color_overlay);
-        
-        stack.popPose();
-        stack.popPose();
-        root.xRot = xRot0; root.yRot = yRot0; root.zRot = zRot0;
-        root.x = x0; root.y = y0; root.z = z0;
+    public DogModel.DogModelRenderContext createDogRenderContext(VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
+        var part_ctx = new DogModel.DogRenderPartContext(p_103014_, p_103015_, p_103016_, color_overlay);
+        return new DogModel.DogModelRenderContext(this.root, this.pivot, getDogModelBabyHead(head, young), Optional.of(part_ctx), Optional.empty());
+    }
+    
+    protected static Optional<ModelPart> getDogModelBabyHead(Optional<ModelPart> head, boolean young) {
+        return young ? head : Optional.empty();
     }
 
     @Override
