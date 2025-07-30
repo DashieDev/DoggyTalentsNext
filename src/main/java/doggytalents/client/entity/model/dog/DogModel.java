@@ -367,6 +367,10 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         return true;
     }
 
+    public boolean renderDogWetShade() {
+        return true;
+    }
+
     public boolean warnAccessory(Dog dog, Accessory inst)  {
         return false;
     }
@@ -438,8 +442,10 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
 
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
-        int wet_color = ARGB.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
-        color_overlay = ARGB.multiply(color_overlay, wet_color);
+        if (renderDogWetShade()) {
+            int wet_color = ARGB.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
+            color_overlay = ARGB.multiply(color_overlay, wet_color);
+        }
         
         var ctx = DogModelRenderContext.forDogModelRendering(this, vertex_consumer, light, overlay, color_overlay, this.getDogModelAdditionalHeadRenderer());
         renderDogModelFromRootWithPivot(stack, ctx);
