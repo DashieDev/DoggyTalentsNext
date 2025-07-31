@@ -8,9 +8,11 @@ import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.CachedSearchUtil.DogGreedyFireSafeSearchPath;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -135,38 +137,45 @@ public class DogGoAwayFromFireGoal extends Goal {
     private byte isDogInDangerSpot(Vec3 pos) {
         final double FLUID_BB_DEFLATE = 0.001D;
         var half_bbw = 0.5*dog.getBbWidth() - FLUID_BB_DEFLATE;
-        int minX = Mth.floor(pos.x - half_bbw)-1;
-        int minY = Mth.floor(pos.y);
-        int minZ = Mth.floor(pos.z - half_bbw)-1;
+        int min_x = Mth.floor(pos.x - half_bbw)-1;
+        int min_y = Mth.floor(pos.y);
+        int min_z = Mth.floor(pos.z - half_bbw)-1;
 
-        int maxX = Mth.floor(pos.x + half_bbw)+1;
-        int maxY = Mth.floor(pos.y+1);
-        int maxZ = Mth.floor(pos.z + half_bbw)+1;
+        int max_x = Mth.floor(pos.x + half_bbw)+1;
+        int max_y = Mth.floor(pos.y+1);
+        int max_z = Mth.floor(pos.z + half_bbw)+1;
 
         byte ret = -1; //Assume all is safe
-        for (BlockPos x : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
-            boolean isCorner = 
-                (x.getX() == minX || x.getX() == maxX)
-                && (x.getZ() == minZ || x.getZ() == maxZ);
-            if (isCorner)
+        for (var check_pos : BlockPos.betweenClosed(min_x, min_y, min_z, max_x, max_y, max_z)) {
+            boolean is_corner = 
+                (check_pos.getX() == min_x || check_pos.getX() == max_x)
+                && (check_pos.getZ() == min_z || check_pos.getZ() == max_z);
+            if (is_corner)
                 continue;
-            var state = dog.level().getBlockState(x);
-            var isBurning = WalkNodeEvaluator.isBurningBlock(state);
-
-            if (state.is(Blocks.LAVA)) {
+                
+            var state = dog.level().getBlockState(check_pos);
+            if (state.getFluidState().is(FluidTags.LAVA))
                 return 1;
+            
+
+            var check_pos_bb = new AABB(check_pos);
+            boolean pos_within_dog_bb = dog.getBoundingBox().intersects(check_pos_bb);
+            if (!pos_within_dog_bb) 
+                continue;
+
+            boolean is_burning = WalkNodeEvaluator.isBurningBlock(state);
+            if (is_burning)
+                return 1;
+
+            if (check_pos.getY() == min_y) {
+                var pos_below = DogUtil.getSurfaceStandingInPos(dog, check_pos.getX(), check_pos.getZ()).below();
+                var state_below = dog.level().getBlockState(pos_below);
+                boolean full_collision_burning_block = 
+                    WalkNodeEvaluator.isBurningBlock(state_below)
+                    && state_below.isCollisionShapeFullBlock(dog.level(), pos_below);
+                if (full_collision_burning_block)
+                    return 1;
             }
-            var blockBb = new AABB(Vec3.atLowerCornerOf(x),Vec3.atLowerCornerWithOffset(x, 1, 1, 1));
-
-            if (isBurning && dog.getBoundingBox().intersects(blockBb)) {
-                return 1;
-            }
-
-            var pos_below = DogUtil.getSurfaceStandingInPos(dog, x.getX(), x.getZ()).below();
-            var state_below = dog.level().getBlockState(pos_below);
-            if (WalkNodeEvaluator.isBurningBlock(state_below)
-                && state_below.isCollisionShapeFullBlock(dog.level(), pos_below))
-                return 1;
         }
 
         // {
