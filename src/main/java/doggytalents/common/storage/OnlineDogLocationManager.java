@@ -76,6 +76,8 @@ public class OnlineDogLocationManager {
                 continue;
             if (!dog.dogTrackingTracker.isTracking())
                 continue;
+            if (dog.isDogUntracked())
+                continue;
             syncDataToStorage(storage, dog);
         }
     }
@@ -113,6 +115,8 @@ public class OnlineDogLocationManager {
             return;
         if (dog.locationUpdatedUponRemove == null)
             return;
+        if (dog.locationUpdatedUponRemove.shouldNotLog())
+            return;
         var remove_reason = dog.getRemovalReason();
         var pos = dog.blockPosition();
         var name_str = dog.getName().getString();
@@ -144,11 +148,16 @@ public class OnlineDogLocationManager {
         UPDATED("Dog [ %s ] has gone Offline at [ %s ] with type [ %s ]"), 
         UNLOADED_TO_RESPAWN("Dog [ %s ] has been unloaded to Respawn Storage"), 
         REMOVED("Untamed Dog [ %s ] has been removed."),
-        REMOVE_TRUSTED("Dog [ %s ] has been trustfully removed at [ %s ] with type [ %s ]"); 
+        REMOVE_TRUSTED("Dog [ %s ] has been trustfully removed at [ %s ] with type [ %s ]"),
+        NON_TRACKED(""); 
         
         private final String unformattedLog;
         private RemoveState(String unformattedLog) {
             this.unformattedLog = unformattedLog;
+        }
+
+        public boolean shouldNotLog() {
+            return this == NON_TRACKED;
         }
 
         public String getFormattedLog(String name, String pos, String type) {

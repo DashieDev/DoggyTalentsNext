@@ -2140,7 +2140,7 @@ public class Dog extends AbstractDog {
         //where a dog object is removed from the world, change the UUID and then re-added back in.
         if (!this.isAddedToWorld()) return;
 
-        if (this.level() != null && !this.level().isClientSide) {
+        if (this.level() != null && !this.level().isClientSide && !this.isDogUntracked) {
             DogLocationStorage.get(this.level()).remove(oldUniqueId);
             DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
         }
@@ -2370,7 +2370,8 @@ public class Dog extends AbstractDog {
         Entity transportedEntity = super.changeDimension(tansition);
         this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog dog) {
-            DogLocationStorage.get(this.level()).getOrCreateData(this).update(dog);
+            if (!this.isDogUntracked)
+                DogLocationStorage.get(this.level()).getOrCreateData(this).update(dog);
             if (dog.getMode().canWander()) {
                 dog.setMode(DogMode.DOCILE);
             }
@@ -2402,6 +2403,10 @@ public class Dog extends AbstractDog {
     public void onRemovedFromWorld() {
         if (!(this.level() instanceof ServerLevel server_level))
             return;
+        if (this.isDogUntracked) {
+            locationUpdatedUponRemove = OnlineDogLocationManager.RemoveState.NON_TRACKED;
+            return;
+        }
         var data = DogLocationStorage.get(server_level).getData(this);
         if (data == null)
             return;
@@ -4098,6 +4103,23 @@ public class Dog extends AbstractDog {
         this.authorizedChangingOwner = true;
         this.setOwnerUUID(newOwnerUUID);
         this.authorizedChangingOwner = false;
+    }
+
+    private boolean isDogUntracked = false;
+
+    public void setDogUntrackedAndUpdate(boolean val) { 
+        if (this.level().isClientSide || !this.isAlive())
+            return;
+        this.isDogUntracked = val;
+        if (this.isDogUntracked) {
+            DogLocationStorage.get(this.level()).remove(this);
+            
+        }
+            
+    }
+
+    public boolean isDogUntracked() {
+        return this.isDogUntracked;
     }
 
     public boolean canSpendPoints(int amount) {

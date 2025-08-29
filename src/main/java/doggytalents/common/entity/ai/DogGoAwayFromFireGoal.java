@@ -4,17 +4,11 @@ import java.util.EnumSet;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.DogUtil;
-import doggytalents.common.util.CachedSearchUtil.CachedSearchUtil;
 import doggytalents.common.util.CachedSearchUtil.DogGreedyFireSafeSearchPath;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
@@ -26,7 +20,8 @@ public class DogGoAwayFromFireGoal extends Goal {
 
     private int tickUntilSearch;
     private int lastGoAwayTimestamp;
-    private int walkableUntilStop = 1;
+    private boolean finished = false;
+    private byte waitTime = 0;
 
     private DogGreedyFireSafeSearchPath path;
 
@@ -77,15 +72,10 @@ public class DogGoAwayFromFireGoal extends Goal {
     public boolean canContinueToUse() {
         if (this.path == null)
             return false;
-        if (dog.getNavigation().isDone())
-            return false;
-        boolean is_safe = 
-            this.path.getWalkableCount() >= this.walkableUntilStop
-            && this.checkAboveForFallingLava(this.dog.blockPosition());
-        if (is_safe)
+        if (dog.getNavigation().getPath() != this.path)
             return false;
         
-        return true;
+        return this.waitTime > 0;
     }
 
     @Override
@@ -101,19 +91,35 @@ public class DogGoAwayFromFireGoal extends Goal {
             this.dog.getUrgentSpeedModifier());
         this.dog.setDogForcePushAvoid(true);
         int tick_since_last = this.dog.tickCount - this.lastGoAwayTimestamp;
-        this.walkableUntilStop = tick_since_last >= 20 ? 1 : 2;
+        this.path.setMaxWalkableCount(tick_since_last >= 20 ? 1 : 2);
+        this.waitTime = 5;
+        this.finished = false;
+    }
+
+    @Override
+    public void tick() {
+        var path = this.path;
+        if (path == null)
+            return;
+
+        if (!this.finished && path.isDone()) {
+            this.finished = true;
+            this.moveToEndNode();
+        }
+
+        if (path.isDone()) --this.waitTime;
     }
 
     @Override
     public void stop() {
         this.dog.setDogForcePushAvoid(false);
-        this.tickUntilSearch = 5;
+        this.tickUntilSearch = Math.max(0, this.waitTime);
         this.lastGoAwayTimestamp = this.dog.tickCount;
-        proccessEndNode();
         this.dog.getNavigation().stop();
+        this.path = null;
     }
 
-    private void proccessEndNode() {
+    private void moveToEndNode() {
         if (this.path == null) 
             return;
         var end_node = this.path.getEndNode();
@@ -197,7 +203,7 @@ public class DogGoAwayFromFireGoal extends Goal {
     private boolean checkAboveForFallingLava(BlockPos pos) {
         var pos_above = pos.above();
         var state_above = dog.level().getBlockState(pos_above);
-        if (state_above.is(Blocks.LAVA))
+        if (state_above.getFluidState().is(FluidTags.LAVA))
             return false;
 
         return true;

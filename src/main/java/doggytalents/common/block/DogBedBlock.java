@@ -70,6 +70,7 @@ import com.mojang.serialization.MapCodec;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -124,7 +125,12 @@ public class DogBedBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        state = state.setValue(FACING, placer.getDirection().getOpposite());
+        state = state.setValue(FACING, 
+            Optional.ofNullable(placer)
+                .map(LivingEntity::getDirection)
+                .map(Direction::getOpposite)
+                .orElse(Direction.NORTH)
+        );
 
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(worldIn, pos, DogBedTileEntity.class);
 

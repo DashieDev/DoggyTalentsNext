@@ -1,8 +1,6 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import doggytalents.common.entity.Dog;
@@ -23,6 +21,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
     private int maxLength;
     private Node startNode;
     private int walkableCount = 0;
+    private int maxWalkableCount = 1;
 
     private DogGreedyFireSafeSearchPath(Dog dog, ArrayList<Node> nodes, int maxLength) {
         super(nodes, dog.blockPosition(), false);
@@ -49,6 +48,12 @@ public class DogGreedyFireSafeSearchPath extends Path {
 
     private static Optional<Node> getStartNode(Dog dog) {
         var dog_b0 = BlockPos.containing(DogPathNavigation.getTempDogPos(dog));
+        if (!dog.onGround()) {
+            var dog_b0_under = dog_b0.below();
+            var dog_b0_under_state = dog.level().getBlockState(dog_b0_under);
+            if (dog_b0_under_state.isAir())
+                dog_b0 = dog_b0_under;
+        }
         if (isValidStart(dog, dog_b0))
             return blockPosToNodeOptional(dog_b0);
         
@@ -88,8 +93,8 @@ public class DogGreedyFireSafeSearchPath extends Path {
             this.finished = true;
     }
 
-    public int getWalkableCount() {
-        return this.walkableCount;
+    public void setMaxWalkableCount(int val) {
+        this.maxWalkableCount = val;
     }
 
     @Override
@@ -103,6 +108,8 @@ public class DogGreedyFireSafeSearchPath extends Path {
         if (this.getNextNodeIndex() >= this.maxLength)
             return false;
         if (this.nodes.isEmpty())
+            return false;
+        if (this.walkableCount >= this.maxWalkableCount)
             return false;
         
         var old_end = this.nodes.get(this.nodes.size() - 1);
