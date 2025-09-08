@@ -1,9 +1,9 @@
 package doggytalents.common.util.CachedSearchUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogNodeEvaluator;
@@ -32,39 +32,54 @@ public class DogGreedyFireSafeSearchPath extends Path {
     }
     
     public static DogGreedyFireSafeSearchPath create(Dog dog, int maxLength) {
-        var start_node = getStartNode(dog);
-        if (!start_node.isPresent())
+        var start_node_pair = getStartNode(dog);
+        if (!start_node_pair.isPresent())
             return null;
+        boolean skip_start = start_node_pair.get().getLeft();
+        var start_node = start_node_pair.get().getRight();
         var initNodes = new ArrayList<Node>(maxLength);
-        initNodes.add(start_node.get());
+        initNodes.add(start_node);
         var ret = new DogGreedyFireSafeSearchPath(dog, initNodes, maxLength);
-        ret.startNode = start_node.get();
+        ret.startNode = start_node;
         var node_optional = scanSurroundingForNextPos(ret);
         if (!node_optional.isPresent())
             return null;
-        initNodes.clear();
-        initNodes.add(node_optional.get());
+        if (skip_start) {
+            initNodes.clear();
+            initNodes.add(node_optional.get());
+        }
         return ret;
     }
 
-    private static Optional<Node> getStartNode(Dog dog) {
+    private static Optional<Pair<Boolean, Node>> getStartNode(Dog dog) {
         var dog_b0 = BlockPos.containing(DogPathNavigation.getTempDogPos(dog));
+        if (!dog.onGround()) {
+            var dog_b0_under = dog_b0.below();
+            var dog_b0_under_state = dog.level().getBlockState(dog_b0_under);
+            if (dog_b0_under_state.isEmpty())
+                dog_b0 = dog_b0_under;
+        }
         if (isValidStart(dog, dog_b0))
-            return blockPosToNodeOptional(dog_b0);
+            return blockPosToNodeOptional(true, dog_b0);
         
         var dog_bb = dog.getBoundingBox();
-        int min_x = Mth.floor(dog_bb.minX);
-        int min_z = Mth.floor(dog_bb.minZ);
-        int max_x = Mth.floor(dog_bb.maxX);
-        int max_z = Mth.floor(dog_bb.maxZ);
-        for (int i = min_x; i <= max_x; ++i) {
-            for (int j = min_z; j <= max_z; ++j) {
-                var check_b0 = new BlockPos(i, dog_b0.getY(), j);
-                if (isValidStart(dog, check_b0))
-                    return blockPosToNodeOptional(check_b0);
-            }
-        }
+        var check_pos = new BlockPos.MutableBlockPos()
+            .setY(dog_b0.getY());
+        if (setAndCheckValidStart(dog, check_pos, dog_bb.minX, dog_bb.minZ))
+            return blockPosToNodeOptional(false, check_pos);
+        if (setAndCheckValidStart(dog, check_pos, dog_bb.minX, dog_bb.maxZ))
+            return blockPosToNodeOptional(false, check_pos);
+        if (setAndCheckValidStart(dog, check_pos, dog_bb.maxX, dog_bb.minZ))
+            return blockPosToNodeOptional(false, check_pos);
+        if (setAndCheckValidStart(dog, check_pos, dog_bb.maxX, dog_bb.maxZ))
+            return blockPosToNodeOptional(false, check_pos);
         return Optional.empty();
+    }
+
+    private static boolean setAndCheckValidStart(Dog dog, BlockPos.MutableBlockPos pos_mut, double x, double z) {
+        int y = pos_mut.getY();
+        pos_mut.set(x, y, z);
+        return isValidStart(dog, pos_mut);
     }
 
     private static boolean isValidStart(Dog dog, BlockPos pos) {
@@ -75,8 +90,10 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 dog.level(), pos_below) == PathType.BLOCKED;
     }
 
-    private static Optional<Node> blockPosToNodeOptional(BlockPos pos) {
-        return Optional.of(new Node(pos.getX(), pos.getY(), pos.getZ()));
+    private static Optional<Pair<Boolean, Node>> blockPosToNodeOptional(boolean skipFirstNode, BlockPos pos) {
+        var ret_node = new Node(pos.getX(), pos.getY(), pos.getZ());
+        ret_node.type = PathType.WALKABLE;
+        return Optional.of(Pair.of(skipFirstNode, ret_node));
     }
 
     @Override
@@ -176,12 +193,14 @@ public class DogGreedyFireSafeSearchPath extends Path {
                     require_jump && pathtype_above != PathType.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
+                } else {
+                    var malus = path.dog.getPathfindingMalus(node.type);
+                    if (node_chosen == null || malus < malus_min) {
+                        node_chosen = node;
+                        malus_min = malus;
+                    }
                 }
-                var malus = path.dog.getPathfindingMalus(node.type);
-                if (node_chosen == null || malus < malus_min) {
-                    node_chosen = node;
-                    malus_min = malus;
-                }
+                
             }
         }
         //Corner XZ
@@ -213,12 +232,12 @@ public class DogGreedyFireSafeSearchPath extends Path {
                     require_jump && pathtype_above != PathType.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
-                }
-
-                var malus = path.dog.getPathfindingMalus(node.type);
-                if (node_chosen == null || malus < malus_min) {
-                    node_chosen = node;
-                    malus_min = malus;
+                } else {
+                    var malus = path.dog.getPathfindingMalus(node.type);
+                    if (node_chosen == null || malus < malus_min) {
+                        node_chosen = node;
+                        malus_min = malus;
+                    }
                 }
             }
         }
