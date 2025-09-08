@@ -199,6 +199,10 @@ public class DogDuplicationDetection {
         this.sessionUUID = sessionUUID;
     }
 
+    public void invalidateSessionUUID() {
+        this.sessionUUID = null;
+    }
+
     public static class DetectDuplicateContext {
 
         public static final DetectDuplicateContext EMPTY = 
