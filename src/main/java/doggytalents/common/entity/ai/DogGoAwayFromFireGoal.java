@@ -152,7 +152,20 @@ public class DogGoAwayFromFireGoal extends Goal {
                 && (check_pos.getZ() == min_z || check_pos.getZ() == max_z);
             if (is_corner)
                 continue;
-                
+
+            var dog_bb = dog.getBoundingBox();
+
+             /*
+                * TODO Absoluteness of dog bbW.
+                * Currently this implementation relies on the fact that currently a dog's bbHeight never
+                * surpass one block like DogSwimNodeEval
+            */
+            boolean above_outside =
+                check_pos.getY() > min_y
+                && !dog_bb.intersects(new AABB(new BlockPos(check_pos.getX(), min_y, check_pos.getZ())));
+            if (above_outside)
+                continue;
+            
             var state = dog.level().getBlockState(check_pos);
             if (state.getFluidState().is(FluidTags.LAVA))
                 return 1;
