@@ -48,6 +48,9 @@ public class DogGreedyFireSafeSearchPath extends Path {
             initNodes.clear();
             initNodes.add(node_optional.get());
         }
+        if (initNodes.isEmpty())
+            return null;
+        initNodes.get(0).type = PathType.WALKABLE;
         return ret;
     }
 
@@ -135,7 +138,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         if (node.type == PathType.WALKABLE)
             ++this.walkableCount;
 
-        if (old_end.y == node.y) {
+        if (old_end.y == node.y || this.nodes.size() <= 2) {
             node.type = PathType.WALKABLE;
         }
         return true;
