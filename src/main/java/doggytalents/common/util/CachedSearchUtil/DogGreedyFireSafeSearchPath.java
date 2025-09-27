@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.nav.DogNodeEvaluator;
 import doggytalents.common.entity.ai.nav.DogPathNavigation;
+import doggytalents.common.util.DogUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.pathfinder.Node;
@@ -58,8 +59,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         var dog_b0 = BlockPos.containing(DogPathNavigation.getTempDogPos(dog));
         if (!dog.onGround()) {
             var dog_b0_under = dog_b0.below();
-            var dog_b0_under_state = dog.level().getBlockState(dog_b0_under);
-            if (dog_b0_under_state.isEmpty())
+            if (DogUtil.isWalkNodeEvaluatorOpenPos(dog, dog_b0_under))
                 dog_b0 = dog_b0_under;
         }
         if (isValidStart(dog, dog_b0))
