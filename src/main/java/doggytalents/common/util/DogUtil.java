@@ -20,6 +20,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.fabric_helper.util.FabricUtil;
+import doggytalents.common.entity.ai.nav.DogNodeEvaluator;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.storage.DogLocationData;
@@ -675,8 +676,12 @@ public class DogUtil {
         return biggest_dog;
     }
 
-    public static boolean isSafeBlock() {
-        return false;
+    public static boolean isWalkNodeEvaluatorOpenPos(Dog dog, BlockPos pos) {
+        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == PathType.OPEN;
+    }
+
+    public static boolean isWalkNodeEvaluatorBlockedPos(Dog dog, BlockPos pos) {
+        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == PathType.BLOCKED;
     }
 
     public static void teleportDogAbs(Dog dog, BlockPos target) {
