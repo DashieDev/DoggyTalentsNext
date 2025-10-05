@@ -324,4 +324,19 @@ public class ClientEventHandler {
         return true;
     } 
 
+    public static boolean shouldRenderAnimDebugNametag(Dog dog) {
+        var mc = Minecraft.getInstance();
+        var player = mc.player;
+        if (player == null)
+            return false;
+        var mainhand_item = player.getMainHandItem();
+        if (mainhand_item == null 
+            || mainhand_item.getItem() != DoggyItems.DOG_ANIM_DEBUG.get())
+            return false;
+        var owner_uuid = dog.getOwnerUUID();
+        if (owner_uuid == null || 
+            !owner_uuid.equals(player.getUUID()))
+            return false;
+        return true;
+    }
 }
