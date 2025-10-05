@@ -21,6 +21,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -138,7 +139,8 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
 
     @Override
     protected boolean shouldShowName(Dog dog, double distance_to_camera_sqr) {
-        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() && !dog.isVehicle())
+        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() 
+            && !dog.isVehicle() && dog.hasCustomName())
             return true;
         return super.shouldShowName(dog, distance_to_camera_sqr);
     }
@@ -324,7 +326,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
             return text;
         } 
 
-        if (dog.isDogInAnimDebug()) {
+        if (ClientEventHandler.shouldRenderAnimDebugNametag(dog)) {
             text = createC1WithColor(text, 0xffcda700);
             return text;
         }
