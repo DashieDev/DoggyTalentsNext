@@ -148,6 +148,8 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.DismountHelper;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -4157,9 +4159,18 @@ public class Dog extends AbstractDog {
         var newZ = this.getZ() + dz1;
         var newPos = new Vec3(newX, this.getY() + 0.5, newZ);
         var b0 = BlockPos.containing(newPos);
+        newPos = Vec3.atBottomCenterOf(b0);
         var type = WalkNodeEvaluator.getPathTypeStatic(this, b0.mutable());
         if (type == PathType.WALKABLE) {
-            return newPos;
+            for (var pose : passenger.getDismountPoses()) {
+                var dismountBb = 
+                    passenger.getLocalBoundsForPose(pose)
+                    .move(newPos);
+                if (!DismountHelper.canDismountTo(this.level(), passenger, dismountBb)) 
+                    continue;
+                passenger.setPose(pose); // TODO Should we keep this ugly side effect?
+                return newPos;
+            }
         }
         return super.getDismountLocationForPassenger(passenger);
     }
