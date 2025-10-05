@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
+import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -133,7 +134,8 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 
     @Override
     protected boolean shouldShowName(Dog dog) {
-        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() && !dog.isVehicle())
+        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() 
+            && !dog.isVehicle() && dog.hasCustomName())
             return true;
         return super.shouldShowName(dog);
     }
@@ -318,7 +320,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return text;
         } 
 
-        if (dog.isDogInAnimDebug()) {
+        if (ClientEventHandler.shouldRenderAnimDebugNametag(dog)) {
             text = createC1WithColor(text, 0xffcda700);
             return text;
         }
