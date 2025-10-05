@@ -18,7 +18,6 @@ import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -397,7 +396,7 @@ public class DogBedBlock extends BaseEntityBlock {
 
             }
 
-            if (ownerId != null && (flagIn.isAdvanced() || Screen.hasShiftDown())) {
+            if (ownerId != null && flagIn.isAdvanced()) {
                 tooltip.add(Component.literal("UUID: ").withStyle(ChatFormatting.AQUA).append(Component.literal(ownerId.toString())));
             }
         }
