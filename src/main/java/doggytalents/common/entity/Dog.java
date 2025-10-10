@@ -5063,7 +5063,7 @@ public class Dog extends AbstractDog {
     protected void doPush(Entity pushTarget) {
         if (this.pettingManager.checkPush(pushTarget))
             return;
-        if (this.dogPushAvoidManager.shouldBlockPush(pushTarget))
+        if (this.dogPushAvoidManager.shouldBlockActivePush(pushTarget))
             return;
         if (DogSleepOnManager.shouldBlockPush(this))
             return;
@@ -5074,7 +5074,7 @@ public class Dog extends AbstractDog {
             return;        
         }
         if (this.isVehicle() && !this.hasControllingPassenger())
-            pushDogAsVehicle(pushTarget);
+            this.customDogPush(pushTarget, true);
         else
             super.doPush(pushTarget);
     }
@@ -5086,14 +5086,17 @@ public class Dog extends AbstractDog {
             return;
         if (this.pettingManager.checkPush(source))
             return;
-        if (this.isDefeated() && this.incapacitatedMananger.shouldApplyCustomPushBehaviour(source)) {
-            this.incapacitatedMananger.customBeingPushed(source, this::calcDogPushVec);
-            return;
-        }
         if (DogSleepOnManager.shouldBlockPush(this))
             return;
-        if (this.isVehicle() && !this.hasControllingPassenger())
-            pushDogAsVehicle(source);
+        var result = this.dogPushAvoidManager.onBeingPushed(source);
+        if (result == DogPushAvoidManager.OnBeingPushAction.BLOCK_ALL)
+            return;
+        if (result == DogPushAvoidManager.OnBeingPushAction.BLOCK_SOURCE
+            || (this.isDefeated() 
+                && this.incapacitatedMananger.shouldApplyCustomPushBehaviour(source)))
+            this.customDogPush(source, false);
+        else if (this.isVehicle() && !this.hasControllingPassenger())
+            this.customDogPush(source, true);
         else {
             if (isDogCurious())
                 setDogCurious(false);
@@ -5101,7 +5104,7 @@ public class Dog extends AbstractDog {
         }
     }
 
-    private void pushDogAsVehicle(Entity source) {
+    private void customDogPush(Entity source, boolean pushSource) {
         var push_vec_optional = calcDogPushVec(source);
         if (!push_vec_optional.isPresent())
             return;
@@ -5111,7 +5114,7 @@ public class Dog extends AbstractDog {
             this.push(-push_vec.x(), 0.0D, -push_vec.z());
         }
 
-        if (source.isPushable()) {
+        if (pushSource && source.isPushable()) {
             source.push(push_vec.x(), 0.0D, push_vec.z());
         }
     }
@@ -5145,7 +5148,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canCollideWith(Entity otherEntity) {
-        if (this.dogPushAvoidManager.shouldBlockPush(otherEntity)) {
+        if (this.dogPushAvoidManager.shouldBlockActivePush(otherEntity)) {
             return false;
         }
         if (DogSleepOnManager.shouldBlockPush(this))
