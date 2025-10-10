@@ -41,9 +41,8 @@ public class DogPushAvoidManager {
         }
     }
 
-    public boolean shouldBlockPush(Entity target) {
+    public boolean shouldBlockActivePush(Entity target) {
 
-        //require client side check.
         if (checkPushAvoidOwner(target))
             return true;
 
@@ -51,6 +50,20 @@ public class DogPushAvoidManager {
             return true;
         
         return false;
+    }
+
+    public static enum OnBeingPushAction { NONE, BLOCK_SOURCE, BLOCK_ALL }
+    public OnBeingPushAction onBeingPushed(Entity source) {
+        boolean force_push_avoid = this.dog.isDogForcePushAvoid();
+        boolean block_push_owner = 
+            !ConfigHandler.SERVER.DOG_PUSH_OWNER.get()
+            || force_push_avoid;
+        if (!block_push_owner)
+            return OnBeingPushAction.NONE;
+        if (ObjectUtils.notEqual(source.getUUID(), this.dog.getOwnerUUID()))
+            return OnBeingPushAction.NONE;
+            
+        return force_push_avoid ? OnBeingPushAction.BLOCK_ALL : OnBeingPushAction.BLOCK_SOURCE;
     }
 
     public boolean checkPushAvoidOwner(Entity target) {
