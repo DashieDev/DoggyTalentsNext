@@ -4,6 +4,8 @@ import java.util.concurrent.CompletableFuture;
 
 import org.jetbrains.annotations.Nullable;
 
+import doggytalents.DoggyBlocks;
+import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
