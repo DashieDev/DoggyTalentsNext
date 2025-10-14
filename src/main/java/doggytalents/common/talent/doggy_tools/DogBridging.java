@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import doggytalents.DoggyTags;
 import doggytalents.DoggyTalents;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -25,8 +26,12 @@ public class DogBridging {
         for (int i = 0; i < DoggyToolsTalent.getSize(inst.level()); ++i) {
             var stack = inst.getTools().getStackInSlot(i);
             if (stack.isEmpty()) continue;
-            if (stack.getItem() instanceof BlockItem block_item) 
-                return Optional.of(Pair.of(stack, block_item)); 
+            if (!(stack.getItem() instanceof BlockItem block_item))
+                continue;
+            if (block_item.getBlock()
+                .builtInRegistryHolder().is(DoggyTags.BRIDGING_DOG_BLACKLIST)) 
+                continue;
+            return Optional.of(Pair.of(stack, block_item)); 
         }
         return Optional.empty();
     }
