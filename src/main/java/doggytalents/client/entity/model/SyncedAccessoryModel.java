@@ -11,6 +11,7 @@ import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.forward_imitate.ARGBUtil_1_20_under;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.ListModel;
@@ -67,8 +68,8 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
-        DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(p_103014_, p_103015_, p_103016_, color_overlay));
+    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, float r, float g, float b, float a) {
+        DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(p_103014_, p_103015_, p_103016_, ARGBUtil_1_20_under.colorFromFloat(a, r, g, b)));
     }
 
     public DogModel.DogModelRenderContext createDogRenderContext(VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {

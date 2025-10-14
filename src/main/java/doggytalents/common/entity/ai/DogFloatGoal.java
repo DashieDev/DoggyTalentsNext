@@ -5,7 +5,7 @@ import doggytalents.common.entity.ai.nav.DogPathNavigation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
 public class DogFloatGoal extends FloatGoal {
 
@@ -29,7 +29,7 @@ public class DogFloatGoal extends FloatGoal {
             .flatMap(DogPathNavigation::getDogNextNode)
             .filter(node -> 
                 node.y <= this.dog.blockPosition().getY()
-                && node.type != PathType.WATER && node.type != PathType.WATER_BORDER
+                && node.type != BlockPathTypes.WATER && node.type != BlockPathTypes.WATER_BORDER
             )
             .isPresent();
         if (has_next_node_below)

@@ -630,11 +630,11 @@ public class DogUtil {
     }
 
     public static boolean isWalkNodeEvaluatorOpenPos(Dog dog, BlockPos pos) {
-        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == PathType.OPEN;
+        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == BlockPathTypes.OPEN;
     }
 
     public static boolean isWalkNodeEvaluatorBlockedPos(Dog dog, BlockPos pos) {
-        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == PathType.BLOCKED;
+        return DogNodeEvaluator.dogGetPathTypeFromState(dog.level(), pos) == BlockPathTypes.BLOCKED;
     }
 
     public static void teleportDogAbs(Dog dog, BlockPos target) {

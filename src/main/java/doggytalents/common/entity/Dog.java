@@ -4139,7 +4139,7 @@ public class Dog extends AbstractDog {
         var b0 = BlockPos.containing(newPos);
         newPos = Vec3.atBottomCenterOf(b0);
         var type = WalkNodeEvaluator.getBlockPathTypeStatic(this.level(), b0.mutable());
-        if (type == PathType.WALKABLE) {
+        if (type == BlockPathTypes.WALKABLE) {
             for (var pose : passenger.getDismountPoses()) {
                 var dismountBb = 
                     passenger.getLocalBoundsForPose(pose)

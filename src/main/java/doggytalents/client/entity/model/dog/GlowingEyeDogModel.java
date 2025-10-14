@@ -41,10 +41,10 @@ public class GlowingEyeDogModel extends DogModel {
 
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay,
-            int color_overlay) {
+            float r, float g, float b, float a) {
         this.glowingEyes.visible = false;
         this.realGlowingEyes.visible = false;
-        super.renderToBuffer(stack, vertex_consumer, light, overlay, color_overlay);
+        super.renderToBuffer(stack, vertex_consumer, light, overlay, r, g, b, a);
     }
 
     @Override

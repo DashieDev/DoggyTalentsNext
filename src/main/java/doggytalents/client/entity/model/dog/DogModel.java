@@ -21,6 +21,8 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.forward_imitate.ARGBUtil_1_20_under;
+import doggytalents.client.forward_imitate.RenderUtil_1_20_under;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -34,6 +36,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
 public class DogModel extends EntityModel<Dog> {
@@ -439,9 +442,10 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
+    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, float r, float g, float b, float a) {
+        int color_overlay = ARGBUtil_1_20_under.colorFromFloat(a, r, g, b);
         if (renderDogWetShade()) {
-            int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
+            int wet_color = ARGBUtil_1_20_under.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
             color_overlay = FastColor.ARGB32.multiply(color_overlay, wet_color);
         }
         
@@ -525,11 +529,11 @@ public class DogModel extends EntityModel<Dog> {
     public static record DogRenderPartContext(VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
         
         public void renderPart(PoseStack stack, ModelPart part) {
-            part.render(stack, vertex_consumer(), light(), overlay(), color_overlay());
+            RenderUtil_1_20_under.renderPart(part, stack, vertex_consumer(), light(), overlay(), color_overlay());
         }
 
         public void renderGlowingPart(PoseStack stack, ModelPart part) {
-            part.render(stack, vertex_consumer(), 15728880, overlay(), color_overlay());
+            RenderUtil_1_20_under.renderPart(part, stack, vertex_consumer(), 15728880, overlay(), color_overlay());
         }
 
     }
