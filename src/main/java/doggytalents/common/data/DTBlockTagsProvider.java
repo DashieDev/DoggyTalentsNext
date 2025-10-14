@@ -4,6 +4,8 @@ import java.util.concurrent.CompletableFuture;
 
 import org.jetbrains.annotations.Nullable;
 
+import doggytalents.DoggyBlocks;
+import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -25,7 +27,6 @@ public class DTBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(Provider p_256380_) {
-        // TODO Auto-generated method stub
-        
+        tag(DoggyTags.BRIDGING_DOG_BLACKLIST).add(DoggyBlocks.DOG_BED.get());
     }
 }
