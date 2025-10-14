@@ -26,6 +26,7 @@ public class DoggyTags {
 
     public static final TagKey<Block> DOG_BED_CASINGS = tagBlock("dog_bed_casings");
     public static final TagKey<Block> DOG_BED_BEDDINGS =  tagBlock("dog_bed_beddings");
+    public static final TagKey<Block> BRIDGING_DOG_BLACKLIST =  tagBlock("bridging_dog_blacklist");
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(Util.getResource(name));
