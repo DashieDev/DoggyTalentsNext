@@ -2106,5 +2106,4 @@ ALWAYS_RENDER_DOG_NAME is true.
 * Fix Dog improperly dismounting entity without checking the entity size and either forefeit 
 if not fit or adapt the entity's pose. 
 * Fix NPE when Dog places Dog Beds
-* 
 * Fix non swimmer dog drowning while swimming as they don't float enough
