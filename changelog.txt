@@ -2092,3 +2092,19 @@ the Soul Sand.
 
 **1.18.60 - 28th June 2025**
 * Fixed some Dog Pathfinding Bugs.
+
+**1.18.61 - 14th Oct 2025**
+# Anim debug nametag now only show when player is holding dog anim debug stick.
+# Allow blacklisting blocks for dog bridging.
+* Properly fix dog still pushing owner by default. Dog should now actually don't push the owner
+by default, you can still push it though.
+* Dog won't show nametag as "Dog" if it doesn't have a custom name even when
+ALWAYS_RENDER_DOG_NAME is true.
+* Fixes dog name
+* Fixes some issues regarding dog going away from danger logic
+* Fix Dog Go Behind Action doesn't work if a torch is blocking the path.
+* Fix Dog improperly dismounting entity without checking the entity size and either forefeit 
+if not fit or adapt the entity's pose. 
+* Fix NPE when Dog places Dog Beds
+* 
+* Fix non swimmer dog drowning while swimming as they don't float enough
