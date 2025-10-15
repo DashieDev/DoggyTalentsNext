@@ -109,6 +109,7 @@ publishMods {
     file = jar.archiveFile
     changelog = "" //To be filled when running task dtnPrepareChangelogForModPublish
     type = STABLE
+    displayName = file.map { it.asFile.name }
     modLoaders.add("forge")
     final def dtnMcVersions = ["1.20", "1.20.1"]
 
