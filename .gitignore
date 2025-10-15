@@ -28,3 +28,6 @@ logs
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# DTN Temp Changelog File For Mod Publishing
+dtn_changelog_temps.txt
