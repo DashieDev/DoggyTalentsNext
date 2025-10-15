@@ -120,6 +120,7 @@ publishMods {
     file = jar.archiveFile
     changelog = "" //To be filled when running task dtnPrepareChangelogForModPublish
     type = STABLE
+    displayName = file.map { it.asFile.name }
     modLoaders.add("fabric")
     final def dtnMcVersions = ["1.21", "1.21.1"]
 
