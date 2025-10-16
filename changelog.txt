@@ -2107,3 +2107,7 @@ ALWAYS_RENDER_DOG_NAME is true.
 if not fit or adapt the entity's pose. 
 * Fix NPE when Dog places Dog Beds
 * Fix non swimmer dog drowning while swimming as they don't float enough
+
+**1.18.62 - 16th Oct 2025**
+# Config to restrict Mob Retriever to carrying only leashable mobs.
+* (Forge 1.20 Only) fix deofuscated release build.

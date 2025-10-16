@@ -5,7 +5,7 @@ plugins {
     id "me.modmuss50.mod-publish-plugin" version "1.0.0"
 }
 
-version = '1.18.61'
+version = '1.18.62'
 group = 'com.github.dashiedev'
 archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
 
