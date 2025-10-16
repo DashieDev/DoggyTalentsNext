@@ -167,6 +167,8 @@ task dtnPrepareChangelogForModPublish {
 tasks.named('publishMods') {
     mustRunAfter(tasks.named('dtnPrepareChangelogForModPublish'))
     dependsOn('dtnPrepareChangelogForModPublish')
+    mustRunAfter(tasks.named('reobfJar')) // Forge 1.20- only
+    dependsOn('reobfJar') // Forge 1.20- only
 }
 
 tasks.withType(JavaCompile).configureEach {
