@@ -377,6 +377,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public ModConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ModConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
+        public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_LEASHABLE;
         public ModConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
         public ModConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
         public ModConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
@@ -532,6 +533,10 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
                 .comment("Enable this if you prefer Mob Retriever to only work with DTN's dog.")
                 .translation("doggytalents.mob_retriever_only_carry_dog")
                 .define("mob_retriever_only_carry_dog", false);
+            MOB_RETRIEVER_ONLY_CARRY_LEASHABLE = builder
+                .comment("Enable this if you prefer Mob Retriever to only work with Leashable Mobs.")
+                .translation("doggytalents.mob_retriever_only_carry_leashable")
+                .define("mob_retriever_only_carry_leashable", false);
             WOLF_MOUNT_PASSENGER_COLLISION = builder
                 .comment("By default, Dogs extend their bounding box covering the passengers")
                 .comment("to avoid suffocating them while calculating the appropriate path.")
