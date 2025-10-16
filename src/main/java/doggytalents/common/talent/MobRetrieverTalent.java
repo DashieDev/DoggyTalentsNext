@@ -85,9 +85,12 @@ public class MobRetrieverTalent extends TalentInstance {
         if (target.isVehicle())
             return false;
         boolean onlyDog = ConfigHandler.SERVER.MOB_RETRIEVER_ONLY_CARRY_DOG.get();
+        boolean onlyLeashable = ConfigHandler.SERVER.MOB_RETRIEVER_ONLY_CARRY_LEASHABLE.get();
         if (onlyDog && !(target instanceof Dog))
             return false;
         if (!(target instanceof Mob))
+            return false;
+        if (onlyLeashable && !((Mob)target).canBeLeashed())
             return false;
         if (target instanceof Player)
             return false;
