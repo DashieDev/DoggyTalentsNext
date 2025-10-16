@@ -12,6 +12,7 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
+import doggytalents.common.forward_imitate.EntityUtil_1_20_under;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -90,7 +91,7 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (!(target instanceof Mob))
             return false;
-        if (onlyLeashable && !((Mob)target).canBeLeashed())
+        if (onlyLeashable && !EntityUtil_1_20_under.canBeLeashed((Mob)target, dog))
             return false;
         if (target instanceof Player)
             return false;
