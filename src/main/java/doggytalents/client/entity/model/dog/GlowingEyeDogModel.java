@@ -58,12 +58,9 @@ public class GlowingEyeDogModel extends DogModel {
         var part_ctx = part_ctx_optional.get();
         if (this.head.visible) {
             this.glowingEyes.visible = true;
+            this.realGlowingEyes.visible = true;
             part_ctx.renderGlowingPart(stack, this.glowingEyes);
             this.glowingEyes.visible = false;
-        }
-        if (this.realHead.visible) {
-            this.realGlowingEyes.visible = true;
-            part_ctx.renderGlowingPart(stack, this.realGlowingEyes);
             this.realGlowingEyes.visible = false;
         }
     }
