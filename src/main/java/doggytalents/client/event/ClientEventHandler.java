@@ -334,6 +334,8 @@ public class ClientEventHandler {
         var player = mc.player;
         if (player == null)
             return false;
+        if (!dog.isDogInAnimDebug())
+            return false;
         var mainhand_item = player.getMainHandItem();
         if (mainhand_item == null 
             || mainhand_item.getItem() != DoggyItems.DOG_ANIM_DEBUG.get())
