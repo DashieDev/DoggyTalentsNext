@@ -2111,3 +2111,6 @@ if not fit or adapt the entity's pose.
 **1.18.62 - 16th Oct 2025**
 # Config to restrict Mob Retriever to carrying only leashable mobs.
 * (Forge 1.20 Only) fix deofuscated release build.
+
+**1.18.63 - 17th Oct 2025**
+* HOTFIX: Fix Glowing eye detaching.
