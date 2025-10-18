@@ -73,9 +73,8 @@ public class ScreenUtil {
     //1.21.5+
     public static void renderComponentTooltip_21_5(GuiGraphics graphics, Font font, List<Component> list, int i, int j) {
         var client_components = list.stream()
-            .map(Component::getVisualOrderText)
-            .map(ClientTooltipComponent::create).collect(Collectors.toList());
-        graphics.renderTooltip(font, client_components, i, j, DefaultTooltipPositioner.INSTANCE, null);
+            .map(Component::getVisualOrderText).collect(Collectors.toList());
+        graphics.setTooltipForNextFrame(client_components, i, j);
     }
 
     //1.21.7+
