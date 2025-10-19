@@ -1804,11 +1804,12 @@ public class Dog extends AbstractDog {
                 DogSleepOnManager.onHurt(this);            
         }
 
-        if (this.level().isClientSide
-            && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
-            this.hurtTime = 0;
-            this.hurtDuration = 0;
-        }
+        //1.21.7+ reflect change of this in handleDamageEvent
+        // if (this.level().isClientSide
+        //     && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
+        //     this.hurtTime = 0;
+        //     this.hurtDuration = 0;
+        // }
         return ret;
     }
 
@@ -5526,9 +5527,10 @@ public class Dog extends AbstractDog {
     }
     @Override
     public boolean hurtClient(DamageSource source) {
-        return hurtDog(Optional.empty(), source, Optional.empty(), 
-            (source_1, amount_1) -> super.hurtClient(source_1)
-        );
+        // return hurtDog(Optional.empty(), source, Optional.empty(), 
+        //     (source_1, amount_1) -> super.hurtClient(source_1)
+        // );
+        return false; //1.21.7+ We hurt client to 
     }
 
 
@@ -5553,6 +5555,18 @@ public class Dog extends AbstractDog {
     public void setOwner(@Nullable LivingEntity entity) {
         var uuid = entity != null ? entity.getUUID() : null;
         this.setOwnerUUID(uuid);
+    }
+
+
+    //1.21.7+
+    @Override
+    public void handleDamageEvent(DamageSource source) {
+        super.handleDamageEvent(source);
+        if (this.level().isClientSide
+            && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
+            this.hurtTime = 0;
+            this.hurtDuration = 0;
+        }
     }
 
 
