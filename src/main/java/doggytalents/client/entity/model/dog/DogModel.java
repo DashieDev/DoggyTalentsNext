@@ -106,7 +106,7 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
 
     protected void correctInitalPose() {
         var tailPose = this.tail.getInitialPose();
-        float tailX = tailPose.x, tailY = tailPose.y, tailZ = tailPose.z;
+        float tailX = tailPose.x(), tailY = tailPose.y(), tailZ = tailPose.z();
         this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
     }
 
