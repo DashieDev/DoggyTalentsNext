@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.util.Mth;
 
 public class ScrollView extends AbstractElement {
@@ -133,9 +134,11 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public boolean mouseClicked(double x, double y, int p_94697_) {                                                                                                                                                                                                             
+    public boolean mouseClicked(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {                                                                                                                                                                                                             
+        double x = mouseButtonEvent_1_21_9.x(); double y = mouseButtonEvent_1_21_9.y(); 
+
         if (!this.isMouseOver(x, y)) return false;
-        return super.mouseClicked(x, y, p_94697_);
+        return super.mouseClicked(mouseButtonEvent_1_21_9, doubleClick_1_21_9);
     }
 
     private static class ScrollContentContainer extends AbstractElement {

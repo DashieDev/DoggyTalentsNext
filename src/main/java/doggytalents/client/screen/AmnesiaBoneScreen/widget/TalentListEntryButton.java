@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyTalents;
 import doggytalents.api.registry.Talent;
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.UIActionTypes;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTalentDescSlice;
 import doggytalents.client.screen.framework.Store;
@@ -20,7 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-public class TalentListEntryButton extends AbstractButton {
+public class TalentListEntryButton extends AbstractButton_1_21_9 {
     
     static final int DEFAULT_COLOR = 0x485e5d5d;
     static final int DEFAULT_HLCOLOR = 0x835e5d5d;

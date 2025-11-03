@@ -7,6 +7,7 @@ import org.joml.Matrix3x2fStack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
@@ -25,7 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import doggytalents.forge_imitate.network.PacketDistributor;
 
-public class LowHealthStrategySwitch extends AbstractWidget {
+public class LowHealthStrategySwitch extends AbstractWidget_1_21_9 {
 
     static final int DEFAULT_COLOR = 0x485e5d5d;
     static final int DEFAULT_HLCOLOR = 0x835e5d5d;

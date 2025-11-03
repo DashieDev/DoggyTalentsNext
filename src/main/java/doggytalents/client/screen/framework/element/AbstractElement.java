@@ -15,6 +15,7 @@ import net.minecraft.client.gui.layouts.LayoutElement;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 
 //TODO: maybe implements LayoutElement too
 public abstract class AbstractElement implements Renderable, ContainerEventHandler, NarratableEntry {
@@ -309,11 +310,11 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
 
 
     //1.21.5+ tempFix
-    private boolean mouseClicked_tempfix_1_21_5(double p_94695_, double p_94696_, int p_94697_) {
+    private boolean mouseClicked_tempfix_1_21_5(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {
         for(var guieventlistener : this.children()) {
-            if (guieventlistener.mouseClicked(p_94695_, p_94696_, p_94697_)) {
+            if (guieventlistener.mouseClicked(mouseButtonEvent_1_21_9, doubleClick_1_21_9)) {
                this.setFocused(guieventlistener);
-               if (p_94697_ == 0) {
+               if (mouseButtonEvent_1_21_9.button() == 0) {
                   this.setDragging(true);
                }
    
@@ -324,8 +325,8 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         return false;
     }
     @Override
-    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
+    public boolean mouseClicked(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {
         // TODO Auto-generated method stub
-        return mouseClicked_tempfix_1_21_5(p_94695_, p_94696_, p_94697_);
+        return mouseClicked_tempfix_1_21_5(mouseButtonEvent_1_21_9, doubleClick_1_21_9);
     }
 }

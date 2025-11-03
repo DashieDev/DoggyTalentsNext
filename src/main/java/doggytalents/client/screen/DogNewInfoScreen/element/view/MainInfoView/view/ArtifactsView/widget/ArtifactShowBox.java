@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
@@ -23,7 +24,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-public class ArtifactShowBox extends AbstractWidget {
+
+public class ArtifactShowBox extends AbstractWidget_1_21_9 {
 
     private ItemRenderer itemRenderer;
     private Dog dog;

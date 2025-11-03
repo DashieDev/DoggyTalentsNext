@@ -16,6 +16,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 
 public class DropdownMenuManager extends AbstractElement {
 
@@ -70,23 +72,24 @@ public class DropdownMenuManager extends AbstractElement {
         return activeDropdownMenu;
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int modifier) {
+    public boolean mouseClicked(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {
+        double mouseX = mouseButtonEvent_1_21_9.x(); double mouseY = mouseButtonEvent_1_21_9.y();
         if (!this.hasDropdownMenu()) return false;
         if (!this.activeDropdownMenu.isMouseOver(mouseX, mouseY)) {
             this.activeDropdownMenu = null; 
             return false;
         }
-        activeDropdownMenu.mouseClicked(mouseX, mouseY, modifier);
+        activeDropdownMenu.mouseClicked(mouseButtonEvent_1_21_9, doubleClick_1_21_9);
         return true;
     }
 
     @Override
-    public boolean keyPressed(int p_94710_, int p_94711_, int p_94712_) {
+    public boolean keyPressed(KeyEvent keyEvent_1_21_9) {
         if (!(this.getFocused() instanceof EditBox)) {
             this.activeDropdownMenu = null; 
             return false;
         }
-        return super.keyPressed(p_94710_, p_94711_, p_94712_);
+        return super.keyPressed(keyEvent_1_21_9);
     }
 
     public void attach(Screen screen, Consumer<DropdownMenuManager> screenChildrenAdder) {

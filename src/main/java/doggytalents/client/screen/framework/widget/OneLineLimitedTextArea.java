@@ -1,5 +1,6 @@
 package doggytalents.client.screen.framework.widget;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -8,7 +9,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
-public class OneLineLimitedTextArea extends AbstractWidget {
+public class OneLineLimitedTextArea extends AbstractWidget_1_21_9 {
 
     private Font font;
     private Tooltip msgTooltip;

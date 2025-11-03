@@ -3,6 +3,7 @@ package doggytalents.client.screen.widget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -36,7 +37,7 @@ import doggytalents.forge_imitate.network.PacketDistributor;
 import java.util.List;
 import java.util.Optional;
 
-public class DogInventoryButton extends AbstractButton {
+public class DogInventoryButton extends AbstractButton_1_21_9 {
 
     private Screen parent;
     private int baseX;

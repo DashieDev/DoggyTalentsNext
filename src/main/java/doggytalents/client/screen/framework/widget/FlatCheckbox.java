@@ -1,5 +1,6 @@
 package doggytalents.client.screen.framework.widget;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
@@ -10,7 +11,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-public class FlatCheckbox extends AbstractButton {
+public class FlatCheckbox extends AbstractButton_1_21_9 {
 
     private static final int DEFAULT_COLOR = 0x5e5d5d;
     private static final int DEFAULT_ACTIVE_COLOR = 0x7500A5;

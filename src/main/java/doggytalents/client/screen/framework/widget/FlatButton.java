@@ -2,6 +2,7 @@ package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,7 +11,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 
-public class FlatButton extends AbstractButton {
+public class FlatButton extends AbstractButton_1_21_9 {
     public static final int DEFAULT_COLOR = 0x005e5d5d;
     public static final int NON_HL_COLOR_MASK = 0x48000000;
     public static final int HL_COLOR_MASK = 0x83000000;
