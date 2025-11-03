@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.feature.DogMode;
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
@@ -23,7 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import doggytalents.common.network.PacketDistributor;
 
-public class ModeSwitch extends AbstractWidget {
+public class ModeSwitch extends AbstractWidget_1_21_9 {
 
     static final int DEFAULT_COLOR = 0x485e5d5d;
     static final int DEFAULT_HLCOLOR = 0x835e5d5d;

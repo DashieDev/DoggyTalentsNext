@@ -2,13 +2,14 @@ package doggytalents.client.screen.framework.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
-public class TextOnlyButton extends AbstractButton {
+public class TextOnlyButton extends AbstractButton_1_21_9 {
 
     protected final TextOnlyButton.OnPress onPress;
     private Font font;
