@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import doggytalents.DoggyItems;
 import doggytalents.common.util.InventoryUtil;
-import doggytalents.forge_imitate.event.client.RegisterKeyMappingsEvent;
+import doggytalents.common.util.Util;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 
