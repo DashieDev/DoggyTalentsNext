@@ -11,6 +11,7 @@ import com.mojang.math.Axis;
 
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.backward_imitate.BaseDogModel_21_3;
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
@@ -63,7 +64,7 @@ public abstract class SyncedAccessoryModel extends BaseDogModel_21_3 {
     }
 
     private void syncPart(ModelPart part, ModelPart dogPart) {
-        part.copyFrom(dogPart);
+        ModelUtil_1_21_9.copyModelPartFrom(part, dogPart);
     }
 
     @Override

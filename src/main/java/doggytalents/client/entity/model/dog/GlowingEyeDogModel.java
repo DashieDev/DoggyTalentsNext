@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.dog;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
@@ -35,8 +36,8 @@ public class GlowingEyeDogModel extends DogModel {
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
             float headPitch) {
         super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        this.glowingEyes.copyFrom(this.head);
-        this.realGlowingEyes.copyFrom(this.realHead);
+        ModelUtil_1_21_9.copyModelPartFrom(this.glowingEyes, this.head);
+        ModelUtil_1_21_9.copyModelPartFrom(this.realGlowingEyes, this.realHead);
     }
 
     @Override

@@ -2,6 +2,7 @@ package doggytalents.client.entity.model.dog;
 
 import java.util.Optional;
 
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -143,8 +144,8 @@ public class VariantDogModel extends DogModel {
     @Override
     public void copyFrom(DogModel dogModel) {
         super.copyFrom(dogModel);
-        this.realTail2.copyFrom(this.realTail);
-        this.realTail3.copyFrom(this.realTail);
+        ModelUtil_1_21_9.copyModelPartFrom(this.realTail2, this.realTail);
+        ModelUtil_1_21_9.copyModelPartFrom(this.realTail3, this.realTail);
     }
 
     @Override

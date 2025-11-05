@@ -21,6 +21,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.backward_imitate.DogRenderState_21_3;
 import doggytalents.client.backward_imitate.IBaseDogModel_21_3;
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.common.entity.Dog;
@@ -296,17 +297,17 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
     }
 
     public void copyFrom(DogModel dogModel) {
-        this.root.copyFrom(dogModel.root);
-        this.head.copyFrom(dogModel.head);
-        this.realHead.copyFrom(dogModel.realHead);
-        this.body.copyFrom(dogModel.body);
-        this.mane.copyFrom(dogModel.mane);
-        this.legBackRight.copyFrom(dogModel.legBackRight);
-        this.legBackLeft.copyFrom(dogModel.legBackLeft);
-        this.legFrontRight.copyFrom(dogModel.legFrontRight);
-        this.legFrontLeft.copyFrom(dogModel.legFrontLeft);
-        this.tail.copyFrom(dogModel.tail);
-        this.realTail.copyFrom(dogModel.realTail);
+        ModelUtil_1_21_9.copyModelPartFrom(this.root, dogModel.root);
+        ModelUtil_1_21_9.copyModelPartFrom(this.head, dogModel.head);
+        ModelUtil_1_21_9.copyModelPartFrom(this.realHead, dogModel.realHead);
+        ModelUtil_1_21_9.copyModelPartFrom(this.body, dogModel.body);
+        ModelUtil_1_21_9.copyModelPartFrom(this.mane, dogModel.mane);
+        ModelUtil_1_21_9.copyModelPartFrom(this.legBackRight, dogModel.legBackRight);
+        ModelUtil_1_21_9.copyModelPartFrom(this.legBackLeft, dogModel.legBackLeft);
+        ModelUtil_1_21_9.copyModelPartFrom(this.legFrontRight, dogModel.legFrontRight);
+        ModelUtil_1_21_9.copyModelPartFrom(this.legFrontLeft, dogModel.legFrontLeft);
+        ModelUtil_1_21_9.copyModelPartFrom(this.tail, dogModel.tail);
+        ModelUtil_1_21_9.copyModelPartFrom(this.realTail, dogModel.realTail);
     }
 
     public void resetPart(ModelPart part, Dog dog) {
