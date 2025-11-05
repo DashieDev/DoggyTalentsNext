@@ -13,6 +13,7 @@ import com.mojang.math.Axis;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.events.RegisterCustomDogModelsEvent.DogModelProps;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -89,8 +90,8 @@ public class CustomDogModel extends DogModel {
             float headPitch) {
         super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         if (this.props.glowingEyes) {
-            this.glowingEyes.copyFrom(this.head);
-            this.realGlowingEyes.copyFrom(this.realHead);
+            ModelUtil_1_21_9.copyModelPartFrom(this.glowingEyes, this.head);
+            ModelUtil_1_21_9.copyModelPartFrom(this.realGlowingEyes, this.realHead);
         }
     }
 

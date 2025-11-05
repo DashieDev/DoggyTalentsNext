@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
@@ -29,7 +30,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
 
     @Override
     public void sync(DogModel dogModel) {
-        root.copyFrom(dogModel.root);
+        ModelUtil_1_21_9.copyModelPartFrom(root, dogModel.root);
 
         syncPart(this.head, dogModel.head);
         syncPart(this.realHead, dogModel.realHead);
@@ -41,7 +42,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
     }
 
     private void syncPart(Optional<ModelPart> part, ModelPart dogPart) {
-        part.ifPresent(p -> p.copyFrom(dogPart));
+        part.ifPresent(p -> ModelUtil_1_21_9.copyModelPartFrom(p, dogPart));
     }
 
     @Override
