@@ -117,7 +117,7 @@ public class DoggyTalentsNext {
 
         forgeEventBus.register(new EventHandler());
 
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             modEventBus.addListener(DoggyKeybinds::registerDTKeyMapping);
             modEventBus.addListener(this::clientSetup);
             modEventBus.addListener(DoggyBlocks::registerBlockColours);

@@ -9,7 +9,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 public class EventRegister_21_3 {
     
     public static void registerEvent(IEventBus mod_event_bus, IEventBus forge_event_bus) {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             mod_event_bus.addListener(ClientSetup::onRegisterClientExtension_21_3);
             forge_event_bus.addListener(PlayerRenderPrep_21_3::afterPlayerRender);
         }

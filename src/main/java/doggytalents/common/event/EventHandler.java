@@ -339,7 +339,7 @@ public class EventHandler {
 
     private boolean isEnableStarterBundle() {
         final var retMut = new MutableBoolean(false);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             if (ConfigHandler.ClientConfig
                 .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
                 retMut.setTrue();

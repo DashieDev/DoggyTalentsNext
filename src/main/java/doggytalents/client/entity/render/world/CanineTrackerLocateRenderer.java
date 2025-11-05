@@ -23,6 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -65,8 +66,8 @@ public class CanineTrackerLocateRenderer {
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());
         }
-        var camera = event.getCamera();
-        var camera_pos = camera.getPosition().add(0, -0.2, 0);
+        var camera = event.getLevelRenderState().cameraRenderState;
+        var camera_pos = camera.pos.add(0, -0.2, 0);
         var off_dog_camera = dog_pos.subtract(camera_pos);
         var d_dog_camera = off_dog_camera.length();
         var off_txt = off_dog_camera;
@@ -82,10 +83,10 @@ public class CanineTrackerLocateRenderer {
         stopLocating();
     }
 
-    public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, Camera camera) {
+    public static void drawFloatingDistanceText(String name, double distance, Vec3 off_from_player, CameraRenderState camera) {
         var text_mat = new Matrix4f();
         text_mat.translate((float)off_from_player.x(), (float)off_from_player.y(), (float)off_from_player.z());
-        text_mat.rotate(camera.rotation());
+        text_mat.rotate(camera.orientation);
         text_mat.scale(0.02F, -0.02F, 0.02F);
         var font = Minecraft.getInstance().font;
 
