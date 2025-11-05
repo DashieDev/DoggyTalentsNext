@@ -21,6 +21,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -118,8 +119,8 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-    //    InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
+    public boolean keyPressed(KeyEvent keyEvent_1_21_9) {
+    //    InputConstants.Key mouseKey = InputConstants.getKey(keyEvent_1_21_9);
     //    if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
     //        if (this.player.getAbilities().instabuild) {
     //             this.minecraft.setScreen(new CreativeModeInventoryScreen(this.minecraft.player, this.minecraft.player.connection.enabledFeatures(), this.minecraft.options.operatorItemsTab().get()));
@@ -129,7 +130,7 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     //        return true;
     //    }
 
-       return super.keyPressed(keyCode, scanCode, modifiers);
+       return super.keyPressed(keyEvent_1_21_9);
     }
 
     @Override

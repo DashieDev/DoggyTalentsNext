@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.Screen_1_21_9;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
@@ -13,9 +14,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
-public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
+public class StoreConnectedScreen extends Screen_1_21_9 implements IStoreSubscriber {
 
     private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private boolean isResizing = false;
@@ -93,10 +95,10 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     @Override
-    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
+    public boolean mouseClicked(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {
         //invalidate focus every click. Prefer focus to be null if the click is outside of any bound.
         this.setFocused(null);
-        return super.mouseClicked(p_94695_, p_94696_, p_94697_);
+        return super.mouseClicked(mouseButtonEvent_1_21_9, doubleClick_1_21_9);
     }
 
     @Override

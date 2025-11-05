@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.Screen_1_21_9;
 import doggytalents.client.screen.StringEntrySelectScreen.TextField.FocusState;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.client.Minecraft;
@@ -20,7 +22,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 
-public class StringEntrySelectScreen extends Screen {
+public class StringEntrySelectScreen extends Screen_1_21_9 {
     
     private List<String> entries;
     private List<Integer> filteredIndexes;
@@ -134,7 +136,7 @@ public class StringEntrySelectScreen extends Screen {
     }
 
     @Override
-    public boolean charTyped(char code, int p_231042_2_) {
+    public boolean charTyped(int code, int p_231042_2_) {
         return this.searchField.charTyped(code, p_231042_2_);
     }
 
@@ -165,7 +167,7 @@ public class StringEntrySelectScreen extends Screen {
         );
         if (move_left) {
             if (this.prevPageButton.active)
-            this.prevPageButton.onClick(0, 0);
+            GuiUtil_1_21_9.buttonOnClickNull(this.prevPageButton);
             return true;
         }
         boolean move_right = !text_field_focused && (
@@ -174,7 +176,7 @@ public class StringEntrySelectScreen extends Screen {
         );
         if (move_right) {
             if (this.nextPageButton.active)
-            this.nextPageButton.onClick(0, 0);
+            GuiUtil_1_21_9.buttonOnClickNull(this.nextPageButton);
             return true;
         }
 
@@ -334,7 +336,7 @@ public class StringEntrySelectScreen extends Screen {
 
         public boolean keyPressed(boolean textFieldFocused, int keyCode, int scanCode, int modifiers) {
             var mc = Minecraft.getInstance();
-            var mouseKey = InputConstants.getKey(keyCode, scanCode);
+            var mouseKey = GuiUtil_1_21_9.getInputKey(keyCode, scanCode);
             
             boolean is_down = 
                 keyCode == InputConstants.KEY_DOWN || (
@@ -599,7 +601,7 @@ public class StringEntrySelectScreen extends Screen {
             return false;
         }
 
-        public boolean charTyped(char code, int p_231042_2_) {
+        public boolean charTyped(int code, int p_231042_2_) {
             if (!this.isActive())
                 return false;
             if (StringUtil.isAllowedChatCharacter(code)) {

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogDescriptionViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
@@ -36,6 +37,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 
 public class DogNewInfoScreen extends StoreConnectedScreen {
@@ -297,9 +299,11 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent keyEvent_1_21_9) {
+        int keyCode = keyEvent_1_21_9.key();
+
         if (this.getFocused() instanceof EditBox) {
-            return super.keyPressed(keyCode, scanCode, modifiers);
+            return super.keyPressed(keyEvent_1_21_9);
         }
 
         var mc = Minecraft.getInstance();
@@ -309,17 +313,17 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             this.sideTabNavLocked = true;
             if (options.keyLeft.matches(keyCode, scanCode)) {
                 this.lefTabButton.playDownSound(mc.getSoundManager());
-                this.lefTabButton.onClick(0, 0);
-                this.lefTabButton.keyPressed(keyCode, scanCode, modifiers);
+                GuiUtil_1_21_9.buttonOnClickNull(this.lefTabButton);
+                this.lefTabButton.keyPressed(keyEvent_1_21_9);
             } else if (options.keyRight.matches(keyCode, scanCode)) {
                 this.rightTabButton.playDownSound(mc.getSoundManager());
-                this.rightTabButton.onClick(0, 0);
-                this.rightTabButton.keyPressed(keyCode, scanCode, modifiers);
+                GuiUtil_1_21_9.buttonOnClickNull(this.rightTabButton);
+                this.rightTabButton.keyPressed(keyEvent_1_21_9);
             }
         }
         
-        DropdownMenuManager.get(this).keyPressed(keyCode, scanCode, modifiers);
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        DropdownMenuManager.get(this).keyPressed(keyEvent_1_21_9);
+        return super.keyPressed(keyEvent_1_21_9);
     }
 
     @Override
