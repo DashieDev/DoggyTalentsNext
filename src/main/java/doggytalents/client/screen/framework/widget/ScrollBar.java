@@ -1,5 +1,6 @@
 package doggytalents.client.screen.framework.widget;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -8,7 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-public class ScrollBar extends AbstractWidget {
+public class ScrollBar extends AbstractWidget_1_21_9 {
 
     private int barSize;
     private double barOffset;
@@ -79,7 +80,7 @@ public class ScrollBar extends AbstractWidget {
     }
 
     @Override
-    protected void onDrag(double mouseX, double mouseY, double dY, double dX) {
+    public void onDrag(double mouseX, double mouseY, double dY, double dX) {
         holdInflate = true;
         if (!checkAndHandleMouseOutBound(mouseX, mouseY))
             return;

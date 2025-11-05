@@ -49,6 +49,11 @@ public class GuiUtil_1_21_9 {
             onClick(event.x(), event.y());
         }
         @Override
+        protected void onDrag(MouseButtonEvent event, double dY, double dX) {
+            this.onDrag(event.x(), event.y(), dY, dX);
+            super.onDrag(event, dY, dX);
+        }
+        @Override
         public boolean keyPressed(KeyEvent keyEvent) {
             if (this.keyPressed(keyEvent.key(), keyEvent.scancode(), keyEvent.modifiers()))
                 return true;
@@ -69,6 +74,7 @@ public class GuiUtil_1_21_9 {
 
 
         public void onClick(double mouseX, double mouseY) {}
+        public void onDrag(double mouseX, double mouseY, double dY, double dX) {}
         public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
             return false;
         }

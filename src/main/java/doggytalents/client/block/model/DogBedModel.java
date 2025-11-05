@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Either;
 import doggytalents.DoggyBlocks;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
+import doggytalents.client.backward_imitate.AtlasUtil_1_21_9;
 import doggytalents.client.backward_imitate.WrappedDogBedItemOverride_21_3;
 import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
 import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
@@ -397,12 +398,12 @@ public class DogBedModel implements BlockStateModel {
 
                     @Override
                     public TextureAtlasSprite get(Material material, ModelDebugName p_404904_) {
-                        return material.sprite();
+                        return AtlasUtil_1_21_9.getSpriteFromMaterial(material);
                     }
 
                     @Override
                     public TextureAtlasSprite reportMissingReference(String p_387031_, ModelDebugName p_405621_) {
-                        return new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation()).sprite();
+                        return AtlasUtil_1_21_9.getSpriteFromMaterial(new Material(TextureAtlas.LOCATION_BLOCKS, MissingTextureAtlasSprite.getLocation()));
                     }
                     
                 };
