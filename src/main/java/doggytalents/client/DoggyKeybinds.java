@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import doggytalents.DoggyItems;
 import doggytalents.common.util.InventoryUtil;
+import doggytalents.common.util.Util;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
@@ -12,7 +13,7 @@ import net.neoforged.neoforge.client.settings.KeyModifier;
 
 public class DoggyKeybinds {
     
-    public static String CATEGORIES_DT = "key.categories.doggy_talents";
+    public static final KeyMapping.Category CATEGORIES_DT = new KeyMapping.Category(Util.getResource("key.categories.doggy_talents"));
     public static KeyMapping hotkeyWhistle_1 
         = new KeyMapping(
             "key.doggytalents.whistle.1", 

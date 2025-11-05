@@ -15,6 +15,7 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.backward_imitate.DTNRecipeProvider_21_3;
 import doggytalents.common.backward_imitate.EventRegister_1_21_5;
 import doggytalents.common.backward_imitate.EventRegister_1_21_7;
+import doggytalents.common.backward_imitate.EventRegister_1_21_9;
 import doggytalents.common.backward_imitate.EventRegister_21_3;
 import doggytalents.common.backward_imitate.TicketTypeUtil_1_21_5;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
@@ -149,6 +150,9 @@ public class DoggyTalentsNext {
 
         //1.21.7+
         EventRegister_1_21_7.registerEvent(modEventBus, forgeEventBus);
+
+        //1.21.9+
+        EventRegister_1_21_9.registerEvent(modEventBus, forgeEventBus);
     }
 
     public void commonSetup(final FMLCommonSetupEvent event) {
