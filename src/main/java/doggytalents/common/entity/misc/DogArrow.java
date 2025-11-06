@@ -14,6 +14,7 @@ import doggytalents.common.event.EventHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SpellParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -129,7 +130,7 @@ public class DogArrow extends AbstractArrow {
 
     private void updateSpectralArrow() {
         if (this.level().isClientSide && !this.isInGround()) {
-            this.level().addParticle(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            this.level().addParticle(SpellParticleOption.create(ParticleTypes.EFFECT, -1, 1.0F), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
         }
     }
 

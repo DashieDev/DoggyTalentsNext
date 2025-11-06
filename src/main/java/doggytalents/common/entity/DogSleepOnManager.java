@@ -312,7 +312,7 @@ public class DogSleepOnManager {
         if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
             return;
         var player = event.getEntity();
-        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
+        var dog_optional = DogSleepOnManager.getServer(player.level().getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())
             return;
         event.setContinueSleeping(true);

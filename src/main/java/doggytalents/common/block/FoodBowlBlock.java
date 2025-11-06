@@ -139,8 +139,8 @@ public class FoodBowlBlock extends BaseEntityBlock {
         return true;
     }
 
-    @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+    //@Override
+    //public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
         // FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
         // if (foodBowl != null) {
@@ -148,8 +148,8 @@ public class FoodBowlBlock extends BaseEntityBlock {
         //     return InventoryUtil.calcRedstoneFromInventory(bowlInventory);
         // }
 
-        return 0;
-    }
+        //return 0;
+    //}
 
     @Override
     public InteractionResult useWithoutItem(BlockState blockStateIn, Level worldIn, BlockPos posIn, Player playerIn, BlockHitResult result) {

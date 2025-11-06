@@ -14,7 +14,7 @@ import doggytalents.forge_imitate.registry.DeferredRegister;
 public class TicketTypeUtil_1_21_5 {
     
     public static final DeferredRegister<TicketType> TICKET_TYPE = DeferredRegister.create(() -> BuiltInRegistries.TICKET_TYPE, Constants.MOD_ID);
-    public static final TicketType CHUNK_TASK = register("chunk_task", new TicketType(0L, false, TicketType.TicketUse.LOADING_AND_SIMULATION));
+    public static final TicketType CHUNK_TASK = register("chunk_task", new TicketType(0L, 15));
 
     private static TicketType register(String id, TicketType type) {
         TICKET_TYPE.register(id, () -> type);

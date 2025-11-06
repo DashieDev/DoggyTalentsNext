@@ -57,7 +57,7 @@ public class GenderBoneItem extends Item implements IDogItem{
             );
         }
         var stack = playerIn.getItemInHand(handIn);
-        stack.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
+        stack.hurtAndBreak(1, playerIn, handIn.asEquipmentSlot());
         return DogInteractionResult.SUCCESS;
     }
     

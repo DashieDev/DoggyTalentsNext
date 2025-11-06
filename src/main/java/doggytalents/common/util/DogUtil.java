@@ -624,7 +624,7 @@ public class DogUtil {
                 if (dataDim == null) {
                     dataDim = Level.OVERWORLD;
                 }
-                var server = owner.getServer();
+                var server = owner.level().getServer();
                 if (server == null)
                     return;
                 var dogLevel = server.getLevel(dataDim);
