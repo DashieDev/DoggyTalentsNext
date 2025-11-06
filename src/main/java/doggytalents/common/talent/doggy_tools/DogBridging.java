@@ -112,13 +112,13 @@ public class DogBridging {
         
         final int limit = limit_optional.get();
 
-        var storage = DogLocationStorage.get(player.getServer());
+        var storage = DogLocationStorage.get(player.level().getServer());
         int current_count = storage.bridgingDogLimitMap.getOrDefault(player.getUUID(), 0);
         return current_count >= limit;
     }
 
     public static void incBridgingCount(LivingEntity player) {
-        var storage = DogLocationStorage.get(player.getServer());
+        var storage = DogLocationStorage.get(player.level().getServer());
         storage.bridgingDogLimitMap.compute(player.getUUID(), (uuid, old_val) -> {
             if (old_val == null) {
                 return 1;
@@ -128,7 +128,7 @@ public class DogBridging {
     }
 
     public static void decBridgingCount(LivingEntity player) {
-        var storage = DogLocationStorage.get(player.getServer());
+        var storage = DogLocationStorage.get(player.level().getServer());
         storage.bridgingDogLimitMap.computeIfPresent(player.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return null;

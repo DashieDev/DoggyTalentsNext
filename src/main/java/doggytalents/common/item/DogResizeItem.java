@@ -57,7 +57,7 @@ public class DogResizeItem extends Item implements IDogItem {
                 DogSize size1 = (this.type == Type.BIG ? size0.grow() : size0.shrink());
                 dog.setDogSize(size1);
                 if (!playerIn.getAbilities().instabuild && size0 != size1)
-                itemInHand.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
+                itemInHand.hurtAndBreak(1, playerIn, handIn.asEquipmentSlot());
             }
             return DogInteractionResult.SUCCESS;
         }

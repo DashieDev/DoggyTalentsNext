@@ -13,7 +13,7 @@ public class RiceCropBlock extends DogCropBlock {
     public RiceCropBlock() {
         super(Block.Properties.of().setId(ResourceKeyHelper_21_3.blockKey("rice_crop"))
             .mapColor(MapColor.PLANT)
-            .noCollission()
+            .noCollision()
             .randomTicks()
             .instabreak()
             .sound(SoundType.CROP)

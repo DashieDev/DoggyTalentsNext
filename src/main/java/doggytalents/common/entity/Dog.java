@@ -1275,7 +1275,7 @@ public class Dog extends AbstractDog {
 
         if (this.level().isClientSide)
             return DogInteractionResult.SUCCESS;
-        stack.hurtAndBreak(1, player, getSlotForHand(hand));
+        stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
         this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
         var wolf_armor0 = this.wolfArmor();
@@ -1420,13 +1420,13 @@ public class Dog extends AbstractDog {
     private boolean ridingAuthorized = false;
 
     @Override
-    public boolean startRiding(Entity entity, boolean force_ride) {
+    public boolean startRiding(Entity entity, boolean force_ride, boolean trigger_player) {
         var result = false;
         boolean not_authorized = 
             requireRidingAuthorization(entity)
             && !isRidingAuthorized();
         if (!not_authorized) {   
-            result = super.startRiding(entity, force_ride);
+            result = super.startRiding(entity, force_ride, trigger_player);
         }
         ridingAuthorized = false;
 
@@ -1957,7 +1957,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean killedEntity(ServerLevel level, LivingEntity entity) {
+    public boolean killedEntity(ServerLevel level, LivingEntity entity, DamageSource source) {
         if (!ConfigHandler.SERVER.DISABLE_KILL_STATS.get())
             this.statsTracker.incrementKillCount(entity);
         return true;
@@ -2660,7 +2660,7 @@ public class Dog extends AbstractDog {
         var entity = cause.getEntity();
         if (level instanceof ServerLevel) {
             ServerLevel serverlevel = (ServerLevel)level;
-            if (entity == null || entity.killedEntity(serverlevel, this)) {
+            if (entity == null || entity.killedEntity(serverlevel, this, cause)) {
                 this.gameEvent(GameEvent.ENTITY_DIE);
                 this.dropAllDeathLoot(serverlevel, cause);
             }
@@ -5556,7 +5556,7 @@ public class Dog extends AbstractDog {
         return owner_ref.getUUID();
     }
     public void setOwnerUUID_1_21_3_Under_SuperCall(UUID uuid) {
-        var owner_ref = uuid == null ? null : new EntityReference<LivingEntity>(uuid);
+        var owner_ref = uuid == null ? null : EntityReference.<LivingEntity>of(uuid);
         super.setOwnerReference(owner_ref);
     }
     @Override
@@ -5580,6 +5580,13 @@ public class Dog extends AbstractDog {
             this.hurtTime = 0;
             this.hurtDuration = 0;
         }
+    }
+
+
+    //1.21.9
+    @Override
+    protected boolean canShearEquipment(Player p_426143_) {
+        return false; //Already handled by DTN
     }
 
 
