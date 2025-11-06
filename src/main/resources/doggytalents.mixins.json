@@ -28,7 +28,10 @@
 
 
       "PlayerRendererMixin_1_21_3",
-      "PlayerRendererMixin_1_21_5"
+      "PlayerRendererMixin_1_21_5",
+
+
+      "NameTagFeatureRendererStorageAccessorMixin_1_21_9"
     ],
     "server": [],
     "injectors": {
