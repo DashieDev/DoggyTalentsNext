@@ -16,6 +16,8 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.backward_imitate.DogRenderState_21_3;
+import doggytalents.client.backward_imitate.RenderUtil_1_21_9;
+import doggytalents.client.backward_imitate.RenderUtil_1_21_9.RenderContext_1_21_9;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.IwankoModel;
@@ -33,11 +35,13 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -87,7 +91,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
     // }
 
     @Override
-    public void render(DogRenderState_21_3 dog_render_state, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void submit(DogRenderState_21_3 dog_render_state, PoseStack matrixStackIn, SubmitNodeCollector node_collector_1_21_9, CameraRenderState camera_state_1_21_9) {
         var dog = dog_render_state.dog; var partialTicks = dog_render_state.partialTick;
 
         var skin = dog.getClientSkin();
@@ -107,7 +111,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         // if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
         //     MobRenderer_render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         // } else
-            super.render(dog_render_state, matrixStackIn, bufferIn, packedLightIn);
+            super.submit(dog_render_state, matrixStackIn, node_collector_1_21_9, camera_state_1_21_9);
 
         this.model = this.nullDogModel;
     }
@@ -146,7 +150,11 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
     }
 
     @Override
-    protected void renderNameTag(DogRenderState_21_3 render_state, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight) {
+    protected void submitNameTag(DogRenderState_21_3 render_state, PoseStack stack, SubmitNodeCollector node_collector_1_21_9, CameraRenderState camera_state_1_21_9) {
+        var render_context_1_21_9 = new RenderContext_1_21_9(node_collector_1_21_9, camera_state_1_21_9, render_state);
+        var text = render_state.dog.getCustomName();
+        if (text == null) return;
+
         var dog = render_state.dog;
         double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
 
@@ -161,18 +169,17 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
             return;
 
         if (net.neoforged.neoforge.client.ClientHooks.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner, !isDiffOwner && WhistleItem.isHoldingDutyWhistle(player));
+            renderMainName(dog, text, stack, render_context_1_21_9, renderDiffOwnerName && isDiffOwner, isDiffOwner, !isDiffOwner && WhistleItem.isHoldingDutyWhistle(player));
         if (d0 <= 64 * 64)
-            renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
+            renderExtraInfo(dog, text, stack, render_context_1_21_9, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
         
     }
 
-    private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int light, boolean diffOwnerRender, boolean isDiffOwner, boolean renderDogOnDuty) {
+    private void renderMainName(Dog dog, Component text, PoseStack stack, RenderContext_1_21_9 renderContext_1_21_9, boolean diffOwnerRender, boolean isDiffOwner, boolean renderDogOnDuty) {
 
         text = modifyMainText(dog, text, diffOwnerRender, renderDogOnDuty);
 
-        renderDogText(dog, text, 0, 0.025f, stack, buffer, light, diffOwnerRender, isDiffOwner);
+        renderDogText(dog, text, 0, 0.025f, stack, renderContext_1_21_9, diffOwnerRender, isDiffOwner);
     }
 
     private int getBkgTextColorWithOpacity(boolean diffOwnerRender) {
@@ -186,7 +193,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
     }
 
     private void renderDogText(Dog dog, Component text, double y_offset_from_default, float scale,
-        PoseStack stack, MultiBufferSource buffer, int light,
+        PoseStack stack, RenderContext_1_21_9 renderContext_1_21_9, 
         boolean render_diffowner, boolean is_diffowner) {
 
         boolean dog_not_sneaking = !dog.isDiscrete();
@@ -195,7 +202,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         stack.pushPose();
 
         stack.translate(0.0D, (double)render_y_offset, 0.0D);
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        stack.mulPose(renderContext_1_21_9.cameraState().orientation);
         stack.scale(scale, -scale, scale);
         
         var pose = stack.last().pose();
@@ -208,7 +215,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
         int bkg_color = getBkgTextColorWithOpacity(render_diffowner);
         int bkg_txtcolor = 0x20FFFFFF;
-        font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
+        RenderUtil_1_21_9.submitNameTagRaw(renderContext_1_21_9, text, tX, tY, bkg_txtcolor, pose, bkg_display_mode, bkg_color);
         
         //for 1.21 to resolve text conflict, no effect on below versions.
         stack.translate(0.0D, (double)0.0D, 0.1D);
@@ -218,21 +225,21 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
             var fg_display_mode = Font.DisplayMode.NORMAL;
             int fg_color = 0x0;
             int fg_txtcolor = 0xFFFFFFFF;
-            font.drawInBatch(text, tX, tY, fg_txtcolor, false, pose, buffer, fg_display_mode, fg_color, light);
+            RenderUtil_1_21_9.submitNameTagRaw(renderContext_1_21_9, text, tX, tY, fg_txtcolor, pose, fg_display_mode, fg_color);
         }
 
         stack.popPose();
     }
 
-    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
+    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, 
+        RenderContext_1_21_9 renderContext_1_21_9, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
         
-        renderInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
-        renderSecondaryInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
+        renderInfoDogText(dog, text, stack, renderContext_1_21_9, d0, diffOwnerRender, isDiffOwner);
+        renderSecondaryInfoDogText(dog, text, stack, renderContext_1_21_9, d0, diffOwnerRender, isDiffOwner);
     }
 
-    private void renderInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
+    private void renderInfoDogText(Dog dog, Component text, PoseStack stack, 
+        RenderContext_1_21_9 renderContext_1_21_9, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
         
         boolean renderHealthInNameActivated = 
             this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
@@ -261,12 +268,12 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
             extra_info_c1 = createC1WithColor(extra_info_c1, TXTCLR_DIFFOWNER);
         }
 
-        renderDogText(dog, extra_info_c1, 0.12f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
+        renderDogText(dog, extra_info_c1, 0.12f, 0.01f, stack, renderContext_1_21_9, diffOwnerRender, isDiffOwner);
 
     }
 
-    private void renderSecondaryInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
+    private void renderSecondaryInfoDogText(Dog dog, Component text, PoseStack stack, 
+        RenderContext_1_21_9 renderContext_1_21_9, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
 
         if (d0 > 5 * 5)
             return;
@@ -281,7 +288,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
             ownerC0 = createC1WithColor(ownerC0, TXTCLR_DIFFOWNER);
         }
 
-        renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
+        renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, renderContext_1_21_9, diffOwnerRender, isDiffOwner);
     }
 
     private Optional<Component> getHungerC1(Dog dog, boolean renderHealthInNameActivated) {
