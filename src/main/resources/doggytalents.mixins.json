@@ -32,7 +32,9 @@
 
 
       "NameTagFeatureRendererStorageAccessorMixin_1_21_9",
-      "AvatarRendererMixin_1_21_9"
+      "AvatarRendererMixin_1_21_9",
+      "ModelFeatureRendererMixin_1_21_9",
+      "FeatureRenderDispatcherMixin_1_21_9"
     ],
     "server": [],
     "injectors": {

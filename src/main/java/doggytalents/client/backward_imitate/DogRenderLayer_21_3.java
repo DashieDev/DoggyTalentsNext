@@ -2,13 +2,14 @@ package doggytalents.client.backward_imitate;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import doggytalents.client.backward_imitate.LegacyRenderLayerUtil_1_21_9.DogRenderLayer_1_21_9;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public abstract class DogRenderLayer_21_3 extends RenderLayer<DogRenderState_21_3, DogModel> {
+public abstract class DogRenderLayer_21_3 extends DogRenderLayer_1_21_9 {
 
     public DogRenderLayer_21_3(RenderLayerParent<DogRenderState_21_3, DogModel> p_117346_) {
         super(p_117346_);
