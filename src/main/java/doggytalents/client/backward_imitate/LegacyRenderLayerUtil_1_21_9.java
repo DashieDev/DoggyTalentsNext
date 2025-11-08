@@ -46,6 +46,31 @@ public class LegacyRenderLayerUtil_1_21_9 {
             DogRenderState_21_3 render_state, float yrot, float xrot);
     }
 
+    public static abstract class DogRenderLayerNew_1_21_9 extends RenderLayer<DogRenderState_21_3, DogModel> {
+
+        public DogRenderLayerNew_1_21_9(RenderLayerParent<DogRenderState_21_3, DogModel> p_117346_) {
+            super(p_117346_);
+        }
+
+        @Override
+        public void submit(PoseStack psoeStack, SubmitNodeCollector nodeCollector_1_21_9, int light, DogRenderState_21_3 renderState_1_21_9, float netHeadYaw, float headPitch) {
+            var ctx = new RenderContext_1_21_9(nodeCollector_1_21_9, renderState_1_21_9);
+            var dog = renderState_1_21_9.dog;
+            var walk_anim_time = renderState_1_21_9.walkAnimationPos;
+            var walk_anim_speed = renderState_1_21_9.walkAnimationSpeed;
+            var pticks = renderState_1_21_9.partialTick;
+            var ticksp = renderState_1_21_9.ageInTicks;
+            submit(psoeStack, ctx, light, dog, walk_anim_time, 
+                walk_anim_speed, pticks, ticksp, netHeadYaw, headPitch);
+        }
+
+        public abstract void submit(PoseStack matrixStack, RenderContext_1_21_9 context_1_21_9, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch);
+
+        public static record RenderContext_1_21_9(SubmitNodeCollector nodeCollector, DogRenderState_21_3 dogRenderState) {}
+
+
+    }
+
 
     public static record DogLegacyLayerSubmit_1_21_9(PoseStack.Pose pose, 
         DogRenderState_21_3 renderState, int light, float yRot, float xRot) {

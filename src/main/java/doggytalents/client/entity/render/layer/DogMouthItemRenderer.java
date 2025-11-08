@@ -10,6 +10,7 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.backward_imitate.DogRenderLayerWithRenderState_21_3;
 import doggytalents.client.backward_imitate.DogRenderLayer_21_3;
 import doggytalents.client.backward_imitate.DogRenderState_21_3;
+import doggytalents.client.backward_imitate.LegacyRenderLayerUtil_1_21_9.DogRenderLayerNew_1_21_9;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.DogRenderer;
@@ -18,6 +19,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -34,7 +36,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
+public class DogMouthItemRenderer extends DogRenderLayerNew_1_21_9 {
     
     private ItemRenderer itemInHandRenderer;
     private SyncedRenderFunctionWithHeadModel itemSyncer;
@@ -49,7 +51,7 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
     }
 
     @Override
-    public void render(PoseStack matrixStack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, DogRenderState_21_3 render_state) {
+    public void submit(PoseStack matrixStack, RenderContext_1_21_9 context_1_21_9, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!ConfigHandler.CLIENT.MOUTH_ITEM_FORCE_RENDER.get()) {
             var skin = dog.getClientSkin();
             if (skin.useCustomModel()) {
@@ -69,11 +71,11 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
         model.copyPropertiesTo(itemSyncer);
         itemSyncer.sync(model);
         itemSyncer.startRenderFromRoot(matrixStack, matrixStack1 -> {
-            renderItem(matrixStack1, bufferSource, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack, render_state);
+            renderItem(matrixStack1, context_1_21_9.nodeCollector(), packedLight, dog, netHeadYaw, headPitch, stack, context_1_21_9.dogRenderState());
         });
     }
 
-    public void renderItem(PoseStack stack, MultiBufferSource bufferSource, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
+    public void renderItem(PoseStack stack, SubmitNodeCollector collector_1_21_9, int packedLight, Dog dog, float netHeadYaw, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
         //1.21.3+ check
         // var item_model_1_21_3 = render_state.getMainHandItemModel();
         // if (item_model_1_21_3 == null) return;
@@ -99,7 +101,7 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
             stack.mulPose(Axis.XP.rotationDegrees(90.0F));
         }
 
-        updateAndRenderItem_1_21_5(dog, itemStack, stack, bufferSource, packedLight);
+        updateAndRenderItem_1_21_9(dog, itemStack, stack, collector_1_21_9, packedLight);
         stack.popPose();
     }
 
@@ -114,8 +116,15 @@ public class DogMouthItemRenderer extends DogRenderLayerWithRenderState_21_3 {
     private void updateMouthItemRenderState_1_21_5(Dog dog, ItemStack mouth_item) {
         itemModelResolver_1_21_5.updateForLiving(mouthItemRenderState_1_21_5, mouth_item, ItemDisplayContext.GROUND, dog);
     }
-    private void updateAndRenderItem_1_21_5(Dog dog, ItemStack itemStack, PoseStack stack, MultiBufferSource bufferSource, int packedLight) {
+    // private void updateAndRenderItem_1_21_5(Dog dog, ItemStack itemStack, PoseStack stack, MultiBufferSource bufferSource, int packedLight) {
+    //     updateMouthItemRenderState_1_21_5(dog, itemStack);
+    //     mouthItemRenderState_1_21_5.render(stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+    // }
+
+
+    //1.21.9+
+    private void updateAndRenderItem_1_21_9(Dog dog, ItemStack itemStack, PoseStack stack, SubmitNodeCollector collector_1_21_9, int light) {
         updateMouthItemRenderState_1_21_5(dog, itemStack);
-        mouthItemRenderState_1_21_5.render(stack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+        mouthItemRenderState_1_21_5.submit(stack, collector_1_21_9, light, OverlayTexture.NO_OVERLAY, 0);
     }
 }
