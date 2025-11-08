@@ -23,7 +23,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;

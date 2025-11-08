@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.PlayerRenderUtil_1_21_9;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogSleepOnManager;
 import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
@@ -20,7 +21,7 @@ import doggytalents.mixin.CameraMixinAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -126,9 +127,12 @@ public class DTNClientDogSleepOnManager {
         return view_vec.normalize().scale(-translate_amount);
     }
 
-    public void afterPlayerModelSetupAnim(LivingEntity living, PlayerRenderState state, PlayerModel model) {
-        var player_optional = checkIsSleepingOnDog(living);
-        if (!player_optional.isPresent())
+    public void afterPlayerModelSetupAnim(LivingEntity living, AvatarRenderState state, PlayerModel model) {
+        // var player_optional = checkIsSleepingOnDog(living);
+        // if (!player_optional.isPresent())
+        //     return;
+        // 1_21_9 checked based on state
+        if (state.getRenderData(PlayerRenderUtil_1_21_9.SLEEPING_ON_DOG_KEY) == null)
             return;
         
         model.head.xRot += 40 * Mth.DEG_TO_RAD; 
@@ -157,6 +161,19 @@ public class DTNClientDogSleepOnManager {
         var player = player_optional.get();
         var dog = sleeperMap.get(player.getUUID());
         ((CameraMixinAccessor)camera).dtn__setRotation(dog.getSleepOnState().sleep_yrot(), 0.0F);
+    }
+
+
+
+    //1.21.9+
+    public boolean markPlayerRenderStateIfSleepingOnDog_1_21_9(Player player, AvatarRenderState renderState) {
+        if (sleeperMap.isEmpty())
+            return false;
+        var player_optional = checkIsSleepingOnDog(player);
+        if (!player_optional.isPresent())
+            return false;
+        renderState.setRenderData(PlayerRenderUtil_1_21_9.SLEEPING_ON_DOG_KEY, new Object());
+        return true;
     }
 
 }
