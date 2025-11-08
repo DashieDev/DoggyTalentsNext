@@ -7,15 +7,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
-@Mixin(PlayerRenderer.class)
+@Mixin(AvatarRenderer.class)
 public class PlayerRendererMixin_1_21_3 {
     
-    @Inject(at = @At("TAIL"),  method = "extractRenderState")
-    public void dtn__extractRenderState(AbstractClientPlayer player, PlayerRenderState state, float pticks, CallbackInfo info) {
-        PlayerRenderPrep_21_3.player = player;
-    }
+    // @Inject(at = @At("TAIL"),  method = "extractRenderState")
+    // public void dtn__extractRenderState(AbstractClientPlayer player, PlayerRenderState state, float pticks, CallbackInfo info) {
+    //     PlayerRenderPrep_21_3.player = player;
+    // }
 
 }
