@@ -4,6 +4,7 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
@@ -35,6 +36,10 @@ public class GuiUtil_1_21_9 {
         return InputConstants.getKey(event);
     }
 
+    public static boolean matchesMouse(KeyMapping key, int button) {
+        var event = new MouseButtonEvent(0, 0, new MouseButtonInfo(button, 0));
+        return key.matchesMouse(event);
+    }
 
     public static abstract class AbstractWidget_1_21_9 extends AbstractWidget {
 

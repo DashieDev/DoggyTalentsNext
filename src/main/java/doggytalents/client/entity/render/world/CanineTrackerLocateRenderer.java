@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.DoggyItems;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
+import doggytalents.client.backward_imitate.RenderUtil_1_21_9;
 import doggytalents.client.entity.render.RenderUtil;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.CanineTrackerItem;
@@ -59,9 +60,9 @@ public class CanineTrackerLocateRenderer {
         if (player != null && player.isSpectator()) return;
         Vec3 dog_pos = null;
         if (cachedDog.get() != null) {
-            double d0 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().xOld, cachedDog.get().getX());
-            double d1 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().yOld, cachedDog.get().getY());
-            double d2 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().zOld, cachedDog.get().getZ());
+            double d0 = Mth.lerp((double)RenderUtil_1_21_9.getDeltaTracker().getGameTimeDeltaPartialTick(false), cachedDog.get().xOld, cachedDog.get().getX());
+            double d1 = Mth.lerp((double)RenderUtil_1_21_9.getDeltaTracker().getGameTimeDeltaPartialTick(false), cachedDog.get().yOld, cachedDog.get().getY());
+            double d2 = Mth.lerp((double)RenderUtil_1_21_9.getDeltaTracker().getGameTimeDeltaPartialTick(false), cachedDog.get().zOld, cachedDog.get().getZ());
             dog_pos = new Vec3(d0, d1 + 1, d2);
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());

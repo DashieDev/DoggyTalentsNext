@@ -3,6 +3,8 @@ package doggytalents.client.backward_imitate;
 import org.joml.Matrix4f;
 
 import doggytalents.mixin.NameTagFeatureRendererStorageAccessorMixin_1_21_9;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.SubmitNodeStorage;
@@ -26,5 +28,9 @@ public class RenderUtil_1_21_9 {
         var submit_entry = new SubmitNodeStorage.NameTagSubmit(pose, tX, tY, text, light, txtcolor, bkg_color, camera_dist_sqr);
         submit_target.add(submit_entry);
     }
+
+    public static DeltaTracker getDeltaTracker() {
+        return Minecraft.getInstance().getDeltaTracker();
+    } 
 
 }
