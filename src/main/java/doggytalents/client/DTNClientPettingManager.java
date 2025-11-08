@@ -13,6 +13,7 @@ import com.google.common.collect.Maps;
 import com.mojang.math.Axis;
 
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
@@ -182,7 +183,7 @@ public class DTNClientPettingManager {
             return;
         var mc = Minecraft.getInstance();
         var button = event.getButton();
-        if (!mc.options.keyUse.matchesMouse(button))
+        if (!GuiUtil_1_21_9.matchesMouse(mc.options.keyUse, button))
             return;
         if (mc.screen != null || mc.getOverlay() != null || mc.player == null)
             return;
