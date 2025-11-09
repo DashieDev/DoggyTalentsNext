@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.EntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.common.entity.misc.DogGunpowderProjectile;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DogGunpowderProjectileRenderer extends EntityRenderer_21_3<DogGunpowderProjectile> {
+public class DogGunpowderProjectileRenderer extends EntityRenderer_1_21_9<DogGunpowderProjectile> {
     
     private ItemRenderer itemRenderer;
     private ItemStack renderStack;
@@ -30,14 +31,14 @@ public class DogGunpowderProjectileRenderer extends EntityRenderer_21_3<DogGunpo
     }
 
     @Override
-    public void render(DogGunpowderProjectile dogFood, float yRot, float pTick, PoseStack stack,
-            MultiBufferSource buffer, int light) {
+    public void submit(DogGunpowderProjectile dogFood, float yRot, float pTick, PoseStack stack,
+            RenderContext_1_21_9<DogGunpowderProjectile> context_1_21_9, int light) {
         stack.pushPose();
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        stack.mulPose(context_1_21_9.cameraState().orientation);
         stack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        this.itemRenderer.renderStatic(renderStack, 
+        this.submitItemStack(renderStack, 
             ItemDisplayContext.GROUND, light, OverlayTexture.NO_OVERLAY, 
-            stack, buffer, null, dogFood.getId());
+            stack, context_1_21_9);
         stack.popPose();
     }
 

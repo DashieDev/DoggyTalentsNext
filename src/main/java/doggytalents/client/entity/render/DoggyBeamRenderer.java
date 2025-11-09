@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
+import doggytalents.client.backward_imitate.EntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_21_3<T> {
+public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_1_21_9<T> {
 
     private final net.minecraft.client.renderer.entity.ItemRenderer itemRenderer;
     private final float scale;
@@ -42,16 +43,16 @@ public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_21_3<T> 
     }
 
     @Override
-    public void render(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void submit(T entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, RenderContext_1_21_9<T> context_1_21_9, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.scale(this.scale, this.scale, this.scale);
-        matrixStackIn.mulPose(this.entityRenderDispatcher.cameraOrientation());
+        matrixStackIn.mulPose(context_1_21_9.cameraState().orientation);
         matrixStackIn.mulPose(Axis.YP.rotationDegrees(180.0F));
-        this.itemRenderer.renderStatic(new ItemStack(Items.SNOWBALL), 
+        this.submitItemStack(new ItemStack(Items.SNOWBALL), 
             ItemDisplayContext.GROUND, packedLightIn, OverlayTexture.NO_OVERLAY, 
-            matrixStackIn, bufferIn, null, entityIn.getId());
+            matrixStackIn, context_1_21_9);
         matrixStackIn.popPose();
-        super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        //super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 
     @Override

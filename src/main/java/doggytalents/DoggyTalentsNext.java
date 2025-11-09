@@ -187,4 +187,5 @@ public class DoggyTalentsNext {
 
     //TODO
     //EventRegister_1_21_9
+    //Ensure that we extract fabric partialticks for all state
 }
