@@ -10,7 +10,7 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
 
-public class WrapperVanillaModel_1_21_9 extends Model<WrappedEntityRenderState_21_3<?>> {
+public class WrapperVanillaModel_1_21_9 extends Model<WrapperVanillaModel_1_21_9.DefferedSetupContainer_1_21_9> {
 
     private final BaseModel_21_3 wrapped;
 
@@ -26,8 +26,15 @@ public class WrapperVanillaModel_1_21_9 extends Model<WrappedEntityRenderState_2
     }
 
     @Override
-    public void setupAnim(WrappedEntityRenderState_21_3<?> state) {
+    public void setupAnim(DefferedSetupContainer_1_21_9 state) {
         state.runDefferedSetupAndInvalidate_1_21_9();
         super.setupAnim(state);
+    }
+    
+    @FunctionalInterface
+    public static interface DefferedSetupContainer_1_21_9 {
+
+        public void runDefferedSetupAndInvalidate_1_21_9();
+
     }
 }
