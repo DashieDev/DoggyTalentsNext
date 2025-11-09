@@ -1,13 +1,13 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.142'
+    id 'net.neoforged.gradle.userdev' version '7.1.4'
     id "me.modmuss50.mod-publish-plugin" version "1.0.0"
 }
 
 version = '1.18.62'
 group = 'com.github.dashiedev'
-archivesBaseName = "DoggyTalentsNext-${project.target_mc_version}"
+base { archivesName = "DoggyTalentsNext-${project.target_mc_version}"; }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -45,25 +45,29 @@ runs {
         //taskName 'doggytalents_client'
         workingDirectory file('run')
         systemProperty 'forge.logging.console.level', 'debug'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
+        modSources.add(project.sourceSets.main)
+        modSources.add(project.sourceSets.api)
     }
 
     server {
         //taskName 'doggytalents_server'
         workingDirectory file('run-server')
         systemProperty 'forge.logging.console.level', 'debug'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
+        modSources.add(project.sourceSets.main)
+        modSources.add(project.sourceSets.api)
     }
 
     clientData {
         //taskName 'doggytalents_data'
         workingDirectory file('run')
         systemProperty 'forge.logging.console.level', 'debug'
-        programArguments.addAll '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
-        modSources.add(project.getSourceSets().main)
-        modSources.add(project.getSourceSets().api)
+        arguments.addAll '--mod', 'doggytalents', '--all', '--output', '"' + file('src/generated/resources/') + '"', '--existing', '"' + sourceSets.main.resources.srcDirs[0] + '"'
+        modSources.add(project.sourceSets.main)
+        modSources.add(project.sourceSets.api)
+    }
+
+    configureEach {
+        shouldExportToIDE = false
     }
 }
 
@@ -186,8 +190,11 @@ task vscodePrintRunClient {
         println(vmArgs)
         println("==================================")
         println("args:")
-        def programArgs = vscodeFetchProgramArguments({ runs.client.getProgramArguments().get() })
+        def programArgs = vscodeFetchProgramArguments({ runs.client.getArguments().get() })
         println(programArgs)
+        println("==================================")
+        println("mainClass:")
+        println(runs.client.getMainClass().get())
         println("==================================")
         println("")
         println("")
@@ -202,8 +209,11 @@ task vscodePrintRunData {
         println(vmArgs)
         println("==================================")
         println("args:")
-        def programArgs = vscodeFetchProgramArguments({ runs.clientData.getProgramArguments().get() })
+        def programArgs = vscodeFetchProgramArguments({ runs.clientData.getArguments().get() })
         println(programArgs)
+        println("==================================")
+        println("mainClass:")
+        println(runs.clientData.getMainClass().get())
         println("==================================")
         println("")
         println("")
@@ -217,8 +227,11 @@ task vscodePrintRunServer {
         println(vmArgs)
         println("==================================")
         println("args:")
-        def programArgs = vscodeFetchProgramArguments({ runs.server.getProgramArguments().get() })
+        def programArgs = vscodeFetchProgramArguments({ runs.server.getArguments().get() })
         println(programArgs)
+        println("==================================")
+        println("mainClass:")
+        println(runs.server.getMainClass().get())
         println("==================================")
         println("")
         println("")
