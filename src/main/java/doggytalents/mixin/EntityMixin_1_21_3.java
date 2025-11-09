@@ -16,7 +16,7 @@ public class EntityMixin_1_21_3 {
     //Workaround for player no longer be able to force the Dog on their head in 1.21.3+
     //thanks to the canSerialize check.
     @WrapOperation(
-        method = "startRiding(Lnet/minecraft/world/entity/Entity;Z)Z", 
+        method = "startRiding(Lnet/minecraft/world/entity/Entity;ZZ)Z", 
         at = @At(
             value = "INVOKE", 
             target = "Lnet/minecraft/world/entity/EntityType;canSerialize()Z"
