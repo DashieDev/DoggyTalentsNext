@@ -2,6 +2,9 @@ package doggytalents.client.tileentity.renderer;
 
 import com.google.common.base.Objects;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import doggytalents.client.backward_imitate.LegacyBlockEntityRendererUtil_1_21_9.BlockEntityRenderer_1_21_9;
+import doggytalents.client.backward_imitate.LegacyBlockEntityRendererUtil_1_21_9.RenderContext_1_21_9;
 import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -12,12 +15,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class DogBedRenderer implements BlockEntityRenderer<DogBedTileEntity> {
+public class DogBedRenderer extends BlockEntityRenderer_1_21_9<DogBedTileEntity> {
 
     public DogBedRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     @Override
-    public void render(DogBedTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 vec3) {
+    public void submit(DogBedTileEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, RenderContext_1_21_9<DogBedTileEntity> context_1_21_9, int combinedLightIn, int combinedOverlayIn) {
         if (tileEntityIn.getBedName() != null && this.isLookingAtBed(tileEntityIn)) {
             matrixStackIn.pushPose();
             matrixStackIn.translate(0.5D, 0.5D, 0.5D);
