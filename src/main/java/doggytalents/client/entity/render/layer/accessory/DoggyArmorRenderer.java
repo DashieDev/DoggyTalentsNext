@@ -39,6 +39,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.client.resources.model.EquipmentClientInfo.LayerType;
 import net.minecraft.core.Holder;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
@@ -70,7 +71,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
         this.model = newModel;
 
         this.helmetAltModel = new DogArmorHelmetAltModel(ctx);
-        this.dogArmorTrimAtlas = ctx.getAtlas(Sheets.ARMOR_TRIMS_SHEET);
+        this.dogArmorTrimAtlas = ctx.getAtlas(AtlasIds.ARMOR_TRIMS);
         initLookup_1_21_3();
     }
 
