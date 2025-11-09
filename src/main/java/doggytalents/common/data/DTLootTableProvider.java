@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.backward_imitate.DataUtil_1_21_9;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
