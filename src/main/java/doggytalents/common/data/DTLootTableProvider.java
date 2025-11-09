@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.common.backward_imitate.DataUtil_1_21_9;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.WritableRegistry;
@@ -85,7 +86,7 @@ public class DTLootTableProvider extends LootTableProvider {
                          .setRolls(ConstantValue.exactly(1)))
                          .add(LootItem.lootTableItem(block.get())
                                  .apply(
-                                         CopyCustomDataFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
+                                         CopyCustomDataFunction.copyData(DataUtil_1_21_9.getBlockEntityNbtProvider())
                                          .copy("casingId", "doggytalents.casingId")
                                          .copy("beddingId", "doggytalents.beddingId")
                                          .copy("ownerId", "doggytalents.ownerId")

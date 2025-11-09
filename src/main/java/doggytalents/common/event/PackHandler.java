@@ -3,6 +3,7 @@ package doggytalents.common.event;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import doggytalents.common.backward_imitate.DataUtil_1_21_9;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
@@ -59,8 +60,8 @@ public class PackHandler {
             .orElseThrow().getModInfo();
         var version = mod_info.getVersion().toString();
         
-        var res_path = mod_info.getOwningFile().getFile()
-            .findResource(mod_path);
+        // var res_path = mod_info.getOwningFile().getFile()
+        //     .findResource(mod_path);
         
         var known_pack_info = 
             new KnownPack(Constants.MOD_ID, id, version);
@@ -71,7 +72,7 @@ public class PackHandler {
         var pack = Pack.readMetaAndCreate(
             pack_location_info,
             BuiltInPackSource.fromName(
-                (pack_info) -> new PathPackResources(pack_info, res_path)),
+                DataUtil_1_21_9.getPackResourceSupplier(mod_info, mod_path)),
             type,
             new PackSelectionConfig(always_active, position, false));
         return Optional.ofNullable(pack);
