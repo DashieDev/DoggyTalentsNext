@@ -14,6 +14,7 @@ import doggytalents.client.block.model.DogBedItemOverride;
 import doggytalents.client.block.model.DogBedModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.block.model.ItemTransform;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -32,13 +33,13 @@ public class DogBedItemModelRendererr_1_21_5 implements SpecialModelRenderer<Ite
     }
 
     @Override
-    public void render(ItemStack itemStack, ItemDisplayContext context, PoseStack stack,
-            MultiBufferSource buffer, int light, int overlay, boolean p_387642_) {
+    public void submit(ItemStack itemStack, ItemDisplayContext context, PoseStack stack,
+            SubmitNodeCollector collector_1_21_9, int light, int overlay, boolean p_387642_, int outlineColor_1_21_9) {
         if (itemStack == null)  
             return;
         var model_part = dogBedResolver.resolve(dogBedModel, itemStack, null, null, light);
         var model = new SingleVariant(model_part);
-        ModelBlockRenderer.renderModel(stack.last(), buffer.getBuffer(ItemBlockRenderTypes.getRenderType(itemStack)), model, 0, 0, 0, light, overlay);
+        collector_1_21_9.submitBlockModel(stack, ItemBlockRenderTypes.getRenderType(itemStack), model, 0, 0, 0, light, overlay, outlineColor_1_21_9);
     }
 
     @Override
