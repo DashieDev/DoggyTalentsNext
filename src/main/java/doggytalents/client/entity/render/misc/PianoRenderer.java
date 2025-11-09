@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.EntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.entity.model.misc.GrandPianoModel;
 import doggytalents.client.entity.model.misc.UprightPianoModel;
@@ -19,7 +20,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class PianoRenderer extends EntityRenderer_21_3<Piano> {
+public class PianoRenderer extends EntityRenderer_1_21_9<Piano> {
 
     private GrandPianoModel model;
     private UprightPianoModel modelUpright;
@@ -59,19 +60,21 @@ public class PianoRenderer extends EntityRenderer_21_3<Piano> {
     }
 
     @Override
-    public void render(Piano piano, float p_114486_, float p_114487_, PoseStack stack,
-            MultiBufferSource bufferSource, int light) {
+    public void submit(Piano piano, float p_114486_, float p_114487_, PoseStack stack,
+            RenderContext_1_21_9<Piano> context_1_21_9, int light) {
         stack.pushPose();
         stack.scale(-1.0F, -1.0F, 1.0F);
         stack.translate(0.0F, -1.501F, 0.0F);
         stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
         if (piano.getPianoType() == PianoType.UPRIGHT) {
-            var consumer = bufferSource.getBuffer(getRenderType(piano));
-            this.modelUpright.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
+            var renderType_1_21_9 = getRenderType(piano);
+            this.submitModel(context_1_21_9, this.modelUpright, renderType_1_21_9, stack, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         } else {
+            context_1_21_9.renderState().defferedSetup_1_21_9 = () -> { //1.21.9+
             model.preparePianoModel(piano);
-            var consumer = bufferSource.getBuffer(getRenderType(piano));
-            this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
+            }; // 1.21.9+
+            var renderType_1_21_9 = getRenderType(piano);
+            this.submitModel(context_1_21_9, this.model, renderType_1_21_9, stack, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         }
         
         stack.popPose();

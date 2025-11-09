@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.backward_imitate.EntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.entity.model.misc.DogPlushieModel;
 import doggytalents.common.entity.misc.DogPlushie;
@@ -18,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
-public class DogPlushieRenderer extends EntityRenderer_21_3<DogPlushie> {
+public class DogPlushieRenderer extends EntityRenderer_1_21_9<DogPlushie> {
 
     private DogPlushieModel model;
 
@@ -43,18 +44,18 @@ public class DogPlushieRenderer extends EntityRenderer_21_3<DogPlushie> {
     }
 
     @Override
-    public void render(DogPlushie piano, float p_114486_, float p_114487_, PoseStack stack,
-            MultiBufferSource bufferSource, int light) {
+    public void submit(DogPlushie piano, float p_114486_, float p_114487_, PoseStack stack,
+            RenderContext_1_21_9<DogPlushie> context_1_21_9, int light) {
         stack.pushPose();
         stack.scale(-0.6F, -0.6F, 0.6F);
         stack.translate(0.0F, -1.05F, 0.0F);
         stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
-        var consumer = bufferSource.getBuffer(getRenderType(piano, false));
-        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
+        var renderType_1_21_9 = getRenderType(piano, false);
+        this.submitModel(context_1_21_9, this.model, renderType_1_21_9, stack, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         int color = piano.getCollarColor();
         var arr = Util.rgbIntToFloatArray(color);
-        consumer = bufferSource.getBuffer(getRenderType(piano, true));
-        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, arr[0], arr[1], arr[2]));
+        renderType_1_21_9 = getRenderType(piano, true);
+        this.submitModel(context_1_21_9, this.model, renderType_1_21_9, stack, light, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, arr[0], arr[1], arr[2]));
 
         stack.popPose();
     }
