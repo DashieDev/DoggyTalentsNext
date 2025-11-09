@@ -98,7 +98,7 @@ public class DisplayInfoBuilder {
     }
 
     public DisplayInfo build() {
-        return new DisplayInfo(icon, title, description, Optional.ofNullable(background).map(x -> new ClientAsset(x)), frame, showToast, announceToChat, hidden);
+        return new DisplayInfo(icon, title, description, Optional.ofNullable(background).map(x -> new ClientAsset.ResourceTexture(x)), frame, showToast, announceToChat, hidden);
     }
 
     public static DisplayInfoBuilder create() {
