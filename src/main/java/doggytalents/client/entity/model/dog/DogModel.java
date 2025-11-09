@@ -586,6 +586,7 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         var xrot = render_state.xRot;
         var ticks_with_partial = render_state.ageInTicks;
         this.young = dog.isBaby();
+        render_state.runDefferedSetupAndInvalidate_1_21_9();
         this.prepareMobModel(dog, walk_anim_time, walk_anim_speed, render_state.partialTick);
         this.setupAnim(dog, walk_anim_time, walk_anim_speed, ticks_with_partial, yrot, xrot);
     }

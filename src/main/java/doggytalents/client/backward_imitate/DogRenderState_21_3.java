@@ -11,6 +11,16 @@ public class DogRenderState_21_3 extends LivingEntityRenderState {
     //this state system acts as a view of the Dog for another thread  
     public Dog dog = null;
 
+    
+    //1.21.9+
+    public Runnable defferedSetup_1_21_9 = null;
+    public void runDefferedSetupAndInvalidate_1_21_9() {
+        if (defferedSetup_1_21_9 == null)
+            return;
+        defferedSetup_1_21_9.run();
+        defferedSetup_1_21_9 = null;
+    }
+
 
 
     //Fabric
