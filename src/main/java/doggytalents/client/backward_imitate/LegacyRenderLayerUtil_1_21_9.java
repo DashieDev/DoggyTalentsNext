@@ -38,6 +38,8 @@ public class LegacyRenderLayerUtil_1_21_9 {
             float xrot = submit.xRot;
             stack.pushPose();
             stack.last().set(submit.pose);
+            var parent_model = this.getParentModel();
+            parent_model.setupAnim(render_state);
             render(stack, buffer, light, render_state, yrot, xrot);
             stack.popPose();
         }
