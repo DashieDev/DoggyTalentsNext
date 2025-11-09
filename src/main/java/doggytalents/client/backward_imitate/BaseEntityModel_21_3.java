@@ -21,13 +21,4 @@ public abstract class BaseEntityModel_21_3<T extends Entity> extends BaseModel_2
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     }
 
-
-
-    //1.21.9+
-    private WrapperVanillaModel_1_21_9 vanillaModel_1_21_9 = null;
-    public WrapperVanillaModel_1_21_9 getWrappedVanilla_1_21_9() {
-        if (vanillaModel_1_21_9 == null)
-            vanillaModel_1_21_9 = new WrapperVanillaModel_1_21_9(this);
-        return vanillaModel_1_21_9;
-    }
 }

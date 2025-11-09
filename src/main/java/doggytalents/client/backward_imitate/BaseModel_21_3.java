@@ -25,4 +25,15 @@ public abstract class BaseModel_21_3 {
         }
     }
 
+
+
+    
+    //1.21.9+
+    private WrapperVanillaModel_1_21_9 vanillaModel_1_21_9 = null;
+    public WrapperVanillaModel_1_21_9 getWrappedVanilla_1_21_9() {
+        if (vanillaModel_1_21_9 == null)
+            vanillaModel_1_21_9 = new WrapperVanillaModel_1_21_9(this);
+        return vanillaModel_1_21_9;
+    }
+
 }
