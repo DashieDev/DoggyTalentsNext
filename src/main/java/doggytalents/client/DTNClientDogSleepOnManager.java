@@ -128,11 +128,8 @@ public class DTNClientDogSleepOnManager {
     }
 
     public void afterPlayerModelSetupAnim(LivingEntity living, AvatarRenderState state, PlayerModel model) {
-        // var player_optional = checkIsSleepingOnDog(living);
-        // if (!player_optional.isPresent())
-        //     return;
-        // 1_21_9 checked based on state
-        if (state.getRenderData(PlayerRenderUtil_1_21_9.SLEEPING_ON_DOG_KEY) == null)
+        var player_optional = checkIsSleepingOnDog(living);
+        if (!player_optional.isPresent())
             return;
         
         model.head.xRot += 40 * Mth.DEG_TO_RAD; 
@@ -161,19 +158,6 @@ public class DTNClientDogSleepOnManager {
         var player = player_optional.get();
         var dog = sleeperMap.get(player.getUUID());
         ((CameraMixinAccessor)camera).dtn__setRotation(dog.getSleepOnState().sleep_yrot(), 0.0F);
-    }
-
-
-
-    //1.21.9+
-    public boolean markPlayerRenderStateIfSleepingOnDog_1_21_9(Player player, AvatarRenderState renderState) {
-        if (sleeperMap.isEmpty())
-            return false;
-        var player_optional = checkIsSleepingOnDog(player);
-        if (!player_optional.isPresent())
-            return false;
-        renderState.setRenderData(PlayerRenderUtil_1_21_9.SLEEPING_ON_DOG_KEY, new Object());
-        return true;
     }
 
 }

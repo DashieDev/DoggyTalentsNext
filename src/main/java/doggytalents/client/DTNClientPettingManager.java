@@ -15,6 +15,7 @@ import com.mojang.math.Axis;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
+import doggytalents.client.backward_imitate.PlayerRenderUtil_1_21_9;
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager;
@@ -274,10 +275,12 @@ public class DTNClientPettingManager {
 
     //@SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        //1_21_3+ check
-        if (PlayerRenderPrep_21_3.player == null) return;
-        
-        if (!isPettingPlayer(PlayerRenderPrep_21_3.player))
+        //1.21.9+ check
+        var player_1_21_9 = PlayerRenderUtil_1_21_9.getPlayerFromState(event.getRenderState(), false);
+        if (!player_1_21_9.isPresent())
+            return;
+
+        if (!isPettingPlayer(player_1_21_9.get()))
             return;
         
         //var renderer = event.getRenderer();

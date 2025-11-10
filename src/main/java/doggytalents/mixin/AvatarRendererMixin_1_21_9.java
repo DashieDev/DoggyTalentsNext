@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.client.PettingArmPose;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
+import doggytalents.client.backward_imitate.PlayerRenderUtil_1_21_9;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
@@ -21,28 +22,13 @@ import net.minecraft.world.entity.HumanoidArm;
 
 @Mixin(AvatarRenderer.class)
 public class AvatarRendererMixin_1_21_9 {
-    
-    @Inject(at = @At("TAIL"),  method = "extractRenderState")
-    public void dtn__extractRenderState(Avatar avatar, AvatarRenderState state, float pticks, CallbackInfo info) {
-        PlayerRenderPrep_21_3.player = null;
-        if (avatar.getType() != EntityType.PLAYER)
-            return;
-        if (!(avatar instanceof AbstractClientPlayer player))
-            return;
-
-        boolean result = DTNClientDogSleepOnManager.get().markPlayerRenderStateIfSleepingOnDog_1_21_9(player, state);
-        
-        if (result)
-            PlayerRenderPrep_21_3.player = player;
-    }
-
     @Inject(at = @At("HEAD"),  method = "setupRotations", cancellable = true)
     protected void dtn__setupRotation(AvatarRenderState living, PoseStack p_115318_, float p_115319_, float p_115320_, CallbackInfo info) {
-        
-        if (PlayerRenderPrep_21_3.player == null) return;
+        var player_1_21_9 = PlayerRenderUtil_1_21_9.getPlayerFromState(living, true);
+        if (!player_1_21_9.isPresent()) return;
         
         boolean result = DTNClientDogSleepOnManager.get()
-            .onLivingModelSetupRotation(PlayerRenderPrep_21_3.player, p_115318_, p_115319_, p_115320_);
+            .onLivingModelSetupRotation(player_1_21_9.get(), p_115318_, p_115319_, p_115320_);
         if (result) 
             info.cancel();
     }
