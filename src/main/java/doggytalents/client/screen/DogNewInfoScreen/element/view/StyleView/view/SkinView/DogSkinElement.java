@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.backward_imitate.DummyDogs_1_21_9;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.client.entity.skin.DogSkin;
@@ -40,14 +41,14 @@ public class DogSkinElement extends AbstractElement {
 
     Dog dog;
     List<DogSkin> locList;
-    final Dog dummyDog;
+    final DummyDogs_1_21_9 dummyDog;
     int activeSkinId;
     Font font;
     boolean showInfo;
 
     private TextOnlyButton copy_sha1_button;
 
-    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, Dog dummy, List<DogSkin> locList, int active_id) {
+    public DogSkinElement(AbstractElement parent, Screen screen, Dog dog, DummyDogs_1_21_9 dummy, List<DogSkin> locList, int active_id) {
         super(parent, screen);
         this.dog = dog;
         this.locList = locList;
@@ -248,16 +249,16 @@ public class DogSkinElement extends AbstractElement {
 
         if (nextId < locList.size()) {
             this.renderSkinAndDogModel(nextId, false, graphics, 
-                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50, true);
+                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50, true, DummyDogs_1_21_9.Type.FIRST);
         }
 
         if (prevId >= 0) {
             this.renderSkinAndDogModel(prevId, false, graphics, 
-                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, true);
+                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, true, DummyDogs_1_21_9.Type.SECOND);
         }
 
         this.renderSkinAndDogModel(activeSkinId, true, graphics, 
-            mouseX, mouseY, e_mX, e_mY + 36, 64, false);
+            mouseX, mouseY, e_mX, e_mY + 36, 64, true/*1.21.9+*/, DummyDogs_1_21_9.Type.THIRD);
     }
 
     private void renderShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
@@ -267,7 +268,7 @@ public class DogSkinElement extends AbstractElement {
         int e_mY = this.getRealY() + mY - 10;
 
         this.renderSkinAndDogModel(activeSkinId, true, graphics, 
-            mouseX, mouseY, this.getRealX() + 70, e_mY + 36, 64, true);
+            mouseX, mouseY, this.getRealX() + 70, e_mY + 36, 64, true, DummyDogs_1_21_9.Type.FIRST);
 
         var manifestSkin = this.locList.get(activeSkinId);
     
@@ -291,7 +292,9 @@ public class DogSkinElement extends AbstractElement {
     }
 
     private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 
-        int mouseY, int e_mX, int e_mY, int size, boolean useDummy) {
+        int mouseY, int e_mX, int e_mY, int size, boolean useDummy, DummyDogs_1_21_9.Type dummyType_1_21_9) {
+        final var dummyDog = this.dummyDog.get(dummyType_1_21_9); //1.21.9+
+        
         var oldSkin = dog.getClientSkinHolder();
         var manifestSkin = this.locList.get(indx);
         if (manifestSkin.mystery()) {
