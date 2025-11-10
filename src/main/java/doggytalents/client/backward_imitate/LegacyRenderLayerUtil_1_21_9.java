@@ -18,6 +18,8 @@ public class LegacyRenderLayerUtil_1_21_9 {
 
     public static abstract class DogRenderLayer_1_21_9 extends RenderLayer<DogRenderState_21_3, DogModel> {
 
+        private DogModel parentDogModel = null;
+
         public DogRenderLayer_1_21_9(RenderLayerParent<DogRenderState_21_3, DogModel> p_117346_) {
             super(p_117346_);
         }
@@ -27,8 +29,13 @@ public class LegacyRenderLayerUtil_1_21_9 {
             DogRenderState_21_3 renderState, float yrot, float xrot) {
             
             var submit = new DogLegacyLayerSubmit_1_21_9(stack.last().copy(), 
-                renderState, light, yrot, xrot);
+                renderState, light, yrot, xrot, super.getParentModel());
             submits.add(Pair.of(this, submit));
+        }
+
+        @Override
+        public DogModel getParentModel() {
+            return this.parentDogModel;
         }
 
         public void render(PoseStack stack, MultiBufferSource buffer, DogLegacyLayerSubmit_1_21_9 submit) {
@@ -38,9 +45,11 @@ public class LegacyRenderLayerUtil_1_21_9 {
             float xrot = submit.xRot;
             stack.pushPose();
             stack.last().set(submit.pose);
+            this.parentDogModel = submit.parentModel;
             var parent_model = this.getParentModel();
             parent_model.setupAnim(render_state);
             render(stack, buffer, light, render_state, yrot, xrot);
+            this.parentDogModel = null;
             stack.popPose();
         }
 
@@ -75,7 +84,7 @@ public class LegacyRenderLayerUtil_1_21_9 {
 
 
     public static record DogLegacyLayerSubmit_1_21_9(PoseStack.Pose pose, 
-        DogRenderState_21_3 renderState, int light, float yRot, float xRot) {
+        DogRenderState_21_3 renderState, int light, float yRot, float xRot, DogModel parentModel) {
     }
     
     private static final PoseStack poseStack = new PoseStack();
