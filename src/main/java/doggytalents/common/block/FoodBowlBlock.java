@@ -99,7 +99,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier p_405359_) {
+    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier p_405359_, boolean p_451758__1_21_10) {
         if (entityIn instanceof ItemEntity) {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
