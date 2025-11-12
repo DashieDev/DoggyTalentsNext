@@ -117,7 +117,7 @@ jar {
 }
 
 publishMods {
-    file = jar.archiveFile
+    file = remapJar.archiveFile
     changelog = "" //To be filled when running task dtnPrepareChangelogForModPublish
     type = STABLE
     displayName = file.map { it.asFile.name }
