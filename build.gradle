@@ -2,6 +2,7 @@ plugins {
     id 'eclipse'
 	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
+    id "me.modmuss50.mod-publish-plugin" version "1.0.0"
 }
 
 version = '1.18.61'
@@ -113,6 +114,69 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
+
+publishMods {
+    file = jar.archiveFile
+    changelog = "" //To be filled when running task dtnPrepareChangelogForModPublish
+    type = STABLE
+    modLoaders.add("fabric")
+    final def dtnMcVersions = ["1.21.7"]
+
+    curseforge {
+        accessToken = providers.gradleProperty("DTN_CURSEFORGE_TOKEN")
+        
+        projectId = "694492"
+
+        dtnMcVersions.each { version -> minecraftVersions.add(version)}
+
+        changelogType = "text"
+        javaVersions.add(JavaVersion.VERSION_21)
+        clientRequired = true
+        serverRequired = true
+    }
+    modrinth {
+        accessToken = providers.gradleProperty("DTN_MODRINTH_TOKEN")
+        
+        projectId = "oXgmplvv"
+
+        dtnMcVersions.each { version -> minecraftVersions.add(version)}
+    }
+}
+
+task dtnPrepareChangelogForModPublish {
+    final def changelog_path = "dtn_changelog_temp.txt";
+    
+    inputs.file(changelog_path) 
+    outputs.upToDateWhen { false } 
+    
+    doLast {
+        def changelog_file = file(changelog_path)
+        if (!changelog_file.exists())
+            throw new GradleException("Changelog " + changelog_path + " can't be found.")
+        def changelog_content = changelog_file.text
+        if (changelog_content.isEmpty())
+            throw new GradleException("Changelog is Empty!")
+        def build_version = project.version
+        if (!changelog_content.contains(build_version))
+            throw new GradleException(
+                "Changelog does not contain this build's version number! "
+                + "The current build version is: [ " + build_version + " ]. "
+                + "You might have forgotten to update the file."
+            )
+        def publishMods_extension = project.extensions.getByName("publishMods")
+        publishMods_extension.changelog = changelog_content
+
+        logger.lifecycle("Fetched changelog from: " + changelog_path)
+        logger.lifecycle("PUBLISHING CHANGELOG CONTENT======================")
+        logger.lifecycle("\n" + changelog_content + "\n")
+        logger.lifecycle("==================================================")
+    }
+}
+
+tasks.named('publishMods') {
+    mustRunAfter(tasks.named('dtnPrepareChangelogForModPublish'))
+    dependsOn('dtnPrepareChangelogForModPublish')
 }
 
 tasks.withType(JavaCompile).configureEach {
