@@ -5546,8 +5546,7 @@ public class Dog extends AbstractDog {
     }
 
     public Optional<TagKey<Fluid>> getMaxFluidHeight() {
-        return this.fluidHeight.object2DoubleEntrySet()
-            .stream().max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue)).map(Object2DoubleMap.Entry::getKey);
+        return FabricUtil.getMaxFluidHeight(this, this.fluidHeight);
     }
 
     // @Override

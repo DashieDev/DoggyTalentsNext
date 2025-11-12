@@ -1,15 +1,19 @@
 package doggytalents.common.fabric_helper.util;
 
 import java.util.List;
+import java.util.Optional;
 
+import doggytalents.common.entity.Dog;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.equipment.ArmorMaterials;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
 
 public class FabricUtil {
@@ -53,6 +57,16 @@ public class FabricUtil {
 
     public static float getPartialTick(Minecraft mc) {
         return mc.getDeltaTracker().getGameTimeDeltaPartialTick(true);
+    }
+
+    public static Optional<TagKey<Fluid>> getMaxFluidHeight(Dog dog, 
+        Object2DoubleMap<TagKey<Fluid>> fluidHeight) {
+        if (dog.isInWater())
+            return Optional.of(FluidTags.WATER);
+        return fluidHeight.object2DoubleEntrySet().stream()
+            .max(java.util.Comparator.comparingDouble(Object2DoubleMap.Entry::getDoubleValue))
+            .filter(x -> x.getDoubleValue() > 0.0)
+            .map(x -> x.getKey());
     }
 
 }
