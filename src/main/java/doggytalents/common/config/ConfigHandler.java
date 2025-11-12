@@ -390,7 +390,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue DISABLE_TRAIN_UNTAMED_WOLF;
         public ForgeConfigSpec.BooleanValue DOG_RESPAWN_INCAPACITATED_WHEN_KILLED;
         public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_DOG;
-        public ModConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_LEASHABLE;
+        public ForgeConfigSpec.BooleanValue MOB_RETRIEVER_ONLY_CARRY_LEASHABLE;
         public ForgeConfigSpec.BooleanValue WOLF_MOUNT_PASSENGER_COLLISION;
         public ForgeConfigSpec.BooleanValue CONDUCTING_BONE_CROSS_ORIGIN;
         public ForgeConfigSpec.BooleanValue INCAP_VAL_RESET_WHEN_HURT;
