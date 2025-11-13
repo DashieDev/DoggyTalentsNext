@@ -15,3 +15,4 @@ accessible method net/minecraft/world/entity/animal/wolf/Wolf getVariant ()Lnet/
 accessible field net/minecraft/server/level/ServerChunkCache ticketStorage Lnet/minecraft/world/level/TicketStorage;
 
 accessible field net/minecraft/world/level/Level isClientSide Z
+extendable class net/minecraft/world/level/pathfinder/Path
