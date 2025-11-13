@@ -1,13 +1,13 @@
 plugins {
     id 'eclipse'
-	id 'fabric-loom' version '1.11-SNAPSHOT'
+	id 'fabric-loom' version '1.13-SNAPSHOT'
 	id 'maven-publish'
     id "me.modmuss50.mod-publish-plugin" version "1.0.0"
 }
 
 version = '1.18.63'
 group = 'com.github.dashiedev'
-archivesBaseName = "DoggyTalentsNext[Fabric]-${project.minecraft_version}"
+base { archivesName = "DoggyTalentsNext[Fabric]-${project.minecraft_version}"; }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -85,7 +85,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:21.7.0"
+    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:21.10.1"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -122,7 +122,7 @@ publishMods {
     type = STABLE
     displayName = file.map { it.asFile.name }
     modLoaders.add("fabric")
-    final def dtnMcVersions = ["1.21.7"]
+    final def dtnMcVersions = ["1.21.10"]
 
     curseforge {
         accessToken = providers.gradleProperty("DTN_CURSEFORGE_TOKEN")
