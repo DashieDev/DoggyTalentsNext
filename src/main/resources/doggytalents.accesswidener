@@ -13,3 +13,5 @@ accessible field net/minecraft/client/player/ClientInput moveVector Lnet/minecra
 accessible field net/minecraft/client/renderer/entity/EntityRenderDispatcher equipmentAssets Lnet/minecraft/client/resources/model/EquipmentAssetManager;
 accessible method net/minecraft/world/entity/animal/wolf/Wolf getVariant ()Lnet/minecraft/core/Holder;
 accessible field net/minecraft/server/level/ServerChunkCache ticketStorage Lnet/minecraft/world/level/TicketStorage;
+
+accessible field net/minecraft/world/level/Level isClientSide Z
