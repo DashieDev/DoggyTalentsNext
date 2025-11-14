@@ -2,6 +2,7 @@ package doggytalents.client.backward_imitate;
 
 import java.util.Optional;
 
+import doggytalents.client.backward_imitate.fabric_util.FabricClientAttachmentHolder_1_21_10;
 import doggytalents.client.backward_imitate.fabric_util.RenderPlayerEvent_21_3;
 import doggytalents.common.backward_imitate.fabric_util.FabricEventRegisterer_1_21_9;
 import doggytalents.common.util.Util;
@@ -21,11 +22,11 @@ public class PlayerRenderUtil_1_21_9 {
     public static Optional<Player> getPlayerFromState(EntityRenderState renderState, boolean flagCheck) {
         if (flagCheck && !isPlayerRender)
             return Optional.empty();
-        return Optional.ofNullable(renderState.getRenderData(PLAYER_ACCESS));
+        return Optional.ofNullable(FabricClientAttachmentHolder_1_21_10.getAttachment(renderState, PLAYER_ACCESS));
     }
 
     public static void setPlayerToState(EntityRenderState renderState, Player player) {
-        renderState.setRenderData(PLAYER_ACCESS, player);
+        FabricClientAttachmentHolder_1_21_10.putAttachement(renderState, PLAYER_ACCESS, player);
     }
 
     public static void onPlayerRenderStart(RenderPlayerEvent.Pre event) {

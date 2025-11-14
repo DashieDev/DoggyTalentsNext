@@ -35,7 +35,8 @@
 
 
         "GameRendererMixin_1_21_7",
-        "GuiGraphicsAccessorMixin_1_21_7"
+        "GuiGraphicsAccessorMixin_1_21_7",
+        "EntityRenderStateMixin_1_21_10"
     ],
     "server": [],
     "injectors": {
