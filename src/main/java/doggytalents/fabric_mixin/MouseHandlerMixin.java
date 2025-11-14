@@ -11,12 +11,15 @@ import doggytalents.forge_imitate.event.client.InputEvent;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
+import net.minecraft.client.input.MouseButtonInfo;
 
 @Mixin(MouseHandler.class)
 public class MouseHandlerMixin {
     
-    @Inject(at = @At("TAIL"), method = "onPress(JIII)V")
-    public void dtn__onPress(long x, int button, int action, int a, CallbackInfo info) {
+    @Inject(at = @At("TAIL"), method = "onButton(JLnet/minecraft/client/input/MouseButtonInfo;I)V")
+    public void dtn__onButton(long x, MouseButtonInfo button_info_1_21_10, int action, CallbackInfo info) {
+        var button = button_info_1_21_10.button();
+        
         var mc = Minecraft.getInstance();
         var option = mc.options;
         if (!GuiUtil_1_21_9.matchesMouse(option.keyUse, button))

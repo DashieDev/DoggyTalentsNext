@@ -16,18 +16,20 @@ import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.gui.render.state.GuiRenderState;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.feature.FeatureRenderDispatcher;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin_1_21_7 {
     
     @WrapOperation(
-        method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/ItemInHandRenderer;Lnet/minecraft/client/renderer/RenderBuffers;)V", 
+        method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/renderer/ItemInHandRenderer;Lnet/minecraft/client/renderer/RenderBuffers;Lnet/minecraft/client/renderer/block/BlockRenderDispatcher;)V", 
         at = @At(
             value = "NEW", 
-            target = "(Lnet/minecraft/client/gui/render/state/GuiRenderState;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Ljava/util/List;)Lnet/minecraft/client/gui/render/GuiRenderer;"
+            target = "(Lnet/minecraft/client/gui/render/state/GuiRenderState;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher;Ljava/util/List;)Lnet/minecraft/client/gui/render/GuiRenderer;"
         )
     )
-    private GuiRenderer dtn__GuiRenderer_constructor(GuiRenderState guiRenderState, MultiBufferSource.BufferSource bufferSource, List<PictureInPictureRenderer<?>> list, Operation<GuiRenderer> original) {
+    private GuiRenderer dtn__GuiRenderer_constructor(GuiRenderState guiRenderState, MultiBufferSource.BufferSource bufferSource, SubmitNodeCollector submitNodeCollector, FeatureRenderDispatcher featureRenderDispatcher, List<PictureInPictureRenderer<?>> list, Operation<GuiRenderer> original) {
         var modify_list = new ArrayList<>(list);
         
         var gather_list = new ArrayList
@@ -41,7 +43,7 @@ public class GameRendererMixin_1_21_7 {
             list = List.copyOf(modify_list);
         }
 
-        return original.call(guiRenderState, bufferSource, list);
+        return original.call(guiRenderState, bufferSource, submitNodeCollector, featureRenderDispatcher, list);
     }
 
 }
