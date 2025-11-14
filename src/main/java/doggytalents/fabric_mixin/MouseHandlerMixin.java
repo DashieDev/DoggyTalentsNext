@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.client.InputEvent;
 import net.minecraft.client.KeyMapping;
@@ -18,7 +19,7 @@ public class MouseHandlerMixin {
     public void dtn__onPress(long x, int button, int action, int a, CallbackInfo info) {
         var mc = Minecraft.getInstance();
         var option = mc.options;
-        if (!option.keyUse.matchesMouse(button))
+        if (!GuiUtil_1_21_9.matchesMouse(option.keyUse, button))
             return;
         var event = new InputEvent.MouseButton.Pre(button, action);
         EventCallbacksRegistry.postEvent(event);
