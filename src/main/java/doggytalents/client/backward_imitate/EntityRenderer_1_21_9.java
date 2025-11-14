@@ -47,6 +47,7 @@ public abstract class EntityRenderer_1_21_9<T extends Entity> extends EntityRend
     public void extractRenderState(T entity, WrappedEntityRenderState_21_3<T> render_state, float pticks) {
         super.extractRenderState(entity, render_state, pticks);
         render_state.entity = entity;
+        render_state.partialTick = pticks; //Fabric  
     }
     
     public abstract ResourceLocation getTextureLocation(T entity);

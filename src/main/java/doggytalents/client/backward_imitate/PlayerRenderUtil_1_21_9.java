@@ -2,12 +2,15 @@ package doggytalents.client.backward_imitate;
 
 import java.util.Optional;
 
+import doggytalents.client.backward_imitate.fabric_util.RenderPlayerEvent_21_3;
+import doggytalents.common.backward_imitate.fabric_util.FabricEventRegisterer_1_21_9;
 import doggytalents.common.util.Util;
+import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
+import doggytalents.forge_imitate.event.client.RenderPlayerEvent;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 public class PlayerRenderUtil_1_21_9 {
     
@@ -25,17 +28,17 @@ public class PlayerRenderUtil_1_21_9 {
         renderState.setRenderData(PLAYER_ACCESS, player);
     }
 
-    public static void onPlayerRenderStart(RenderPlayerEvent.Pre<?> event) {
+    public static void onPlayerRenderStart(RenderPlayerEvent.Pre event) {
         isPlayerRender = true;
     }
 
-    public static void onPlayerRenderEnd(RenderPlayerEvent.Post<?> event) {
+    public static void onPlayerRenderEnd(RenderPlayerEvent_21_3.Post event) {
         isPlayerRender = false;
     }
 
-    public static void registerEvents(IEventBus forgeEventBus) {
-        forgeEventBus.addListener(PlayerRenderUtil_1_21_9::onPlayerRenderStart);
-        forgeEventBus.addListener(PlayerRenderUtil_1_21_9::onPlayerRenderEnd);
+    public static void registerEvents() {
+        FabricEventRegisterer_1_21_9.registerSingleEvent(RenderPlayerEvent.Pre.class, PlayerRenderUtil_1_21_9::onPlayerRenderStart);
+        FabricEventRegisterer_1_21_9.registerSingleEvent(RenderPlayerEvent_21_3.Post.class, PlayerRenderUtil_1_21_9::onPlayerRenderEnd);
     }
     
 }
