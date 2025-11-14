@@ -8,12 +8,12 @@ import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBa
 public class FabricEventRegisterer_1_21_3 {
     
     public static void init() {
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<RenderPlayerEvent_21_3.Post>(
-                RenderPlayerEvent_21_3.Post.class,
-                PlayerRenderPrep_21_3::afterPlayerRender
-            )
-        );
+        // EventCallbacksRegistry.registerCallback(
+        //     new SingleEventCallBack<RenderPlayerEvent_21_3.Post>(
+        //         RenderPlayerEvent_21_3.Post.class,
+        //         PlayerRenderPrep_21_3::afterPlayerRender
+        //     )
+        // );
     }
     
 }

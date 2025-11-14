@@ -33,10 +33,10 @@ public class BedFinderRenderer {
                     int level = dog.getDogLevel(DoggyTalents.BED_FINDER);
                     double distance = (level * 200D) - Math.sqrt(bedPos.distSqr(dog.blockPosition()));
                     if (level == 5 || distance >= 0.0D) {
-                        PoseStack stack = event.getPoseStack();
+                        // PoseStack stack = event.getPoseStack();
 
-                        AABB boundingBox = new AABB(bedPos).inflate(0.5D);
-                        drawSelectionBox(stack, boundingBox);
+                        // AABB boundingBox = new AABB(bedPos).inflate(0.5D);
+                        // drawSelectionBox(stack, boundingBox);
                     }
                 }
             }

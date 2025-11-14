@@ -11,8 +11,6 @@ import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
-import net.neoforged.neoforge.resource.JarContentsPackResources;
-import net.neoforged.neoforgespi.language.IModInfo;
 
 public class DataUtil_1_21_9 {
 
@@ -24,11 +22,11 @@ public class DataUtil_1_21_9 {
         return result.getOrThrow().getFirst();
     }
 
-    public static Function<PackLocationInfo, PackResources> getPackResourceSupplier(IModInfo modInfo, String prefix) {
-        return (pack_info) -> {
-            var contents = modInfo.getOwningFile().getFile().getContents();
-            return new JarContentsPackResources(pack_info, contents, prefix);
-        };
-    }
+    // public static Function<PackLocationInfo, PackResources> getPackResourceSupplier(IModInfo modInfo, String prefix) {
+    //     return (pack_info) -> {
+    //         var contents = modInfo.getOwningFile().getFile().getContents();
+    //         return new JarContentsPackResources(pack_info, contents, prefix);
+    //     };
+    // }
 
 }

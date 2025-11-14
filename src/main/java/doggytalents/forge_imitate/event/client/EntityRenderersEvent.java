@@ -1,7 +1,9 @@
 package doggytalents.forge_imitate.event.client;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import doggytalents.client.backward_imitate.LegacyBlockEntityRendererUtil_1_21_9.BlockEntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.LegacyBlockEntityRendererUtil_1_21_9.WrappedBlockEntityRenderState;
 import doggytalents.forge_imitate.event.Event;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -41,8 +43,8 @@ public class EntityRenderersEvent {
             EntityRenderers.register(entityType, entityRendererFactory);
         }
 
-        public <E extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<E> blockEntityType, Supplier<WrappedBlockEntityRenderState<E>> prov) {
-            BlockEntityRenderers.register(blockEntityType, prov);
+        public <E extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<E> blockEntityType, Function<BlockEntityRendererProvider.Context, BlockEntityRenderer_1_21_9<E>> prov) {
+            BlockEntityRenderers.register(blockEntityType, prov::apply);
         }
         
     }

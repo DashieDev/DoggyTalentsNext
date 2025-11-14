@@ -16,7 +16,10 @@
         "MobMixin",
         "ServerLevelMixin",
         "PlayerMixin",
-        "EntityMixin"
+        "EntityMixin",
+
+
+        "CustomDataAccessorMixin_1_21_10"
     ],
     "client": [
         "LocalPlayerMixin",

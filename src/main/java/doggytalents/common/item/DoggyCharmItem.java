@@ -6,6 +6,7 @@ import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.backward_imitate.InteractionResultHolder;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.common.backward_imitate.fabric_util.FabricTagUtil_1_21_10;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.event.EventHandler;
@@ -175,7 +176,7 @@ public class DoggyCharmItem extends Item implements IDogItem, HoverTextAppender_
     }
 
     public static boolean isCharmForcedGlint(ItemStack stack) {
-        return ItemUtil.getWrappedTag(stack).contains("dtn_charm_forced_glint");
+        return FabricTagUtil_1_21_10.containsEntry(ItemUtil.getWrappedTag(stack), "dtn_charm_forced_glint");
     }
 
     public static void setCharmForcedGlint(ItemStack stack, boolean glint) {
