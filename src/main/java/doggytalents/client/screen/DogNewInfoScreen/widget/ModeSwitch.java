@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.feature.DogMode;
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractWidget_1_21_9;
+import doggytalents.client.backward_imitate.fabric_util.FabricGuiUtil_1_21_10;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
@@ -222,7 +223,7 @@ public class ModeSwitch extends AbstractWidget_1_21_9 {
     public boolean keyPressedGlobal(int keyCode, int scanCode, int modifiers) {
         var mc = Minecraft.getInstance();
         var sneakKey = mc.options.keyShift;
-        if (sneakKey.matches(keyCode, scanCode)) {
+        if (FabricGuiUtil_1_21_10.matchesKey(sneakKey, keyCode, scanCode)) {
             isHolding = true;
             return true;
         }

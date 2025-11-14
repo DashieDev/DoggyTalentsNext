@@ -69,7 +69,7 @@ public class CanineTrackerLocateRenderer {
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());
         }
-        var camera = event.getLevelRenderState().cameraRenderState;
+        var camera = event.getLevelRenderState_1_21_10().cameraRenderState;
         var camera_pos = camera.pos.add(0, -0.2, 0);
         var off_dog_camera = dog_pos.subtract(camera_pos);
         var d_dog_camera = off_dog_camera.length();

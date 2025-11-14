@@ -1,5 +1,8 @@
 package doggytalents.forge_imitate.event.client;
 
+import java.util.function.Supplier;
+
+import doggytalents.client.backward_imitate.LegacyBlockEntityRendererUtil_1_21_9.WrappedBlockEntityRenderState;
 import doggytalents.forge_imitate.event.Event;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -8,6 +11,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,10 +38,10 @@ public class EntityRenderersEvent {
         }
 
         public <E extends Entity> void registerEntityRenderer(EntityType<E> entityType, EntityRendererProvider<E> entityRendererFactory) {
-            EntityRendererRegistry.register(entityType, entityRendererFactory);
+            EntityRenderers.register(entityType, entityRendererFactory);
         }
 
-        public <E extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<E> blockEntityType, BlockEntityRendererProvider<E> prov) {
+        public <E extends BlockEntity> void registerBlockEntityRenderer(BlockEntityType<E> blockEntityType, Supplier<WrappedBlockEntityRenderState<E>> prov) {
             BlockEntityRenderers.register(blockEntityType, prov);
         }
         

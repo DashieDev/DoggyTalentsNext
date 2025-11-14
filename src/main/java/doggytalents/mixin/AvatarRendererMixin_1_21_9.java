@@ -33,18 +33,18 @@ public class AvatarRendererMixin_1_21_9 {
             info.cancel();
     }
 
-    @Inject(at = @At("HEAD"),  method = "getArmPose", cancellable = true)
-    private static void dtn__getArmPose(Avatar player, HumanoidArm arm, CallbackInfoReturnable<HumanoidModel.ArmPose> info) {
-        if (arm == HumanoidArm.RIGHT && PettingArmPose.activeRight_1_21_5) {
-            PettingArmPose.activeRight_1_21_5 = false;
-            info.setReturnValue(PettingArmPose.VALUE);
-            return;
-        }
-        if (arm == HumanoidArm.LEFT && PettingArmPose.activeLeft_1_21_5) {
-            PettingArmPose.activeLeft_1_21_5 = false;
-            info.setReturnValue(PettingArmPose.VALUE);
-            return;
-        }
-    }
+    // @Inject(at = @At("HEAD"),  method = "getArmPose", cancellable = true)
+    // private static void dtn__getArmPose(Avatar player, HumanoidArm arm, CallbackInfoReturnable<HumanoidModel.ArmPose> info) {
+    //     if (arm == HumanoidArm.RIGHT && PettingArmPose.activeRight_1_21_5) {
+    //         PettingArmPose.activeRight_1_21_5 = false;
+    //         info.setReturnValue(PettingArmPose.VALUE);
+    //         return;
+    //     }
+    //     if (arm == HumanoidArm.LEFT && PettingArmPose.activeLeft_1_21_5) {
+    //         PettingArmPose.activeLeft_1_21_5 = false;
+    //         info.setReturnValue(PettingArmPose.VALUE);
+    //         return;
+    //     }
+    // }
 
 }

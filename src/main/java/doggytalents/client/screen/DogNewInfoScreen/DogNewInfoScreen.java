@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
+import doggytalents.client.backward_imitate.fabric_util.FabricGuiUtil_1_21_10;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogDescriptionViewBoxElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogStatusViewBoxElement;
@@ -89,7 +90,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             @Override
             public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                 var mc = Minecraft.getInstance();
-                if (mc.options.keyRight.matches(keyCode, scanCode)) {
+                if (FabricGuiUtil_1_21_10.matchesKey(mc.options.keyRight, keyCode, scanCode)) {
                     this.selected = true;
                 }
                 return false;
@@ -141,7 +142,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             @Override
             public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
                 var mc = Minecraft.getInstance();
-                if (mc.options.keyLeft.matches(keyCode, scanCode)) {
+                if (FabricGuiUtil_1_21_10.matchesKey(mc.options.keyLeft, keyCode, scanCode)) {
                     this.selected = true;
                 }
                 return false;
@@ -311,11 +312,11 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         
         if (!this.sideTabNavLocked) {
             this.sideTabNavLocked = true;
-            if (options.keyLeft.matches(keyCode, scanCode)) {
+            if (options.keyLeft.matches(keyEvent_1_21_9)) {
                 this.lefTabButton.playDownSound(mc.getSoundManager());
                 GuiUtil_1_21_9.buttonOnClickNull(this.lefTabButton);
                 this.lefTabButton.keyPressed(keyEvent_1_21_9);
-            } else if (options.keyRight.matches(keyCode, scanCode)) {
+            } else if (options.keyRight.matches(keyEvent_1_21_9)) {
                 this.rightTabButton.playDownSound(mc.getSoundManager());
                 GuiUtil_1_21_9.buttonOnClickNull(this.rightTabButton);
                 this.rightTabButton.keyPressed(keyEvent_1_21_9);

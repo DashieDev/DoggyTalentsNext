@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9.AbstractButton_1_21_9;
+import doggytalents.client.backward_imitate.fabric_util.FabricGuiUtil_1_21_10;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -158,7 +159,7 @@ public class DogInventoryButton extends AbstractButton_1_21_9 {
     public void keyGlobalPressed(int keyCode, int scanCode, int modifier) {
         var mc = Minecraft.getInstance();
         var shiftKey = mc.options.keyShift;
-        if (shiftKey.matches(keyCode, scanCode) && this.openSingleDog.isPresent()) {
+        if (FabricGuiUtil_1_21_10.matchesKey(shiftKey, keyCode, scanCode) && this.openSingleDog.isPresent()) {
             this.openSingle = true;
         }
     }

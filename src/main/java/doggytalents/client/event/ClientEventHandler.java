@@ -9,6 +9,7 @@ import doggytalents.DoggyTalentsNext;
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.backward_imitate.DogBedModifyingBakingResult_1_21_5;
+import doggytalents.client.backward_imitate.fabric_util.FabricGuiUtil_1_21_10;
 import doggytalents.client.block.model.DogBedModel;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
@@ -188,7 +189,7 @@ public class ClientEventHandler {
         
         //Fabric
         var keyHotbarSlots = mc.options.keyHotbarSlots[hotkey_use];
-        if (keyHotbarSlots.matches(event.keyCode, event.scanCode))
+        if (FabricGuiUtil_1_21_10.matchesKey(keyHotbarSlots, event.keyCode, event.scanCode))
             keyHotbarSlots.consumeClick();
     }
 

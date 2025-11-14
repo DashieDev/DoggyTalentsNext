@@ -11,6 +11,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9.Screen_1_21_9;
+import doggytalents.client.backward_imitate.fabric_util.FabricGuiUtil_1_21_10;
 import doggytalents.client.screen.StringEntrySelectScreen.TextField.FocusState;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.client.Minecraft;
@@ -146,7 +147,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
         boolean text_field_focused = 
             this.searchField.focusState() == TextField.FocusState.FOCUS;
         
-        if (mc.options.keyShift.matches(keyCode, scanCode))
+        if (FabricGuiUtil_1_21_10.matchesKey(mc.options.keyShift, keyCode, scanCode))
             this.isSneakPressed = true;
 
         if (this.entryView.keyPressed(text_field_focused, keyCode, scanCode, modifiers)) {
@@ -154,7 +155,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
         }
         
         boolean focus_search_field = 
-            mc.options.keyJump.matches(keyCode, scanCode)
+            FabricGuiUtil_1_21_10.matchesKey(mc.options.keyJump, keyCode, scanCode)
             && isSneakPressed
             && this.searchField.focusState() == TextField.FocusState.NONE;
         if (focus_search_field) {
@@ -163,7 +164,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
         }
         boolean move_left = !text_field_focused && (
             keyCode == InputConstants.KEY_LEFT
-            || mc.options.keyLeft.matches(keyCode, scanCode)
+            || FabricGuiUtil_1_21_10.matchesKey(mc.options.keyLeft, keyCode, scanCode)
         );
         if (move_left) {
             if (this.prevPageButton.active)
@@ -172,7 +173,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
         }
         boolean move_right = !text_field_focused && (
             keyCode == InputConstants.KEY_RIGHT
-            || mc.options.keyRight.matches(keyCode, scanCode)
+            || FabricGuiUtil_1_21_10.matchesKey(mc.options.keyRight, keyCode, scanCode)
         );
         if (move_right) {
             if (this.nextPageButton.active)
@@ -191,18 +192,18 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
         var mc = Minecraft.getInstance();
         boolean text_field_focus_ready = 
             this.searchField.focusState() == TextField.FocusState.READY
-            && mc.options.keyJump.matches(keyCode, scanCode);
+            && FabricGuiUtil_1_21_10.matchesKey(mc.options.keyJump, keyCode, scanCode);
         if (text_field_focus_ready)
             this.searchField.setFocusState(TextField.FocusState.FOCUS);
         
-        if (mc.options.keyShift.matches(keyCode, scanCode))
+        if (FabricGuiUtil_1_21_10.matchesKey(mc.options.keyShift, keyCode, scanCode))
             this.isSneakPressed = false;
 
         //Confirm when key released instead of pressed to avoid propagating
         //the key press outside of the screen lifetime.
         boolean is_confirm = 
             keyCode == InputConstants.KEY_RETURN || (
-                mc.options.keyJump.matches(keyCode, scanCode)
+                FabricGuiUtil_1_21_10.matchesKey(mc.options.keyJump, keyCode, scanCode)
                 && !isSneakPressed
                 && this.searchField.focusState() == TextField.FocusState.NONE
             );
@@ -341,7 +342,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
             boolean is_down = 
                 keyCode == InputConstants.KEY_DOWN || (
                     !textFieldFocused 
-                    && mc.options.keyDown.matches(keyCode, scanCode)
+                    && FabricGuiUtil_1_21_10.matchesKey(mc.options.keyDown, keyCode, scanCode)
                 );
             if (is_down) {
                 moveSelectedEntryInPage(x -> x + 1);
@@ -350,7 +351,7 @@ public class StringEntrySelectScreen extends Screen_1_21_9 {
             boolean is_up = 
                 keyCode == InputConstants.KEY_UP || (
                     !textFieldFocused 
-                    && mc.options.keyUp.matches(keyCode, scanCode)
+                    && FabricGuiUtil_1_21_10.matchesKey(mc.options.keyUp, keyCode, scanCode)
                 );
             if (is_up) {
                 moveSelectedEntryInPage(x -> x - 1);

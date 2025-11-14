@@ -75,7 +75,7 @@ public class PackHandler { // Reflect change in FabricPackHandler
         //     type,
         //     new PackSelectionConfig(always_active, position, false));
         // return Optional.ofNullable(pack);
-    }
+    //}
 
     public static boolean isBuiltinPack(String id) {
         return FabricPackHandler.isBuiltinPack(id);
