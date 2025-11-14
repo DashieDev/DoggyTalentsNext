@@ -276,7 +276,7 @@ public class DTNClientPettingManager {
     //@SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         //1.21.9+ check
-        var player_1_21_9 = PlayerRenderUtil_1_21_9.getPlayerFromState(event.getRenderState(), false);
+        var player_1_21_9 = PlayerRenderUtil_1_21_9.getPlayerFromState(event.getRenderState_1_21_10(), false);
         if (!player_1_21_9.isPresent())
             return;
 
