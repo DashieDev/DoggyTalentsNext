@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import doggytalents.client.PettingArmPose;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
+import doggytalents.client.backward_imitate.fabric_util.FabricClientAttachmentHolder_1_21_10;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
@@ -18,9 +19,8 @@ public class HumanoidModelMixin {
     
     @Inject(at = @At("HEAD"), cancellable = true, method = "poseRightArm(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;Lnet/minecraft/client/model/HumanoidModel$ArmPose;)V")
     public void dtn__poseRightArm(HumanoidRenderState state, ArmPose pose, CallbackInfo info) {
-        if (!PettingArmPose.activateRight)
+        if (!FabricClientAttachmentHolder_1_21_10.hasAttachment(state, PettingArmPose.ACTIVE_RIGHT_1_21_10))
             return;
-        PettingArmPose.activateRight = false;
         var self = (HumanoidModel<?>)(Object)this;
         PettingArmPose.applyTransform(self, state, HumanoidArm.RIGHT);
         info.cancel();
@@ -28,9 +28,8 @@ public class HumanoidModelMixin {
 
     @Inject(at = @At("HEAD"), cancellable = true, method = "poseLeftArm(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;Lnet/minecraft/client/model/HumanoidModel$ArmPose;)V")
     public void dtn__poseLeftArm(HumanoidRenderState state, ArmPose pose, CallbackInfo info) {
-        if (!PettingArmPose.activateLeft)
+        if (!FabricClientAttachmentHolder_1_21_10.hasAttachment(state, PettingArmPose.ACTIVE_LEFT_1_21_10))
             return;
-        PettingArmPose.activateLeft = false;
         var self = (HumanoidModel<?>)(Object)this;
         PettingArmPose.applyTransform(self, state, HumanoidArm.LEFT);
         info.cancel();

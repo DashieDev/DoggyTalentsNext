@@ -24,4 +24,8 @@ public interface FabricClientAttachmentHolder_1_21_10 {
         var attachment = getAttachmentFromState(state);
         attachment.put(key, object);
     }
+
+    public static boolean hasAttachment(EntityRenderState state, ContextKey<?> key) {
+        return getAttachment(state, key) != null;
+    }
 }

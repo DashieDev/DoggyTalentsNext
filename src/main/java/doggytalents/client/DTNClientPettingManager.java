@@ -16,6 +16,7 @@ import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.client.backward_imitate.GuiUtil_1_21_9;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
 import doggytalents.client.backward_imitate.PlayerRenderUtil_1_21_9;
+import doggytalents.client.backward_imitate.fabric_util.FabricClientAttachmentHolder_1_21_10;
 import doggytalents.client.screen.PetSelectScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogPettingManager;
@@ -39,6 +40,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Input;
@@ -288,8 +290,10 @@ public class DTNClientPettingManager {
         
         //model.leftArmPose = PettingArmPose.VALUE;
         //model.rightArmPose = PettingArmPose.VALUE;
-        PettingArmPose.activateLeft = true;
-        PettingArmPose.activateRight = true;
+        FabricClientAttachmentHolder_1_21_10
+        .putAttachement(event.getRenderState_1_21_10(), PettingArmPose.ACTIVE_LEFT_1_21_10, Unit.INSTANCE);
+        FabricClientAttachmentHolder_1_21_10
+        .putAttachement(event.getRenderState_1_21_10(), PettingArmPose.ACTIVE_RIGHT_1_21_10, Unit.INSTANCE);
     }
 
     private boolean isPettingPlayer(Player player) {
