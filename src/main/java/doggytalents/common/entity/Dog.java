@@ -70,6 +70,9 @@ import doggytalents.common.storage.DogRespawnStorage;
 import doggytalents.common.storage.OnlineDogLocationManager;
 import doggytalents.common.util.*;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
+import doggytalents.forge_imitate.event.util.DogInteractTestEvent;
+import doggytalents.forge_imitate.event.util.EventBus;
+import doggytalents.forge_imitate.event.util.TestEventHandler;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.fabricmc.api.EnvType;
@@ -1085,6 +1088,18 @@ public class Dog extends AbstractDog {
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
         var stack = player.getItemInHand(hand);
+
+        if (stack.getItem() == Items.STONE_AXE) {
+            if (!this.level().isClientSide) {
+                long start_time = System.nanoTime();
+                for (int i = 0; i < 9999; ++ i) {
+                    EventBus.COMMON_BUS.post(new DogInteractTestEvent(this));
+                }
+                long stop_time = System.nanoTime();
+                ((ServerPlayer)player).sendSystemMessage(Component.literal("test took : " + (stop_time - start_time) + " ns inc: " + TestEventHandler.inc));
+            }
+            return InteractionResult.SUCCESS;
+        }
         
         if (this.isDefeated()) 
             return this.incapacitatedMananger

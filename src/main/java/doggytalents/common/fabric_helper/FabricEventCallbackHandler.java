@@ -8,6 +8,7 @@ import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent.UpdateCause;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -47,6 +48,7 @@ public class FabricEventCallbackHandler {
             var ret = EventCallbacksRegistry.postEvent(new LivingHurtEvent(entity, source, amount));
             if (ret.isCanceled())
                 return false;
+            EventBus.COMMON_BUS.post(new LivingHurtEvent(entity, source, amount));
             return true;
         });
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {

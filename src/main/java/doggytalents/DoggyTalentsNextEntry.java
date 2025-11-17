@@ -23,6 +23,8 @@ import doggytalents.common.variants.fabric.DTNWolfVariantsFabricSpawn;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EventHandlerRegisterer;
 import doggytalents.forge_imitate.event.ForgeCommonSetup;
+import doggytalents.forge_imitate.event.util.EventBus;
+import doggytalents.forge_imitate.event.util.TestEventHandler;
 import doggytalents.common.network.DTNNetworkHandler
 ;
 import net.fabricmc.api.ModInitializer;
@@ -47,6 +49,10 @@ public class DoggyTalentsNextEntry implements ModInitializer {
         doModCommonSetup();
         
         PostInitEntry.firePosInitEntry();
+
+        EventBus.COMMON_BUS.register(new TestEventHandler());
+        EventBus.COMMON_BUS.finishRegister();
+
     }
 
     private void initAllModRegistries() {
