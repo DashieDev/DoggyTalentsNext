@@ -85,6 +85,8 @@ public class EventBus {
         if (!this.locked)
             throw new IllegalStateException("Event bus must be locked before use");
         var listeners = this.listenersByType.get(event.getClass());
+        if (listeners == null)
+            return;
         for (var listener : listeners) {
             listener.invoke(event);
         }
