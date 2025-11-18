@@ -3,15 +3,21 @@ package doggytalents.forge_imitate.event.util;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
+import java.util.function.Consumer;
 
 import doggytalents.forge_imitate.event.Event;
 
-public interface EventListener {
+public /*sealed*/ interface EventListener {
     
     public void invoke(Event event);
 
     public static InstanceWrapped createInstanceWrapped(Object instance, Method method) {
         return new InstanceWrapped(instance, UnreflectUtil.getMethodHandleFromMethod(method));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static SimpleWrapped createSimpleUnsafe(Consumer<? extends Event> listener) {
+        return new SimpleWrapped((Consumer<Event>) listener);
     }
 
     public static class InstanceWrapped implements EventListener {
@@ -36,6 +42,20 @@ public interface EventListener {
             } catch (Throwable t) {
                 throw new RuntimeException("Unhandled checked exception thrown", t);
             }
+        }
+    }
+
+    public static class SimpleWrapped implements EventListener {
+
+        private final Consumer<Event> wrappedListener;
+
+        private SimpleWrapped(Consumer<Event> wrappedListener) {
+            this.wrappedListener = wrappedListener;
+        }
+
+        @Override
+        public void invoke(Event event) {
+            this.wrappedListener.accept(event);
         }
     }
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,7 +30,7 @@ public class EventBus {
     public void register(Object handlerObj) {
         var handler_class = handlerObj.getClass();
         var handler_methods = new ArrayList<Method>();
-        for (var method : handler_class.getMethods()) {
+        for (var method : handler_class.getDeclaredMethods()) {
             if (method.getAnnotation(SubscribeEvent.class) != null)
                 handler_methods.add(method);
         }
@@ -53,6 +54,9 @@ public class EventBus {
     }
 
     private Class<?> validateHandlerMethodAndGetEventType(Method handler_method, Supplier<String> exception_msg) {
+        if (!Modifier.isPublic(handler_method.getModifiers()))
+            throw new IllegalArgumentException(exception_msg.get());
+        
         var param_types = handler_method.getParameterTypes();
         if (param_types.length != 1)
             throw new IllegalArgumentException(exception_msg.get());
@@ -65,6 +69,15 @@ public class EventBus {
             throw new IllegalArgumentException(exception_msg.get());
 
         return event_type;
+    }
+
+    public <T extends Event> void addListener(Class<T> eventType, Consumer<T> listener) {
+        if (this.locked)
+            throw new IllegalStateException(
+                "Event bus is locked. Cannot register additional listeners.");
+            
+        var wrapped_listener = EventListener.createSimpleUnsafe(listener);
+        this.registeredListeners.add(Pair.of(eventType, wrapped_listener));
     }
 
     public void finishRegister() {
