@@ -1,12 +1,13 @@
 package doggytalents.forge_imitate.event;
 
+import doggytalents.forge_imitate.event.util.ModBusEvent;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 
 public class RegisterColorHandlersEvent {
     
-    public static class Block extends Event {
+    public static class Block extends Event implements ModBusEvent {
 
         private final RegisterCallback<BlockColor, net.minecraft.world.level.block.Block> callback = (x, y) -> {
             ColorProviderRegistry.BLOCK.register(x, y);  
@@ -18,7 +19,7 @@ public class RegisterColorHandlersEvent {
 
     }
 
-    public static class Item extends Event {
+    public static class Item extends Event implements ModBusEvent {
 
         private final RegisterCallback<ItemColor, net.minecraft.world.item.Item> callback = (x, y) -> {
             ColorProviderRegistry.ITEM.register(x, y);  

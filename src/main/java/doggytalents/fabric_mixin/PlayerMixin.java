@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.PlayerWakeUpEvent;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,7 +16,7 @@ public class PlayerMixin {
     public void dtn__stopSleepInBed(boolean wake_immediately, boolean update_level, CallbackInfo info) {
         var self = (Player)(Object)this;
         var event = new PlayerWakeUpEvent(self);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
     }
 
 }

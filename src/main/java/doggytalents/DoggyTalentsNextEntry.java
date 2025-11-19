@@ -23,12 +23,15 @@ import doggytalents.common.variants.fabric.DTNWolfVariantsFabricSpawn;
 import doggytalents.forge_imitate.atrrib.ForgeMod;
 import doggytalents.forge_imitate.event.EventHandlerRegisterer;
 import doggytalents.forge_imitate.event.ForgeCommonSetup;
+import doggytalents.forge_imitate.event.util.ModEventBus;
 import doggytalents.common.network.DTNNetworkHandler
 ;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 public class DoggyTalentsNextEntry implements ModInitializer {
+
+    public static final ModEventBus MOD_BUS = ModEventBus.create();
 
     @Override
     public void onInitialize() {

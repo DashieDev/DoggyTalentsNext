@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.LivingChangeTargetEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -19,7 +19,7 @@ public class MobMixin {
     )
     public void dtn__setTarget(LivingEntity target, CallbackInfo info) {
         var self = (Mob)(Object)this;
-        EventCallbacksRegistry.postEvent(new LivingChangeTargetEvent(self, target));
+        EventBus.COMMON_BUS.post(new LivingChangeTargetEvent(self, target));
     }
 
 }

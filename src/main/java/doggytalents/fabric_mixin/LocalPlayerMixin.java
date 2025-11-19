@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
 import net.minecraft.client.player.LocalPlayer;
 
@@ -24,7 +24,7 @@ public class LocalPlayerMixin {
     public void dtn__aiStep(CallbackInfo info) {
         var self = (LocalPlayer)(Object) this;
         var input = self.input;
-        EventCallbacksRegistry.postEvent(new MovementInputUpdateEvent(input, self));
+        EventBus.COMMON_BUS.post(new MovementInputUpdateEvent(input, self));
     }
 
 }

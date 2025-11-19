@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.forge_imitate.event.EntityJoinLevelEvent;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.entity.EntityAccess;
@@ -21,7 +21,7 @@ public class PersistentEntitySectionManagerMixin {
         if (!(entity instanceof LivingEntity living))
             return;
         var event = new EntityJoinLevelEvent(living, loadedFromWorld);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
         if (event.isCanceled())
             info.setReturnValue(false);
     }

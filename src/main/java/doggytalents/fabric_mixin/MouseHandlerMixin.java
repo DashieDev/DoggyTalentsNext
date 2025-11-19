@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.client.InputEvent;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -21,7 +21,7 @@ public class MouseHandlerMixin {
         if (!option.keyUse.matchesMouse(button))
             return;
         var event = new InputEvent.MouseButton.Pre(button, action);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
         if (event.isCanceled()) {
             option.keyUse.consumeClick();
             option.keyUse.setDown(false);

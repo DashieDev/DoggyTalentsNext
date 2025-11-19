@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.SleepFinishedTimeEvent;
 import net.minecraft.server.level.ServerLevel;
 
@@ -38,7 +38,7 @@ public class ServerLevelMixin {
     public void dtn__tick(BooleanSupplier booleanSupplier, CallbackInfo info) {
         var self = (ServerLevel)(Object)this;
         var event = new SleepFinishedTimeEvent(self);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
     }
 
 }

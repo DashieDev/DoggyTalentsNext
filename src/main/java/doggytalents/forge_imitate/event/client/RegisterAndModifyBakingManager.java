@@ -10,7 +10,6 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.Event;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Context;
 import net.minecraft.client.renderer.block.model.BlockModel;

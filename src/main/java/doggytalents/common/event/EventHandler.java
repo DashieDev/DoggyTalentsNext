@@ -57,6 +57,7 @@ import doggytalents.forge_imitate.event.ServerStoppedEvent;
 import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
+import doggytalents.forge_imitate.event.util.SubscribeEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent.Phase;
 import doggytalents.forge_imitate.event.SleepFinishedTimeEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
@@ -96,7 +97,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class EventHandler {
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onServerTickEnd(final ServerTickEvent event) {
 
         if (event.phase != Phase.END) return;
@@ -106,7 +107,7 @@ public class EventHandler {
         DogSleepOnManager.tickServer(event.getServer());
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
         DTNForcedChunkManager.onServerStop();
@@ -116,14 +117,14 @@ public class EventHandler {
         DogSleepOnManager.onServerStop(event.getServer());
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onServerStopped(final ServerStoppedEvent event) {
         var overworld = event.getServer().getLevel(Level.OVERWORLD);
         if (overworld != null)
             DogLocationStorage.get(overworld).onServerStopped(event);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onWolfRightClickWithTreat(final PlayerInteractEvent.EntityInteract event) {
         var level = event.getLevel();
         var stack = event.getItemStack();
@@ -292,7 +293,7 @@ public class EventHandler {
         dog.setWolfArmor(armor_stack);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onEntitySpawn(final EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         var level = entity.level();
@@ -307,7 +308,7 @@ public class EventHandler {
         }
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
         if (event.getEntity().level().isClientSide)
             return;
@@ -345,7 +346,7 @@ public class EventHandler {
     //     HunterDogTalent.onLootDrop(event);
     // }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onProjectileHit(final ProjectileImpactEvent event) {
         var levelChecker = event.getProjectile();
         if (levelChecker == null)
@@ -418,7 +419,7 @@ public class EventHandler {
     }
 
     public final int COLLECT_RADIUS = 26;
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onEntityChangeDimension(EntityTravelToDimensionEvent event) {
         var entity = event.getEntity();
         if (entity.level().isClientSide) return;
@@ -492,12 +493,12 @@ public class EventHandler {
         return from.distanceToSqr(to) < MIN_DISTANCE_TO_TRIGGER_TELEPORT_SQR;
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onLivingDeath(LivingDropsEvent event) {
         PackPuppyTalent.mayNotifyNearbyPackPuppy(event);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onTagsUpdated(TagsUpdatedEvent event) {
         DogBedMaterialManager.onTagsUpdated(event);
     }
@@ -516,7 +517,7 @@ public class EventHandler {
     //     DogLocationStorageMigration.checkAndMigrate(level_overworld);
     // }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onLivingHurt(LivingHurtEvent event) {
         onDogPassenegerHurtInWall(event);
         // if (event.isCanceled())
@@ -544,7 +545,7 @@ public class EventHandler {
         event.setCanceled(true);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onWolfSetTarget(LivingChangeTargetEvent event) {
         var entity = event.getEntity();
         if (!ConfigHandler.SERVER.PREVENT_WILD_WOLVES_ANGRY.get())
@@ -566,23 +567,23 @@ public class EventHandler {
         wolf.setPersistenceRequired();
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
         DogSleepOnManager.canPlayerContinueSleeping(event);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void beforeAllPlayerWakeUp(SleepFinishedTimeEvent event) {
         DogSleepOnManager.beforeSleepFinishedForAllPlayer(event);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void playerWakeUpEvent(PlayerWakeUpEvent event) {
         if (!event.getEntity().level().isClientSide)
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void playerLoggedOut(PlayerLoggedOutEvent event) {
         var player = event.getEntity();
         if (player.level().isClientSide)
@@ -602,7 +603,7 @@ public class EventHandler {
         }
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onEntityJoinLevel(EntityJoinLevelEvent event) {
         DogDuplicationDetection.beforeEntityJoinLevel(event);
     }

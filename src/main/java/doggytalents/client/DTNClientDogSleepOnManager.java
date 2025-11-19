@@ -16,6 +16,7 @@ import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent;
 import doggytalents.forge_imitate.event.client.ClientTickEvent.Phase;
+import doggytalents.forge_imitate.event.util.SubscribeEvent;
 import doggytalents.mixin.CameraMixinAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -41,14 +42,14 @@ public class DTNClientDogSleepOnManager {
     private final Map<UUID, Dog> sleeperMap = Maps.newHashMap();
     private final List<UUID> toRemove = new ArrayList<>();
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void tickClient(ClientTickEvent event) {
         if (event.phase != Phase.END)
             return;
         invalidateSleeperCache();
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         this.sleeperMap.clear();
     }

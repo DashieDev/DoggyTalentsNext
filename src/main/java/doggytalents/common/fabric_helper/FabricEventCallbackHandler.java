@@ -1,6 +1,5 @@
 package doggytalents.common.fabric_helper;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LivingHurtEvent;
 import doggytalents.forge_imitate.event.PlayerInteractEvent;
 import doggytalents.forge_imitate.event.ServerStoppedEvent;
@@ -8,6 +7,7 @@ import doggytalents.forge_imitate.event.ServerStoppingEvent;
 import doggytalents.forge_imitate.event.ServerTickEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent;
 import doggytalents.forge_imitate.event.TagsUpdatedEvent.UpdateCause;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -20,22 +20,22 @@ public class FabricEventCallbackHandler {
     
     public static void init() {
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-            EventCallbacksRegistry.postEvent(new ServerStoppingEvent(server));         
+            EventBus.COMMON_BUS.post(new ServerStoppingEvent(server));         
         });
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
-            EventCallbacksRegistry.postEvent(new ServerStoppedEvent(server));         
+            EventBus.COMMON_BUS.post(new ServerStoppedEvent(server));         
         });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
-            EventCallbacksRegistry.postEvent(new ServerTickEvent(server));      
+            EventBus.COMMON_BUS.post(new ServerTickEvent(server));      
         });
         CommonLifecycleEvents.TAGS_LOADED.register((registry, isClient) -> {
-            EventCallbacksRegistry.postEvent(new TagsUpdatedEvent(
+            EventBus.COMMON_BUS.post(new TagsUpdatedEvent(
                 isClient ? UpdateCause.CLIENT_PACKET_RECEIVED
                 : UpdateCause.SERVER));
         });
         UseEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
             var stack = player.getItemInHand(hand);
-            var ret = EventCallbacksRegistry.postEvent(new PlayerInteractEvent.EntityInteract(player, entity, stack));
+            var ret = EventBus.COMMON_BUS.post(new PlayerInteractEvent.EntityInteract(player, entity, stack));
             if (!ret.isCanceled())
                 return InteractionResult.PASS;
             var res = ret.getCancelInteractionResult();
@@ -44,14 +44,14 @@ public class FabricEventCallbackHandler {
             return InteractionResult.FAIL;
         });
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            var ret = EventCallbacksRegistry.postEvent(new LivingHurtEvent(entity, source, amount));
+            var ret = EventBus.COMMON_BUS.post(new LivingHurtEvent(entity, source, amount));
             if (ret.isCanceled())
                 return false;
             return true;
         });
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             var stack = player.getItemInHand(hand);
-            var ret = EventCallbacksRegistry.postEvent(new PlayerInteractEvent
+            var ret = EventBus.COMMON_BUS.post(new PlayerInteractEvent
                 .RightClickBlock(player, hitResult.getBlockPos(), hitResult.getDirection(), stack,
                     hand, hitResult));
             if (!ret.isCanceled())
