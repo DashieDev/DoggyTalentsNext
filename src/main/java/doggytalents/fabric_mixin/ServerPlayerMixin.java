@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import doggytalents.forge_imitate.event.EntityTravelToDimensionEvent;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -20,14 +20,14 @@ public class ServerPlayerMixin {
     public void dtn__teleportTo(ServerLevel level, double x, double y, double z, float f1, float f2, CallbackInfo info) {
         var self = (ServerPlayer)(Object)this;
         if (level != self.level()) {
-            EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.dimension()));
+            EventBus.COMMON_BUS.post(new EntityTravelToDimensionEvent(self, level.dimension()));
         }
     }
 
     @Inject(at = @At("HEAD"),  method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;")
     public void dtn_changeDimension(DimensionTransition level, CallbackInfoReturnable<Entity> info) {
         var self = (ServerPlayer)(Object)this;
-        EventCallbacksRegistry.postEvent(new EntityTravelToDimensionEvent(self, level.newLevel().dimension()));
+        EventBus.COMMON_BUS.post(new EntityTravelToDimensionEvent(self, level.newLevel().dimension()));
     }
 
 

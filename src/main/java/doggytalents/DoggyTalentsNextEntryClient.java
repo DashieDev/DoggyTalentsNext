@@ -4,6 +4,7 @@ import doggytalents.forge_imitate.client.ForgeGuiOverlayManager;
 import doggytalents.forge_imitate.event.client.ClientEventHandlerRegisterer;
 import doggytalents.forge_imitate.event.client.FabricEventCallbackHandlerClient;
 import doggytalents.forge_imitate.event.client.ForgeClientSetup;
+import doggytalents.forge_imitate.event.util.ModEventBus;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;
 import doggytalents.common.network.DTNNetworkHandler
 ;
@@ -12,6 +13,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.renderer.RenderType;
 
 public class DoggyTalentsNextEntryClient implements ClientModInitializer {
+
+    public static final ModEventBus MOD_BUS = ModEventBus.create();
 
     @Override
     public void onInitializeClient() {

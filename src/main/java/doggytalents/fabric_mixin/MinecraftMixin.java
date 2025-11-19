@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import doggytalents.common.entity.Dog;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -58,6 +58,6 @@ public class MinecraftMixin {
     
     @Inject(at = @At("HEAD"),  method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;Z)V")
     public void dtn_disconnect(Screen screen, boolean isClientTransfering, CallbackInfo info) {
-        EventCallbacksRegistry.postEvent(new ClientPlayerNetworkEvent.LoggingOut());
+        EventBus.COMMON_BUS.post(new ClientPlayerNetworkEvent.LoggingOut());
     }
 }

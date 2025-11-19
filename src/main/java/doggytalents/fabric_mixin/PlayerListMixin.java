@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.PlayerLoggedInEvent;
 import doggytalents.forge_imitate.event.PlayerLoggedOutEvent;
 import net.minecraft.network.Connection;
@@ -18,12 +18,12 @@ public class PlayerListMixin {
     
     @Inject(at = @At("TAIL"),  method = "placeNewPlayer(Lnet/minecraft/network/Connection;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/network/CommonListenerCookie;)V")
     public void dtn__placeNewPlayer(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo info) {
-        EventCallbacksRegistry.postEvent(new PlayerLoggedInEvent(player));
+        EventBus.COMMON_BUS.post(new PlayerLoggedInEvent(player));
     }
 
     @Inject(at = @At("HEAD"),  method = "remove(Lnet/minecraft/server/level/ServerPlayer;)V")
     public void dtn__remove(ServerPlayer player, CallbackInfo info) {
-        EventCallbacksRegistry.postEvent(new PlayerLoggedOutEvent(player));
+        EventBus.COMMON_BUS.post(new PlayerLoggedOutEvent(player));
     }
 
 }

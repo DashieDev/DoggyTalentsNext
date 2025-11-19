@@ -1,6 +1,7 @@
 package doggytalents.forge_imitate.event.client;
 
 import doggytalents.forge_imitate.event.Event;
+import doggytalents.forge_imitate.event.util.ModBusEvent;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class EntityRenderersEvent {
     
-    public static class RegisterLayerDefinitions extends Event {
+    public static class RegisterLayerDefinitions extends Event implements ModBusEvent {
 
         public RegisterLayerDefinitions() {
             
@@ -28,7 +29,7 @@ public class EntityRenderersEvent {
 
     }
 
-    public static class RegisterRenderers extends Event {
+    public static class RegisterRenderers extends Event implements ModBusEvent {
         
         public RegisterRenderers() {
             

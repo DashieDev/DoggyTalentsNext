@@ -1,7 +1,7 @@
 package doggytalents.common.fabric_helper.entity;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
 import doggytalents.forge_imitate.event.LivingDropsEvent;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -28,7 +28,7 @@ public class FabricMobKillDropCapture {
         if (!droppedSinceLastCapture.get())
             return;
         var event = new LivingDropsEvent(entity, source);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
     }
     
 }

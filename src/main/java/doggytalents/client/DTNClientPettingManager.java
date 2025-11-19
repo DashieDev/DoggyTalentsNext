@@ -28,6 +28,7 @@ import doggytalents.forge_imitate.event.client.InputEvent;
 import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
 import doggytalents.forge_imitate.event.client.RenderArmEvent;
 import doggytalents.forge_imitate.event.client.RenderPlayerEvent;
+import doggytalents.forge_imitate.event.util.SubscribeEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
 import doggytalents.mixin.CameraMixinAccessor;
 import doggytalents.common.util.EntityUtil;
@@ -83,7 +84,7 @@ public class DTNClientPettingManager {
         pet_camera_yRot0_add = 0;
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void tickClient(ClientTickEvent event) {
         if (event.phase != Phase.END)
             return;
@@ -93,7 +94,7 @@ public class DTNClientPettingManager {
         invalidatePetterCache();
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         clearPetterMap();
     }
@@ -140,7 +141,7 @@ public class DTNClientPettingManager {
         this.pet_camera_yRot0_add = pet_camera_yRot_add - y_rot_change;
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onRenderHand(RenderArmEvent event) {
         if (event.getArm() != HumanoidArm.RIGHT)
             return;
@@ -173,7 +174,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onMouseInput(InputEvent.MouseButton.Pre event) {
         if (selectedType == null)
             return;
@@ -268,7 +269,7 @@ public class DTNClientPettingManager {
         return dog.getPettingState().type();
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
         if (!isPettingPlayer(event.getEntity()))
             return;
@@ -358,7 +359,7 @@ public class DTNClientPettingManager {
         }
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void modifyCameraAngle(ComputeCameraAngles event) {
         if (!this.isPetting)
             return;
@@ -378,7 +379,7 @@ public class DTNClientPettingManager {
         fixCameraPosition_1_20_under(event.getCamera(), FabricUtil.getPartialTick(mc), event.getYaw(), event.getPitch());
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onMovementInput(MovementInputUpdateEvent event) {
         if (!this.isPetting)
             return;

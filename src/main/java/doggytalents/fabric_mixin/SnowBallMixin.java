@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import doggytalents.forge_imitate.event.ProjectileImpactEvent;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.phys.HitResult;
@@ -16,7 +16,7 @@ public class SnowBallMixin {
     @Inject(at = @At("HEAD"),  method = "onHit(Lnet/minecraft/world/phys/HitResult;)V")
     public void dtn__onHit(HitResult hitResult, CallbackInfo info) {
         var self = (Snowball)(Object)this;
-        EventCallbacksRegistry.postEvent(new ProjectileImpactEvent(self, hitResult));
+        EventBus.COMMON_BUS.post(new ProjectileImpactEvent(self, hitResult));
     }
 
 }

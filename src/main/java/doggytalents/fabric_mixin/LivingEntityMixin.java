@@ -12,7 +12,7 @@ import doggytalents.common.fabric_helper.entity.FabricDogKillXPFix;
 import doggytalents.common.fabric_helper.entity.FabricMobKillDropCapture;
 import doggytalents.common.fabric_helper.entity.FabricModifyDogSwimSpeedFix;
 import doggytalents.forge_imitate.event.CanContinueSleepingEvent;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +88,7 @@ public class LivingEntityMixin {
         
         var self = (LivingEntity)(Object)this;
         var event = new CanContinueSleepingEvent(self, BedSleepingProblem.NOT_POSSIBLE_HERE);
-        EventCallbacksRegistry.postEvent(event);
+        EventBus.COMMON_BUS.post(event);
         if (event.canContinueSleeping())
             info.setReturnValue(true);
     }

@@ -5,6 +5,7 @@ import java.util.concurrent.Executor;
 
 import doggytalents.common.util.Util;
 import doggytalents.forge_imitate.event.Event;
+import doggytalents.forge_imitate.event.util.ModBusEvent;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
@@ -15,7 +16,7 @@ import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-public class RegisterClientReloadListenersEvent extends Event {
+public class RegisterClientReloadListenersEvent extends Event implements ModBusEvent {
 
     public RegisterClientReloadListenersEvent() {
     }

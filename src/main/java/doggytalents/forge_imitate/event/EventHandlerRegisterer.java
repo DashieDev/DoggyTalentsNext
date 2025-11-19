@@ -3,166 +3,19 @@ package doggytalents.forge_imitate.event;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyItems;
+import doggytalents.DoggyTalentsNextEntry;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.item.ChopinRecordItem;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry.InstanceEventCallBack;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry.SingleEventCallBack;
+import doggytalents.forge_imitate.event.util.EventBus;
 
 public class EventHandlerRegisterer {
     
-    private static EventHandler handlerIst = new EventHandler();
-
     public static void init() {
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, ServerTickEvent>
-                (handlerIst, ServerTickEvent.class,
-                    (x, y) -> x.onServerTickEnd(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, ServerStoppingEvent>
-                (handlerIst, ServerStoppingEvent.class,
-                    (x, y) -> x.onServerStop(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, ServerStoppedEvent>
-                (handlerIst, ServerStoppedEvent.class,
-                    (x, y) -> x.onServerStopped(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, PlayerInteractEvent.EntityInteract>
-                (handlerIst, PlayerInteractEvent.EntityInteract.class,
-                    (x, y) -> x.onWolfRightClickWithTreat(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, EntityJoinLevelEvent>
-                (handlerIst, EntityJoinLevelEvent.class,
-                    (x, y) -> x.onEntitySpawn(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, PlayerLoggedInEvent>
-                (handlerIst, PlayerLoggedInEvent.class,
-                    (x, y) -> x.playerLoggedIn(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, TagsUpdatedEvent>
-                (handlerIst, TagsUpdatedEvent.class,
-                    (x, y) -> x.onTagsUpdated(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, ProjectileImpactEvent>
-                (handlerIst, ProjectileImpactEvent.class,
-                    (x, y) -> x.onProjectileHit(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, EntityTravelToDimensionEvent>
-                (handlerIst, EntityTravelToDimensionEvent.class,
-                    (x, y) -> x.onEntityChangeDimension(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, LivingHurtEvent>
-                (handlerIst, LivingHurtEvent.class,
-                    (x, y) -> x.onLivingHurt(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, LivingChangeTargetEvent>
-                (handlerIst, LivingChangeTargetEvent.class,
-                    (x, y) -> x.onWolfSetTarget(y)
-                )
-        );
-        // EventCallbacksRegistry.registerCallback(
-        //     new InstanceEventCallBack<EventHandler, LootingLevelEvent>
-        //         (handlerIst, LootingLevelEvent.class,
-        //             (x, y) -> x.onLootDrop(y)
-        //         )
-        // );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<RegisterColorHandlersEvent.Block>(
-                RegisterColorHandlersEvent.Block.class,
-                DoggyBlocks::registerBlockColours
-            )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<RegisterColorHandlersEvent.Item>(
-                RegisterColorHandlersEvent.Item.class,
-                DoggyItems::registerItemColours
-            )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<EntityAttributeCreationEvent>(
-                EntityAttributeCreationEvent.class,
-                DoggyEntityTypes::addEntityAttributes
-            )
-        );
-        // EventCallbacksRegistry.registerCallback(
-        //     new SingleEventCallBack<MobSpawnEvent.FinalizeSpawn>(
-        //         MobSpawnEvent.FinalizeSpawn.class,
-        //         DTNWolfVariantsSpawnOverride::onWolfSpawn
-        //     )
-        // );
-        // EventCallbacksRegistry.registerCallback(
-        //     new SingleEventCallBack<MobSpawnEvent.PositionCheck>(
-        //         MobSpawnEvent.PositionCheck.class,
-        //         DTNWolfVariantsSpawnPlacements::onPositionCheck
-        //     )
-        // );
-        // EventCallbacksRegistry.registerCallback(
-        //     new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
-        //         PlayerInteractEvent.RightClickBlock.class,
-        //         VSCodeWolfSpawnHandler::onRightClickBlock
-        //     )
-        // );
-        EventCallbacksRegistry.registerCallback(
-            new SingleEventCallBack<PlayerInteractEvent.RightClickBlock>(
-                PlayerInteractEvent.RightClickBlock.class,
-                ChopinRecordItem::onRightClickBlock
-            )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, CanContinueSleepingEvent>
-                (handlerIst, CanContinueSleepingEvent.class,
-                    (x, y) -> x.canPlayerContinueSleeping(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, SleepFinishedTimeEvent>
-                (handlerIst, SleepFinishedTimeEvent.class,
-                    (x, y) -> x.beforeAllPlayerWakeUp(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, PlayerWakeUpEvent>
-                (handlerIst, PlayerWakeUpEvent.class,
-                    (x, y) -> x.playerWakeUpEvent(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, PlayerLoggedOutEvent>
-                (handlerIst, PlayerLoggedOutEvent.class,
-                    (x, y) -> x.playerLoggedOut(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, EntityJoinLevelEvent>
-                (handlerIst, EntityJoinLevelEvent.class,
-                    (x, y) -> x.onEntityJoinLevel(y)
-                )
-        );
-        EventCallbacksRegistry.registerCallback(
-            new InstanceEventCallBack<EventHandler, LivingDropsEvent>
-                (handlerIst, LivingDropsEvent.class,
-                    (x, y) -> x.onLivingDeath(y)
-                )
-        );
+        EventBus.COMMON_BUS.register(new EventHandler());
+        DoggyTalentsNextEntry.MOD_BUS.addListener(EntityAttributeCreationEvent.class, 
+            DoggyEntityTypes::addEntityAttributes);
+        EventBus.COMMON_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, 
+            ChopinRecordItem::onRightClickBlock);
     }
 
 }

@@ -57,6 +57,7 @@ import doggytalents.forge_imitate.event.client.ClientPlayerNetworkEvent;
 import doggytalents.forge_imitate.event.client.InputEvent;
 import doggytalents.forge_imitate.event.client.MovementInputUpdateEvent;
 import doggytalents.forge_imitate.event.client.ScreenEvent;
+import doggytalents.forge_imitate.event.util.SubscribeEvent;
 import doggytalents.forge_imitate.network.PacketDistributor;
 
 import java.util.List;
@@ -109,7 +110,7 @@ public class ClientEventHandler {
 
     // }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
         if (!event.getInput().jumping)
             return;
@@ -124,19 +125,19 @@ public class ClientEventHandler {
         dog.setJumpPower(100);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onScreenInit(final ScreenEvent.Init.Post event) {
         DogInventoryButton.onScreenInit(event);
         DoggySpin.onScreenInit(event);
     }
 
     
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onScreenDrawForeground(final ScreenEvent.Render.Post event) {
         DoggySpin.onScreenRenderForeground(event);
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onKeyboardInput(InputEvent.Key event) {
         proccessWhistle(event);
     }
@@ -301,7 +302,7 @@ public class ClientEventHandler {
         Store.get(infoScr).dispatch(TalentChangeHandlerSlice.class, new UIAction(UIActionTypes.Talents.TALENT_UPDATE, null));
     }
 
-    //@SubscribeEvent
+    @SubscribeEvent
     public void onPlayerLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         CanineTrackerLocateRenderer.onWorldLogOut();
     }

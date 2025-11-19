@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import doggytalents.forge_imitate.event.Event;
-import doggytalents.forge_imitate.event.EventCallbacksRegistry;
+import doggytalents.forge_imitate.event.util.EventBus;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,7 +24,7 @@ public class ForgeGuiOverlayManager {
         //already occupied by other bars.  
         //HudRenderCallback.EVENT.register(ForgeGuiOverlayManager::onRenderCallback);
         gui = new ForgeGui(Minecraft.getInstance());
-        EventCallbacksRegistry.postEvent(new RegisterGuiOverlaysEvent());
+        EventBus.COMMON_BUS.post(new RegisterGuiOverlaysEvent());
     }
 
     public static void onRenderCallback(GuiGraphics graphics, float pTicks) {
