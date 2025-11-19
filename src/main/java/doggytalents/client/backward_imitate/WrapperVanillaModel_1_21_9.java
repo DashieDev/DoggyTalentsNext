@@ -22,7 +22,7 @@ public class WrapperVanillaModel_1_21_9 extends Model<WrapperVanillaModel_1_21_9
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer consumer, int light, int overlay,
             int color) {
-        wrapped.renderToBuffer(stack, consumer, light, color, overlay);
+        wrapped.renderToBuffer(stack, consumer, light, overlay, color);
     }
 
     @Override
