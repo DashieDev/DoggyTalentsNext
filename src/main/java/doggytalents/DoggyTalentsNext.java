@@ -22,6 +22,7 @@ import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.event.PackHandler;
@@ -106,6 +107,8 @@ public class DoggyTalentsNext {
         forgeEventBus.addListener(this::registerCommands);
         forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent); 
         forgeEventBus.addListener(ChopinRecordItem::onRightClickBlock);
+        forgeEventBus.addListener(DogAllowedSkinManager::onRegisterReloadListener);
+        forgeEventBus.addListener(DogAllowedSkinManager::onDataPackSyncServer);
 
 
         forgeEventBus.register(new EventHandler());
