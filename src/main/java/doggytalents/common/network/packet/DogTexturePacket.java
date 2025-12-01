@@ -1,6 +1,7 @@
 package doggytalents.common.network.packet;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.entity.texture.DogSkinData;
 import doggytalents.common.entity.texture.DogSkinData.Version;
 import doggytalents.common.network.packet.data.DogTextureData;
@@ -31,7 +32,7 @@ public class DogTexturePacket extends DogPacket<DogTextureData> {
             return;
         }
 
-        if (!DogUtil.vertifySkinData(data.hash))
+        if (!DogAllowedSkinManager.getServer().isSkinValid(data.hash))
             return;
 
         dogIn.setDogSkinData(new DogSkinData(data.hash, Version.VERSION_0));

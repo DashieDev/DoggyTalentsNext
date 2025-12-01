@@ -21,6 +21,7 @@ import doggytalents.common.entity.BoostingFoodHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.MeatFoodHandler;
 import doggytalents.common.entity.WhitelistFoodHandler;
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.entity.DogDrinkMilkHandler;
 import doggytalents.common.event.EventHandler;
 import doggytalents.common.event.PackHandler;
@@ -177,4 +178,11 @@ public class DoggyTalentsNext {
     //         gen.addProvider(true, new DTEntityTagsProvider(packOutput, lookup, event.getExistingFileHelper()));
     //     }
     // }x
+
+
+    //TODO FABRIC
+    /*
+    + forgeEventBus.addListener(DogAllowedSkinManager::onRegisterReloadListener);
+    + forgeEventBus.addListener(DogAllowedSkinManager::onDataPackSyncServer);
+    */
 }

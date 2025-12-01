@@ -5,6 +5,7 @@ import doggytalents.common.fabric_helper.entity.network.FabricPlushieSpawnData;
 import doggytalents.common.fabric_helper.entity.network.FabricPlushieSpawnPacket;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllData;
 import doggytalents.common.fabric_helper.entity.network.FabricSyncAllPacket;
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.network.packet.*;
 import doggytalents.common.network.packet.data.*;
 import doggytalents.common.network.packet.data.ParticleData.*;
@@ -76,6 +77,7 @@ public final class PacketHandler {
         registerPacket(new DogInterruptibleSoundPacket(), DogInterruptibleSoundData.class);
         registerPacket(new DogOnDutyPacket(), DogOnDutyData.class);
         registerPacket(new CarryMePacket(), CarryMeData.class);
+        registerPacket(new DogAllowedSkinManager.Packet(), DogAllowedSkinManager.AllowedSkinEntryCompressed.class);
 
         //Fabric
         registerPacket(new FabricSyncAllPacket(), FabricSyncAllData.class);
