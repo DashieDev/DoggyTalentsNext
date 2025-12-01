@@ -1,5 +1,6 @@
 package doggytalents.common.network;
 
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.network.packet.*;
 import doggytalents.common.network.packet.data.*;
 import doggytalents.common.network.packet.data.ParticleData.*;
@@ -70,6 +71,7 @@ public final class PacketHandler {
         registerPacket(new DogInterruptibleSoundPacket(), DogInterruptibleSoundData.class);
         registerPacket(new DogOnDutyPacket(), DogOnDutyData.class);
         registerPacket(new CarryMePacket(), CarryMeData.class);
+        registerPacket(new DogAllowedSkinManager.Packet(), DogAllowedSkinManager.AllowedSkinEntryCompressed.class);
     }
 
     public static <MSG> void send(PacketDistributor.PacketTarget<?> target, MSG message) {
