@@ -20,8 +20,8 @@ import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.ScrollBar;
 import doggytalents.client.screen.framework.widget.ScrollBar.Direction;
 import doggytalents.common.config.ConfigHandler;
-import doggytalents.common.config.ConfigHandler.DogCustomSkinConfig.DataStrategy;
 import doggytalents.common.entity.Dog;
+import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.util.DogUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
@@ -190,12 +190,13 @@ public class SkinView extends AbstractElement {
     }
 
     private List<DogSkin> filterValidDogSkin(List<DogSkin> locList) {
-        if (ConfigHandler.DogCustomSkinConfig.getStrategy() == DataStrategy.NONE)
+        var allowed_skin_manager = DogAllowedSkinManager.getClient();
+        if (allowed_skin_manager.isNone())
             return locList;
         var filtered = new ArrayList<DogSkin>(locList.size());
         for (var filter : locList) {
             var hash = DogTextureManager.INSTANCE.getHash(filter);
-            if (DogUtil.vertifySkinData(hash))
+            if (allowed_skin_manager.isSkinValid(hash))
                 filtered.add(filter);
         }
         return filtered;

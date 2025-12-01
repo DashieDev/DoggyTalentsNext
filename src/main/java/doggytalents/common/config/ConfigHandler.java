@@ -24,7 +24,6 @@ public class ConfigHandler {
     public static ServerConfig SERVER;
     public static TalentConfig TALENT;
     public static RespawnTagConfig RESPAWN_TAGS;
-    public static DogCustomSkinConfig CUSTOM_SKINS;
     public static DogCustomSkinClientConfig CUSTOM_SKINS_CLIENT;
     private static ForgeConfigSpec CONFIG_SERVER_SPEC;
     private static ForgeConfigSpec CONFIG_CLIENT_SPEC;
@@ -50,7 +49,6 @@ public class ConfigHandler {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_SERVER_SPEC);
 ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC);
         initRespawnTagsConfig();
-        initCustomSkinsConfig();
         initCustomSkinsConfigClient();
         modEventBus.addListener(ConfigHandler::onConfigLoad);
     }
@@ -69,14 +67,6 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
         RESPAWN_TAGS = respawnPair.getLeft();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_RESPAWN_TAG_SPEC, "doggytalents-respawn_tags_to_remove.toml");
-    }
-
-    public static void initCustomSkinsConfig() {
-        var customSkinPair = new ForgeConfigSpec.Builder().configure(DogCustomSkinConfig::new);
-        CONFIG_CUSTOM_SKINS_SPEC = customSkinPair.getRight();
-        CUSTOM_SKINS = customSkinPair.getLeft();
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_CUSTOM_SKINS_SPEC, "doggytalents-dog_custom_skins.toml");
     }
 
     public static void initCustomSkinsConfigClient() {
@@ -793,88 +783,6 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
     }
 
-    public static class DogCustomSkinConfig {
-
-        public ForgeConfigSpec.IntValue STRATEGY;
-        public ConfigValue<List<? extends String>> WHITELISTED_SHA1;
-        public ConfigValue<List<? extends String>> BLACKLISTED_SHA1;
-
-        private Set<String> whitelistedSet = Set.of();
-        private Set<String> blacklistedSet = Set.of(); 
-
-        public DogCustomSkinConfig(ForgeConfigSpec.Builder builder) {
-            builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
-            builder.comment("could be set for a Dog. The texture's Hash Value is required to be");
-            builder.comment("the entry for these lists, they can be obtained via the Show Info");
-            builder.comment("page of Style > Skins at the Dog GUI.");
-            builder.comment("0: Allow all");
-            builder.comment("1: Allow all except blacklisted");
-            builder.comment("2: Disallow all except whitelisted");
-            builder.comment("Other: Defaulted to 0");
-
-            STRATEGY = builder.defineInRange("strategy", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-            
-            WHITELISTED_SHA1 = builder
-                .translation("doggytalents.whitelisted_sha1")    
-                .<String>defineList("whitelisted_sha1", List.of(), 
-                    obj -> {
-                        return obj instanceof String;
-                    }
-                );
-            BLACKLISTED_SHA1 = builder
-            .translation("doggytalents.blacklisted_sha1")    
-            .<String>defineList("blacklisted_sha1", List.of(), 
-                obj -> {
-                    return obj instanceof String;
-                }
-            );
-        }
-
-        public static<T> T getConfig(ConfigValue<T> config) {
-            if (CONFIG_CUSTOM_SKINS_SPEC.isLoaded()) {
-                    return config.get();
-            }
-            return config.getDefault();
-        }
-
-        public boolean isBlacklisted(String val) {
-            return this.blacklistedSet.contains(val);
-        }
-
-        public boolean isWhitelisted(String val) {
-            return this.whitelistedSet.contains(val);
-        }
-
-        public void reloadSets() {
-            var blacklist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.BLACKLISTED_SHA1);
-            var whitelist = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.WHITELISTED_SHA1);
-            this.blacklistedSet = new HashSet<>(blacklist);
-            this.whitelistedSet = new HashSet<>(whitelist);
-        }
-
-        public static DogCustomSkinConfig getInstance() {
-            return CUSTOM_SKINS;
-        }
-
-        public static DataStrategy getStrategy() {
-            if (CUSTOM_SKINS == null)
-                return DataStrategy.NONE;
-            if (CUSTOM_SKINS.STRATEGY == null)
-                return DataStrategy.NONE;
-            var id = DogCustomSkinConfig.getConfig(CUSTOM_SKINS.STRATEGY);
-            if (id == 1)
-                return DataStrategy.ALLOW_EXCEPT;
-            else if (id == 2)
-                return DataStrategy.DISALLOW_EXCEPT;
-            return DataStrategy.NONE;
-        }
-
-        public enum DataStrategy {
-            ALLOW_EXCEPT, DISALLOW_EXCEPT, NONE
-        }
-
-    }
-
     public static class DogCustomSkinClientConfig {
 
         public ForgeConfigSpec.IntValue STRATEGY;
@@ -960,10 +868,7 @@ ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CONFIG_CLIENT_SPEC
 
     public static void onConfigLoad(ModConfigEvent.Loading event) {
         var loaded_config = event.getConfig();
-        if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_SPEC) {
-            if (CUSTOM_SKINS != null)
-                CUSTOM_SKINS.reloadSets();
-        } else if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_CLIENT_SPEC) {
+        if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_CLIENT_SPEC) {
             if (CUSTOM_SKINS_CLIENT != null)
                 CUSTOM_SKINS_CLIENT.reloadSets();
         }
