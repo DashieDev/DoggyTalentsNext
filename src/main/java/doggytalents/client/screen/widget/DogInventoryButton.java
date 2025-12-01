@@ -134,17 +134,16 @@ public class DogInventoryButton extends AbstractButton {
     @Override
     public void onPress() {
         var mc = Minecraft.getInstance();
-        if (mc.screen instanceof AbstractContainerScreen container) {
-            var menu = container.getMenu();
-            if (menu != null)
-                menu.setCarried(ItemStack.EMPTY);
-        }
         if (openSingle && openSingleDog.isPresent()) {
             var dog = openSingleDog.get();
             PacketHandler.send(PacketDistributor.SERVER.noArg(), 
                 new OpenDogScreenData(ScreenType.INVENTORY_SINGLE, dog.getId()));
         } else {
-            PacketHandler.send(PacketDistributor.SERVER.noArg(), new OpenDogScreenData());
+            boolean do_close_container = 
+                mc.screen instanceof AbstractContainerScreen container
+                && container.getMenu() == mc.player.inventoryMenu;
+            PacketHandler.send(PacketDistributor.SERVER.noArg(), 
+                OpenDogScreenData.dogInventory(do_close_container));
         }
         
         this.active = false;
