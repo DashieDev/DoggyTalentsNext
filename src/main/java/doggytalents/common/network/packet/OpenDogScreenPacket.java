@@ -23,7 +23,13 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
         var type = OpenDogScreenData.ScreenType
             .byId(buf.readInt());
         var dogId = buf.readInt();
-        return new OpenDogScreenData(type, dogId);
+        
+        if (type.mayRequireClosingContiner()) {
+            boolean mayCloseContainer = buf.readBoolean();
+            return new OpenDogScreenData(type, dogId, mayCloseContainer);
+        } else {
+            return new OpenDogScreenData(type, dogId);
+        }
     }
 
 
@@ -31,6 +37,9 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
     public void encode(OpenDogScreenData data, FriendlyByteBuf buf) {
         buf.writeInt(data.type.getId());
         buf.writeInt(data.dogId);
+        if (data.type.mayRequireClosingContiner()) {
+            buf.writeBoolean(data.closeContainer);
+        }
     }
 
     @Override
@@ -78,7 +87,7 @@ public class OpenDogScreenPacket implements IPacket<OpenDogScreenData>  {
                 dogs = dogs.subList(0, PackPuppyTalent.MAX_DOG_INV_VIEW);
             }
             if (!dogs.isEmpty()) {
-                Screens.openDogInventoriesScreen(player, dogs);
+                Screens.openDogInventoriesScreen(player, dogs, data.closeContainer);
             }
             break;
         }
