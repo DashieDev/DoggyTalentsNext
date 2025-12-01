@@ -21,22 +21,28 @@ public class OpenDogScreenData {
         public static ScreenType byId(int id) {
             return ScreenType.values()[id];
         }
+
+        public boolean mayRequireClosingContiner() {
+            return this == INVENTORY;
+        }
     }
 
     public ScreenType type = ScreenType.INVENTORY; 
     public int dogId = -1;
-
-    public OpenDogScreenData() {
-        super();
-        type = ScreenType.INVENTORY;
-        dogId = -1;
-    }
-
+    public boolean closeContainer = false;
+    
     public OpenDogScreenData(ScreenType type, int id) {
         this.type = type;
         this.dogId = id;
     }
 
+    public OpenDogScreenData(ScreenType type, int id, boolean doCloseContainer) {
+        this.type = type;
+        this.dogId = id;
+        this.closeContainer = doCloseContainer;
+    }
 
-
+    public static OpenDogScreenData dogInventory(boolean doCloseContainer) {
+        return new OpenDogScreenData(ScreenType.INVENTORY, -1, doCloseContainer);
+    }
 }

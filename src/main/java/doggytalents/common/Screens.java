@@ -60,6 +60,11 @@ public class Screens {
         public Component getDisplayName() {
             return Component.translatable("container.doggytalents.dog_inventories");
         }
+
+        @Override
+        public boolean shouldTriggerClientSideContainerClosingOnOpen() {
+            return false;
+        }
     }
 
     public static class TreatBagContainerProvider implements MenuProvider {
@@ -131,8 +136,10 @@ public class Screens {
         }
     }
 
-    public static void openDogInventoriesScreen(ServerPlayer player, List<Dog> dogIn) {
+    public static void openDogInventoriesScreen(ServerPlayer player, List<Dog> dogIn, boolean doCloseContainer) {
         if (!dogIn.isEmpty()) {
+            if (doCloseContainer)
+                player.doCloseContainer();
             player.openMenu(new DogInventoriesContainerProvider(dogIn), (buf) -> {
                 buf.writeInt(dogIn.size());
                 for (Dog dog : dogIn) {
