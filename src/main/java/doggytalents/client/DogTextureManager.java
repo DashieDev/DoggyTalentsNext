@@ -68,7 +68,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
 
     private static enum RegisterState { SUCCESS, DUPLICATE, FAIL }
 
-    private synchronized RegisterState registerDogSkin(DogTextureManager.DogSkinLoadResult prep, Resource resource, DogSkin dogSkin) {        
+    private RegisterState registerDogSkin(DogTextureManager.DogSkinLoadResult prep, Resource resource, DogSkin dogSkin) {        
         var state = RegisterState.FAIL;
 
         InputStream inputstream = null;
@@ -101,7 +101,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return prep;
     }
 
-    public synchronized boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.DogSkinLoadResult prep) {
+    public boolean getSkinFromSkinJsonAllPack(ResourceManager resMan, DogTextureManager.DogSkinLoadResult prep) {
         final var SKIN_JSON_RES = Util.getResource("textures/entity/dog/skin.json");
         var jsonSkinPacks = resMan.listPacks()
             .collect(Collectors.toList());
