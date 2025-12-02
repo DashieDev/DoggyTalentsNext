@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
@@ -28,12 +29,7 @@ public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRan
         return INSTANCE;
     }
 
-    private final List<String> nameList = new ArrayList<>();
-
-    public void populateNameList(List<String> name) {
-        this.nameList.clear();
-        this.nameList.addAll(name);
-    }
+    private List<String> nameList = List.of();
 
     public String getRandomName(Dog dog) {
         if (nameList.isEmpty())
@@ -42,12 +38,7 @@ public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRan
         return nameList.get(r);
     }
 
-    public static class Prep {
-        public List<String> names;
-        public Prep(List<String> x) {
-            this.names = x;
-        }
-    }
+    public static record Prep(List<String> names) {}
 
     @Override
     protected Prep prepare(ResourceManager resMan, ProfilerFiller p_10797_) {
@@ -72,7 +63,7 @@ public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRan
 
     @Override
     protected void apply(Prep prep, ResourceManager p_10794_, ProfilerFiller p_10795_) {
-        this.populateNameList(prep.names);
+        this.nameList = List.copyOf(Set.copyOf(prep.names));
     }
         
 }
