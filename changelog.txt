@@ -2093,7 +2093,7 @@ the Soul Sand.
 **1.18.60 - 28th June 2025**
 * Fixed some Dog Pathfinding Bugs.
 
-**1.18.61 - 14th Oct 2025**
+**1.18.61 - 14th October 2025**
 # Anim debug nametag now only show when player is holding dog anim debug stick.
 # Allow blacklisting blocks for dog bridging.
 * Properly fix dog still pushing owner by default. Dog should now actually don't push the owner
@@ -2108,13 +2108,12 @@ if not fit or adapt the entity's pose.
 * Fix NPE when Dog places Dog Beds
 * Fix non swimmer dog drowning while swimming as they don't float enough
 
-**1.18.62 - 16th Oct 2025**
+**1.18.62 - 16th October 2025**
 # Config to restrict Mob Retriever to carrying only leashable mobs.
 * (Forge 1.20 Only) fix deofuscated release build.
 
-**1.18.63 - 17th Oct 2025**
+**1.18.63 - 17th October 2025**
 * HOTFIX: Fix Glowing eye detaching.
-
 
 **1.18.64 - 3rd December 2025**
 =======
