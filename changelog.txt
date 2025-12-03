@@ -2114,3 +2114,34 @@ if not fit or adapt the entity's pose.
 
 **1.18.63 - 17th Oct 2025**
 * HOTFIX: Fix Glowing eye detaching.
+
+
+**1.18.64 - 3rd December 2025**
+=======
+Properly implement a datapack based Serverside DogSkin BlackList/WhiteList config system.
++ To configure, first create a datapack for the target MC version (or use an existing one).
++ Then create this file (in the exact directory relative to the datapack root directory): 
+data/doggytalents/doggytalents/allowed_skin/allowed_skin.json
++ In the file, specify the json in this format 
+```json
+{
+  "strategy": "<*1>",
+  "skins_hashes": [
+    "<hash_1>",
+    "<hash_2>",
+    ...
+    "<hash_n>"
+  ]
+}
+```
+*1: either allow_except (allow all skin except the specified skins) 
+or disallow_except (disallow all skin except the specified skins). 
+
+hash_1, hash_2,...hash_n: The skins you want to blacklist/whitelist. 
+The skin's texture's Hash Value is required to be the entry for this list,
+they can be obtained via the Show Info page of Style > Skins at the Dog GUI.
+=======
+# Ensure no duplications in Random Name List.
+* Fix wierd dog inventory behaviour when user clicks on the dog inventory button 
+located in their inventory while carrying a stack in their cursor, resulting in the
+stack temporarily vanishing clientside.
