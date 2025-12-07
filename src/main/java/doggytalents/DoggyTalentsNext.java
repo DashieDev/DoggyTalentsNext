@@ -103,8 +103,6 @@ public class DoggyTalentsNext {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.addListener(this::serverStarting);
         forgeEventBus.addListener(this::registerCommands);
-        forgeEventBus.addListener(DoggyBrewingRecipes::onRegisterEvent); 
-        forgeEventBus.addListener(ChopinRecordItem::onRightClickBlock);
         forgeEventBus.addListener(DogAllowedSkinManager::onRegisterReloadListener);
         forgeEventBus.addListener(DogAllowedSkinManager::onDataPackSyncServer);
 

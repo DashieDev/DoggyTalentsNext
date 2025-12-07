@@ -22,10 +22,9 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.common.forward_imitate.NeoEventUtil_1_20_under;
 import doggytalents.common.lib.Constants;
-import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.IPacket;
-import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.util.Util;
 import net.minecraft.network.FriendlyByteBuf;
@@ -35,8 +34,10 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
 
 public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
 
@@ -128,7 +129,7 @@ public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
     }
 
     public static void onDataPackSyncServer(OnDatapackSyncEvent event) {
-        var to_sync = event.getRelevantPlayers();
+        var to_sync = NeoEventUtil_1_20_under.getRelevantPlayers(event);
         getServer().broadcastToAll(to_sync);
     }
 

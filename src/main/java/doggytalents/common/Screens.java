@@ -61,10 +61,10 @@ public class Screens {
             return Component.translatable("container.doggytalents.dog_inventories");
         }
 
-        @Override
-        public boolean shouldTriggerClientSideContainerClosingOnOpen() {
-            return false;
-        }
+        // @Override
+        // public boolean shouldTriggerClientSideContainerClosingOnOpen() {
+        //     return false;
+        // }
     }
 
     public static class TreatBagContainerProvider implements MenuProvider {
