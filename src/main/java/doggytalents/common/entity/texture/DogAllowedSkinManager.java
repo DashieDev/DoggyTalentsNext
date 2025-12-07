@@ -22,6 +22,7 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.common.backward_imitate.SimpleJsonResourceReloadListener_1_21_9;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
 import doggytalents.common.network.IPacket;
@@ -32,13 +33,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
-public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
+public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener_1_21_9 {
 
     // In charge of loading the allowed skin config at
     // data/doggytalents/doggytalents/allowed_skin/allowed_skin.json
@@ -123,8 +123,8 @@ public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
         });
     }
 
-    public static void onRegisterReloadListener(AddReloadListenerEvent event) {
-        event.addListener(getServer());
+    public static void onRegisterReloadListener(AddServerReloadListenersEvent event) {
+        event.addListener(Util.getResource("dogallowedskin"), getServer());
     }
 
     public static void onDataPackSyncServer(OnDatapackSyncEvent event) {
