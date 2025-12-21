@@ -101,8 +101,18 @@ public class SnifferDogTalent extends TalentInstance {
                 var r = dog.getRandom();
                 int offSmall = 2;
                 int offLarge = start + 2;
+                
+                /*
+                    Ideally we want r2 outcomes to not include zero since 
+                    it creates a bias towards the cross around the dog, 
+                    in other words, the set of position within the check radius 
+                    that is not diagonal to the dog (xpos == xdog || zpos == zdog)
+                    Although, this might be a good behaviour since blocks along that axis
+                    are the eaiest to follow.
+                */
                 int r1 = r.nextIntBetweenInclusive(-offLarge, offLarge);
                 int r2 = r.nextIntBetweenInclusive(-offSmall, offSmall);
+
                 r2 += Mth.sign(r2)*start;
                 int randXOff = r1;
                 int randZOff = r2;
