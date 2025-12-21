@@ -78,7 +78,7 @@ repositories {
 
 dependencies {
 
-    implementation "net.neoforged:neoforge:21.10.50-beta"
+    implementation "net.neoforged:neoforge:21.11.12-beta"
     
 }
 
@@ -105,7 +105,7 @@ publishMods {
     type = STABLE
     displayName = file.map { it.asFile.name }
     modLoaders.add("neoforge")
-    final def dtnMcVersions = ["1.21.10"]
+    final def dtnMcVersions = ["1.21.11"]
 
     curseforge {
         accessToken = providers.gradleProperty("DTN_CURSEFORGE_TOKEN")
