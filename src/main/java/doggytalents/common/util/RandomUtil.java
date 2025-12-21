@@ -8,4 +8,9 @@ public class RandomUtil {
         return random.nextFloat() * 2 - 1;
     }
 
+    public static int randomOffsetNonZero(RandomSource random, int radius) {
+        int ret = random.nextInt(radius * 2) - radius;
+        return ret >= 0 ? ret + 1 : ret;
+    }
+
 }
