@@ -217,18 +217,9 @@ public class OokamiKazeTalent extends TalentInstance {
             this.dog.setForcedActionAnim(false);
             dog.dogSoundManager.setAmbientLocked(false);
             dog.dogSoundManager.interuptPlaying();
-            if (phase == ActionPhase.EXPLODE) {
-                if (dog.getAnim() == DogAnimation.HOWL) {
-                    dog.setAnim(DogAnimation.NONE);
-                }
-                return;
-            }
-
-            if (dog.getAnim() == DogAnimation.BACKFLIP) {
+            if (!dog.getAnim().interupting())
                 dog.setAnim(DogAnimation.NONE);
-            }
             return;
-            
         }
 
         private void beginCatchAnim() {
