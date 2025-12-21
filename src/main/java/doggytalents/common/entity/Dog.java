@@ -99,7 +99,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.SynchedEntityData.DataItem;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
@@ -252,7 +252,7 @@ public class Dog extends AbstractDog {
     private ArrayList<AccessoryInstance> clientAccessories
         = new ArrayList<AccessoryInstance>();
 
-    private ResourceLocation missingDogVariant = null;
+    private Identifier missingDogVariant = null;
         
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogDataSyncManager dogSyncedDataManager
@@ -2893,7 +2893,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
-                NBTUtil_1_21_7.putResourceLocation(bedNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putIdentifier(bedNBT, "dim", entry.getKey().location());
                 NBTUtil_1_21_7.putBlockPos(bedNBT, "pos", entry.getValue());
                 bedsList.add(bedNBT);
             }
@@ -2908,7 +2908,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
-                NBTUtil_1_21_7.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putIdentifier(bowlsNBT, "dim", entry.getKey().location());
                 NBTUtil_1_21_7.putBlockPos(bowlsNBT, "pos", entry.getValue());
                 bowlsList.add(bowlsNBT);
             }
@@ -3091,7 +3091,7 @@ public class Dog extends AbstractDog {
 
                 for (int i = 0; i < bedsList.size(); i++) {
                     CompoundTag_1_21_5 bedNBT = bedsList.getCompound(i);
-                    ResourceLocation loc = NBTUtil.getResourceLocation(bedNBT, "dim");
+                    Identifier loc = NBTUtil.getIdentifier(bedNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
                     if (pos.isPresent())
@@ -3113,7 +3113,7 @@ public class Dog extends AbstractDog {
 
                 for (int i = 0; i < bowlsList.size(); i++) {
                     CompoundTag_1_21_5 bowlsNBT = bowlsList.getCompound(i);
-                    ResourceLocation loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
+                    Identifier loc = NBTUtil.getIdentifier(bowlsNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
                     if (pos.isPresent())

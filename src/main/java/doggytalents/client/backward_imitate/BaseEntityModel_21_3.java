@@ -8,7 +8,7 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 
 public abstract class BaseEntityModel_21_3<T extends Entity> extends BaseModel_21_3 {

@@ -15,13 +15,13 @@ import com.google.gson.JsonElement;
 
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
 public class DogRandomNameRegistry extends SimplePreparableReloadListener<DogRandomNameRegistry.Prep>  {
-    private static ResourceLocation NAME_RES = Util.getResource("dogname/name.json");
+    private static Identifier NAME_RES = Util.getResource("dogname/name.json");
     private static DogRandomNameRegistry INSTANCE = new DogRandomNameRegistry();
     private static final Gson GSON = new Gson();
 

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class SamoyedPlushieRenderer extends EntityRenderer_1_21_9<SamoyedPlushie> {
@@ -26,7 +26,7 @@ public class SamoyedPlushieRenderer extends EntityRenderer_1_21_9<SamoyedPlushie
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SamoyedPlushie plushie) {
+    public Identifier getTextureLocation(SamoyedPlushie plushie) {
         return Resources.SAMOYED_PLUSHIE_TOY;
     }
 

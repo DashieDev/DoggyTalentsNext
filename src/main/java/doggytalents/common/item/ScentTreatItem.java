@@ -76,7 +76,7 @@ public class ScentTreatItem extends Item implements HoverTextAppender_1_21_5 {
 
         var block = state.getBlock();
         var id = BuiltInRegistries.BLOCK.getKey(block);
-        NBTUtil_1_21_7.putResourceLocation(tag, SCENT_BLOCK_ID, id);
+        NBTUtil_1_21_7.putIdentifier(tag, SCENT_BLOCK_ID, id);
 
         ItemUtil.putTag(stack, CompoundTag_1_21_5.wrap(tag));
 

@@ -12,7 +12,7 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
@@ -20,7 +20,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.slf4j.Logger;
 
-public abstract class SimpleJsonResourceReloadListener_1_21_9 extends SimplePreparableReloadListener<Map<ResourceLocation, JsonElement>> {
+public abstract class SimpleJsonResourceReloadListener_1_21_9 extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
    private final Gson gson;
    private final String directory;
 
@@ -29,13 +29,13 @@ public abstract class SimpleJsonResourceReloadListener_1_21_9 extends SimplePrep
       this.directory = dir;
    }
 
-   protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-      var jsons = new HashMap<ResourceLocation, JsonElement>();
+   protected Map<Identifier, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+      var jsons = new HashMap<Identifier, JsonElement>();
       scanDirectory(resourceManager, this.directory, this.gson, jsons);
       return jsons;
    }
 
-   public static void scanDirectory(ResourceManager resourceManager, String directory, Gson gson, Map<ResourceLocation, JsonElement> outputJsons) {
+   public static void scanDirectory(ResourceManager resourceManager, String directory, Gson gson, Map<Identifier, JsonElement> outputJsons) {
       var file_to_id = FileToIdConverter.json(directory);
 
       for(var entry : file_to_id.listMatchingResources(resourceManager).entrySet()) {

@@ -797,7 +797,7 @@ ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIEN
         public DogCustomSkinClientConfig(ModConfigSpec.Builder builder) {
             builder.comment("Specify the Strategy to be used when picking which Dog Custom Skin");
             builder.comment("will not be loaded clientside. The entry for these lists is");
-            builder.comment("required to be the texture's path in ResourceLocation format");
+            builder.comment("required to be the texture's path in Identifier format");
             builder.comment("(e.g. doggytalents:textures/entity/dog/custom/arcanine_shiro.png).");
             builder.comment("Your client do need to be restarted for any changes to take places.");
             builder.comment("0: Allow all");

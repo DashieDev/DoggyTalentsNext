@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +49,7 @@ public abstract class EntityRenderer_1_21_9<T extends Entity> extends EntityRend
         render_state.entity = entity;
     }
     
-    public abstract ResourceLocation getTextureLocation(T entity);
+    public abstract Identifier getTextureLocation(T entity);
     
     protected void submitModel(SubmitNodeCollector collector_1_21_9, 
         BaseEntityModel_21_3<?> model, WrappedEntityRenderState_21_3<?> renderState, RenderType renderType, 

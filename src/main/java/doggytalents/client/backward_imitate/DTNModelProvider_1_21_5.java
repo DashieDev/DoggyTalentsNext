@@ -28,7 +28,7 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -207,7 +207,7 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         blockModels.createTrivialBlock(DoggyBlocks.DOG_BATH.get(), template_provider);
     }
 
-    private ResourceLocation dogBathWaterTexture() {
+    private Identifier dogBathWaterTexture() {
         return blockTextureWithExtent(Blocks.WATER, "_still");
     }
 
@@ -280,17 +280,17 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         blockModels.createTrivialBlock(block, template_provider);
     }
     
-    private ResourceLocation blockTextureWithExtent(Block block, String extend) {
+    private Identifier blockTextureWithExtent(Block block, String extend) {
         return blockTextureWithModifyPath(block, x -> x + extend);
     }
 
-    private ResourceLocation blockTextureWithModifyPath(Block block, 
+    private Identifier blockTextureWithModifyPath(Block block, 
         Function<String, String> path_modifier) {
         var block_texture = TextureMapping.getBlockTexture(block);
         return Util.modifyPath(block_texture, path_modifier);
     }
 
-    private ResourceLocation vanillaBlockModelParent() {
+    private Identifier vanillaBlockModelParent() {
         return ModelLocationUtils.decorateBlockModelLocation(mcLocation("block").toString());
     }
 
@@ -328,7 +328,7 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
         generated2(itemModels, item, layer0_rl, layer1_rl);
     }
 
-    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier, ResourceLocation layer0, ResourceLocation layer1) {
+    public static void generated2(ItemModelGenerators itemModels, Supplier<? extends Item> item_supplier, Identifier layer0, Identifier layer1) {
         var item = item_supplier.get();
         if (item instanceof DoubleDyableAccessoryItem dyeable) {
             generateDoubleDyeable(itemModels, item, dyeable, layer0, layer1);
@@ -355,7 +355,7 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
     }
 
     public static void generateSingleDyeable(ItemModelGenerators itemModels, Item item, 
-        IDyeableArmorItem dyable, int dye_layer, ResourceLocation layer0, ResourceLocation layer1) {
+        IDyeableArmorItem dyable, int dye_layer, Identifier layer0, Identifier layer1) {
         
         var model = itemModels.generateLayeredItem(item, layer0, layer1);
         var dye_tint = new Dye(dyable.getDefaultColor(ItemStack.EMPTY));
@@ -367,7 +367,7 @@ public class DTNModelProvider_1_21_5 extends ModelProvider {
     }
 
     public static void generateDoubleDyeable(ItemModelGenerators itemModels, Item item, 
-        DoubleDyableAccessoryItem dyable, ResourceLocation layer0, ResourceLocation layer1) {
+        DoubleDyableAccessoryItem dyable, Identifier layer0, Identifier layer1) {
 
         var model = itemModels.generateLayeredItem(item, layer0, layer1);
         var model_tinted = ItemModelUtils.tintedModel(

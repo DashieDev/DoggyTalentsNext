@@ -27,7 +27,7 @@ import net.minecraft.client.resources.model.SpriteGetter;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -50,7 +50,7 @@ import java.util.function.Function;
 public class DogBedModel implements BlockStateModel {
 
     public static DogBedItemOverride ITEM_OVERIDE = new DogBedItemOverride();
-    private static final ResourceLocation MISSING_TEXTURE = Util.getVanillaResource("missingno");
+    private static final Identifier MISSING_TEXTURE = Util.getVanillaResource("missingno");
 
     private final ModelBakery modelLoader;
     private final BlockModel unbakedModel;
@@ -174,7 +174,7 @@ public class DogBedModel implements BlockStateModel {
         // var baker = (new ModelBaker() {
 
         //     @Override
-        //     public @Nullable BakedModel bake(ResourceLocation location, ModelState state,
+        //     public @Nullable BakedModel bake(Identifier location, ModelState state,
         //             Function<Material, TextureAtlasSprite> sprites) {
         //         return to_bake.bake(Material::sprite, 
         //             getModelRotation(dir),
@@ -188,18 +188,18 @@ public class DogBedModel implements BlockStateModel {
         //     }
 
         //     // @Override
-        //     // public UnbakedModel getModel(ResourceLocation p_252194_) {
+        //     // public UnbakedModel getModel(Identifier p_252194_) {
         //     //     return to_bake;
         //     // }
 
         //     @Override
         //     @javax.annotation.Nullable
-        //     public BakedModel bake(ResourceLocation p_250776_, ModelState p_251280_) {
+        //     public BakedModel bake(Identifier p_250776_, ModelState p_251280_) {
         //         return this.bake(p_250776_, p_251280_, getModelTextureGetter());
         //     }
 
         //     @Override
-        //     public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelResourceLocation location) {
+        //     public @org.jetbrains.annotations.Nullable UnbakedModel getTopLevelModel(ModelIdentifier location) {
         //         // TODO Auto-generated method stub
         //         return null;
         //     }
@@ -232,7 +232,7 @@ public class DogBedModel implements BlockStateModel {
         return findTexture(resource != null ? resource.getTexture() : null);
     }
 
-    private static Either<Material, String> findTexture(ResourceLocation resource) {
+    private static Either<Material, String> findTexture(Identifier resource) {
         if (resource == null) {
             resource = MISSING_TEXTURE;
         }
@@ -380,7 +380,7 @@ public class DogBedModel implements BlockStateModel {
         return new ModelBaker() {
 
             @Override
-            public ResolvedModel getModel(ResourceLocation p_405736_) {
+            public ResolvedModel getModel(Identifier p_405736_) {
                 return resolved_model;
             }
 

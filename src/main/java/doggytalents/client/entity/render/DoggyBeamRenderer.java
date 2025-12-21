@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -56,7 +56,7 @@ public class DoggyBeamRenderer<T extends Entity> extends EntityRenderer_1_21_9<T
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Entity entity) {
+    public Identifier getTextureLocation(Entity entity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

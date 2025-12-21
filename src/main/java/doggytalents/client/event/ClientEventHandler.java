@@ -45,7 +45,7 @@ import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -67,9 +67,9 @@ public class ClientEventHandler {
     // public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
 
     //     try {
-    //         ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-    //         ResourceLocation unbakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-    //         event.register(ModelResourceLocation.standalone(unbakedModelLoc));
+    //         Identifier Identifier = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
+    //         Identifier unbakedModelLoc = Util.getResource(Identifier.getNamespace(), "block/" + Identifier.getPath());
+    //         event.register(ModelIdentifier.standalone(unbakedModelLoc));
     //     }
     //     catch(Exception e) {
     //         DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
@@ -81,12 +81,12 @@ public class ClientEventHandler {
         try {
             // var modelRegistry = event.getModels();
 
-            // ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-            // ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+            // Identifier Identifier = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
+            // Identifier bakedModelLoc = Util.getResource(Identifier.getNamespace(), "block/" + Identifier.getPath());
 
-            // var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
+            // var model = modelRegistry.get(ModelIdentifier.standalone(bakedModelLoc));
 
-            // var modelUnbaked = (BlockModel) event.getModelBakery().topModels.get(ModelResourceLocation.standalone(bakedModelLoc));
+            // var modelUnbaked = (BlockModel) event.getModelBakery().topModels.get(ModelIdentifier.standalone(bakedModelLoc));
 
             // BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
 
@@ -96,7 +96,7 @@ public class ClientEventHandler {
             // });
 
             // // Replace inventory model
-            // modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
+            // modelRegistry.put(new ModelIdentifier(Identifier, "inventory"), customModel);
             DogBedModifyingBakingResult_1_21_5.modifyBakedModels(event);   
         }
         catch(Exception e) {
@@ -228,18 +228,18 @@ public class ClientEventHandler {
         }
     }
 
-    public static boolean vertifyBlockTexture(ResourceLocation loc) {
+    public static boolean vertifyBlockTexture(Identifier loc) {
         var path = getAbsoluteBlockTexture(loc);
         var res = Minecraft.getInstance().getResourceManager()
             .getResource(path);
         return res.isPresent();
     }
 
-    public static ResourceLocation getAbsoluteBlockTexture(ResourceLocation loc) {
+    public static Identifier getAbsoluteBlockTexture(Identifier loc) {
         return Util.getResource(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
     }
 
-    public static boolean vertifyArmorTexture(ResourceLocation loc) {
+    public static boolean vertifyArmorTexture(Identifier loc) {
         var res = Minecraft.getInstance().getResourceManager()
             .getResource(loc);
         return res.isPresent();

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -106,15 +106,15 @@ public class Accessory {
         return (T) this;
     } 
 
-    private ResourceLocation modelTexture;
+    private Identifier modelTexture;
 
-    public <T extends Accessory> T setModelTexture(ResourceLocation modelTextureIn) {
+    public <T extends Accessory> T setModelTexture(Identifier modelTextureIn) {
         this.modelTexture = modelTextureIn;
         return (T) this;
     }
 
     @Nullable
-    public ResourceLocation getModelTexture() {
+    public Identifier getModelTexture() {
         return this.modelTexture;
     }
 

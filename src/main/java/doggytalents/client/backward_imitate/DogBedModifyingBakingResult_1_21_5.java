@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.item.ModelRenderProperties;
 import net.minecraft.client.resources.model.ResolvedModel;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.event.ModelEvent;
 
@@ -37,7 +37,7 @@ public class DogBedModifyingBakingResult_1_21_5 {
             new DogBedItemModel_1_21_5(dog_bed_model, render_props));
     }
 
-    private static ResourceLocation getBlockModelLocation(Block block) {
+    private static Identifier getBlockModelLocation(Block block) {
         var block_id = BuiltInRegistries.BLOCK.getKey(block);
         return Util.modifyPath(block_id, x -> "block/" + x);
     }

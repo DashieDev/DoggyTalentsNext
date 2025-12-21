@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -65,16 +65,16 @@ public class NBTUtil {
         compound.remove(key + "Least");
     }
 
-    public static void putResourceLocation(CompoundTag_1_21_7 compound, String key, @Nullable ResourceLocation rl) {
+    public static void putIdentifier(CompoundTag_1_21_7 compound, String key, @Nullable Identifier rl) {
         if (rl != null) {
             compound.putString(key, rl.toString());
         }
     }
 
     @Nullable
-    public static ResourceLocation getResourceLocation(CompoundTag_1_21_5 compound, String key) {
+    public static Identifier getIdentifier(CompoundTag_1_21_5 compound, String key) {
         if (compound.contains(key, Tag.TAG_STRING)) {
-            return ResourceLocation.tryParse(compound.getString(key));
+            return Identifier.tryParse(compound.getString(key));
         }
 
         return null;
@@ -147,7 +147,7 @@ public class NBTUtil {
 
     @Nullable
     public static <T> T getRegistryValue(CompoundTag_1_21_5 compound, String key, Registry<T> registry) {
-        ResourceLocation rl = NBTUtil.getResourceLocation(compound, key);
+        Identifier rl = NBTUtil.getIdentifier(compound, key);
         if (rl != null) {
             if (registry.containsKey(rl)) {
                 return registry.getValue(rl);
@@ -161,9 +161,9 @@ public class NBTUtil {
         return null;
     }
 
-    public static void putRegistryValue(CompoundTag_1_21_7 compound, String key, ResourceLocation value) {
+    public static void putRegistryValue(CompoundTag_1_21_7 compound, String key, Identifier value) {
         if (value != null) {
-            NBTUtil.putResourceLocation(compound, key, value);
+            NBTUtil.putIdentifier(compound, key, value);
         }
     }
 

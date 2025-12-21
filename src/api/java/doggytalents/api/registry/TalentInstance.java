@@ -13,7 +13,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TalentInstance implements IDogAlteration {
 
@@ -128,7 +128,7 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
-        ResourceLocation rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
+        Identifier rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
         if (rl != null) {
             compound.putString("type", rl.toString());
         }
@@ -137,7 +137,7 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public static Optional<TalentInstance> readInstance(AbstractDog dogIn, CompoundTag_1_21_5 compound) {
-        ResourceLocation rl = ResourceLocation.tryParse(compound.getString("type"));
+        Identifier rl = Identifier.tryParse(compound.getString("type"));
         if (DoggyTalentsAPI.TALENTS.get().containsKey(rl)) {
             TalentInstance inst = DoggyTalentsAPI.TALENTS.get().getValue(rl).getDefault();
             inst.doReadFromNBT(dogIn, compound);

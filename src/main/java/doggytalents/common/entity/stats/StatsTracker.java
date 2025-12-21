@@ -186,7 +186,7 @@ public class StatsTracker {
         for (var entry : this.ENTITY_KILLS.entrySet()) {
             var typeId = BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey());
             var killCount = entry.getValue();
-            buf.writeResourceLocation(typeId);
+            buf.writeIdentifier(typeId);
             buf.writeInt(killCount);
         }
     }
@@ -204,7 +204,7 @@ public class StatsTracker {
         this.ENTITY_KILLS.clear();
         int mapSize = buf.readInt();
         for (int i = 0; i < mapSize; ++i) {
-            var typeId = buf.readResourceLocation();
+            var typeId = buf.readIdentifier();
             var killCount = buf.readInt();
             var type = BuiltInRegistries.ENTITY_TYPE.getValue(typeId);
             this.ENTITY_KILLS.put(type, killCount);

@@ -8,7 +8,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
 import net.minecraft.server.packs.PackType;
@@ -43,7 +43,7 @@ public class PackHandler {
         return "data/" + Constants.MOD_ID + "/datapacks/" + id;
     }
 
-    public static Optional<ResourceLocation> onPackLoadIcon(Pack pack) {
+    public static Optional<Identifier> onPackLoadIcon(Pack pack) {
         var pack_id = pack.getId();
         if (isBuiltinPack(pack_id)) {
             return Optional.of(Resources.DTN_PACK_ICON);

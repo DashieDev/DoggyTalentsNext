@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TorchDogRenderer extends DogRenderLayer_21_3  {
     
@@ -44,7 +44,7 @@ public class TorchDogRenderer extends DogRenderLayer_21_3  {
         this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
         this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        ResourceLocation res = Resources.TORCH_DOG;
+        Identifier res = Resources.TORCH_DOG;
         int renderLight = 15728880;
         if (dog.isDefeated()) {
             res = Resources.TORCH_DOG_UNLIT;

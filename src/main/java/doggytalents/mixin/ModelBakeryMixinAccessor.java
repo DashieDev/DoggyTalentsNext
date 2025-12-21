@@ -12,6 +12,6 @@ import net.minecraft.client.resources.model.UnbakedModel;
 public interface ModelBakeryMixinAccessor {
     
     // @Accessor("topLevelModels")
-    // Map<ModelResourceLocation, UnbakedModel> dtn__getTopLevelModels();
+    // Map<ModelIdentifier, UnbakedModel> dtn__getTopLevelModels();
 
 }

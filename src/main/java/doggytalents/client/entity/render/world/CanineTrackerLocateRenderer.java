@@ -30,7 +30,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -42,7 +42,7 @@ import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
 
-    private static ResourceLocation DEFAULT_0 = Util.getVanillaResource("default/0");
+    private static Identifier DEFAULT_0 = Util.getVanillaResource("default/0");
 
     private static boolean locating;
     private static UUID locatingUUID;

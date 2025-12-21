@@ -41,7 +41,7 @@ import net.minecraft.client.resources.model.EquipmentClientInfo.LayerType;
 import net.minecraft.core.Holder;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -197,7 +197,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
         model.renderToBuffer(stack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
-    private void renderArmorCutout(DogArmorModel model, ResourceLocation textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Dog entityIn, float red, float green, float blue) {
+    private void renderArmorCutout(DogArmorModel model, Identifier textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Dog entityIn, float red, float green, float blue) {
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.armorCutoutNoCull(textureLocationIn));
         model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, red, green, blue));
     }
@@ -218,8 +218,8 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     private Function<TrimSpriteKey, TextureAtlasSprite> trimSpriteLookup;
     private void initLookup_1_21_3() {
         this.trimSpriteLookup = net.minecraft.Util.memoize(p_371220_ -> {
-            ResourceLocation resourcelocation = p_371220_.trim.layerAssetId(p_371220_.layerType.trimAssetPrefix(), p_371220_.equipmentModelId);
-            return this.dogArmorTrimAtlas.getSprite(resourcelocation);
+            Identifier Identifier = p_371220_.trim.layerAssetId(p_371220_.layerType.trimAssetPrefix(), p_371220_.equipmentModelId);
+            return this.dogArmorTrimAtlas.getSprite(Identifier);
         });
     }
     static record TrimSpriteKey(ArmorTrim trim, EquipmentClientInfo.LayerType layerType, ResourceKey<EquipmentAsset> equipmentModelId) {

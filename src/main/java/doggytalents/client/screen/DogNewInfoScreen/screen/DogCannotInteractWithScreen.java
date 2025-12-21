@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import doggytalents.common.network.PacketDistributor;
 
@@ -190,7 +190,7 @@ public class DogCannotInteractWithScreen extends Screen {
         //RenderSystem.disableBlend();
     }
 
-    public static ResourceLocation getDefeatedKanji(Dog dog) {
+    public static Identifier getDefeatedKanji(Dog dog) {
         var state = dog.getIncapSyncState();
         var cause = state.type;
         switch (cause) {

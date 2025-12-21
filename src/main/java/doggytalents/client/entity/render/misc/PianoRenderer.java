@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class PianoRenderer extends EntityRenderer_1_21_9<Piano> {
@@ -32,7 +32,7 @@ public class PianoRenderer extends EntityRenderer_1_21_9<Piano> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Piano piano) {
+    public Identifier getTextureLocation(Piano piano) {
         var type = piano.getPianoType();
         var color = piano.getPianoColor();
         if (type == PianoType.GRAND) {

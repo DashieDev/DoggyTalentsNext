@@ -17,7 +17,7 @@ import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;

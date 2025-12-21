@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WolfArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.item.Item;
@@ -31,7 +31,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 
 public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
 
-    private static final Map<Crackiness.Level, ResourceLocation> ARMOR_CRACK_LOCATIONS = Map.of(
+    private static final Map<Crackiness.Level, Identifier> ARMOR_CRACK_LOCATIONS = Map.of(
         Crackiness.Level.LOW,
         Util.getVanillaResource("textures/entity/wolf/wolf_armor_crackiness_low.png"),
         Crackiness.Level.MEDIUM,
@@ -138,6 +138,6 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
 
 
     //1.21.3+
-    private static final ResourceLocation WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute.png");
-    private static final ResourceLocation WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute_overlay.png");
+    private static final Identifier WOLF_ARMOR_MAIN_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute.png");
+    private static final Identifier WOLF_ARMOR_DYE_21_3 = Util.getVanillaResource("textures/entity/equipment/wolf_body/armadillo_scute_overlay.png");
 }

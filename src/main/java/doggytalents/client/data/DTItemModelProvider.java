@@ -9,7 +9,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
@@ -200,7 +200,7 @@ public class DTItemModelProvider {
         generated(DoggyItems.DOG_ANIM_DEBUG);
     }
 
-    // private ResourceLocation itemTexture(Supplier<? extends ItemLike> item) {
+    // private Identifier itemTexture(Supplier<? extends ItemLike> item) {
     //     return modLoc(ModelProvider.ITEM_FOLDER + "/" + name(item));
     // }
 
@@ -216,7 +216,7 @@ public class DTItemModelProvider {
     //     return radar(item, itemTexture(item));
     // }
 
-    // private ItemModelBuilder radar(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    // private ItemModelBuilder radar(Supplier<? extends ItemLike> item, Identifier texture) {
     //     ItemModelBuilder builder = generated(item, texture);
     //     builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 0, 55F).translation(0, 4F, 0.5F).scale(0.85F);
     //     builder.transforms().transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 0, -55F).translation(0, 4F, 0.5F).scale(0.85F);
@@ -229,7 +229,7 @@ public class DTItemModelProvider {
         DTNModelProvider_1_21_5.generated(itemGenerators_1_21_5, item);
     }
 
-    // private void generated(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    // private void generated(Supplier<? extends ItemLike> item, Identifier texture) {
     //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated")).texture("layer0", texture);
     // }
 
@@ -273,7 +273,7 @@ public class DTItemModelProvider {
         DTNModelProvider_1_21_5.generated2(this.itemGenerators_1_21_5, item, "striped_scarf_bg", "striped_scarf_fg");
     }
 
-    // private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, ResourceLocation tex0, ResourceLocation tex1) {
+    // private ItemModelBuilder generated2(Supplier<? extends ItemLike> item, Identifier tex0, Identifier tex1) {
     //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/generated"))
     //         .texture("layer0", tex0)
     //         .texture("layer1", tex1);
@@ -283,7 +283,7 @@ public class DTItemModelProvider {
         DTNModelProvider_1_21_5.handheld(itemGenerators_1_21_5, item);
     }
 
-    // private ItemModelBuilder handheld(Supplier<? extends ItemLike> item, ResourceLocation texture) {
+    // private ItemModelBuilder handheld(Supplier<? extends ItemLike> item, Identifier texture) {
     //     return getBuilder(name(item)).parent(new UncheckedModelFile(ModelProvider.ITEM_FOLDER + "/handheld")).texture("layer0", texture);
     // }
 

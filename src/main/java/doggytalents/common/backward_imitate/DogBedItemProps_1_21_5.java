@@ -3,12 +3,12 @@ package doggytalents.common.backward_imitate;
 import doggytalents.DoggyBlocks;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public class DogBedItemProps_1_21_5 {
     
-    public static ResourceLocation dogBedModelLocation() {
+    public static Identifier dogBedModelLocation() {
         return BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
     }
 

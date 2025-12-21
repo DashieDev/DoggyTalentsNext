@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +47,7 @@ public class DogFoodProjectileRenderer extends EntityRenderer_1_21_9<DogFoodProj
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DogFoodProjectile proj) {
+    public Identifier getTextureLocation(DogFoodProjectile proj) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
     

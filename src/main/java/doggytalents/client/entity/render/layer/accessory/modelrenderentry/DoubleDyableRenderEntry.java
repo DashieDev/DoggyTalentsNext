@@ -13,7 +13,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.DoubleDyableAccessory.DoubleDyableAccessoryInstance;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class DoubleDyableRenderEntry extends Entry {
  
@@ -42,7 +42,7 @@ public abstract class DoubleDyableRenderEntry extends Entry {
     };
 
     private static void doRenderLayer(boolean isTranslucent, SyncedAccessoryModel model,
-        ResourceLocation resource, PoseStack stack, MultiBufferSource buffer, int light, Dog dog,
+        Identifier resource, PoseStack stack, MultiBufferSource buffer, int light, Dog dog,
             float[] color) {
         if (isTranslucent) {
             DefaultAccessoryRenderer.renderTranslucentModel(model, resource, 
@@ -57,11 +57,11 @@ public abstract class DoubleDyableRenderEntry extends Entry {
         return true;
     }
 
-    protected abstract ResourceLocation getFgResource(AccessoryInstance inst);
-    protected abstract ResourceLocation getBgResource(AccessoryInstance inst);
+    protected abstract Identifier getFgResource(AccessoryInstance inst);
+    protected abstract Identifier getBgResource(AccessoryInstance inst);
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return getBgResource(inst);
     }
 

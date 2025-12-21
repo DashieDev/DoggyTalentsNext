@@ -12,7 +12,7 @@ import doggytalents.api.anim.DogAnimation;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.Event;
 import net.neoforged.fml.event.IModBusEvent;
 
@@ -34,7 +34,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
     // }
 
     public static class DogModelProps {
-        public final ResourceLocation id;
+        public final Identifier id;
         public final ModelLayerLocation layer;
         public final boolean shouldRenderAccessories;
         public final boolean shouldRenderIncapacitated;
@@ -45,7 +45,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         public final boolean glowingEyes;
         private Map<DogAnimation, AnimationDefinition> aninationOverride = Maps.newConcurrentMap();
 
-        private DogModelProps(ResourceLocation id, ModelLayerLocation layer, boolean accessory, boolean model_accessories, boolean incap,
+        private DogModelProps(Identifier id, ModelLayerLocation layer, boolean accessory, boolean model_accessories, boolean incap,
             Vector3f customPivot, float defaulScale, boolean glowingEyes) {
             this.id = id;
             this.layer = layer;
@@ -63,7 +63,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
         }
 
         public static class Builder {
-            public final ResourceLocation id;
+            public final Identifier id;
             public final ModelLayerLocation layer;
             private boolean accessory = false, incap = false, model_accessory = false;
             private Vector3f customRootPivot = null;
@@ -71,7 +71,7 @@ public class RegisterCustomDogModelsEvent extends Event implements IModBusEvent 
             private boolean glowingEyes = false;
             private Map<DogAnimation, AnimationDefinition> animationOverride = Maps.newConcurrentMap();
 
-            public Builder(ResourceLocation id, ModelLayerLocation layer) {
+            public Builder(Identifier id, ModelLayerLocation layer) {
                 this.id = id;
                 this.layer = layer;
             }

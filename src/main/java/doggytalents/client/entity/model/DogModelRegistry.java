@@ -90,14 +90,14 @@ import doggytalents.client.entity.model.dog.oina.*;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.ModLoader;
 
 public class DogModelRegistry {
     
-    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
+    private static Map<Identifier, DogModelHolder> MODEL_MAP;
 
-    public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
+    public static <T extends AbstractDog> void register(Identifier id, Function<EntityRendererProvider.Context, DogModel>  getter) {
         MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
     }
 
@@ -105,14 +105,14 @@ public class DogModelRegistry {
         register(Util.getResource(name), getter);
     }
 
-    public static DogModelHolder getDogModelHolder(ResourceLocation id) {
+    public static DogModelHolder getDogModelHolder(Identifier id) {
         return MODEL_MAP.get(id);
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
-        ResourceLocation loc;
+        Identifier loc;
         if (name.indexOf(':') >= 0) {
-            loc = ResourceLocation.parse(name);
+            loc = Identifier.parse(name);
         } else {
             loc = Util.getResource(name);
         }

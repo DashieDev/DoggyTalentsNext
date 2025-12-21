@@ -9,7 +9,7 @@ import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class AccessoryInstance {
 
@@ -59,7 +59,7 @@ public class AccessoryInstance {
     }
 
     public final void writeInstance(CompoundTag compound) {
-        ResourceLocation rl = DoggyTalentsAPI.ACCESSORIES.get().getKey(this.getAccessory());
+        Identifier rl = DoggyTalentsAPI.ACCESSORIES.get().getKey(this.getAccessory());
         if (rl != null) {
             compound.putString("type", rl.toString());
         }
@@ -73,9 +73,9 @@ public class AccessoryInstance {
      * is returned.
      */
     public static Optional<AccessoryInstance> readInstance(CompoundTag_1_21_5 compound) {
-        ResourceLocation rl = null;
+        Identifier rl = null;
         try {
-            rl = ResourceLocation.tryParse(compound.getString("type"));
+            rl = Identifier.tryParse(compound.getString("type"));
             if (DoggyTalentsAPI.ACCESSORIES.get().containsKey(rl)) {
                 Accessory type = DoggyTalentsAPI.ACCESSORIES.get().getValue(rl);
                 return Optional.of(type.read(compound));
@@ -98,7 +98,7 @@ public class AccessoryInstance {
         }
     }
     
-    public ResourceLocation getModelTexture(AbstractDog dog) {
+    public Identifier getModelTexture(AbstractDog dog) {
         return this.getAccessory().getModelTexture();
     }
 }

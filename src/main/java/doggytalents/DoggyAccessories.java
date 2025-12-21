@@ -5,7 +5,7 @@ import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.common.entity.accessory.*;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.registries.DeferredRegister;

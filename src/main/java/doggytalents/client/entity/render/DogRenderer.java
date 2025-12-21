@@ -48,7 +48,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -123,7 +123,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DogRenderState_21_3 render_state) {
+    public Identifier getTextureLocation(DogRenderState_21_3 render_state) {
         return DogTextureManager.INSTANCE.getTexture(render_state.dog);
     }
 

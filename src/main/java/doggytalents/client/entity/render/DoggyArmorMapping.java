@@ -16,7 +16,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 public class DoggyArmorMapping {
 
-    private static final Map<Item, ResourceLocation> LEGACY_MAPPING = new ImmutableMap.Builder<Item, ResourceLocation>()
+    private static final Map<Item, Identifier> LEGACY_MAPPING = new ImmutableMap.Builder<Item, Identifier>()
         .put(Items.IRON_HELMET,      Resources.IRON_HELMET)
         .put(Items.DIAMOND_HELMET,   Resources.DIAMOND_HELMET)
         .put(Items.GOLDEN_HELMET,    Resources.GOLDEN_HELMET)
@@ -61,9 +61,9 @@ public class DoggyArmorMapping {
         .put(Items.NETHERITE_LEGGINGS, Resources.NETHERITE_BODY_PIECE)
        .build();
 
-    private static Map<Item, ResourceLocation> MAPPING = Maps.newConcurrentMap();
+    private static Map<Item, Identifier> MAPPING = Maps.newConcurrentMap();
 
-    private static ResourceLocation computeArmorTexture(Item item, Dog dog, ItemStack stack) {
+    private static Identifier computeArmorTexture(Item item, Dog dog, ItemStack stack) {
         if (!(ItemUtil_1_21_5.isHumanoidArmor(stack)))
             return Resources.DEFAULT_DOG_ARMOR;
         //1.21.3+
@@ -85,7 +85,7 @@ public class DoggyArmorMapping {
         return armorLoc;
     }
 
-    // private static Optional<ResourceLocation> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack, ArmorItem armor) {
+    // private static Optional<Identifier> computePreferedArmorLoc(Item item, Dog dog, ItemStack stack, ArmorItem armor) {
     //     if (armor.getMaterial().value().layers().isEmpty())
     //         return Optional.empty(); 
     //     var material_layer = armor.getMaterial().value().layers().get(0);
@@ -99,14 +99,14 @@ public class DoggyArmorMapping {
     //     return Optional.ofNullable(preferedLoc);
     // }
 
-    public static ResourceLocation getMappedResource(Item item, Dog dog, ItemStack stack) {
+    public static Identifier getMappedResource(Item item, Dog dog, ItemStack stack) {
         if (ConfigHandler.CLIENT.USE_LEGACY_DOG_ARMOR_RENDER.get())
             return getLegacyMappedResource(dog, item);
 
         return MAPPING.computeIfAbsent(item, x -> computeArmorTexture(x, dog, stack));
     }
 
-    public static ResourceLocation getLegacyMappedResource(Dog dog, Item item) {
+    public static Identifier getLegacyMappedResource(Dog dog, Item item) {
         var x = LEGACY_MAPPING.get(item);
         if (x != null) return x;
         var slot = dog.getEquipmentSlotForItem(new ItemStack(item));

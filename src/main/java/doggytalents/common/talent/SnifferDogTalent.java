@@ -28,7 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -248,7 +248,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (this.detectingBlock == null)
             this.detectingBlock = Blocks.AIR;
         var id = BuiltInRegistries.BLOCK.getKey(this.detectingBlock);
-        NBTUtil_1_21_7.putResourceLocation(compound, "snifferDog_detectingBlock", id);
+        NBTUtil_1_21_7.putIdentifier(compound, "snifferDog_detectingBlock", id);
     }
 
     @Override

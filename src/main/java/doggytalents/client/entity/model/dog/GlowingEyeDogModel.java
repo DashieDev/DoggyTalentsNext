@@ -7,7 +7,7 @@ import doggytalents.client.backward_imitate.ModelUtil_1_21_9;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -22,7 +22,7 @@ public class GlowingEyeDogModel extends DogModel {
         setupGlowingEyes();
     }
 
-    public GlowingEyeDogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
+    public GlowingEyeDogModel(ModelPart box, Function<Identifier, RenderType> renderType) {
         super(box, renderType);
         setupGlowingEyes();
     }

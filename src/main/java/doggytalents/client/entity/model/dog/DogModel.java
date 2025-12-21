@@ -34,7 +34,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
@@ -69,7 +69,7 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         initDogModel(box);
     }
 
-    public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
+    public DogModel(ModelPart box, Function<Identifier, RenderType> renderType) {
         super(box, renderType);
         initDogModel(box);
     }

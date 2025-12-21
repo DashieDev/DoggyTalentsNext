@@ -3,7 +3,7 @@ package doggytalents;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -33,7 +33,7 @@ public class DoggySounds {
         return register(name, () -> SoundEvent.createVariableRangeEvent(Util.getResource(name)));
     }
 
-    private static <T extends SoundEvent> Supplier<T> register(final String name, final Function<ResourceLocation, T> factory) {
+    private static <T extends SoundEvent> Supplier<T> register(final String name, final Function<Identifier, T> factory) {
         return register(name, () -> factory.apply(Util.getResource(name)));
     }
 

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DogVariant {
     
@@ -16,14 +16,14 @@ public class DogVariant {
         .icon(Util.getResource("textures/entity/dog/classical_icon/pale.png"))
         .guiColor(0xffff5555));
 
-    private final ResourceLocation id;
-    private final ResourceLocation texture;
+    private final Identifier id;
+    private final Identifier texture;
     private final String translation;
     private final boolean isVanila;
-    private Optional<ResourceLocation> icon;
+    private Optional<Identifier> icon;
     private int guiColor;
-    private Optional<ResourceLocation> glowingOverlay;
-    private Optional<ResourceLocation> customInjuredTexture;
+    private Optional<Identifier> glowingOverlay;
+    private Optional<Identifier> customInjuredTexture;
     private final boolean burnsPetter;
     private final boolean preventWetShade;
 
@@ -40,7 +40,7 @@ public class DogVariant {
         this.preventWetShade = props.preventWetShade;
     }
 
-    private static ResourceLocation createTextureLoc(Props props) {
+    private static Identifier createTextureLoc(Props props) {
         if (props.namespaceType == NamespaceType.DTN)
             return Util.getResource("textures/entity/dog/classical/compl/wolf_" + props.name.getPath() + ".png");
         if (props.namespaceType == NamespaceType.VANILLA)
@@ -61,15 +61,15 @@ public class DogVariant {
         return "dog.classical.variant.custom." + props.name.getNamespace() + "." + props.name.getPath();
     }
 
-    public ResourceLocation id() {
+    public Identifier id() {
         return this.id;
     }
 
-    public ResourceLocation texture() {
+    public Identifier texture() {
         return this.texture;
     }
 
-    public Optional<ResourceLocation> icon() {
+    public Optional<Identifier> icon() {
         return this.icon;
     }
 
@@ -81,11 +81,11 @@ public class DogVariant {
         return this.translation;
     }
 
-    public Optional<ResourceLocation> glowingOverlay() {
+    public Optional<Identifier> glowingOverlay() {
         return this.glowingOverlay;
     }
 
-    public Optional<ResourceLocation> customInjuredTexture() {
+    public Optional<Identifier> customInjuredTexture() {
         return this.customInjuredTexture;
     }
 
@@ -105,7 +105,7 @@ public class DogVariant {
         return new Props(Util.getResource(name), NamespaceType.DTN);
     }
 
-    public static Props props(ResourceLocation name) {
+    public static Props props(Identifier name) {
         if (name.getNamespace().equals(Constants.MOD_ID))
             return props(name.getPath());
         if (name.getNamespace().equals("minecraft"))
@@ -116,22 +116,22 @@ public class DogVariant {
     public static class Props {
         
         private final NamespaceType namespaceType;
-        private final ResourceLocation name;
-        private Optional<ResourceLocation> icon = Optional.empty();
+        private final Identifier name;
+        private Optional<Identifier> icon = Optional.empty();
         private int guiColor = 0xffdad7d8;
-        private Optional<ResourceLocation> customTexture = Optional.empty();
+        private Optional<Identifier> customTexture = Optional.empty();
         private Optional<String> customTranslation = Optional.empty();
-        private Optional<ResourceLocation> glowingOverlay = Optional.empty();
-        private Optional<ResourceLocation> customInjuredTexture = Optional.empty();
+        private Optional<Identifier> glowingOverlay = Optional.empty();
+        private Optional<Identifier> customInjuredTexture = Optional.empty();
         private boolean burnsPetter = false;
         private boolean preventWetShade = false;
 
-        private Props(ResourceLocation name, NamespaceType namespaceType) {
+        private Props(Identifier name, NamespaceType namespaceType) {
             this.name = name;
             this.namespaceType = namespaceType;
         }
 
-        public Props icon(ResourceLocation icon) {
+        public Props icon(Identifier icon) {
             this.customTexture = Optional.of(icon);
             return this;
         }
@@ -141,7 +141,7 @@ public class DogVariant {
             return this;
         }
 
-        public Props customTexture(ResourceLocation texture) {
+        public Props customTexture(Identifier texture) {
             this.customTexture = Optional.of(texture);
             return this;
         }
@@ -151,14 +151,14 @@ public class DogVariant {
             return this;
         }
 
-        public Props glowingOverlay(ResourceLocation overlay) {
+        public Props glowingOverlay(Identifier overlay) {
             if (overlay == null)
                 return this;
             this.glowingOverlay = Optional.of(overlay);
             return this;
         }
 
-        public Props customInjuredTexture(ResourceLocation texture) {
+        public Props customInjuredTexture(Identifier texture) {
             if (texture == null)
                 return this;
             this.customInjuredTexture = Optional.of(texture);

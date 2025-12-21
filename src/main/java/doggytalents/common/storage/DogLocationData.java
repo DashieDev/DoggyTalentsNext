@@ -136,7 +136,7 @@ public class DogLocationData implements IDogData {
     public void read(CompoundTag_1_21_5 compound) {
         this.ownerId = NBTUtil.getUniqueId(compound, "ownerId");
         this.position = NBTUtil.getVector3d(compound);
-        var dimension = NBTUtil.getResourceLocation(compound, "dimension");
+        var dimension = NBTUtil.getIdentifier(compound, "dimension");
         if (dimension != null)
             this.dimension = ResourceKey.create(Registries.DIMENSION, dimension);
         this.name = NBTUtil.getTextComponent(compound, "name_text_component");
@@ -157,7 +157,7 @@ public class DogLocationData implements IDogData {
             getCachedDog().map(Dog::position).orElse(this.position));
         var dimension = this.dimension;
         if (dimension != null)
-            NBTUtil_1_21_7.putResourceLocation(compound, "dimension", dimension.location());
+            NBTUtil_1_21_7.putIdentifier(compound, "dimension", dimension.location());
         NBTUtil_1_21_7.putTextComponent(compound, "name_text_component", this.name);
         if (this.gender != null) {
             compound.putString("gender", this.gender.getSaveName());

@@ -11,7 +11,7 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -19,18 +19,18 @@ import net.minecraft.network.chat.Style;
 public class CasingMaterial extends ICasingMaterial {
 
     private final Supplier<Block> block;
-    protected ResourceLocation texture;
-    protected final ResourceLocation id;
+    protected Identifier texture;
+    protected final Identifier id;
 
     @Nullable
     private String translationKey;
 
-    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn) {
+    public CasingMaterial(Identifier id, Supplier<Block> blockIn) {
         this.block = blockIn;
         this.id = id;
     }
 
-    public CasingMaterial(ResourceLocation id, Supplier<Block> blockIn, ResourceLocation texture) {
+    public CasingMaterial(Identifier id, Supplier<Block> blockIn, Identifier texture) {
         this.block = blockIn;
         this.texture = texture;
         this.id = id;
@@ -40,10 +40,10 @@ public class CasingMaterial extends ICasingMaterial {
      * Texture location that for material, eg 'minecraft:block/oak_planks'
      */
     @Override
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         if (this.texture == null) {
-            ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(this.block.get());
-            this.texture = ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath());
+            Identifier loc = BuiltInRegistries.BLOCK.getKey(this.block.get());
+            this.texture = Identifier.fromNamespaceAndPath(loc.getNamespace(), "block/" + loc.getPath());
         }
 
         return this.texture;
@@ -74,7 +74,7 @@ public class CasingMaterial extends ICasingMaterial {
     }
 
     @Override
-    public ResourceLocation getSaveKey() {
+    public Identifier getSaveKey() {
         return this.id;
     }
 }

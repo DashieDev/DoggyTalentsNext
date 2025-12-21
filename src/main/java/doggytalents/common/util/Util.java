@@ -6,7 +6,7 @@ import doggytalents.common.block.DogBathBlock;
 import doggytalents.common.lib.Constants;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 
@@ -141,16 +141,16 @@ public class Util {
     /**
      * @param name The path of the resource
      */
-    public static ResourceLocation getResource(String name) {
+    public static Identifier getResource(String name) {
         return getResource(Constants.MOD_ID, name);
     }
 
-    public static ResourceLocation getResource(String modId, String name) {
-        return ResourceLocation.fromNamespaceAndPath(modId, name);
+    public static Identifier getResource(String modId, String name) {
+        return Identifier.fromNamespaceAndPath(modId, name);
     }
 
-    public static ResourceLocation getVanillaResource(String name) {
-        return ResourceLocation.withDefaultNamespace(name);
+    public static Identifier getVanillaResource(String name) {
+        return Identifier.withDefaultNamespace(name);
     }
 
     public static String getResourcePath(String name) {
@@ -166,7 +166,7 @@ public class Util {
         return getResource(modId, name).toString();
     }
 
-    public static ResourceLocation modifyPath(ResourceLocation target, Function<String, String> modifier) {
+    public static Identifier modifyPath(Identifier target, Function<String, String> modifier) {
         var namespace = target.getNamespace();
         var path = target.getPath();
         var new_path = modifier.apply(path);
@@ -234,15 +234,15 @@ public class Util {
      * Takes various registry related objects and returns the
      * registry id of the object it is representing
      */
-    // public static ResourceLocation getRegistryId(Object obj) {
-    //     if (obj instanceof ResourceLocation) {
-    //         return (ResourceLocation) obj;
+    // public static Identifier getRegistryId(Object obj) {
+    //     if (obj instanceof Identifier) {
+    //         return (Identifier) obj;
     //     }
 
     //     if (obj instanceof String) {
     //         // Returns null when namespace or path contain invalid
     //         // characters
-    //         return ResourceLocation.tryParse((String) obj);
+    //         return Identifier.tryParse((String) obj);
     //     }
 
     //     // if (obj instanceof IForgeRegistryEntry) {

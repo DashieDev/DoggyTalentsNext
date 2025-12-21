@@ -8,7 +8,7 @@ import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implements IBaseDogModel_21_3 {
     
@@ -25,7 +25,7 @@ public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implem
 
     public static void renderColoredCutoutModel(
         BaseModel_21_3 model,
-        ResourceLocation texture,
+        Identifier texture,
         PoseStack stack,
         MultiBufferSource buffer,
         int light,
@@ -38,7 +38,7 @@ public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implem
 
     public static void renderColoredCutoutModel(
         DogModel model,
-        ResourceLocation texture,
+        Identifier texture,
         PoseStack stack,
         MultiBufferSource buffer,
         int light,

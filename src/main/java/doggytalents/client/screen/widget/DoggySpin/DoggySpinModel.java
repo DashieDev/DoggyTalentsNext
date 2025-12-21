@@ -34,7 +34,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class DoggySpinModel {
@@ -250,7 +250,7 @@ public class DoggySpinModel {
         doRenderModelWithTexture(stack, source, false, Resources.COLLAR_THICC, this.collarColor);
     }
 
-    private void doRenderModelWithTexture(PoseStack stack, MultiBufferSource source, boolean translucent, ResourceLocation loc, int color) {
+    private void doRenderModelWithTexture(PoseStack stack, MultiBufferSource source, boolean translucent, Identifier loc, int color) {
         var renderType = translucent ? 
             RenderType.entityTranslucent(loc) 
             : RenderType.entityCutoutNoCull(loc);

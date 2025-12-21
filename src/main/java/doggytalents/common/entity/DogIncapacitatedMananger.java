@@ -29,7 +29,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -57,7 +57,7 @@ public class DogIncapacitatedMananger {
     private final Dog dog;
 
     private int recoveryMultiplier = 1;
-    private static final ResourceLocation INCAP_MOVEMENT = Util.getResource("injured_slowdown");
+    private static final Identifier INCAP_MOVEMENT = Util.getResource("injured_slowdown");
     private boolean appliedIncapChanges = false;
     
     private static final int MAX_BANDAID_COUNT = 8;

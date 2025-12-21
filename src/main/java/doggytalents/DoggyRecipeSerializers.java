@@ -4,7 +4,7 @@ import doggytalents.common.inventory.recipe.DogBedRecipe;
 import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;

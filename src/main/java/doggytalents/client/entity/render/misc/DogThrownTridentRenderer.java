@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Unit;
 
@@ -42,7 +42,7 @@ public class DogThrownTridentRenderer extends EntityRenderer_1_21_9<DogThrownTri
         //super.render(p_116111_, p_116112_, p_116113_, p_116114_, context_1_21_9, p_116116_);
     }
 
-    public ResourceLocation getTextureLocation(DogThrownTrident p_116109_) {
+    public Identifier getTextureLocation(DogThrownTrident p_116109_) {
         return ThrownTridentRenderer.TRIDENT_LOCATION;
     }
 

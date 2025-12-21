@@ -22,7 +22,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.SimpleContainerData;
@@ -35,13 +35,13 @@ public class DogArmorContainer extends AbstractContainerMenu {
     private Player player;
     private Dog dog;
 
-    public static final ResourceLocation BLOCK_ATLAS = Util.getVanillaResource("textures/atlas/blocks.png");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_HELMET = Util.getVanillaResource("container/slot/helmet");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_CHESTPLATE = Util.getVanillaResource("container/slot/chestplate");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_LEGGINGS = Util.getVanillaResource("container/slot/leggings");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_BOOTS = Util.getVanillaResource("container/slot/boots");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_SHIELD = Util.getVanillaResource("container/slot/shield");
-    static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
+    public static final Identifier BLOCK_ATLAS = Util.getVanillaResource("textures/atlas/blocks.png");
+    public static final Identifier EMPTY_ARMOR_SLOT_HELMET = Util.getVanillaResource("container/slot/helmet");
+    public static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE = Util.getVanillaResource("container/slot/chestplate");
+    public static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS = Util.getVanillaResource("container/slot/leggings");
+    public static final Identifier EMPTY_ARMOR_SLOT_BOOTS = Util.getVanillaResource("container/slot/boots");
+    public static final Identifier EMPTY_ARMOR_SLOT_SHIELD = Util.getVanillaResource("container/slot/shield");
+    static final Identifier[] TEXTURE_EMPTY_SLOTS = new Identifier[]{EMPTY_ARMOR_SLOT_BOOTS, EMPTY_ARMOR_SLOT_LEGGINGS, EMPTY_ARMOR_SLOT_CHESTPLATE, EMPTY_ARMOR_SLOT_HELMET};
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     //Server method
@@ -69,7 +69,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 }
 
                 @Override
-                public ResourceLocation getNoItemIcon() {
+                public Identifier getNoItemIcon() {
                     return TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()];
                 }
     
@@ -94,7 +94,7 @@ public class DogArmorContainer extends AbstractContainerMenu {
                 }
 
                 @Override
-                public ResourceLocation getNoItemIcon() {
+                public Identifier getNoItemIcon() {
                     return TEXTURE_EMPTY_SLOTS[equipmentslot.getIndex()];
                 }
     

@@ -23,7 +23,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class WigRenderEntry extends AccessoryModelManager.Entry {
@@ -48,7 +48,7 @@ public class WigRenderEntry extends AccessoryModelManager.Entry {
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return Resources.WIG;
     }
 

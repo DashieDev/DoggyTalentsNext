@@ -25,7 +25,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
@@ -96,7 +96,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         //RenderSystem.disableBlend();
     }
 
-    public static ResourceLocation getKanjiDogLevel(Dog dog) {
+    public static Identifier getKanjiDogLevel(Dog dog) {
         var dogLevel = dog.getDogLevel();
         if (dogLevel.isFullKami())
             return Resources.KANJI_KAMI;

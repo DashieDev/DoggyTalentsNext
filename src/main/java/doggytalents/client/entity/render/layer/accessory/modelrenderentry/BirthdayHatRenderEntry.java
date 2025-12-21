@@ -18,7 +18,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class BirthdayHatRenderEntry extends DoubleDyableRenderEntry {
@@ -41,12 +41,12 @@ public class BirthdayHatRenderEntry extends DoubleDyableRenderEntry {
     }
 
     @Override
-    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+    protected Identifier getFgResource(AccessoryInstance inst) {
         return Resources.BIRTHDAY_HAT_FG;
     }
 
     @Override
-    protected ResourceLocation getBgResource(AccessoryInstance inst) {
+    protected Identifier getBgResource(AccessoryInstance inst) {
         return Resources.BIRTHDAY_HAT_BG;
     }
     

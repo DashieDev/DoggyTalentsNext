@@ -5,7 +5,7 @@ import net.minecraft.core.ClientAsset;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.network.chat.Component;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
@@ -23,13 +23,13 @@ public class DisplayInfoBuilder {
     private Component title;
     private Component description;
     private ItemStack icon;
-    private ResourceLocation background;
+    private Identifier background;
     private AdvancementType frame;
     private boolean showToast = true;
     private boolean announceToChat = true;
     private boolean hidden = false;
 
-    public DisplayInfoBuilder translate(ResourceLocation key) {
+    public DisplayInfoBuilder translate(Identifier key) {
         return this.translate(key.getNamespace() + "." + key.getPath());
     }
 
@@ -72,7 +72,7 @@ public class DisplayInfoBuilder {
         return background(Util.getResource(modId, "textures/gui/advancements/backgrounds/" + path));
     }
 
-    public DisplayInfoBuilder background(ResourceLocation backgroundIn) {
+    public DisplayInfoBuilder background(Identifier backgroundIn) {
         this.background = backgroundIn;
         return this;
     }

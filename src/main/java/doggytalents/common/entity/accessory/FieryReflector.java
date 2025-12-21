@@ -13,7 +13,7 @@ import doggytalents.client.event.ClientEventHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogPose;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

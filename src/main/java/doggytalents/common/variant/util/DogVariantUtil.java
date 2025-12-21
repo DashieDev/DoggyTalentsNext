@@ -10,7 +10,7 @@ import doggytalents.DogVariants;
 import doggytalents.DoggyRegistries;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.animal.wolf.WolfVariant;
 
@@ -28,10 +28,10 @@ public class DogVariantUtil {
         return fromSaveString(string, id -> {});
     }
 
-    public static DogVariant fromSaveString(String string, Consumer<ResourceLocation> missingSetter) {
-        ResourceLocation id = null;
+    public static DogVariant fromSaveString(String string, Consumer<Identifier> missingSetter) {
+        Identifier id = null;
         try {
-            id = ResourceLocation.parse(string);
+            id = Identifier.parse(string);
         } catch (Exception e) {
             
         }
@@ -58,7 +58,7 @@ public class DogVariantUtil {
         return toSaveString(variant, () -> Optional.empty());
     }
 
-    public static String toSaveString(DogVariant variant, Supplier<Optional<ResourceLocation>> missingGetter) {
+    public static String toSaveString(DogVariant variant, Supplier<Optional<Identifier>> missingGetter) {
         if (variant == null)
             variant = getDefault();
         if (variant == getMissing()) {

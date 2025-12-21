@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -76,12 +76,12 @@ public class AccessoryModelManager {
                 poseStack, buffer, packedLight, dog, color[0], color[1], color[2]);
         };
         public abstract void registerLayerDef(final EntityRenderersEvent.RegisterLayerDefinitions event);
-        public abstract ResourceLocation getResources(AccessoryInstance inst);
+        public abstract Identifier getResources(AccessoryInstance inst);
         public boolean isDyable() { return false; }
         public boolean isTranslucent() { return false; }
     }
 
-    public static void renderColoredCutoutModel(SyncedAccessoryModel p_117377_, ResourceLocation p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_) {
+    public static void renderColoredCutoutModel(SyncedAccessoryModel p_117377_, Identifier p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_) {
         VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityCutoutNoCull(p_117378_));
         p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, DogRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(1, p_117383_, p_117384_, p_117385_));
     }

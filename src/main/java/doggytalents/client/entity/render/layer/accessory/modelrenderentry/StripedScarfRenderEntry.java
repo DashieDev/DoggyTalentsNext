@@ -7,7 +7,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class StripedScarfRenderEntry extends DoubleDyableRenderEntry {
@@ -30,12 +30,12 @@ public class StripedScarfRenderEntry extends DoubleDyableRenderEntry {
     }
 
     @Override
-    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+    protected Identifier getFgResource(AccessoryInstance inst) {
         return Resources.STRIPED_SCARF_FG;
     }
 
     @Override
-    protected ResourceLocation getBgResource(AccessoryInstance inst) {
+    protected Identifier getBgResource(AccessoryInstance inst) {
         return Resources.STRIPED_SCARF_BG;
     }
     

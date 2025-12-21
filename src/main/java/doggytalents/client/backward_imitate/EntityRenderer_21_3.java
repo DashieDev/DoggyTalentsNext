@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
@@ -41,7 +41,7 @@ public abstract class EntityRenderer_21_3/*<T extends Entity> extends EntityRend
     // public void render(T entity, float yrot, float pticks, PoseStack stack,
     //     MultiBufferSource bufferSource, int light) {}
 
-    // public abstract ResourceLocation getTextureLocation(T entity);
+    // public abstract Identifier getTextureLocation(T entity);
     
 
 }

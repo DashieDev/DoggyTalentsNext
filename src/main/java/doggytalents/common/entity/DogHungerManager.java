@@ -5,7 +5,7 @@ import java.util.UUID;
 import doggytalents.api.feature.DogMode;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class DogHungerManager {
     
-    public static final ResourceLocation HUNGER_MOVEMENT = Util.getResource("dog_hunger_slowndown");
+    public static final Identifier HUNGER_MOVEMENT = Util.getResource("dog_hunger_slowndown");
     public static final float MAX_HUNGER_TICK = 800;
 
     private final Dog dog;

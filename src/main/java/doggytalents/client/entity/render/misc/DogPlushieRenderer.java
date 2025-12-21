@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
@@ -29,7 +29,7 @@ public class DogPlushieRenderer extends EntityRenderer_1_21_9<DogPlushie> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DogPlushie plushie) {
+    public Identifier getTextureLocation(DogPlushie plushie) {
         return plushie.getDogVariant().texture();
     }
     

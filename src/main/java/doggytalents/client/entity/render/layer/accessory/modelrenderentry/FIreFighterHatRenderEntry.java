@@ -7,7 +7,7 @@ import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class FIreFighterHatRenderEntry extends Entry {
@@ -32,7 +32,7 @@ public class FIreFighterHatRenderEntry extends Entry {
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return inst.getAccessory().getModelTexture();
     }
 

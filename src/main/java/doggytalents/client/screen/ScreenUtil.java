@@ -9,7 +9,7 @@ import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPosition
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 
 import java.util.ArrayList;
@@ -63,10 +63,10 @@ public class ScreenUtil {
 
 
     //1.21.3+
-    public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int tex_from_x, int tex_from_y, int tex_to_x, int tex_to_y) {
+    public static void blit_21_3(GuiGraphics graphics, Identifier texture, int x, int y, int tex_from_x, int tex_from_y, int tex_to_x, int tex_to_y) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, 256, 256);
     }
-    public static void blit_21_3(GuiGraphics graphics, ResourceLocation texture, int x, int y, int a, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y) {
+    public static void blit_21_3(GuiGraphics graphics, Identifier texture, int x, int y, int a, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y) {
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_size_x, tex_size_y);
     }
 
@@ -78,11 +78,11 @@ public class ScreenUtil {
     }
 
     //1.21.7+
-    public static void blitColored_1_21_7(GuiGraphics graphics, ResourceLocation texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y, float[] color) {
+    public static void blitColored_1_21_7(GuiGraphics graphics, Identifier texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, int tex_size_x, int tex_size_y, float[] color) {
         int color_i = ARGB.colorFromFloat(color[3], color[0], color[1], color[2]);
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_to_x, tex_to_y, tex_size_x, tex_size_y, color_i);
     }
-    public static void blitColored_1_21_7(GuiGraphics graphics, ResourceLocation texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, float[] color) {
+    public static void blitColored_1_21_7(GuiGraphics graphics, Identifier texture, int x, int y, float tex_from_x, float tex_from_y, int tex_to_x, int tex_to_y, float[] color) {
         int color_i = ARGB.colorFromFloat(color[3], color[0], color[1], color[2]);
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, tex_from_x, tex_from_y, tex_to_x, tex_to_y, tex_to_x, tex_to_y, 256, 256, color_i);
     }

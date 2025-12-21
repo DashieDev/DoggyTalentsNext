@@ -18,7 +18,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
@@ -45,7 +45,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         super(type, worldIn);
     }
 
-    public void setAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc, BiFunction<AbstractDog, ResourceLocation, AttributeModifier> modifierGenerator) {
+    public void setAttributeModifier(Holder<Attribute> attribute, Identifier modifierLoc, BiFunction<AbstractDog, Identifier, AttributeModifier> modifierGenerator) {
         AttributeInstance attributeInst = this.getAttribute(attribute);
 
         AttributeModifier currentModifier = attributeInst.getModifier(modifierLoc);
@@ -65,7 +65,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
 
-    public void removeAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, Identifier modifierLoc) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
         attrib.removeModifier(modifierLoc);

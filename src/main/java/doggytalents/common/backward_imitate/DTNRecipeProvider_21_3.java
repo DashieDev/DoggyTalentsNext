@@ -12,7 +12,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Recipe;
 
 public class DTNRecipeProvider_21_3 extends RecipeProvider.Runner {
@@ -43,7 +43,7 @@ public class DTNRecipeProvider_21_3 extends RecipeProvider.Runner {
         protected abstract void buildRecipes(RecipeOutput output);
     }
 
-    public static ResourceKey<Recipe<?>> recipeKey(ResourceLocation loc) {
+    public static ResourceKey<Recipe<?>> recipeKey(Identifier loc) {
         return ResourceKey.create(Registries.RECIPE, loc);
     }
 
