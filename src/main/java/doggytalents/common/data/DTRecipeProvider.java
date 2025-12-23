@@ -9,7 +9,7 @@ import doggytalents.common.inventory.recipe.DogBedRecipe;
 import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
