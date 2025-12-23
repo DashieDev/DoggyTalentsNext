@@ -6,7 +6,7 @@ import com.mojang.math.Axis;
 import doggytalents.client.backward_imitate.EntityRenderer_1_21_9;
 import doggytalents.client.backward_imitate.EntityRenderer_21_3;
 import doggytalents.common.entity.misc.DogThrownTrident;
-import net.minecraft.client.model.TridentModel;
+import net.minecraft.client.model.object.projectile.TridentModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;

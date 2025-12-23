@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 

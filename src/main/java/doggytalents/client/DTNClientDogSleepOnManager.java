@@ -17,7 +17,7 @@ import doggytalents.common.entity.DogSleepOnManager.DogSleepOnState;
 import doggytalents.mixin.CameraMixinAccessor;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

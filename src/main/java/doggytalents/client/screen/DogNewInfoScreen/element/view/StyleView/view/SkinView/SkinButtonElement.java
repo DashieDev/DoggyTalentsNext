@@ -3,7 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.checkerframework.checker.units.qual.C;
+//import org.checkerframework.checker.units.qual.C;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
