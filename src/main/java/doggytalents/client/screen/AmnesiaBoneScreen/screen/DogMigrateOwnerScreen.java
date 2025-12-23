@@ -16,7 +16,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogMigrateOwnerData;
 import doggytalents.common.network.packet.data.DogUntameData;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

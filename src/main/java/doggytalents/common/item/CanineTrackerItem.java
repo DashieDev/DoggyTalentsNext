@@ -7,7 +7,7 @@ import doggytalents.client.screen.CanineTrackerScreen;
 import doggytalents.common.storage.DogLocationData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.ItemUtil;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.TooltipFlag;

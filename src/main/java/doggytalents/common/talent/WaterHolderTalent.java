@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import javax.annotation.Nonnull;
 
 import doggytalents.api.backward_imitate.CompoundTag_1_21_5;
 import doggytalents.api.backward_imitate.DogInteractionResult;
@@ -387,12 +387,12 @@ public class WaterHolderTalent extends TalentInstance {
     public static class ExtinguishAction extends TriggerableAction {
 
         private WaterHolderTalent talentInst;
-        private @NonNull LivingEntity target;
+        private @Nonnull LivingEntity target;
 
         private int ticksUntilPathRecalc = 0;
         private final int stopDist = 2;
 
-        public ExtinguishAction(Dog dog, WaterHolderTalent talentInst, @NonNull LivingEntity target) {
+        public ExtinguishAction(Dog dog, WaterHolderTalent talentInst, @Nonnull LivingEntity target) {
             super(dog, false, true);
             this.talentInst = talentInst;
             this.target = target;

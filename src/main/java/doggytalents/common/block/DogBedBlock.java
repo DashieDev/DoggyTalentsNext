@@ -22,7 +22,7 @@ import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.PlayerUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

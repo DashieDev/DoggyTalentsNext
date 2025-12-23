@@ -22,7 +22,7 @@ import doggytalents.common.network.packet.data.CanineTrackerData.ResponsePosUpda
 import doggytalents.common.network.packet.data.CanineTrackerData.StartLocatingData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.ItemUtil;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

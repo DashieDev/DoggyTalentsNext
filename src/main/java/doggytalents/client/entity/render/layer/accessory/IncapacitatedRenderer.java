@@ -17,7 +17,7 @@ import doggytalents.common.config.ConfigHandler.ClientConfig;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.DogIncapacitatedMananger.IncapacitatedSyncState;
 import doggytalents.common.lib.Resources;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;

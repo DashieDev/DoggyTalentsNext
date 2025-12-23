@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import doggytalents.client.DTNClientDogSleepOnManager;
 import doggytalents.client.backward_imitate.PlayerRenderPrep_21_3;
 import doggytalents.client.backward_imitate.PlayerRenderUtil_1_21_9;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.LivingEntity;
 

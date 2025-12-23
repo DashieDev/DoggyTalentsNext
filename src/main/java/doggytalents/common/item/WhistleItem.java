@@ -28,7 +28,7 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.PlayerUtil;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;

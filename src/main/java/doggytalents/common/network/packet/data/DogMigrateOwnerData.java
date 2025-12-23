@@ -2,7 +2,7 @@ package doggytalents.common.network.packet.data;
 
 import java.util.UUID;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 
 public class DogMigrateOwnerData extends DogData {
 
