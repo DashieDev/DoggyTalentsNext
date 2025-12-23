@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 
 public class WrapperVanillaModel_1_21_9 extends Model<WrapperVanillaModel_1_21_9.DefferedSetupContainer_1_21_9> {
 

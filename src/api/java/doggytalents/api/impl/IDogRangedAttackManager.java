@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import doggytalents.api.inferface.AbstractDog;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 
 public interface IDogRangedAttackManager {
     
