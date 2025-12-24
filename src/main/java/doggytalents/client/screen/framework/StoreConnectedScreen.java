@@ -51,7 +51,7 @@ public class StoreConnectedScreen extends Screen_1_21_9 implements IStoreSubscri
     }
 
     @Override
-    public void resize(Minecraft p_96575_, int width, int height) {
+    public void resize(/*Minecraft p_96575_,*/ int width, int height) {
         this.width = width;
         this.height = height;
         Store.get(this).dispatchAll(

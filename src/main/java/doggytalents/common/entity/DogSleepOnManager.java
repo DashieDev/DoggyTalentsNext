@@ -14,6 +14,7 @@ import com.google.common.collect.Maps;
 import doggytalents.DoggyTalents;
 import doggytalents.api.feature.DogSize;
 import doggytalents.client.DTNClientDogSleepOnManager;
+import doggytalents.common.backward_imitate.BedSleepUtil_1_21_11;
 import doggytalents.common.talent.BedDogTalent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -102,7 +103,7 @@ public class DogSleepOnManager {
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
             return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();
-        if (!level.dimensionType().bedWorks())
+        if (!BedSleepUtil_1_21_11.bedWorks(dog))
             return DogSleepOnFailMessage.NO_SLEEP_DIM.asResult();
         if (!dog.getDogSize().largerOrEquals(DogSize.MODERATO))
             return DogSleepOnFailMessage.TOO_SMOL.asResult();
@@ -309,8 +310,8 @@ public class DogSleepOnManager {
 
 
     public static void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
-        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
-            return;
+        // if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE) //1.21.11+ obselete check
+        //     return;
         var player = event.getEntity();
         var dog_optional = DogSleepOnManager.getServer(player.level().getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())

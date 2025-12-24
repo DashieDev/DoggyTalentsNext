@@ -4520,7 +4520,7 @@ public class Dog extends AbstractDog {
         Vec3 vec3d = this.getDeltaMovement();
         this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
         this.setDogJumping(true);
-        this.hasImpulse = true;
+        this.needsSync = true;
 
         // If moving forward, propel further in the direction
         if (forward > 0.0F) {

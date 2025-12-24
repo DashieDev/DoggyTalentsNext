@@ -218,7 +218,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     //1.21.3+ 
     private Function<TrimSpriteKey, TextureAtlasSprite> trimSpriteLookup;
     private void initLookup_1_21_3() {
-        this.trimSpriteLookup = net.minecraft.Util.memoize(p_371220_ -> {
+        this.trimSpriteLookup = net.minecraft.util.Util.memoize(p_371220_ -> {
             Identifier Identifier = p_371220_.trim.layerAssetId(p_371220_.layerType.trimAssetPrefix(), p_371220_.equipmentModelId);
             return this.dogArmorTrimAtlas.getSprite(Identifier);
         });

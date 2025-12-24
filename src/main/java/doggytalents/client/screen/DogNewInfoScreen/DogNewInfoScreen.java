@@ -349,9 +349,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void resize(Minecraft p_96575_, int width, int height) {
+    public void resize(/*Minecraft p_96575_, */int width, int height) {
         DropdownMenuManager.get(this).clearActiveDropdownMenu();
-        super.resize(p_96575_, width, height);
+        super.resize(/*p_96575_, */width, height);
     }
 
     @Override
