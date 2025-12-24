@@ -9,6 +9,8 @@ public class PettingArmPoseParams {
         case 0:
             return Boolean.valueOf(false);
         case 1:
+            return Boolean.valueOf(false);
+        case 2:
             IArmPoseTransformer ret = (x, y, z) -> {
                 PettingArmPose.applyTransform(x, y, z);
             };

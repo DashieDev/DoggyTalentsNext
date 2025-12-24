@@ -9,12 +9,13 @@ import doggytalents.client.DTNClientDogSleepOnManager;
 import net.minecraft.client.Camera;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 @Mixin(Camera.class)
 public class CameraMixin {
 
     @Inject(at = @At("TAIL"),  method = "setup", cancellable = false)
-    protected void dtn__setup(BlockGetter level, Entity entity, boolean p_90578_, boolean p_90579_, float p_90580_, CallbackInfo info) {
+    protected void dtn__setup(Level level, Entity entity, boolean p_90578_, boolean p_90579_, float p_90580_, CallbackInfo info) {
         var self = (Camera)(Object)this;
         DTNClientDogSleepOnManager.get().afterCameraSetup(self, entity);   
     }

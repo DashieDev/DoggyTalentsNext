@@ -3,7 +3,7 @@
         {
             "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
             "name": "doggytalents_petting",
-            "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+            "constructor": "(ZZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
             "parameters": {
                 "class": "doggytalents/client/PettingArmPoseParams",
                 "method": "declareParameter"
