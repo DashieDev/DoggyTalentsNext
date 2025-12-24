@@ -91,7 +91,7 @@ public class GuiUtil_1_21_9 {
         }
     }
 
-    public static abstract class AbstractButton_1_21_9 extends AbstractButton {
+    public static abstract class AbstractButton_1_21_9 extends GuiUtil_1_21_11.AbstractButton_1_21_11 {
 
         public AbstractButton_1_21_9(int x, int y, int w, int h, Component msg) {
             super(x, y, w, h, msg);

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-public class SmallButton extends Button {
+public class SmallButton extends Button.Plain {
 
     public SmallButton(int x, int y, Component text, OnPress onPress) {
         super(x, y, 12, 12, text, onPress, (c) -> Component.literal(""));
