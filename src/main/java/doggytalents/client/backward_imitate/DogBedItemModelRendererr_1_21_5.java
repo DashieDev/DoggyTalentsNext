@@ -40,7 +40,7 @@ public class DogBedItemModelRendererr_1_21_5 implements SpecialModelRenderer<Ite
             return;
         var model_part = dogBedResolver.resolve(dogBedModel, itemStack, null, null, light);
         var model = new SingleVariant(model_part);
-        collector_1_21_9.submitBlockModel(stack, ItemBlockRenderTypes.getRenderType(itemStack), model, 0, 0, 0, light, overlay, outlineColor_1_21_9);
+        collector_1_21_9.submitBlockModel(stack, DogBedUtil_1_21_11.getItemBlockRenderType(itemStack), model, 0, 0, 0, light, overlay, outlineColor_1_21_9);
     }
 
     @Override

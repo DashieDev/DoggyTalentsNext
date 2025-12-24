@@ -2,6 +2,8 @@ package doggytalents.client.block.model;
 
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
+import com.mojang.math.OctahedralGroup;
+
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.backward_imitate.AtlasUtil_1_21_9;
@@ -218,10 +220,10 @@ public class DogBedModel implements BlockStateModel {
 
     private static BlockModelRotation getModelRotation(@Nonnull Direction dir) {
         switch (dir) {
-        default:    return BlockModelRotation.X0_Y0;
-        case EAST:  return BlockModelRotation.X0_Y90;
-        case SOUTH: return BlockModelRotation.X0_Y180;
-        case WEST:  return BlockModelRotation.X0_Y270;
+        default:    return BlockModelRotation.get(OctahedralGroup.IDENTITY);
+        case EAST:  return BlockModelRotation.get(OctahedralGroup.ROT_90_Y_NEG);
+        case SOUTH: return BlockModelRotation.get(OctahedralGroup.ROT_180_FACE_XZ);
+        case WEST:  return BlockModelRotation.get(OctahedralGroup.ROT_90_Y_POS);
         }
     }
 

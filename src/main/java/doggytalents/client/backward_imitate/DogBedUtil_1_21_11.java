@@ -5,7 +5,13 @@ import org.joml.Vector3fc;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
 
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelBaker.PartCache;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 
 public class DogBedUtil_1_21_11 {
     
@@ -32,6 +38,14 @@ public class DogBedUtil_1_21_11 {
 
     public static PartCache partCacheImpl() {
         return PART_CACHE_IMPL;
+    }
+
+    public static RenderType getItemBlockRenderType(ItemStack stack) {
+        var item = stack.getItem();
+        if (!(item instanceof BlockItem block_item))
+            throw new IllegalArgumentException("Not a block item");
+        var block = block_item.getBlock();
+        return ItemBlockRenderTypes.getRenderType(block.defaultBlockState());
     }
 
 }
