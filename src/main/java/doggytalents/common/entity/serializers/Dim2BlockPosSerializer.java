@@ -13,7 +13,7 @@ public class Dim2BlockPosSerializer extends DogSerializer<Dimension2BlockPosMap>
     public void write(FriendlyByteBuf buf, Dimension2BlockPosMap value) {
         buf.writeInt(value.size());
         for (var entry : value.entrySet()) {
-            buf.writeIdentifier(entry.getKey().location());
+            buf.writeIdentifier(entry.getKey().identifier());
             EntityDataSerializers.BLOCK_POS.codec().encode((RegistryFriendlyByteBuf) buf, entry.getValue());
         }
     }

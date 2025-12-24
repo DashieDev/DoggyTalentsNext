@@ -61,7 +61,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     private RiceFromGrass createGrassRiceModifer() {
         var correct_id_codition = 
-            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().get().location())
+            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().get().identifier())
             .build();
         var not_shear_condtion = 
             MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(Registries.ITEM), Items.SHEARS))

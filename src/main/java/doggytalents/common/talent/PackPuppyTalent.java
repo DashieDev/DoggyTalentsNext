@@ -226,7 +226,7 @@ public class PackPuppyTalent extends TalentInstance {
     public void dropInventory(AbstractDog dogIn) {
         if (dogIn.level().isClientSide)
             return;
-        if (((ServerLevel)dogIn.level()).getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+        if (((ServerLevel)dogIn.level()).getGameRules().get(GameRules.KEEP_INVENTORY))
             return;
 
         //TODO either drop inventory or save to respawn data, currently does both

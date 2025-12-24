@@ -404,7 +404,7 @@ public class DoggyCommands {
         var posStr = bpos == null ? "[???]" : 
             "[ " + bpos.getX() + ", " + bpos.getY() + ", " + bpos.getZ() + " ]";
         var dim = loc.getDimension();
-        var dim_loc = dim == null ? null : dim.location(); 
+        var dim_loc = dim == null ? null : dim.identifier(); 
         var dimStr = dim == null ? "[???]" :
             "[ " + (dim_loc == null ? "" : dim_loc) + " ]";
         var dogName = loc.getDogName();

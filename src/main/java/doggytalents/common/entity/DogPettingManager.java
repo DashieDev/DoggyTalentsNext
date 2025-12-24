@@ -267,7 +267,7 @@ public class DogPettingManager {
     }
 
     public static record DogPettingState(UUID petting_id, boolean is_petting, DogPettingType type) {
-        public static DogPettingState NULL = new DogPettingState(net.minecraft.Util.NIL_UUID, false, DogPettingType.FACERUB);
+        public static DogPettingState NULL = new DogPettingState(net.minecraft.util.Util.NIL_UUID, false, DogPettingType.FACERUB);
     }
 
     public static enum DogPettingType {

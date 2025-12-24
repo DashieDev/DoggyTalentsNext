@@ -374,7 +374,7 @@ public class DogSleepOnManager {
     private static record SleepOnPair(Dog dog, Player player) {} 
 
     public static record DogSleepOnState(UUID sleeper, boolean is_sleeping, float sleep_yrot) {
-        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.Util.NIL_UUID, false, 0);
+        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.util.Util.NIL_UUID, false, 0);
     }
 
     public static class StartSleepOnDogResult {

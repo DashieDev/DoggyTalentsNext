@@ -2669,7 +2669,7 @@ public class Dog extends AbstractDog {
         }
         
         var owner = this.getOwner();
-        if (!this.level().isClientSide && ((ServerLevel)this.level()).getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
+        if (!this.level().isClientSide && ((ServerLevel)this.level()).getGameRules().get(GameRules.SHOW_DEATH_MESSAGES) && owner instanceof ServerPlayer) {
             PlayerUtil.sendSystemMessage(owner, deathMessage);
         }
     }
@@ -2893,7 +2893,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
-                NBTUtil_1_21_7.putIdentifier(bedNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putIdentifier(bedNBT, "dim", entry.getKey().identifier());
                 NBTUtil_1_21_7.putBlockPos(bedNBT, "pos", entry.getValue());
                 bedsList.add(bedNBT);
             }
@@ -2908,7 +2908,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
-                NBTUtil_1_21_7.putIdentifier(bowlsNBT, "dim", entry.getKey().location());
+                NBTUtil_1_21_7.putIdentifier(bowlsNBT, "dim", entry.getKey().identifier());
                 NBTUtil_1_21_7.putBlockPos(bowlsNBT, "pos", entry.getValue());
                 bowlsList.add(bowlsNBT);
             }

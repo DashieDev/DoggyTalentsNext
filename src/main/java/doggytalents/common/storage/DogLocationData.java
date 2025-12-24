@@ -157,7 +157,7 @@ public class DogLocationData implements IDogData {
             getCachedDog().map(Dog::position).orElse(this.position));
         var dimension = this.dimension;
         if (dimension != null)
-            NBTUtil_1_21_7.putIdentifier(compound, "dimension", dimension.location());
+            NBTUtil_1_21_7.putIdentifier(compound, "dimension", dimension.identifier());
         NBTUtil_1_21_7.putTextComponent(compound, "name_text_component", this.name);
         if (this.gender != null) {
             compound.putString("gender", this.gender.getSaveName());
