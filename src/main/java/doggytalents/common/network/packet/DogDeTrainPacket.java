@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.DoggyItems;
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.registry.Talent;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.DogDeTrainData;
@@ -46,7 +47,7 @@ public class DogDeTrainPacket extends DogPacket<DogDeTrainData> {
         var dog_level = talent_inst.level();
         if (dog_level <= 0) return;
         boolean talent_allow_detrain = 
-            sender.hasPermissions(Constants.OPERATOR_PERMISSION)
+            PlayerUtil_1_21_11.isOperator(sender)
             || talent_inst.allowDetrain(dog);
         if (!talent_allow_detrain)
             return;

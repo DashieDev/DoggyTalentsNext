@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.ObjectUtils;
 
 import doggytalents.DoggyItems;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.packet.data.ForceChangeOwnerData;
@@ -30,7 +31,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         //Only change owner if sender have access to Admin actions and
         //is in creative.
         var sender = ctx.get().getSender();
-        if (!sender.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (!PlayerUtil_1_21_11.isOperator(sender))
             return;
         if (!sender.getAbilities().instabuild)
             return;

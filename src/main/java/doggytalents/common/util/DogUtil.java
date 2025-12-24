@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.TalentOption;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.api.registry.Talent;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
@@ -652,7 +653,7 @@ public class DogUtil {
     }
 
     public static boolean playerCanTrainTalent(Player player, Talent talent) {
-        if (player != null && player.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (player != null && PlayerUtil_1_21_11.isOperator(player))
             return true;
         return (ConfigHandler.TALENT.getFlag(talent));
     }

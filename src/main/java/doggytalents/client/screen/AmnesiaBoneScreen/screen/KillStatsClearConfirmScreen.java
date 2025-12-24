@@ -2,6 +2,7 @@ package doggytalents.client.screen.AmnesiaBoneScreen.screen;
 
 import java.util.function.Consumer;
 
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.widget.CustomButton;
 import doggytalents.common.entity.Dog;
@@ -111,7 +112,7 @@ public class KillStatsClearConfirmScreen extends Screen {
         var player = Minecraft.getInstance().player;
         if (player == null)
             return;
-        if (!player.hasPermissions(4))
+        if (!PlayerUtil_1_21_11.isOperator(player))
             return;
 
         var str = Component.literal("Clear Kill Stats");

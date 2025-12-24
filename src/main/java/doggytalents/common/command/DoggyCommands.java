@@ -10,6 +10,8 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.common.command.arguments.UUIDArgument;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.CanineTrackerItem;
@@ -67,7 +69,7 @@ public class DoggyCommands {
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 literal("dog")
-                    .requires(s -> s.hasPermission(Constants.OPERATOR_PERMISSION))
+                    .requires(PlayerUtil_1_21_11.operatorCheck())
                     .then(
                         Commands.literal("locate")
                         .then(

@@ -9,6 +9,7 @@ import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.client.screen.AmnesiaBoneScreen.AmneisaBoneScreen;
 import doggytalents.client.screen.AmnesiaBoneScreen.screen.DogForceMigrateOwnerScreen;
 import doggytalents.common.entity.Dog;
@@ -63,7 +64,7 @@ public class AmnesiaBoneItem extends Item implements IDogItem, HoverTextAppender
             return;
         } 
         boolean isOpAndCreative = 
-            player.hasPermissions(Constants.OPERATOR_PERMISSION)
+            PlayerUtil_1_21_11.isOperator(player)
             && player.getAbilities().instabuild;
         if (isOpAndCreative && player.isShiftKeyDown()) {
             DogForceMigrateOwnerScreen.open(dog);

@@ -3,6 +3,7 @@ package doggytalents.common.network.packet;
 import java.util.function.Supplier;
 
 import doggytalents.DoggyItems;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
@@ -28,7 +29,7 @@ public class ForceClearKillStatsPacket extends DogPacket<ForceClearKillStatsData
     public void handleDog(Dog dogIn, ForceClearKillStatsData data, Supplier<Context> ctx) {
         //Same logic as force claim Owner.
         var sender = ctx.get().getSender();
-        if (!sender.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (!PlayerUtil_1_21_11.isOperator(sender))
             return;
         if (!sender.getAbilities().instabuild)
             return;

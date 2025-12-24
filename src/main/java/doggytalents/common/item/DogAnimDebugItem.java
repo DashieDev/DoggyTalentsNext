@@ -10,6 +10,7 @@ import doggytalents.api.backward_imitate.DogInteractionResult;
 import doggytalents.api.backward_imitate.HoverTextAppender_1_21_5;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogItem;
+import doggytalents.client.backward_imitate.PlayerUtil_1_21_11;
 import doggytalents.client.screen.DogAnimDebugScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
@@ -56,7 +57,7 @@ public class DogAnimDebugItem extends Item implements IDogItem, HoverTextAppende
     private void useActionOnDog(AbstractDog dogIn, Player player) {
         if (!(dogIn instanceof Dog dog))
             return;
-        if (!player.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (!PlayerUtil_1_21_11.isOperator(player))
             return;
         if (!player.isCreative())
             return;
