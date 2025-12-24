@@ -16,6 +16,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.backward_imitate.DogRenderState_21_3;
+import doggytalents.client.backward_imitate.RenderUtil_1_21_11;
 import doggytalents.client.backward_imitate.RenderUtil_1_21_9;
 import doggytalents.client.backward_imitate.RenderUtil_1_21_9.RenderContext_1_21_9;
 import doggytalents.client.entity.model.DogModelRegistry;
@@ -244,7 +245,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         RenderContext_1_21_9 renderContext_1_21_9, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
         
         boolean renderHealthInNameActivated = 
-            this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+            RenderUtil_1_21_11.getCameraEntity(this.entityRenderDispatcher).isShiftKeyDown()
             && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
         final String seperator = ConfigHandler.CLIENT.DOG_INFO_SEPERATOR.get();
         final Component seperator_c1 = createC1WithColor(seperator, TXCLR_SEPERATOR);
@@ -279,7 +280,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
 
         if (d0 > 5 * 5)
             return;
-        var camera_entity = this.entityRenderDispatcher.camera.getEntity();
+        var camera_entity = RenderUtil_1_21_11.getCameraEntity(this.entityRenderDispatcher);
         if (!camera_entity.isShiftKeyDown())
             return;
         if (dog.getOwner() == camera_entity)
@@ -341,7 +342,7 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         }
 
         boolean renderHealthInNameActive = 
-                this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+                RenderUtil_1_21_11.getCameraEntity(this.entityRenderDispatcher).isShiftKeyDown()
                 && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
         if (renderHealthInNameActive) {
             text = colorTextWithHealth(dog, text);
