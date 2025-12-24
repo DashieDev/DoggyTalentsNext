@@ -27,6 +27,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class RiceMillModel extends SimpleAnimatedModel {
 
@@ -35,7 +36,7 @@ public class RiceMillModel extends SimpleAnimatedModel {
 	private ModelPart hammer;
 
     public RiceMillModel(ModelPart box) {
-		super(RenderType::entityCutoutNoCull);
+		super(RenderTypes::entityCutoutNoCull);
 		this.root = box;
 		this.spin = box.getChild("spin");
 		this.hammer = box.getChild("hammer2");

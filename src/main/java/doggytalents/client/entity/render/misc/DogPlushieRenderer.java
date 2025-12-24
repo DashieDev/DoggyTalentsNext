@@ -12,6 +12,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -38,9 +39,9 @@ public class DogPlushieRenderer extends EntityRenderer_1_21_9<DogPlushie> {
             var collar_res =
                 plushie.getCollarThicc() ? Resources.COLLAR_THICC
                 : Resources.COLLAR_DEFAULT;
-            return RenderType.entityTranslucent(collar_res);
+            return RenderTypes.entityTranslucent(collar_res);
         }
-        return RenderType.entityTranslucent(getTextureLocation(plushie));
+        return RenderTypes.entityTranslucent(getTextureLocation(plushie));
     }
 
     @Override

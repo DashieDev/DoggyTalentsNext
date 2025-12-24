@@ -27,6 +27,7 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -193,12 +194,12 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
 
     private void renderAlternativeModel(Model model, Dog dog, PoseStack stack, MultiBufferSource buffer, int light, ItemStack itemStack) {
         var texLoc = DoggyArmorMapping.getMappedResource(itemStack.getItem(), dog, itemStack);
-        VertexConsumer ivertexbuilder = buffer.getBuffer(RenderType.armorCutoutNoCull(texLoc));
+        VertexConsumer ivertexbuilder = buffer.getBuffer(RenderTypes.armorCutoutNoCull(texLoc));
         model.renderToBuffer(stack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
     private void renderArmorCutout(DogArmorModel model, Identifier textureLocationIn, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, Dog entityIn, float red, float green, float blue) {
-        VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.armorCutoutNoCull(textureLocationIn));
+        VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderTypes.armorCutoutNoCull(textureLocationIn));
         model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, red, green, blue));
     }
 
@@ -209,7 +210,7 @@ public class DoggyArmorRenderer extends DogRenderLayer_21_3 {
     }
 
     private void renderGlint(PoseStack stack, MultiBufferSource buffer, int light, BaseModel_21_3 model) {
-        model.renderToBuffer(stack, buffer.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 0xffffffff);
+        model.renderToBuffer(stack, buffer.getBuffer(RenderTypes.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
 

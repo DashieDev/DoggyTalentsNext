@@ -8,6 +8,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -30,7 +31,7 @@ public class DogVariantRenderer extends DogRenderLayer_21_3 {
                 return;
             
             var custom_injured = custom_injured_optional.get();
-            VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(custom_injured));
+            VertexConsumer vertexconsumer = buffer.getBuffer(RenderTypes.entityTranslucent(custom_injured));
             this.getParentModel().renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 0xffffffff);
             return;
         }
@@ -41,7 +42,7 @@ public class DogVariantRenderer extends DogRenderLayer_21_3 {
             return;
         
         var glow_layer = glow_layer_optional.get();
-        VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(glow_layer));
+        VertexConsumer vertexconsumer = buffer.getBuffer(RenderTypes.entityTranslucent(glow_layer));
         this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 

@@ -9,13 +9,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class WrapperVanillaModel_1_21_9 extends Model<WrapperVanillaModel_1_21_9.DefferedSetupContainer_1_21_9> {
 
     private final BaseModel_21_3 wrapped;
 
     public WrapperVanillaModel_1_21_9(BaseModel_21_3 wrapped) {
-        super(new ModelPart(List.of(), Map.of()), RenderType::entityTranslucent);
+        super(new ModelPart(List.of(), Map.of()), RenderTypes::entityTranslucent);
         this.wrapped = wrapped;
     }
 

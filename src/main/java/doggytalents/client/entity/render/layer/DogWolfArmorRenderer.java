@@ -16,6 +16,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -98,7 +99,7 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
     }
 
     private void renderWolfArmorLayerMain(DogModel model, PoseStack poseStack, MultiBufferSource buffer, int light, Item item) {
-        var vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(WOLF_ARMOR_MAIN_21_3));
+        var vertexConsumer = buffer.getBuffer(RenderTypes.entityCutoutNoCull(WOLF_ARMOR_MAIN_21_3));
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
 
@@ -120,7 +121,7 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
         
         model
             .renderToBuffer(
-                stack, buffer.getBuffer(RenderType.entityCutoutNoCull(armor_overlay)), light, 
+                stack, buffer.getBuffer(RenderTypes.entityCutoutNoCull(armor_overlay)), light, 
                 OverlayTexture.NO_OVERLAY, ARGB.colorFromFloat(1, r, g, b)
             );
     }
@@ -131,7 +132,7 @@ public class DogWolfArmorRenderer extends DogRenderLayer_21_3 {
             return;
 
         var crack_rl = ARMOR_CRACK_LOCATIONS.get(crack_level);
-        var vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(crack_rl));
+        var vertexconsumer = buffer.getBuffer(RenderTypes.entityTranslucent(crack_rl));
         model.renderToBuffer(stack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
     }
     

@@ -8,6 +8,7 @@ import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implements IBaseDogModel_21_3 {
@@ -32,7 +33,7 @@ public abstract class BaseDogModel_21_3 extends BaseEntityModel_21_3<Dog> implem
         Dog dog,
         int color_overlay
     ) {
-        VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
+        VertexConsumer vertexconsumer = buffer.getBuffer(RenderTypes.entityCutoutNoCull(texture));
         model.renderToBuffer(stack, vertexconsumer, light, DogRenderer.getOverlayCoords(dog, 0.0F), color_overlay);
     }
 

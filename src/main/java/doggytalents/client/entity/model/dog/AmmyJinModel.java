@@ -9,13 +9,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class AmmyJinModel extends DogModel {
 
 	
 
     public AmmyJinModel(ModelPart box) {
-		super(box, RenderType::entityTranslucent);
+		super(box, RenderTypes::entityTranslucent);
 	}
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

@@ -2,6 +2,7 @@ package doggytalents.client.backward_imitate;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
@@ -51,8 +52,8 @@ public class DogBedItemModelRendererr_1_21_5 implements SpecialModelRenderer<Ite
 
     //1.21.7+
     @Override
-    public void getExtents(Set<Vector3f> extents) {
-        extents.addAll(Arrays.asList(DefaultExtent_1_21_7.EXTENTS));
+    public void getExtents(Consumer<Vector3fc> extents) {
+        Arrays.stream(DefaultExtent_1_21_7.EXTENTS).forEach(extents);
     }
     
 }

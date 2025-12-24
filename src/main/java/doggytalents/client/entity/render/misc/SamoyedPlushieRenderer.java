@@ -10,6 +10,7 @@ import doggytalents.common.entity.misc.SamoyedPlushie;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -31,7 +32,7 @@ public class SamoyedPlushieRenderer extends EntityRenderer_1_21_9<SamoyedPlushie
     }
 
     private RenderType getRenderType(SamoyedPlushie plushie) {
-        return RenderType.entityTranslucent(getTextureLocation(plushie));
+        return RenderTypes.entityTranslucent(getTextureLocation(plushie));
     }
 
     @Override

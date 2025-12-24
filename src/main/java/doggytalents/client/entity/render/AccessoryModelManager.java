@@ -18,6 +18,7 @@ import doggytalents.common.lib.Resources;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -82,7 +83,7 @@ public class AccessoryModelManager {
     }
 
     public static void renderColoredCutoutModel(SyncedAccessoryModel p_117377_, Identifier p_117378_, PoseStack p_117379_, MultiBufferSource p_117380_, int p_117381_, Dog p_117382_, float p_117383_, float p_117384_, float p_117385_) {
-        VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderType.entityCutoutNoCull(p_117378_));
+        VertexConsumer vertexconsumer = p_117380_.getBuffer(RenderTypes.entityCutoutNoCull(p_117378_));
         p_117377_.renderToBuffer(p_117379_, vertexconsumer, p_117381_, DogRenderer.getOverlayCoords(p_117382_, 0.0F), ARGB.colorFromFloat(1, p_117383_, p_117384_, p_117385_));
     }
 

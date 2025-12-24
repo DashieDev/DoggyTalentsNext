@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.particles.ParticleTypes;
 
 public class AmaterasuModel extends DogModel {
@@ -16,7 +17,7 @@ public class AmaterasuModel extends DogModel {
 	
 
     public AmaterasuModel(ModelPart box) {
-		super(box, RenderType::entityTranslucent);
+		super(box, RenderTypes::entityTranslucent);
 	}
 
 	public static LayerDefinition createBodyLayer() {

@@ -12,6 +12,7 @@ import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -45,7 +46,7 @@ public class RiceMillRenderer extends BlockEntityRenderer_1_21_9<RiceMillBlockEn
         context_1_21_9.renderState().defferedSetup_1_21_9 = () -> { //1.21.9+
         this.model.setUpMillAnim(mill, pTicks);
         }; //1.21.9+
-        var renderType_1_21_9 = (RenderType.entityCutoutNoCull(Resources.RICE_MILL_MODEL));
+        var renderType_1_21_9 = (RenderTypes.entityCutoutNoCull(Resources.RICE_MILL_MODEL));
         this.submitModel(context_1_21_9, this.model, renderType_1_21_9, stack, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
         stack.popPose();
     }

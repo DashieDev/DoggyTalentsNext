@@ -24,6 +24,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -122,7 +123,7 @@ public class CanineTrackerLocateRenderer {
         var bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 
         //TODO For some reason, this line is required for the below lines to work...
-        bufferSource.getBuffer(RenderType.text(Resources.SMALL_WIDGETS));
+        bufferSource.getBuffer(RenderTypes.text(Resources.SMALL_WIDGETS));
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;

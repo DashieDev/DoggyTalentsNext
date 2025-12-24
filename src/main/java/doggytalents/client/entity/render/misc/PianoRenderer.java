@@ -13,6 +13,7 @@ import doggytalents.common.entity.misc.Piano.PianoType;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
@@ -56,7 +57,7 @@ public class PianoRenderer extends EntityRenderer_1_21_9<Piano> {
     }
     
     private RenderType getRenderType(Piano piano) {
-        return RenderType.entityTranslucent(getTextureLocation(piano));
+        return RenderTypes.entityTranslucent(getTextureLocation(piano));
     }
 
     @Override
