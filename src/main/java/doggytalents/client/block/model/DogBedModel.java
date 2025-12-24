@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Either;
 import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.client.backward_imitate.AtlasUtil_1_21_9;
+import doggytalents.client.backward_imitate.DogBedUtil_1_21_11;
 import doggytalents.client.backward_imitate.WrappedDogBedItemOverride_21_3;
 import doggytalents.common.block.DogBedMaterialManager.NaniBedding;
 import doggytalents.common.block.DogBedMaterialManager.NaniCasing;
@@ -351,7 +352,7 @@ public class DogBedModel implements BlockStateModel {
     private static SimpleModelWrapper bakeModel_1_21_5(BlockModel model, Direction dir) {
         var resolved_model = resolvedModel_1_21_5(model);
         var baker = modelBaker_1_21_5(resolved_model);
-        return SimpleModelWrapper.bake(baker, resolved_model, getModelRotation(dir));
+        return (SimpleModelWrapper) SimpleModelWrapper.bake(baker, resolved_model, getModelRotation(dir));
     }
 
     public static ResolvedModel resolvedModel_1_21_5(UnbakedModel model) {
@@ -404,6 +405,16 @@ public class DogBedModel implements BlockStateModel {
             @Override
             public <T> T compute(SharedOperationKey<T> p_410340_) {
                 return p_410340_.compute(this);
+            }
+
+            @Override
+            public BlockModelPart missingBlockModelPart() {
+                throw new IllegalStateException("Unhandled missing DogBed's BlockModelPart! Please report to the DTN Devs.");
+            }
+
+            @Override
+            public PartCache parts() {
+                return DogBedUtil_1_21_11.partCacheImpl();
             }
             
         };
