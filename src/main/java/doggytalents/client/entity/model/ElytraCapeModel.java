@@ -60,7 +60,7 @@ public class ElytraCapeModel extends AnimatedSyncedAccessoryModel {
     private Vector3f vecObj = new Vector3f(0, 0, 0);
 
     @Override
-    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
         var animationManager = dog.animationManager;
         var animState = animationManager.animationState;

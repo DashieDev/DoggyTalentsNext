@@ -51,7 +51,7 @@ public class AngelHaloModel extends AnimatedSyncedAccessoryModel {
     }
 
     @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
         var animLenMillis = (long)HALO_SPINNA.lengthInSeconds() * 1000;
         var offset = (entityIn.getId() % 6) * (20 * 0.5);

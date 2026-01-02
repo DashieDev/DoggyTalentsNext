@@ -29,7 +29,7 @@ public class PackPuppyRenderer extends DogRenderLayer_21_3 {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
         if (dog.isInvisible()) {
             return;
         }
@@ -49,7 +49,7 @@ public class PackPuppyRenderer extends DogRenderLayer_21_3 {
         if (inst.isPresent() && inst.get().renderChest()) {
             this.getParentModel().copyPropertiesTo(this.model);
             this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
             this.model.sync(getParentModel());
 
             BaseDogModel_21_3.renderColoredCutoutModel(this.model, Resources.TALENT_CHEST, poseStack, buffer, packedLight, dog, 0xffffffff);

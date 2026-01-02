@@ -51,7 +51,7 @@ public class DogMouthItemRenderer extends DogRenderLayerNew_1_21_9 {
     }
 
     @Override
-    public void submit(PoseStack matrixStack, RenderContext_1_21_9 context_1_21_9, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void submit(PoseStack matrixStack, RenderContext_1_21_9 context_1_21_9, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
         if (!ConfigHandler.CLIENT.MOUTH_ITEM_FORCE_RENDER.get()) {
             var skin = dog.getClientSkin();
             if (skin.useCustomModel()) {
@@ -71,11 +71,11 @@ public class DogMouthItemRenderer extends DogRenderLayerNew_1_21_9 {
         model.copyPropertiesTo(itemSyncer);
         itemSyncer.sync(model);
         itemSyncer.startRenderFromRoot(matrixStack, matrixStack1 -> {
-            renderItem(matrixStack1, context_1_21_9.nodeCollector(), packedLight, dog, netHeadYaw, headPitch, stack, context_1_21_9.dogRenderState());
+            renderItem(matrixStack1, context_1_21_9.nodeCollector(), packedLight, dog, relativeHeadYRot, headPitch, stack, context_1_21_9.dogRenderState());
         });
     }
 
-    public void renderItem(PoseStack stack, SubmitNodeCollector collector_1_21_9, int packedLight, Dog dog, float netHeadYaw, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
+    public void renderItem(PoseStack stack, SubmitNodeCollector collector_1_21_9, int packedLight, Dog dog, float relativeHeadYRot, float headPitch, ItemStack itemStack, DogRenderState_21_3 render_state) {
         //1.21.3+ check
         // var item_model_1_21_3 = render_state.getMainHandItemModel();
         // if (item_model_1_21_3 == null) return;

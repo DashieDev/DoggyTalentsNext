@@ -86,7 +86,7 @@ public abstract class SyncedAccessoryModel extends BaseDogModel_21_3 {
     }
 
     @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
 
     }
 }

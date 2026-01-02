@@ -31,9 +31,9 @@ public class PropellerHatModel extends SyncedAccessoryModel {
     }
 
     @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
-        super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
         this.spinna.yRot = 24*ageInTicks % 360 * Mth.DEG_TO_RAD;
     }
     
