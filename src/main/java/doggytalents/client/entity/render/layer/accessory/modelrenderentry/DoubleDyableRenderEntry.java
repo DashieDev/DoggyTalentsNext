@@ -19,13 +19,13 @@ public abstract class DoubleDyableRenderEntry extends Entry {
     public void renderAccessory(RenderLayer<Dog, DogModel> layer, 
         PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
         Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
-        float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance inst) {
+        float ageInTicks, float relativeHeadYRot, float headPitch, AccessoryInstance inst) {
         
         var model = this.getModel();
         var dogModel = layer.getParentModel();
         dogModel.copyPropertiesTo(model);
         model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-        model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
         model.sync(dogModel);
         
         if (!(inst instanceof DoubleDyableAccessoryInstance dInst))

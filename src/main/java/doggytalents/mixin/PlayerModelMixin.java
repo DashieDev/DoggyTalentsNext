@@ -13,9 +13,9 @@ import net.minecraft.world.entity.LivingEntity;
 public class PlayerModelMixin {
     
     @Inject(at = @At("TAIL"),  method = "setupAnim")
-    protected void dtn__setupAnim(LivingEntity player, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
+    protected void dtn__setupAnim(LivingEntity player, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch, CallbackInfo info) {
         var self = (PlayerModel<?>)(Object) this;
-        DTNClientDogSleepOnManager.get().afterPlayerModelSetupAnim(player, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, self);
+        DTNClientDogSleepOnManager.get().afterPlayerModelSetupAnim(player, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch, self);
     }
 
 }

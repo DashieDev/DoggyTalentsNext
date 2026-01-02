@@ -54,13 +54,13 @@ public class MidiKeyboardRenderEntry extends Entry{
     @Override
     public void renderAccessory(RenderLayer<Dog, DogModel> layer, PoseStack poseStack, MultiBufferSource buffer,
             int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks,
-            float netHeadYaw, float headPitch, AccessoryInstance inst) {
+            float relativeHeadYRot, float headPitch, AccessoryInstance inst) {
         
         var model = this.getModel();
             var dogModel = layer.getParentModel();
             dogModel.copyPropertiesTo(model);
             model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-            model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
             model.sync(dogModel);
             
             float[] color = new float[]{1.0f, 1.0f, 1.0f};

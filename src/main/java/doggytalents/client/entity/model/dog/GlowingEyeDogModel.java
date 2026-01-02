@@ -32,9 +32,9 @@ public class GlowingEyeDogModel extends DogModel {
     }
 
     @Override
-    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
-        super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
         this.glowingEyes.copyFrom(this.head);
         this.realGlowingEyes.copyFrom(this.realHead);
     }

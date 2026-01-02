@@ -230,7 +230,7 @@ public class DogModel extends EntityModel<Dog> {
     private float headXRot0 = 0, headYRot0 = 0, realHeadZRot0 = 0;
 
     @Override
-    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
 
@@ -241,7 +241,7 @@ public class DogModel extends EntityModel<Dog> {
 
         if (pose.freeHead) {
             this.head.xRot += headPitch * ((float)Math.PI / 180F); 
-            this.head.yRot += netHeadYaw *  Mth.DEG_TO_RAD;
+            this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
             this.tail.xRot = dog.getTailRotation();

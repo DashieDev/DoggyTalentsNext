@@ -85,7 +85,7 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
 
     }
 }

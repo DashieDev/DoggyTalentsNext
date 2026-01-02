@@ -168,7 +168,7 @@ public class UprightPianoModel extends EntityModel<Piano> {
 	}
 
 	@Override
-	public void setupAnim(Piano entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(Piano entity, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
 
 	}
 

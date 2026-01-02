@@ -127,7 +127,7 @@ public class DTNClientDogSleepOnManager {
     }
 
     public void afterPlayerModelSetupAnim(LivingEntity living, float limbSwing, 
-        float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, PlayerModel<?> model) {
+        float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch, PlayerModel<?> model) {
         var player_optional = checkIsSleepingOnDog(living);
         if (!player_optional.isPresent())
             return;
