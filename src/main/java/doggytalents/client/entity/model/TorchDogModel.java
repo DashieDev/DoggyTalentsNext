@@ -58,7 +58,7 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
     private Vector3f vecObj = new Vector3f(0, 0, 0);
     
     @Override
-    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+    public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
         var animLenMillis = (long)TORCH_SPINNA.lengthInSeconds() * 1000;
         var offset = (entityIn.getId() % 6) * (20 * 0.5);

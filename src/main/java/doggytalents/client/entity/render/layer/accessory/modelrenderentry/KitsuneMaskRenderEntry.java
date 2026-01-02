@@ -47,13 +47,13 @@ public class KitsuneMaskRenderEntry extends Entry {
     @Override
     public void renderAccessory(RenderLayer<Dog, DogModel> layer, PoseStack poseStack, MultiBufferSource buffer,
             int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks,
-            float netHeadYaw, float headPitch, AccessoryInstance inst) {
+            float relativeHeadYRot, float headPitch, AccessoryInstance inst) {
         this.model.wear();
         if (inst instanceof KitsuneMask.Inst kitsuneInst && kitsuneInst.unwear) {
             this.model.unWear();
         }
         super.renderAccessory(layer, poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks,
-                netHeadYaw, headPitch, inst);
+                relativeHeadYRot, headPitch, inst);
     }
     
 }

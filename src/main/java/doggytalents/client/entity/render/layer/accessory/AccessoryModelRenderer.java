@@ -25,7 +25,7 @@ public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
         //TODO Temporary disable baby dog rendering accesory model
         if (dog.isInvisible()) {
             return;
@@ -44,7 +44,7 @@ public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
             var hasModelAccessory = (IAccessoryHasModel) accessory;
             hasModelAccessory.getRenderEntry().renderAccessory(
                 this, poseStack, buffer, packedLight, dog, limbSwing, 
-                limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
+                limbSwingAmount, partialTicks, ageInTicks, relativeHeadYRot, headPitch, accessoryInst);
         }
 
     }

@@ -36,7 +36,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
         // Only show armour if dog is tamed or visible
         if (!dog.isTame() || dog.isInvisible()) {
             return;
@@ -55,14 +55,14 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
                 continue;
             if (!isOverlay(accessory)) continue;               
             if (accessory.hasHindLegDiffTex()) {
-                this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
+                this.renderHindLegDifferentAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, relativeHeadYRot, headPitch, accessoryInst);
             } else {
-                this.renderNormalAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, accessoryInst);
+                this.renderNormalAccessory(poseStack, buffer, packedLight, dog, limbSwing, limbSwingAmount, partialTicks, ageInTicks, relativeHeadYRot, headPitch, accessoryInst);
             }
         }
     }
 
-    private void renderNormalAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
+    private void renderNormalAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch, AccessoryInstance accessoryInst) {
         var parentModel = this.getParentModel();
 
         DogModel dogModel;
@@ -94,7 +94,7 @@ public class DefaultAccessoryRenderer extends RenderLayer<Dog, DogModel> {
         dogModel.tail.visible = tailVisible0;
     }
 
-    private void renderHindLegDifferentAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, AccessoryInstance accessoryInst) {
+    private void renderHindLegDifferentAccessory(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch, AccessoryInstance accessoryInst) {
         var parentModel = this.getParentModel();
 
         DogModel dogModel;
