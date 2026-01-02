@@ -241,7 +241,7 @@ public class DogModel extends EntityModel<Dog> {
 
         if (pose.freeHead) {
             this.head.xRot += headPitch * ((float)Math.PI / 180F); 
-            this.head.yRot += netHeadYaw * (dog.isInSittingPose() && dog.isLying() ? 0.005F : (float)Math.PI / 180F);
+            this.head.yRot += netHeadYaw *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
             this.tail.xRot = dog.getTailRotation();
