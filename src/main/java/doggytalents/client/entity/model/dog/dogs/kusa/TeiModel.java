@@ -1,7 +1,10 @@
-package doggytalents.client.entity.model.dog.kusa;
+package doggytalents.client.entity.model.dog.dogs.kusa;
 
+import doggytalents.api.anim.AltDogAnimationSequences;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -9,11 +12,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.rendertype.RenderType;
 
-public class ReiModel extends DogModel {
+public class TeiModel extends DogModel {
 
-    public ReiModel(ModelPart box) {
+    public TeiModel(ModelPart box) {
 		super(box);
 	}
 
@@ -24,9 +26,11 @@ public class ReiModel extends DogModel {
 		var head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create(), 
             PartPose.offset(0F, 13.5F, -7.0F));
 		var real_head = head.addOrReplaceChild("real_head", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, -2.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(-0.1F))
-		.texOffs(1, 1).addBox(-3.0F, -3.95F, -2.0F, 6.0F, 2.0F, 3.0F, new CubeDeformation(-0.35F))
+		.texOffs(1, 1).addBox(-3.0F, -3.7F, -1.75F, 6.0F, 2.0F, 3.0F, new CubeDeformation(-0.35F))
+		.texOffs(54, 0).addBox(0.75F, 0.48F, -4.75F, 1.0F, 3.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(54, 0).mirror().addBox(-1.75F, 0.48F, -4.75F, 1.0F, 3.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
 		.texOffs(0, 10).addBox(-1.5F, -0.22F, -5.0F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.2F)), PartPose.ZERO);
-
+	
 		real_head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(15, 15).addBox(-1.5F, 0.0F, -2.25F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.3F))
 		.texOffs(16, 12).addBox(-1.7F, 0.6F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(0.04F))
 		.texOffs(16, 12).addBox(-2.3F, 0.85F, -2.25F, 1.0F, 3.0F, 3.0F, new CubeDeformation(-0.05F))
@@ -44,14 +48,14 @@ public class ReiModel extends DogModel {
 
 		CubeListBuilder var4 = CubeListBuilder.create().texOffs(44, 19).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
         CubeListBuilder var4_1 = CubeListBuilder.create().texOffs(0, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, CubeDeformation.NONE);
-		partdefinition.addOrReplaceChild("right_hind_leg", var4, PartPose.offset(-1.5F, 16.0F, 7.0F));
+        partdefinition.addOrReplaceChild("right_hind_leg", var4, PartPose.offset(-1.5F, 16.0F, 7.0F));
         partdefinition.addOrReplaceChild("left_hind_leg", var4, PartPose.offset(1.5F, 16.0F, 7.0F));
         partdefinition.addOrReplaceChild("right_front_leg", var4_1, PartPose.offset(-1.5F, 16.0F, -4.0F));
         partdefinition.addOrReplaceChild("left_front_leg", var4_1, PartPose.offset(1.5F, 16.0F, -4.0F));
 		var tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 12.0F, 8.0F, 1.8326F, 0.0F, 0.0F));
 
 		tail.addOrReplaceChild("real_tail", CubeListBuilder.create().texOffs(9, 18).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.ZERO);
-
+        
 		return LayerDefinition.create(meshdefinition, 64, 64);
 
     }
@@ -60,4 +64,13 @@ public class ReiModel extends DogModel {
     public boolean useDefaultModelForAccessories() {
         return true;
     }
+
+	@Override
+	protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+		if (anim == DogAnimation.HOWL) {
+			return AltDogAnimationSequences.VICTORY_HOWL_ALT;
+		}
+		return super.getAnimationSequence(anim);
+	}
+
 }

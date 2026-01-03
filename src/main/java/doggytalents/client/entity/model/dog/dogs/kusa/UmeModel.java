@@ -1,4 +1,4 @@
-package doggytalents.client.entity.model.dog.kusa;
+package doggytalents.client.entity.model.dog.dogs.kusa;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
@@ -9,11 +9,10 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.rendertype.RenderType;
 
-public class HayabusaModel extends DogModel {
+public class UmeModel extends DogModel {
 
-    public HayabusaModel(ModelPart box) {
+    public UmeModel(ModelPart box) {
 		super(box);
 	}
 
@@ -27,7 +26,7 @@ public class HayabusaModel extends DogModel {
 		.texOffs(23, 0).addBox(-1.5F, -0.07F, -4.5F, 3.0F, 3.0F, 4.0F, new CubeDeformation(-0.3F)), PartPose.ZERO);
 
 		var bone = real_head.addOrReplaceChild("right_ear", CubeListBuilder.create(), PartPose.offset(1.6753F, -3.65F, -0.2839F));
-
+		
 		bone.addOrReplaceChild("head_r1", CubeListBuilder.create().texOffs(0, 3).addBox(-0.1F, -1.2F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
 		.texOffs(0, 3).addBox(0.2F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
 		.texOffs(0, 3).addBox(-0.4F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F))
@@ -35,13 +34,13 @@ public class HayabusaModel extends DogModel {
 		.texOffs(0, 0).addBox(-0.7F, -0.3F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.6545F, 0.0F));
 
 		var bone2 = real_head.addOrReplaceChild("left_ear", CubeListBuilder.create(), PartPose.offset(-1.6753F, -3.65F, -0.2839F));
-
+		
 		bone2.addOrReplaceChild("head_r2", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(-1.3F, -0.3F, -0.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
 		.texOffs(18, 13).mirror().addBox(-1.5F, -1.2F, -0.75F, 3.0F, 3.0F, 1.0F, new CubeDeformation(-0.7F)).mirror(false)
 		.texOffs(0, 3).mirror().addBox(-0.6F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
 		.texOffs(0, 3).mirror().addBox(-1.2F, -0.7F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false)
 		.texOffs(0, 3).mirror().addBox(-0.9F, -1.2F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.6545F, 0.0F));
-	
+
         var body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 13).addBox(-3.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
         var upper_body = partdefinition.addOrReplaceChild("upper_body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -3.0F, -3.0F, 8.0F, 6.0F, 7.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0F, 14.0F, -3.0F, 1.5707964F, 0.0F, 0.0F));
 
@@ -57,9 +56,10 @@ public class HayabusaModel extends DogModel {
 		.texOffs(8, 28).addBox(-1.0F, 3.3F, -0.1F, 2.0F, 5.0F, 2.0F, new CubeDeformation(-0.25F))
 		.texOffs(16, 28).addBox(-1.0F, 4.4F, 2.3F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.45F))
 		.texOffs(16, 28).addBox(-1.0F, 3.5F, 2.8F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.65F)), PartPose.ZERO);
-
+        
 		return LayerDefinition.create(meshdefinition, 64, 64);
-	}
+
+    }
 
 	@Override
     public boolean useDefaultModelForAccessories() {

@@ -4,7 +4,7 @@ import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.HeadBandModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.WigModel;
-import doggytalents.client.entity.model.dog.kusa.LocatorOrbModel;
+import doggytalents.client.entity.model.dog.dogs.kusa.LocatorOrbModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;

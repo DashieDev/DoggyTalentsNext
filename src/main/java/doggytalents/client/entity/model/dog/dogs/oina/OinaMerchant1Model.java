@@ -1,4 +1,4 @@
-package doggytalents.client.entity.model.dog.oina;
+package doggytalents.client.entity.model.dog.dogs.oina;
 
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.registry.Accessory;
