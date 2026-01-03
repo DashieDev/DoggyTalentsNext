@@ -1,4 +1,4 @@
-package doggytalents.client.entity.model.dog.oina;
+package doggytalents.client.entity.model.dog.dogs.oina;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import net.minecraft.client.model.geom.ModelPart;

@@ -2,7 +2,7 @@ package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
-import doggytalents.client.entity.model.dog.kusa.LocatorOrbModel;
+import doggytalents.client.entity.model.dog.dogs.kusa.LocatorOrbModel;
 import doggytalents.common.lib.Resources;
 import doggytalents.forge_imitate.event.client.EntityRenderersEvent.RegisterLayerDefinitions;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;

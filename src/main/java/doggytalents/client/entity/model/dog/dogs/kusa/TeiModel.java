@@ -1,4 +1,4 @@
-package doggytalents.client.entity.model.dog.kusa;
+package doggytalents.client.entity.model.dog.dogs.kusa;
 
 import doggytalents.api.anim.AltDogAnimationSequences;
 import doggytalents.api.anim.DogAnimation;
