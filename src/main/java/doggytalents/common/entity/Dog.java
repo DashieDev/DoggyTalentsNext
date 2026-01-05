@@ -96,6 +96,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.StatFormatter;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
@@ -1798,6 +1799,12 @@ public class Dog extends AbstractDog {
             this.hurtTime = 0;
             this.hurtDuration = 0;
         }
+
+        
+        if (this.level().isClientSide) {
+            this.walkAnimation.setSpeed(0);
+            this.walkAnimation.update(0, 0);
+        }
         return ret;
     }
 
@@ -1869,6 +1876,8 @@ public class Dog extends AbstractDog {
 
         if (wasSitting || real_hurt_amount >= 6) {
             this.setAnim(DogAnimation.HURT_1);
+            this.walkAnimation.setSpeed(0);
+            this.walkAnimation.update(0, 0);
             return;
         }
 

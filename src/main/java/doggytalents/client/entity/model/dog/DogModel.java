@@ -21,6 +21,7 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.entity.model.animation.DogWalkAnimationSequences;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -62,6 +63,9 @@ public class DogModel extends EntityModel<Dog> {
     //Optional parts
     public Optional<ModelPart> earLeft;
     public Optional<ModelPart> earRight;
+
+    private final AnimSnapshot animSnapshot1 = new AnimSnapshot();
+    private final AnimSnapshot animSnapshot2 = new AnimSnapshot();
 
     public DogModel(ModelPart box) {
         initDogModel(box);
@@ -153,16 +157,21 @@ public class DogModel extends EntityModel<Dog> {
 
         var pose = dog.getDogPose();
 
-        var anim = dog.getAnim();
-        if (anim != DogAnimation.NONE) {
-            if (anim.freeHead() && pose.canBeg)
-                this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-            return;
-        };
+        // var anim = dog.getAnim();
+        // if (anim != DogAnimation.NONE) {
+        //     if (anim.freeHead() && pose.canBeg)
+        //         this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+        //     return;
+        // };
 
-        boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, partialTickTime);
-        if (stand_pose)
+        if (dog.getAnim() == DogAnimation.SIT_DOWN) {
             this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+        } else {
+            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, partialTickTime);
+            if (stand_pose)
+                this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+        }
+        
 
         if (pose.canShake)
         this.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
@@ -173,7 +182,31 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
+        animateWalkAndRun(dog, limbSwing, limbSwingAmount, partialTickTime);
+        //animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
+    }
+
+    public void animateWalkAndRun(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.headXRot0 = 0; this.headYRot0 = 0; this.realHeadZRot0 = 0;
+        final var walk_anim = DogWalkAnimationSequences.WALKING;
+        final var run_anim = DogWalkAnimationSequences.RUNNING;
+        
+        final var walk_pose = this.animSnapshot1;
+        final var run_pose = this.animSnapshot2;
+        var walk_pos = dog.walkAnimation.position(partialTickTime);
+        var walk_speed = dog.walkAnimation.speed(partialTickTime);
+        var walk_timeline = (long) (walk_pos * 50 * 1.5);
+        var run_timeline = (long) (walk_pos * 50);
+        float run_threshold = 0.8f;
+        var anim_blend = walk_speed < run_threshold ? 0 
+            : Mth.clamp((walk_speed - run_threshold)/(1 - run_threshold), 0, 1);
+        DogKeyframeAnimations.animate(this, dog, walk_anim, walk_timeline, walk_speed, vecObj);
+        walk_pose.store(this);
+        this.resetAllPose();
+        DogKeyframeAnimations.animate(this, dog, run_anim, run_timeline, 1, vecObj);
+        run_pose.store(this);
+        this.resetAllPose();
+        AnimSnapshot.blendAndApply(anim_blend, walk_pose, run_pose, this);
     }
 
     public void animateStandWalking(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -264,11 +297,23 @@ public class DogModel extends EntityModel<Dog> {
         anim.rootRotation().ifPresent(x -> {
             this.root.yRot += x * Mth.DEG_TO_RAD;
         });
+
+        animSnapshot1.store(this);
+        this.resetAllPose();
         
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
             DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
+
+        animSnapshot2.store(this);
+        this.resetAllPose();
+        
+        final float blend_time_millis = 250;
+        long anim_time_millis = animState.getAccumulatedTimeMillis();
+        float progress = anim_time_millis >= blend_time_millis ? 1
+            : anim_time_millis / blend_time_millis;
+        AnimSnapshot.blendAndApply(progress, animSnapshot1, animSnapshot2, this);
     }
 
     private void setDogUpDebugAnim(Dog dog) {
