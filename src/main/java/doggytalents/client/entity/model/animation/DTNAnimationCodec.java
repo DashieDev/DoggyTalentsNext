@@ -1,22 +1,23 @@
 package doggytalents.client.entity.model.animation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.joml.Vector3f;
 
 import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.Mth;
 
 public class DTNAnimationCodec {
     
@@ -51,7 +52,7 @@ public class DTNAnimationCodec {
             builder -> builder.group(
                 Codec.FLOAT.fieldOf("length")
                     .forGetter(AnimationDefinition::lengthInSeconds),
-                Codec.BOOL.fieldOf("loop")
+                Codec.BOOL.optionalFieldOf("loop", false)
                     .forGetter(AnimationDefinition::looping),
                 channelWithPartCodec().listOf().xmap(
                     DTNAnimationCodec::channelWithPartListToMap,
@@ -89,7 +90,8 @@ public class DTNAnimationCodec {
     private static final ImmutableBiMap<String, AnimationChannel.Target>
         CHANNEL_TYPE_BY_ID = ImmutableBiMap.of(
             "position", AnimationChannel.Targets.POSITION,
-            "rotation", AnimationChannel.Targets.ROTATION
+            "rotation", AnimationChannel.Targets.ROTATION,
+            "scale", AnimationChannel.Targets.SCALE
         );
     private static final AnimationChannel.Target getChannelTypeFromId(String id) {
         return CHANNEL_TYPE_BY_ID.get(id);
@@ -100,41 +102,80 @@ public class DTNAnimationCodec {
     private record ChannelWithPart(String part, AnimationChannel channel) {
         public AnimationChannel.Target type() { return channel.target(); }
         public List<Keyframe> keyframesForEncode() { 
-            return fixChannelWhenEncode(channel); 
+            return processChannelWhenEncode(channel); 
         }
         public static ChannelWithPart of(String part, AnimationChannel.Target type, 
             List<Keyframe> keyframes) {
             return new ChannelWithPart(part, 
-                fixChannelWhenDecode(type, keyframes));
+                processChannelWhenDecode(type, keyframes));
         }
     }
-    private static AnimationChannel fixChannelWhenDecode(
-        AnimationChannel.Target type, List<Keyframe> keyframes) {
-        
-        if (type != AnimationChannel.Targets.ROTATION)
-            return new AnimationChannel(type, keyframes.toArray(Keyframe[]::new));
-
-        var new_keyframes = keyframes.stream()
-            .map(kf -> {
-                var old_value = kf.target();
-                var new_value = new Vector3f(-old_value.x(), -old_value.y(), old_value.z());
-                return new Keyframe(kf.timestamp(), new_value, kf.interpolation());
-            })
-            .toArray(Keyframe[]::new);
-        return new AnimationChannel(type, new_keyframes);
+    private static record KeyframeProcessor(
+        KeyframeValueFunction whenDecode, KeyframeValueFunction whenEncode
+    ) {
+        public static KeyframeProcessor of(KeyframeValueFunction whenDecode, 
+            KeyframeValueFunction whenEncode) {
+            return new KeyframeProcessor(whenDecode, whenEncode);
+        }
     }
-    private static List<Keyframe> fixChannelWhenEncode(AnimationChannel channel) {
-        var type = channel.target();
-        if (type != AnimationChannel.Targets.ROTATION)
-            return Arrays.asList(channel.keyframes());
+    private static final ImmutableMap<AnimationChannel.Target, KeyframeProcessor>
+        KEYFRAME_PROCESSORS = ImmutableMap.of(
+            
+            AnimationChannel.Targets.POSITION, 
+            KeyframeProcessor.of(KeyframeAnimations::posVec, KeyframeAnimations::posVec),
+            
+            AnimationChannel.Targets.ROTATION,
+            KeyframeProcessor.of(KeyframeAnimations::degreeVec, DTNAnimationCodec::invertedRotationVec),
+
+            AnimationChannel.Targets.SCALE,
+            KeyframeProcessor.of(KeyframeAnimations::scaleVec, DTNAnimationCodec::invertedScaleVec)
         
-        return Arrays.stream(channel.keyframes())
-            .map(kf -> {
-                var old_value = kf.target();
-                var new_value = new Vector3f(-old_value.x(), -old_value.y(), old_value.z());
-                return new Keyframe(kf.timestamp(), new_value, kf.interpolation());
-            })
-            .collect(Collectors.toList());
+        );
+    private static AnimationChannel processChannelWhenDecode(
+        AnimationChannel.Target type, List<Keyframe> rawKeyframes) {
+
+        final var keyframe_processor = KEYFRAME_PROCESSORS.get(type);
+        final boolean fix_rotation = type == AnimationChannel.Targets.ROTATION;
+
+        var keyframes = new ArrayList<Keyframe>(rawKeyframes.size());
+        for (var raw_keyframe : rawKeyframes) {
+            var value = raw_keyframe.target();
+            
+            value = keyframe_processor.whenDecode()
+                .apply(value.x, value.y, value.z);
+            
+            if (fix_rotation)
+                value = new Vector3f(-value.x, -value.y, value.z);
+            
+            var keyframe = 
+                new Keyframe(raw_keyframe.timestamp(), value, raw_keyframe.interpolation());
+            keyframes.add(keyframe);
+        }
+        return new AnimationChannel(type, keyframes.toArray(Keyframe[]::new));
+    }
+    private static List<Keyframe> processChannelWhenEncode(AnimationChannel channel) {
+        var type = channel.target();
+        final var keyframe_processor = KEYFRAME_PROCESSORS.get(type);
+        final boolean fix_rotation = type == AnimationChannel.Targets.ROTATION;
+
+        var keyframes = channel.keyframes(); 
+        var raw_keyframes = new ArrayList<Keyframe>(keyframes.length);
+        for (var keyframe : keyframes) {
+            var value = keyframe.target();
+
+            if (fix_rotation)
+                value = new Vector3f(-value.x, -value.y, value.z);
+            
+            value = keyframe_processor.whenEncode()
+                .apply(value.x, value.y, value.z);
+
+            value = sanitizeWhenEncode(value);
+            
+            var raw_keyframe = 
+                new Keyframe(keyframe.timestamp(), value, keyframe.interpolation());
+            raw_keyframes.add(raw_keyframe);
+        }
+        return raw_keyframes;
     }
     private static Codec<ChannelWithPart> channelWithPartCodec() {
         return RecordCodecBuilder.create(
@@ -148,7 +189,7 @@ public class DTNAnimationCodec {
                     )
                     .fieldOf("type")
                     .forGetter(ChannelWithPart::type),
-                keyframeCodec().listOf()
+                rawKeyframeCodec().listOf()
                     .fieldOf("keyframes")
                     .forGetter(ChannelWithPart::keyframesForEncode)
             )
@@ -167,7 +208,8 @@ public class DTNAnimationCodec {
     private static final String getIdFromInterp(AnimationChannel.Interpolation interp) {
         return INTERP_BY_ID.inverse().get(interp);
     }
-    private static Codec<Keyframe> keyframeCodec() {
+    
+    private static Codec<Keyframe> rawKeyframeCodec() {
         return RecordCodecBuilder.create(
             builder -> builder.group(
                 Codec.FLOAT.fieldOf("at")
@@ -181,5 +223,37 @@ public class DTNAnimationCodec {
             )
             .apply(builder, Keyframe::new)
         );
+    }
+
+    public static Vector3f invertedRotationVec(float x, float y, float z) {
+        return new Vector3f(x, y, z).mul(Mth.RAD_TO_DEG);
+    }
+    public static Vector3f invertedScaleVec(float x, float y, float z) {
+        return new Vector3f(x, y, z).add(1, 1, 1);
+    }
+    private static Vector3f sanitizeWhenEncode(Vector3f vec) {
+        vec = zeroSanitize(vec);
+        vec = round(vec);
+        return vec;
+    }
+    private static Vector3f zeroSanitize(Vector3f vec) {
+        return new Vector3f(
+            Mth.equal(vec.x(), 0) ? 0 : vec.x(),
+            Mth.equal(vec.y(), 0) ? 0 : vec.y(),
+            Mth.equal(vec.z(), 0) ? 0 : vec.z()
+        );
+    }
+    private static Vector3f round(Vector3f vec) {
+        final float rounding_mul = 100f;
+        return new Vector3f(
+            Math.round(vec.x * rounding_mul)/rounding_mul,
+            Math.round(vec.y * rounding_mul)/rounding_mul,
+            Math.round(vec.z * rounding_mul)/rounding_mul
+        );
+    }
+
+    @FunctionalInterface
+    private static interface KeyframeValueFunction {
+        public Vector3f apply(float x, float y, float z);
     }
 }
