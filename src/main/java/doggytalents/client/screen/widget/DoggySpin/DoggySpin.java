@@ -8,8 +8,10 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class DoggySpin extends AbstractWidget {
+    private static final String TIPS_MOD_ID = "tipsmod";
 
     private int size;
     private long accumulatedTime = 0;
@@ -66,7 +68,14 @@ public class DoggySpin extends AbstractWidget {
         if (!ConfigHandler.CLIENT.WORD_LOAD_ICON.get())
             return;
         spinWidget.setY(event.getScreen().height - spinWidget.getHeight());
+        if (ConfigHandler.CLIENT.WORLD_LOAD_ICON_RIGHT.get() || isTipsLoaded()) {
+            spinWidget.setX(event.getScreen().width - spinWidget.getWidth() - 10);
+        }
         spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+    }
+
+    private static boolean isTipsLoaded() {
+        return FabricLoader.getInstance().isModLoaded(TIPS_MOD_ID);
     }
 
     private static boolean isLevelLoadingScreen(ScreenEvent event) {

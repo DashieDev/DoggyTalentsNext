@@ -124,6 +124,7 @@ public class ConfigHandler {
         public ForgeConfigSpec.BooleanValue HIDE_WOLF_MOUNT_STATUS;
         public ForgeConfigSpec.BooleanValue SHOW_DOG_NAME_THRU_WALL;
         public ForgeConfigSpec.IntValue MAX_DOG_BED_MODEL_CACHE;
+        public ForgeConfigSpec.BooleanValue WORLD_LOAD_ICON_RIGHT;
 
         //Fabric only
         public ForgeConfigSpec.BooleanValue DOGBED_FORCE_DEFAULT_MODEL;
@@ -306,6 +307,10 @@ public class ConfigHandler {
                 .comment("By default, DTN will render your Dogs' Names through walls. Disable")
                 .comment("this to make Owned Dogs' Names no longer visible through walls.")
                 .define("show_dog_name_thru_wall", true);
+            WORLD_LOAD_ICON_RIGHT = builder
+                .comment("Switch the world load icon to the right. This setting is ignored and forcefully")
+                .comment("treated as true if Tips is installed (so they don't overlap).")
+                .define("world_load_icon_right", false);
             builder.pop();
         }
 
