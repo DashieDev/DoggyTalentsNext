@@ -18,6 +18,7 @@ import doggytalents.client.entity.model.DogRescueModel;
 import doggytalents.client.entity.model.FisherDogModel;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.TorchDogModel;
+import doggytalents.client.entity.model.animation.DTNAnimationLoader;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
@@ -446,6 +447,7 @@ public class ClientSetup {
     public static void addClientReloadListeners(final AddClientReloadListenersEvent event) {
         event.addListener(Util.getResource("dogskinmanager"), DogTextureManager.INSTANCE);
         event.addListener(Util.getResource("dognamemanager"), DogRandomNameRegistry.getInstance());
+        event.registerReloadListener(DTNAnimationLoader.INSTANCE);
     }
 
 

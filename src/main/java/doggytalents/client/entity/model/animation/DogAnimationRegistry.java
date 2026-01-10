@@ -1,5 +1,6 @@
 package doggytalents.client.entity.model.animation;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
@@ -14,6 +15,10 @@ public class DogAnimationRegistry {
     
     public static void register(DogAnimation animation, AnimationDefinition sequence) {
         DEFINITION_MAP.putIfAbsent(animation, sequence);
+    }
+
+    public static void update(Map<DogAnimation, AnimationDefinition> newMap) {
+        DEFINITION_MAP = new HashMap<>(newMap);
     }
 
     public static AnimationDefinition getSequence(DogAnimation animation) {
