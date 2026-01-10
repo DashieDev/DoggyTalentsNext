@@ -13,8 +13,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import doggytalents.DogVariants;
+import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
-import doggytalents.client.entity.model.animation.DogAnimationSequences;
+import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -178,17 +179,21 @@ public class DoggySpinModel {
                 this::resetPart
                 ), seq, passed_millis, 1, buf);
         } else if (style == Style.SIT) {
-            long len_millis = Mth.ceil(DogAnimationSequences.SIT_LOOK_AROUND.lengthInSeconds() * 1000);
+            final var sit_look_around = DogAnimationRegistry.getSequence(
+                DogAnimation.SIT_LOOK_AROUND);
+            long len_millis = Mth.ceil(sit_look_around.lengthInSeconds() * 1000);
             long passed_millis = Mth.floor(elapsed_millis * 1.7f) % len_millis;
-            var seq = DogAnimationSequences.SIT_LOOK_AROUND;
+            var seq = sit_look_around;
             DogKeyframeAnimations.keyframeAnimate(AnimationContext.of(
                 name -> DogKeyframeAnimations.searchForPartWithName(getRootForStyle(), name),
                 this::resetPart
                 ), seq, passed_millis, 1, buf);
         } else if (style == Style.BACKFLIP) {
-            long len_millis = Mth.ceil(DogAnimationSequences.BACKFLIP.lengthInSeconds() * 1000);
+            final var backflip = DogAnimationRegistry.getSequence(
+                DogAnimation.BACKFLIP);
+            long len_millis = Mth.ceil(backflip.lengthInSeconds() * 1000);
             long passed_millis = elapsed_millis % len_millis;
-            var seq = DogAnimationSequences.BACKFLIP;
+            var seq = backflip;
             DogKeyframeAnimations.keyframeAnimate(AnimationContext.of(
                 name -> DogKeyframeAnimations.searchForPartWithName(getRootForStyle(), name),
                 this::resetPart
