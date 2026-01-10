@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -87,10 +88,15 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
         }
         if (!missing_set.isEmpty()) {
             final int max_missing_log = 5;
+            int additional_missing = Math.max(0, missing_set.size() - max_missing_log);
+            var missing_list_str = 
+                missing_set.stream().limit(max_missing_log)
+                    .collect(Collectors.joining(", "))
+                    + (missing_set.size() > max_missing_log ? ", +" + additional_missing : "");
             LOGGER.error(
                 String.format(
                     "Failed to load some built-in dog animation: [ %s ]",
-                    missing_set.stream().reduce((a, b) -> (a + ", " + b)).orElse("")
+                    missing_list_str
                 )
             );
         } else {
