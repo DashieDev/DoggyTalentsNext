@@ -65,9 +65,7 @@ public class DogFollowOwnerGoal extends Goal implements IHasTickNonRunning {
 
     @Override
     public boolean canContinueToUse() {
-        if (this.dog.getNavigation().isDone()) {
-            return false;
-        } else if (this.dog.isInSittingPose()) {
+         if (this.dog.isInSittingPose()) {
             return false;
         } else {
             return this.dog.distanceToSqr(this.owner) > this.stopDist * this.stopDist;

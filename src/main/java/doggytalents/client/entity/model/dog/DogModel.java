@@ -21,7 +21,9 @@ import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.entity.model.animation.DogNeoForgeAnimationTest;
 import doggytalents.client.entity.model.animation.DogWalkAnimationSequences;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -67,6 +69,8 @@ public class DogModel extends EntityModel<Dog> {
     private final AnimSnapshot animSnapshot1 = new AnimSnapshot();
     private final AnimSnapshot animSnapshot2 = new AnimSnapshot();
 
+    private AnimationDefinition TEMP_RUN_ANIM;
+
     public DogModel(ModelPart box) {
         initDogModel(box);
     }
@@ -80,6 +84,7 @@ public class DogModel extends EntityModel<Dog> {
         populateMandatoryParts(box);
         this.addOptionalParts(box);
         this.correctInitalPose();
+        TEMP_RUN_ANIM = DogNeoForgeAnimationTest.getAnimationFromFile();
     }
 
     private final void populateMandatoryParts(ModelPart box) {
@@ -187,9 +192,8 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void animateWalkAndRun(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        this.headXRot0 = 0; this.headYRot0 = 0; this.realHeadZRot0 = 0;
         final var walk_anim = DogWalkAnimationSequences.WALKING;
-        final var run_anim = DogWalkAnimationSequences.RUNNING;
+        final var run_anim = DogWalkAnimationSequences.DOG_RUNNING;
         
         final var walk_pose = this.animSnapshot1;
         final var run_pose = this.animSnapshot2;
@@ -197,13 +201,27 @@ public class DogModel extends EntityModel<Dog> {
         var walk_speed = dog.walkAnimation.speed(partialTickTime);
         var walk_timeline = (long) (walk_pos * 50 * 1.5);
         var run_timeline = (long) (walk_pos * 50);
-        float run_threshold = 0.8f;
-        var anim_blend = walk_speed < run_threshold ? 0 
-            : Mth.clamp((walk_speed - run_threshold)/(1 - run_threshold), 0, 1);
+        float run_threshold = 0.5f;
+        float run_val = dog.animationManager.runningValue(partialTickTime);
+        var anim_blend = run_val < run_threshold ? 0 
+            : Mth.clamp((run_val - run_threshold)/(1 - run_threshold), 0, 1);
         DogKeyframeAnimations.animate(this, dog, walk_anim, walk_timeline, walk_speed, vecObj);
+        //animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
         walk_pose.store(this);
         this.resetAllPose();
-        DogKeyframeAnimations.animate(this, dog, run_anim, run_timeline, 1, vecObj);
+        var anim_context = AnimationContext.of(
+            this::searchForPartWithName, 
+            x -> x.resetPose(), 
+            (target, vecObj) -> { 
+                boolean is_leg = 
+                    target == this.legFrontLeft
+                    || target == this.legFrontRight
+                    || target == this.legBackLeft
+                    || target == this.legBackRight;
+                if (is_leg) return vecObj.mul(1.5f);
+                return vecObj; 
+            }, part -> {});
+        DogKeyframeAnimations.keyframeAnimate(anim_context, run_anim, run_timeline, 1, vecObj);
         run_pose.store(this);
         this.resetAllPose();
         AnimSnapshot.blendAndApply(anim_blend, walk_pose, run_pose, this);
@@ -268,7 +286,21 @@ public class DogModel extends EntityModel<Dog> {
         var animationManager = dog.animationManager;
 
         if (dog.isDogInAnimDebug() && dog.getAnim().isNone()) {
-            setDogUpDebugAnim(dog);
+            //setDogUpDebugAnim(dog);
+            final var walk_pose = this.animSnapshot1;
+            final var run_pose = this.animSnapshot2;
+            var x = Util.tickMayWithPartialToMillis(ageInTicks);
+            this.resetAllPose();
+            //animateStandWalking(dog, ageInTicks, 0.8f, ageInTicks);
+            DogKeyframeAnimations.animate(this, dog, DogWalkAnimationSequences.DOG_WALKING, x * 2, 1.0F, vecObj);
+            walk_pose.store(this);
+
+            this.resetAllPose();
+            DogKeyframeAnimations.animate(this, dog, TEMP_RUN_ANIM, x, 1.0F, vecObj);
+            run_pose.store(this);
+            
+            AnimSnapshot.blendAndApply(dog.blendAnim, walk_pose, run_pose, this);
+
             return;
         }
 

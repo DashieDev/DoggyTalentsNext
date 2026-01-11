@@ -18,6 +18,9 @@ public class DogAnimationManager {
     public final DogAnimationState animationState
         = new DogAnimationState();
     public boolean needRefresh = false;
+    public float runningValue = 0;
+    public float runningValue0 = 0;
+    public long runningPos = 0;
 
     //Common
     private boolean started = false;
@@ -86,8 +89,32 @@ public class DogAnimationManager {
             }
         }
 
+        this.runningValue0 = this.runningValue;
+        var walk_anim = dog.walkAnimation;
+        float speed = walk_anim.speed();
+        if (speed >= 0.8f) {
+            this.runningValue += 0.05;
+        } else {
+            this.runningValue -= 0.1;
+        }
+
+        this.runningValue = Mth.clamp(this.runningValue, 0, 1);
+        boolean is_running = this.runningValue >= this.getRunThreashold();
+        if (is_running)
+            this.runningPos += 1;
+        else    
+            this.runningPos = 0;
+
         if (isDebug)
             tickDebug();
+    }
+
+    public float getRunThreashold() {
+        return 0.5f;
+    }
+
+    public float runningValue(float pticks) {
+        return Mth.lerp(pticks, this.runningValue0, this.runningValue);
     }
 
     public void onSyncTimeUpdated() {

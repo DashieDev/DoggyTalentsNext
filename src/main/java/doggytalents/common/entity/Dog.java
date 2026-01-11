@@ -628,6 +628,13 @@ public class Dog extends AbstractDog {
     public void tick() {    
         super.tick();
 
+        if (this.level().isClientSide) {
+            if (!Mth.equal(this.walkAnimation.speed(), 0f)) {
+                
+                //this.getOwner().sendSystemMessage(Component.literal("walking speed" + this.walkAnimation.speed()));
+            }
+        }
+
         updateClassicalAnim();
 
         //this.setMaxUpStep(this.isVehicle() ? 1f : 0.6f);
@@ -1072,10 +1079,39 @@ public class Dog extends AbstractDog {
             && !this.isDogInAnimDebug();
     }
 
+    public float animDebugTime = 0;
+    public float blendAnim = 0;
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
 
         var stack = player.getItemInHand(hand);
+
+        if (stack.getItem() == Items.STONE_PICKAXE) {
+            if (this.level().isClientSide) { 
+                if (!player.isShiftKeyDown()) {
+                    animDebugTime += 0.04;
+                    animDebugTime = Mth.clamp(animDebugTime, 0, 0.5f);
+                } else {
+                    blendAnim += 0.05;
+                    blendAnim = Mth.clamp(blendAnim, 0, 1f);
+                }
+            }  
+            return InteractionResult.SUCCESS;
+        }
+        if (stack.getItem() == Items.STONE_AXE) {
+            if (this.level().isClientSide) { 
+                if (!player.isShiftKeyDown()) {
+                    animDebugTime -= 0.04;
+                    animDebugTime = Mth.clamp(animDebugTime, 0, 0.5f);
+                } else {
+                    blendAnim -= 0.05;
+                    blendAnim = Mth.clamp(blendAnim, 0, 1f);
+                }
+                
+            }  
+            return InteractionResult.SUCCESS;
+        }
         
         if (this.isDefeated()) 
             return this.incapacitatedMananger

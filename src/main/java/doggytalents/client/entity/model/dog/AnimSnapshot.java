@@ -4,6 +4,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 
 public class AnimSnapshot {
+
+    
+    public Part root = new Part();
     
     public Part head = new Part();
     public Part realHead = new Part();
@@ -22,6 +25,7 @@ public class AnimSnapshot {
 
 
     public void store(DogModel model) {
+        storePart(root, model.root);
         storePart(head, model.head);
         storePart(realHead, model.realHead);
         storePart(body, model.body);
@@ -38,6 +42,7 @@ public class AnimSnapshot {
     }
 
     public void load(DogModel model) {
+        loadPart(model.root, root);
         loadPart(model.head, head);
         loadPart(model.realHead, realHead);
         loadPart(model.body, body);
@@ -74,7 +79,8 @@ public class AnimSnapshot {
     public static void blendAndApply(float progress, 
         AnimSnapshot result1, AnimSnapshot result2,
         DogModel model) {
-        
+
+        blendPartAndApply(progress, result1.root, result2.root, model.root);
         blendPartAndApply(progress, result1.head, result2.head, model.head);
         blendPartAndApply(progress, result1.realHead, result2.realHead, model.realHead);
         blendPartAndApply(progress, result1.body, result2.body, model.body);
