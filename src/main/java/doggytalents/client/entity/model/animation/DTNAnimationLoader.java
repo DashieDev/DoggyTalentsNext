@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.MapMaker;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
@@ -32,7 +34,8 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/animationLoader");
 
-    private final Map<ResourceLocation, DogAnimationHolder> holderMap = new HashMap<>();
+    private final Map<ResourceLocation, DogAnimationHolder> holderMap = new MapMaker()
+        .concurrencyLevel(1).makeMap();
 
     private DTNAnimationLoader() {
         super(new Gson(), createRegistryPath());
@@ -126,7 +129,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
             k -> new DogAnimationHolder(null));
     }
 
-    public static class DogAnimationHolder {
+    public static class DogAnimationHolder implements Supplier<AnimationDefinition> {
 
         private AnimationDefinition value;
 
@@ -140,6 +143,11 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
 
         public void invalidate() {
             this.value = null;
+        }
+
+        @Override
+        public AnimationDefinition get() {
+            return this.value;
         }
     }
 
