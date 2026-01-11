@@ -137,11 +137,11 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
             this.value = value;
         }
 
-        public void update(AnimationDefinition newValue) {
+        private void update(AnimationDefinition newValue) {
             this.value = newValue;
         }
 
-        public void invalidate() {
+        private void invalidate() {
             this.value = null;
         }
 
