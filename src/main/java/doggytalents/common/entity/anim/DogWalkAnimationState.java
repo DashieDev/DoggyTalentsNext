@@ -22,8 +22,7 @@ public class DogWalkAnimationState {
     public float dampener = 0;
     public float prevYRot = 0;
     public float banking0 = 0, banking = 0;
-    public float yrot_velocity;
-    public SecondOrderDynamics<Float> bankingDynamic = SecondOrderDynamics.single(1f, 0.5f, 0, 0);
+    public SecondOrderDynamics<Float> bankingDynamic = SecondOrderDynamics.single(0.6f, 0.5f, 0, 0);
 
     public DogWalkAnimationState(Dog dog) {
         this.dog = dog;
@@ -97,7 +96,7 @@ public class DogWalkAnimationState {
     }
 
     public void updateBankingValue() {
-        this.yrot_velocity = Mth.wrapDegrees(dog.getYRot() - this.prevYRot);
+        float yrot_velocity = Mth.wrapDegrees(dog.getYRot() - this.prevYRot);
         this.prevYRot = dog.getYRot();
 
         this.banking0 = this.banking;
@@ -181,20 +180,15 @@ public class DogWalkAnimationState {
         if (!isBanking())
             return 0;
         var ret = Mth.lerp(pticks, this.banking0, this.banking);
-        ret += -Mth.sign(ret) * bankingThreshold();
         return Mth.clamp(ret, -1, 1);
     }
 
     public boolean isBanking() {
-        return Mth.abs(this.banking) >= bankingThreshold();
+        return !Mth.equal(this.banking, 0);
     }
 
     public float maxBankZRot() {
         return 45;
-    }
-
-    public float bankingThreshold() {
-        return 0;
     }
     
     public boolean isMoving() {

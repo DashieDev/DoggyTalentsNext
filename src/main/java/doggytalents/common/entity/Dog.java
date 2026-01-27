@@ -275,6 +275,7 @@ public class Dog extends AbstractDog {
     public final DogMoodManager dogMood = new DogMoodManager(this);
     public final DogSoundManager dogSoundManager
         = new DogSoundManager(this);
+    public final DogWalkAnimationState dogWalkAnimation = new DogWalkAnimationState(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
     private IDogRangedAttackManager dogRangedAttackManager
@@ -627,13 +628,6 @@ public class Dog extends AbstractDog {
     @Override
     public void tick() {    
         super.tick();
-
-        if (this.level().isClientSide) {
-            if (!Mth.equal(this.walkAnimation.speed(), 0f)) {
-                
-                //this.getOwner().sendSystemMessage(Component.literal("walking speed" + this.walkAnimation.speed()));
-            }
-        }
 
         updateClassicalAnim();
 
@@ -1151,6 +1145,24 @@ public class Dog extends AbstractDog {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void calculateEntityAnimation(boolean ySpeed) {
+        float rawDeltaMove = (float) Mth.length(
+            this.getX() - this.xo, 
+            0, 
+            this.getZ() - this.zo
+        );
+        this.updateWalkAnimation(rawDeltaMove);
+    }
+
+    @Override
+    protected void updateWalkAnimation(float rawDeltaMove) {
+        super.updateWalkAnimation(rawDeltaMove);
+        if (this.isDogInAnimDebug())
+            rawDeltaMove = this.rawDeltaMove;
+        this.dogWalkAnimation.update(rawDeltaMove);
     }
 
     private InteractionResult handleDogSitStand(Player player) {
