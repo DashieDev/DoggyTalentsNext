@@ -19,11 +19,25 @@ import net.minecraft.util.Mth;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
-public enum DebugGraph {
-    INSTANCE;
+public class DebugGraph {
+    public static final DebugGraph COMMON_INSTANCE = new DebugGraph(0, 0, 480, 120);
+
+    public static DebugGraph shared() {
+        return COMMON_INSTANCE;
+    }
+
+    public int x, y, width, height;
+
+    public DebugGraph(int x, int y, int w, int h) {
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
+    }
 
     private int maxHistory = 100;
     private final Map<String, RecordEntry> historyMap = new HashMap<>();
+    
 
     public void reset(int maxHistory, EntriesBuilder builder) {
         this.maxHistory = maxHistory;
@@ -54,11 +68,7 @@ public enum DebugGraph {
         this.reset(0, EntriesBuilder.NULL);
     }
 
-    public void renderOverlay(GuiGraphics graphics, float pticks) {
-        final int x = 0;
-        final int y = 0;
-        final int width = 480;
-        final int height = 120;
+    public void render(GuiGraphics graphics, float pticks) {
 
         //Background
         int cl = 0x005e5d5d | 0x48000000;
@@ -110,11 +120,11 @@ public enum DebugGraph {
         BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
-    @SubscribeEvent
-    public void afterGuiRender(RenderGuiEvent.Post event) {
-        if (this.maxHistory <= 0)
+    public static void afterGuiRender(RenderGuiEvent.Post event) {
+        var shared = shared();
+        if (shared.maxHistory <= 0)
             return;
-        renderOverlay(event.getGuiGraphics(), event.getPartialTick().getGameTimeDeltaPartialTick(true));
+        shared.render(event.getGuiGraphics(), event.getPartialTick().getGameTimeDeltaPartialTick(true));
     }
 
     public static EntriesBuilder entriesBuilder() {
