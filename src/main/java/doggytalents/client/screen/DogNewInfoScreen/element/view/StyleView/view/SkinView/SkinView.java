@@ -138,8 +138,7 @@ public class SkinView extends AbstractElement {
         if (this.textureList.isEmpty())
             return;
         double progress = (double)this.activeSkinId/ (double) (textureList.size()-1);
-        double barOffset = progress * this.scrollBar.getMaxOffsetValue();
-        this.scrollBar.setBarOffset(barOffset);
+        this.scrollBar.setProgressValue((float) progress);
     }
 
     @Override
