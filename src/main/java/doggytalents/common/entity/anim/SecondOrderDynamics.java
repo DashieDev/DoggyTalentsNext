@@ -37,7 +37,7 @@ public class SecondOrderDynamics<T> {
 
         final int dimension = codec.dimensions();
         if (dimension <= 0)
-            throw new IllegalStateException("dimension cannot <= 0");
+            throw new IllegalArgumentException("dimension cannot <= 0");
 
         this.xp = this.codec.encodeNew(startValue);
         this.y = this.xp.clone();
@@ -54,7 +54,10 @@ public class SecondOrderDynamics<T> {
         final var buffer = this.buffer;
         this.codec.encode(x, buffer);
 
-        final float k2_stable = Math.max(k2, 1.1f * (T_val*T_val/4 + T_val*k1/2)); // Stability clamp
+        final float k2_stable = Math.max(
+            Math.max(k2, T_val * T_val / 2 + T_val * k1 / 2), 
+            T_val * k1
+        ); // Stability clamp
         
         for (int i = 0; i < this.y.length; ++i) {
             // T = Time step since last update (seconds)
