@@ -13,6 +13,7 @@ public class ScrollBar extends AbstractWidget {
     private int barSize;
     private double barOffset;
     private Direction dir;
+    private AlignMode alignMode = AlignMode.RIGHT_BOTTOM;
     private Screen screen;
     private boolean holdInflate;
     private long inflateAnim = 0;
@@ -30,6 +31,12 @@ public class ScrollBar extends AbstractWidget {
     }
 
     public static enum Direction { VERTICAL, HORIZONTAL }
+    public static enum AlignMode { CENTER, LEFT_TOP, RIGHT_BOTTOM }
+
+    public ScrollBar alignMode(AlignMode mode) {
+        this.alignMode = mode;
+        return this;
+    }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
@@ -42,11 +49,9 @@ public class ScrollBar extends AbstractWidget {
         if (passedAnimMillis > 0) {
             prevAnimUpdateMillis = currentTimeMillis;
         }
-        int barOffset = Mth.floor(this.barOffset);
         if (this.holdInflate) {
             this.holdInflate = screen.isDragging();
         }
-        final int BASE_THICK = 3;
         if (passedAnimMillis > 0) {
             if (!this.isHovered && !holdInflate) {
                 this.inflateAnim -= passedAnimMillis;
@@ -61,20 +66,56 @@ public class ScrollBar extends AbstractWidget {
             this.inflateAnim = MAX_INFLATE_ANIM;
         }
 
+        final int BASE_THICK = 3;
         float inflateAnimProgress = ((float) this.inflateAnim) / MAX_INFLATE_ANIM;
-        int maxBarThick = this.dir == Direction.VERTICAL ?
-            this.getWidth() : this.getHeight();
-        int barThickAfterAnim = BASE_THICK + Mth.ceil(inflateAnimProgress*(maxBarThick));
-        if (this.dir == Direction.VERTICAL) 
-            graphics.fill(this.getX() + this.width - barThickAfterAnim, this.getY(), this.getX()+this.width, this.getY()+this.height, 0x87363636);
-        else
-            graphics.fill( this.getX(), this.getY() + this.height - barThickAfterAnim, this.getX()+this.width, this.getY()+this.height, 0x87363636);
+        
+        int maxThickness = (this.dir == Direction.VERTICAL) ? this.getWidth() : this.getHeight();
+        
+        int currentThickness = (int) Mth.lerp(inflateAnimProgress, BASE_THICK, maxThickness);
+
+        int fill_x = this.getX();
+        int fill_y = this.getY();
+        int fill_w = (this.dir == Direction.VERTICAL) ? currentThickness : this.getWidth();
+        int fill_h = (this.dir == Direction.VERTICAL) ? this.getHeight() : currentThickness;
+
         if (this.dir == Direction.VERTICAL) {
-            graphics.fill(this.getX() + this.getWidth() - barThickAfterAnim, this.getY() + barOffset, 
-                this.getX()+this.getWidth(), this.getY() + barOffset+this.barSize, 0xffffffff);
+            switch (this.alignMode) {
+                case RIGHT_BOTTOM:
+                    fill_x = this.getX() + this.getWidth() - currentThickness;
+                    break;
+                case CENTER:
+                    fill_x = this.getX() + this.getWidth()/2 - currentThickness/2;
+                    break;   
+                default:
+                    fill_x = this.getX();
+                    break;
+            }
         } else {
-            graphics.fill(this.getX() + barOffset, this.getY() + this.getHeight() - barThickAfterAnim, 
-                this.getX() + barOffset + this.barSize, this.getY() + this.getHeight(), 0xffffffff);
+            switch (this.alignMode) {
+                case RIGHT_BOTTOM:
+                    fill_y = this.getY() + this.getHeight() - currentThickness;
+                    break;
+                case CENTER:
+                    fill_y = this.getY() + (this.getHeight() - currentThickness) / 2;
+                    break;
+                default:
+                    fill_y = this.getY();
+                    break;
+            }
+        }
+
+        int barOffset = Mth.floor(this.barOffset);
+
+        //Track
+        graphics.fill(fill_x, fill_y, fill_x + fill_w, fill_y + fill_h, 0x87363636);
+
+        //Handle
+        if (this.dir == Direction.VERTICAL) {
+            graphics.fill(fill_x, fill_y + barOffset, 
+                fill_x + fill_w, fill_y + barOffset + this.barSize, 0xffffffff);
+        } else {
+            graphics.fill(fill_x + barOffset, fill_y, 
+                fill_x + barOffset + this.barSize, fill_y + fill_h, 0xffffffff);
         }
     }
 
@@ -131,6 +172,11 @@ public class ScrollBar extends AbstractWidget {
         if (maxOffset <= 0)
             return 0;
         return barOffset/ (double)maxOffset;
+    }
+
+    public void setProgressValue(float progress) {
+        progress = Mth.clamp(progress, 0.0f, 1.0f);
+        this.setBarOffset(progress * this.getMaxOffsetValue());
     }
 
     public void onValueUpdated() {
