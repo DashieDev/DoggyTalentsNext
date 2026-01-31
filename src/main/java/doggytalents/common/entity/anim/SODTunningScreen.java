@@ -2,6 +2,7 @@ package doggytalents.common.entity.anim;
 
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import com.google.common.collect.Maps;
 
@@ -127,14 +128,16 @@ public class SODTunningScreen extends Screen {
         });
 
     }
-    
+
     private TunningEntry createAndAddTunningEntry(String id, int x, int y, Consumer<Float> responder) {
         int pX = x;
         var entry = persistentData.computeIfAbsent(id, k -> new TunningEntry());
+        final Function<Float, Component> value_show_to_str =
+            val -> Component.literal(id + ": " + StatFormatter.DECIMAL_FORMAT.format(val));
         final var value_show = new TextOnlyButton(pX, y, 60, 20, 
-            Component.literal(StatFormatter.DECIMAL_FORMAT.format(entry.value)), b -> {
+            value_show_to_str.apply(entry.value), b -> {
                 try {
-                    var value = b.getMessage().getString();
+                    var value = StatFormatter.DECIMAL_FORMAT.format(entry.value);
                     Minecraft.getInstance().keyboardHandler.setClipboard(value);
                 } catch (NumberFormatException e) {
 
@@ -177,15 +180,15 @@ public class SODTunningScreen extends Screen {
         });
         this.addRenderableWidget(clamp_field);
         pX += clamp_field.getWidth() + 20;
-        final var slider = new ScrollBar(pX, y, 60, 10, Direction.HORIZONTAL, 10, this) {
+        final var slider = new ScrollBar(pX, y + 5, 100, 10, Direction.HORIZONTAL, 10, this) {
             @Override
             public void onValueUpdated() {
                 entry.value = (float) (entry.min + this.getProgressValue() * (entry.max - entry.min));
                 entry.value = Mth.clamp(entry.value, entry.min, entry.max);
                 entry.responder.accept(entry.value);
-                value_show.setMessage(Component.literal(StatFormatter.DECIMAL_FORMAT.format(entry.value)));
+                value_show.setMessage(value_show_to_str.apply(entry.value));
             }
-        };
+        }.alignMode(ScrollBar.AlignMode.CENTER);
         double progress = entry.max - entry.min <= 0 ? 0 :
             (entry.value - entry.min) / (entry.max - entry.min); 
         double slider_off = progress * slider.getMaxOffsetValue();
