@@ -20,13 +20,21 @@ import org.joml.Vector3f;
 public class SecondOrderDynamics<T> {
     
     private final ToFloatArrayCodec<T> codec;
-    private final float[] xp; // Previous Input (to calculate velocity of the target)
+    private final float[] xp; // Previous Input
     private final float[] y, yd; // State (Current Value, Current Velocity)
     private final float k1, k2, k3; // Constants derived from f, z, r
     private final float[] buffer;
     
     public SecondOrderDynamics(float f, float z, float r, T startValue, 
         ToFloatArrayCodec<T> codec) {
+
+        if (f <= 0)
+            throw new IllegalArgumentException("Frequency (f) must be > 0. Received: " + f);
+        if (z < 0)
+            throw new IllegalArgumentException("Damping (z) must be >= 0. Received: " + z);
+        final int dimension = codec.dimensions();
+        if (dimension <= 0)
+            throw new IllegalArgumentException("Array Codec Dimension cannot be <= 0.");
         
         this.codec = codec;
 
@@ -34,10 +42,6 @@ public class SecondOrderDynamics<T> {
         this.k1 = z / (PI * f);
         this.k2 = 1 / ((2 * PI * f) * (2 * PI * f));
         this.k3 = r * z / (2 * PI * f);
-
-        final int dimension = codec.dimensions();
-        if (dimension <= 0)
-            throw new IllegalArgumentException("dimension cannot <= 0");
 
         this.xp = this.codec.encodeNew(startValue);
         this.y = this.xp.clone();
