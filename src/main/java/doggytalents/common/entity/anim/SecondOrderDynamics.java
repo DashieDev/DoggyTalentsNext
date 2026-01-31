@@ -67,11 +67,10 @@ public class SecondOrderDynamics<T> {
             float xd = (buffer[i] - xp[i]) / T_val;
             xp[i] = buffer[i];
 
-            y[i] += yd[i] * T_val; // Integrate position
-            
             float acc = (buffer[i] + k3 * xd - y[i] - k1 * yd[i])/k2_stable;
+            yd[i] += acc * T_val; // Integrate velocity
 
-            yd[i] += acc * T_val;
+            y[i] += yd[i] * T_val; // Integrate position
         }
 
         return this.codec.decode(y, out);
