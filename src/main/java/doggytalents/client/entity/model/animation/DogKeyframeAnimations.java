@@ -5,6 +5,7 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -96,6 +97,42 @@ public class DogKeyframeAnimations {
                 }
 
                 @Override
+                public Vector3f adjustAnimationValue(ModelPart target, Vector3f current) {
+                    return current;
+                }
+
+                @Override
+                public void adjustAnimatedPart(ModelPart part) {
+                    partAdjust.accept(part);
+                }
+                
+            };
+        }
+
+        public static AnimationContext of(
+            Function<String, Optional<ModelPart>> partGetter,
+            Consumer<ModelPart> partReset,
+            BiFunction<ModelPart, Vector3f, Vector3f> animValueAdjust,
+            Consumer<ModelPart> partAdjust
+        ) {
+            return new AnimationContext() {
+
+                @Override
+                public Optional<ModelPart> getPart(String name) {
+                    return partGetter.apply(name);
+                }
+
+                @Override
+                public void resetPart(ModelPart part) {
+                    partReset.accept(part);
+                }
+
+                @Override
+                public Vector3f adjustAnimationValue(ModelPart target, Vector3f current) {
+                    return animValueAdjust.apply(target, current);
+                }
+
+                @Override
                 public void adjustAnimatedPart(ModelPart part) {
                     partAdjust.accept(part);
                 }
@@ -105,6 +142,7 @@ public class DogKeyframeAnimations {
         
         public Optional<ModelPart> getPart(String name);
         public void resetPart(ModelPart part);
+        public Vector3f adjustAnimationValue(ModelPart target, Vector3f current);
         public void adjustAnimatedPart(ModelPart part);
 
     }
