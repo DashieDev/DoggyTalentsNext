@@ -27,16 +27,16 @@ public class DogBodyRotationControl extends BodyRotationControl {
             this.rotateHeadIfNecessary();
             this.lastStableYHeadRot = this.dog.yHeadRot;
             this.headStableTime = 0;
+            return;
+        } 
+        if (Math.abs(this.dog.yHeadRot - this.lastStableYHeadRot) > HEAD_STABLE_ANGLE) {
+            this.headStableTime = 0;
+            this.lastStableYHeadRot = this.dog.yHeadRot;
+            this.rotateBodyIfNecessary();
         } else {
-            if (Math.abs(this.dog.yHeadRot - this.lastStableYHeadRot) > 15.0F) {
-                this.headStableTime = 0;
-                this.lastStableYHeadRot = this.dog.yHeadRot;
-                this.rotateBodyIfNecessary();
-            } else {
-                ++this.headStableTime;
-                if (this.headStableTime > 10) {
-                    this.rotateHeadTowardsFront();
-                }
+            ++this.headStableTime;
+            if (this.headStableTime > DELAY_UNTIL_STARTING_TO_FACE_FORWARD) {
+                this.rotateHeadTowardsFront();
             }
         }
     }
@@ -50,8 +50,8 @@ public class DogBodyRotationControl extends BodyRotationControl {
     }
 
     private void rotateHeadTowardsFront() {
-        int i = this.headStableTime - 10;
-        float f = Mth.clamp((float)i / 10.0F, 0.0F, 1.0F);
+        int i = this.headStableTime - DELAY_UNTIL_STARTING_TO_FACE_FORWARD;
+        float f = Mth.clamp((float)i / HOW_LONG_IT_TAKES_TO_FACE_FORWARD, 0.0F, 1.0F);
         float f1 = (float)this.dog.getMaxHeadYRot() * (1.0F - f);
         this.dog.yBodyRot = Mth.rotateIfNecessary(this.dog.yBodyRot, this.dog.yHeadRot, f1);
     }
