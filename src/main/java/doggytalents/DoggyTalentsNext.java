@@ -7,6 +7,7 @@ import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
+import doggytalents.client.debug.DebugGraph;
 import doggytalents.client.entity.render.DoggyArmorMapping;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
@@ -130,6 +131,7 @@ public class DoggyTalentsNext {
             forgeEventBus.addListener(CanineTrackerLocateRenderer::tickUpdate);
             forgeEventBus.register(DTNClientPettingManager.get());
             forgeEventBus.register(DTNClientDogSleepOnManager.get());
+            forgeEventBus.addListener(DebugGraph::afterGuiRender);
         }
 
         ConfigHandler.init(modEventBus);

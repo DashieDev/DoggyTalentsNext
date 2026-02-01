@@ -17,6 +17,7 @@ import doggytalents.api.inferface.IThrowableItem;
 import doggytalents.api.inferface.InferTypeContext;
 import doggytalents.api.registry.*;
 import doggytalents.client.DogTextureManager;
+import doggytalents.client.debug.DebugGraph;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.entity.skin.DogSkin;
 import doggytalents.client.entity.skin.DogSkinHolder;
@@ -41,6 +42,8 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogWalkAnimationState;
+import doggytalents.common.entity.anim.SODTunningScreen;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
@@ -67,6 +70,7 @@ import doggytalents.common.util.*;
 import doggytalents.common.variant.DogVariant;
 import doggytalents.common.variant.util.DogVariantUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -1073,7 +1077,7 @@ public class Dog extends AbstractDog {
             && !this.isDogInAnimDebug();
     }
 
-    public float animDebugTime = 0;
+    public float rawDeltaMove = 0;
     public float blendAnim = 0;
 
     @Override
@@ -1081,31 +1085,59 @@ public class Dog extends AbstractDog {
 
         var stack = player.getItemInHand(hand);
 
-        if (stack.getItem() == Items.STONE_PICKAXE) {
-            if (this.level().isClientSide) { 
-                if (!player.isShiftKeyDown()) {
-                    animDebugTime += 0.04;
-                    animDebugTime = Mth.clamp(animDebugTime, 0, 0.5f);
-                } else {
-                    blendAnim += 0.05;
-                    blendAnim = Mth.clamp(blendAnim, 0, 1f);
-                }
-            }  
-            return InteractionResult.SUCCESS;
+        if (this.isDogInAnimDebug()) {
+            if (stack.getItem() == Items.STONE_PICKAXE) {
+                if (this.level().isClientSide) { 
+                    if (!player.isShiftKeyDown()) {
+                        rawDeltaMove += 0.05;
+                        rawDeltaMove = Math.max(0, rawDeltaMove);
+                    }
+                }  
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.getItem() == Items.STONE_AXE) {
+                if (this.level().isClientSide) { 
+                    if (!player.isShiftKeyDown()) {
+                        rawDeltaMove -= 0.05;
+                        rawDeltaMove = Math.max(0, rawDeltaMove);
+                    }
+                }  
+                return InteractionResult.SUCCESS;
+            }
+        } else {
+            if (stack.getItem() == Items.STONE_PICKAXE) {
+                if (this.level().isClientSide) { 
+                    // DebugGraph.INSTANCE.reset(
+                    //     100,
+                    //     DebugGraph.entriesBuilder()
+                    //         .entry("bank_raw", -1, 1, 0xffff0000)
+                    //         .entry("bank_smooth", -1, 1, 0xff00ff00)
+                    //         .entry("bank_old", -1, 1, 0xff0000ff)
+                    // );
+                    DebugGraph.shared().reset(
+                        100,
+                        DebugGraph.entriesBuilder()
+                            .entry("raw_delta", 0, 1f, 0xffff0000)
+                            .entry("speed_normal", 0, 1f, 0xff0000ff)
+                            .entry("speed_dynamic", 0, 1f, 0xff00ff00)
+                            .entry("bank_smooth", 0, 1f, 0xff9803fc)
+                    );
+                }  
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.getItem() == Items.STONE_AXE) {
+                if (this.level().isClientSide) { 
+                    DebugGraph.shared().stop();
+                }  
+                return InteractionResult.SUCCESS;
+            }
+            if (stack.getItem() == Items.STONE_SHOVEL) {
+                if (this.level().isClientSide) { 
+                    Minecraft.getInstance().setScreen(new SODTunningScreen());
+                }  
+            }
         }
-        if (stack.getItem() == Items.STONE_AXE) {
-            if (this.level().isClientSide) { 
-                if (!player.isShiftKeyDown()) {
-                    animDebugTime -= 0.04;
-                    animDebugTime = Mth.clamp(animDebugTime, 0, 0.5f);
-                } else {
-                    blendAnim -= 0.05;
-                    blendAnim = Mth.clamp(blendAnim, 0, 1f);
-                }
-                
-            }  
-            return InteractionResult.SUCCESS;
-        }
+        
         
         if (this.isDefeated()) 
             return this.incapacitatedMananger
@@ -1145,6 +1177,22 @@ public class Dog extends AbstractDog {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        //if (this.isDogInAnimDebug()) {
+        float rawDeltaMove = this.isDogInAnimDebug() ? this.rawDeltaMove : 
+            (float) Mth.length(
+                this.getX() - this.xo, 
+                0, 
+                this.getZ() - this.zo
+            );
+            var name_str = this.getName().getString() + " " + StatFormatter.DECIMAL_FORMAT
+                .format(rawDeltaMove);
+            return Component.literal(name_str); 
+        //}
+        //return super.getDisplayName();
     }
 
     @Override
