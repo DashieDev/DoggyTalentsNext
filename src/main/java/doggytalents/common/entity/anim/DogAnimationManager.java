@@ -17,7 +17,6 @@ public class DogAnimationManager {
     //Client
     public final DogAnimationState animationState
         = new DogAnimationState();
-    public boolean needRefresh = false;
 
     //Common
     private boolean started = false;
@@ -47,8 +46,6 @@ public class DogAnimationManager {
             started = false;
             looping = false;
             animationState.stop();
-            if (dog.level().isClientSide)
-                this.needRefresh = true;
         }
     }
 
