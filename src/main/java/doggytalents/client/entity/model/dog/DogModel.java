@@ -19,8 +19,11 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.client.entity.model.animation.DTNAnimationLoader;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
+import doggytalents.client.entity.model.animation.DTNAnimationLoader.DogAnimationHolder;
+import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -62,6 +65,12 @@ public class DogModel extends EntityModel<Dog> {
     //Optional parts
     public Optional<ModelPart> earLeft;
     public Optional<ModelPart> earRight;
+
+    private final AnimSnapshot animSnapshot1 = new AnimSnapshot();
+    private final AnimSnapshot animSnapshot2 = new AnimSnapshot();
+
+    private final DogAnimationHolder WALK_SLOW_TROT = DTNAnimationLoader.INSTANCE.getAnim("slow_trot");
+    private final DogAnimationHolder WALK_GALLOP = DTNAnimationLoader.INSTANCE.getAnim("gallop");
 
     public DogModel(ModelPart box) {
         initDogModel(box);
@@ -173,9 +182,40 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        animateStandWalking(dog, limbSwing, limbSwingAmount, partialTickTime);
+        animateWalkAndRun(dog, limbSwing, limbSwingAmount, partialTickTime);
     }
 
+    public void animateWalkAndRun(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {        
+        final var pose_1 = this.animSnapshot1;
+        final var pose_2 = this.animSnapshot2;
+
+        var walk_pos = dog.dogWalkAnimation.position(partialTickTime);
+        var walk_speed = dog.dogWalkAnimation.speed(partialTickTime);
+        var anim_context = AnimationContext.of(
+            this::searchForPartWithName, 
+            x -> x.resetPose());
+        
+        final long walk_animation_start = 830;
+        long time = walk_animation_start + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+        anim_swing = Mth.clamp(anim_swing, 0, 1);
+        
+        this.resetAllPose();
+        if (anim_swing > Mth.EPSILON) {
+            DogKeyframeAnimations.keyframeAnimate(anim_context, WALK_SLOW_TROT.get(), time, anim_swing, vecObj);
+        }
+        
+        var anim_blend = dog.dogWalkAnimation.runningBlend(partialTickTime);
+        if (anim_blend > Mth.EPSILON) {
+            pose_1.store(this);
+            this.resetAllPose();
+            DogKeyframeAnimations.keyframeAnimate(anim_context, WALK_GALLOP.get(), time / 2, 1, vecObj);
+            pose_2.store(this);
+            AnimSnapshot.blendAndApply(anim_blend, pose_1, pose_2, this);
+        }
+    }
+
+    @Deprecated
     public void animateStandWalking(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         float w = Mth.cos(limbSwing * 0.6662F);
         float w1 = Mth.cos(limbSwing * 0.6662F + (float) Math.PI);
@@ -210,6 +250,7 @@ public class DogModel extends EntityModel<Dog> {
         this.legFrontLeft.xRot += w * 1.4F * limbSwingAmount;
     }
 
+    @Deprecated
     private float getAnimateWalkingValue(float w, float swingAmount, float amplitude) {
         int sign = Mth.sign(amplitude);
         amplitude = Math.abs(amplitude);
