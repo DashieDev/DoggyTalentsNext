@@ -538,5 +538,6 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(dog.hurtTime > 0 || dog.deathTime > 0));
     }
 
-
+    //TODO 
+    private static int implementDogBankingRotationZRotMatrixModify_1_21_11_TODO() {}
 }
