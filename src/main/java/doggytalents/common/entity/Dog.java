@@ -42,6 +42,7 @@ import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction.ActionState;
 import doggytalents.common.entity.anim.DogAnimationManager;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogWalkAnimationState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
 import doggytalents.common.entity.datasync.DogDataSyncManager;
 import doggytalents.common.entity.DogIncapacitatedMananger.BandaidState;
@@ -279,6 +280,7 @@ public class Dog extends AbstractDog {
     public final DogMoodManager dogMood = new DogMoodManager(this);
     public final DogSoundManager dogSoundManager
         = new DogSoundManager(this);
+    public final DogWalkAnimationState dogWalkAnimation = new DogWalkAnimationState(this);
     private DogAlterationProps alterationProps
         = new DogAlterationProps();
     private IDogRangedAttackManager dogRangedAttackManager
@@ -1124,6 +1126,22 @@ public class Dog extends AbstractDog {
         }
 
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public void calculateEntityAnimation(boolean ySpeed) {
+        float rawDeltaMove = (float) Mth.length(
+            this.getX() - this.xo, 
+            0, 
+            this.getZ() - this.zo
+        );
+        this.updateWalkAnimation(rawDeltaMove);
+    }
+
+    @Override
+    protected void updateWalkAnimation(float rawDeltaMove) {
+        super.updateWalkAnimation(rawDeltaMove);
+        this.dogWalkAnimation.update(rawDeltaMove);
     }
 
     private InteractionResult handleDogSitStand(Player player) {
