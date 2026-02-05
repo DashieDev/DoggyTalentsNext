@@ -1120,12 +1120,18 @@ public class Dog extends AbstractDog {
 
     @Override
     public void calculateEntityAnimation(boolean ySpeed) {
-        float rawDeltaMove = (float) Mth.length(
-            this.getX() - this.xo, 
-            0, 
-            this.getZ() - this.zo
-        );
-        this.updateWalkAnimation(rawDeltaMove);
+        double dx = this.getX() - this.xo;
+        double dz = this.getZ() - this.zo;
+        float l_xz = (float) Mth.length(dx, dz);
+
+        float yrot = this.getYRot() * Mth.DEG_TO_RAD;
+        float look_x = -Mth.sin(yrot);
+        float look_z = Mth.cos(yrot);
+
+        float voluntary_spped = (float) (dx * look_x + dz * look_z);
+        voluntary_spped = Mth.clamp(voluntary_spped, 0, l_xz);
+        
+        this.updateWalkAnimation(voluntary_spped);
     }
 
     @Override
