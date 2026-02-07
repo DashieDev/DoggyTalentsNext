@@ -19,6 +19,7 @@ public class DogFlyingMoveControl extends FlyingMoveControl {
         this.talentInst = talentInst;
     }
 
+    @Override
     public void tick() {
 
         if (this.operation == MoveControl.Operation.MOVE_TO) {

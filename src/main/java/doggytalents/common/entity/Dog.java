@@ -603,12 +603,14 @@ public class Dog extends AbstractDog {
         return super.getDimensions(getPose());
     }
 
+    @Override
     public float getDogVisualBbHeight() {
         if (this.visualDimension != null)
             return this.visualDimension.height();
         return this.getBbHeight();
     }
 
+    @Override
     public float getDogVisualBbWidth() {
         if (this.visualDimension != null)
             return this.visualDimension.width();
@@ -3670,6 +3672,7 @@ public class Dog extends AbstractDog {
         }
      }
 
+    @Override
     public void setTarget(@Nullable LivingEntity target) {
         if (target == this)
             target = null;
@@ -3910,6 +3913,7 @@ public class Dog extends AbstractDog {
         this.setDogFlag(262144, val);
     }
 
+    @Override
     public boolean forcedWhenNoneAnim() {
         return getDogFlag(262144);
     }
@@ -4768,6 +4772,7 @@ public class Dog extends AbstractDog {
         return this.lastSitPosSaveTimestamp;
     }
 
+    @Override
     public float getPathfindingMalus(PathType type) {
         switch (type) {
         default:
@@ -4858,10 +4863,12 @@ public class Dog extends AbstractDog {
         return this.alterationProps.canUseTools();
     }
 
+    @Override
     public DogArmorItemHandlerImpl dogArmors() {
         return this.dogArmors;
     }
 
+    @Override
     public ItemStack wolfArmor() {
         var stack = this.getItemBySlot(EquipmentSlot.BODY);
         if (stack == null || !stack.is(Items.WOLF_ARMOR))
@@ -4882,22 +4889,26 @@ public class Dog extends AbstractDog {
         return !this.wolfArmor().isEmpty();
     }
 
+    @Override
     public Iterable<ItemStack> getHandSlots() {
         if (!this.canDogUseTools() || this.mouthStack == null)
             return List.of(); 
         return List.of(this.mouthStack);
     }
 
+    @Override
     public Iterable<ItemStack> getArmorSlots() {
         if (!this.canDogWearArmor())
             return List.of();
         return this.dogArmors.armors();
     }
 
+    @Override
     public Iterable<ItemStack> getArmorAndBodyArmorSlots() {
         return getArmorSlots();
     }
 
+    @Override
     public ItemStack getItemBySlot(EquipmentSlot slot) {
         var type = slot.getType();
         boolean getArmor = 
@@ -4920,6 +4931,7 @@ public class Dog extends AbstractDog {
         return ItemStack.EMPTY;
     }
 
+    @Override
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
         this.verifyEquippedItem(stack);
         if (trySetDogArmorSlot(slot, stack))
@@ -5013,6 +5025,7 @@ public class Dog extends AbstractDog {
         return this.getAirSupply() < this.getMaxAirSupply() * 0.3;
     }
 
+    @Override
     public boolean isDogLowHealth() {
         return this.getHealth() < 6;
     }
@@ -5048,6 +5061,7 @@ public class Dog extends AbstractDog {
         this.setDogFlag(1024, s);
     }
 
+    @Override
     public boolean isDogFlying() {
         return this.getDogFlag(1024);
     }
@@ -5240,6 +5254,7 @@ public class Dog extends AbstractDog {
         this.entityData.set(ANIMATION, animation.getId());
     }
 
+    @Override
     public DogAnimation getAnim() {
         return DogAnimation.byId(this.entityData.get(ANIMATION));
     }
@@ -5337,6 +5352,7 @@ public class Dog extends AbstractDog {
         this.setDogPose(DogPose.STAND);
     }
 
+    @Override
     public float getClientAnimatedYBodyRotInRadians() {
         if (!this.level().isClientSide)
             return this.yBodyRot * Mth.DEG_TO_RAD;
@@ -5353,6 +5369,7 @@ public class Dog extends AbstractDog {
     }
 
     //Client
+    @Override
     public boolean isDogVariantRenderEffective() {
         var skin = this.getClientSkin();
         return skin == null || !skin.isCustom();

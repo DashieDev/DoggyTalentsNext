@@ -40,6 +40,7 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
             propsCreator.apply(new FoodProperties.Builder()).build());
     }
 
+    @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         ItemStack returnStack = super.finishUsingItem(stack, level, user);
         boolean creativeUse = user instanceof Player && ((Player)user).getAbilities().instabuild;

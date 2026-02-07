@@ -25,6 +25,7 @@ public class BunnyEars extends Accessory implements IAccessoryHasModel{
         return AccessoryModelRenderEntries.BUNNY_EARS;
     }
 
+    @Override
     public AccessoryInstance getDefault() {
         return new Inst(this);
     }

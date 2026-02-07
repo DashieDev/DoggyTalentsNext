@@ -31,11 +31,13 @@ public class WolfBegAtTreatGoal extends Goal {
       this.setFlags(EnumSet.of(Goal.Flag.LOOK));
    }
 
+   @Override
    public boolean canUse() {
       this.player = this.level.getNearestPlayer(this.begTargeting, this.wolf);
       return this.player == null ? false : this.playerHoldingInteresting(this.player);
    }
 
+   @Override
    public boolean canContinueToUse() {
       if (!this.player.isAlive()) {
          return false;
@@ -46,16 +48,19 @@ public class WolfBegAtTreatGoal extends Goal {
       }
    }
 
+   @Override
    public void start() {
       this.wolf.setIsInterested(true);
       this.lookTime = this.adjustedTickDelay(40 + this.wolf.getRandom().nextInt(40));
    }
 
+   @Override
    public void stop() {
       this.wolf.setIsInterested(false);
       this.player = null;
    }
 
+   @Override
    public void tick() {
       this.wolf.getLookControl().setLookAt(this.player.getX(), this.player.getEyeY(), this.player.getZ(), 10.0F, (float)this.wolf.getMaxHeadXRot());
       --this.lookTime;

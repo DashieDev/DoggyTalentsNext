@@ -29,6 +29,7 @@ public class DogLeapAtTargetGoal extends Goal {
       this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
    }
 
+   @Override
    public boolean canUse() {
       if (this.dog.isVehicle()) {
          return false;
@@ -66,10 +67,12 @@ public class DogLeapAtTargetGoal extends Goal {
       }
    }
 
+   @Override
    public boolean canContinueToUse() {
       return !this.dog.onGround();  
    }
 
+   @Override
    public void start() {
       Vec3 vec3 = this.dog.getDeltaMovement();
       Vec3 vec31 = new Vec3(this.target.getX() - this.dog.getX(), 0.0D, this.target.getZ() - this.dog.getZ());
