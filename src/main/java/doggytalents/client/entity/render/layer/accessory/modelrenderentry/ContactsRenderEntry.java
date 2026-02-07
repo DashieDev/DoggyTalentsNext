@@ -1,9 +1,9 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.BowTieModel;
-import doggytalents.client.entity.model.ContactsModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.BowTieModel;
+import doggytalents.client.entity.model.accessories.ContactsModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;

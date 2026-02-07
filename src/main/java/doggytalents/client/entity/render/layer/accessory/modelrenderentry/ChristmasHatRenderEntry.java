@@ -1,9 +1,9 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.ChristmasHatModel;
-import doggytalents.client.entity.model.FireFighterHatModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.ChristmasHatModel;
+import doggytalents.client.entity.model.accessories.FireFighterHatModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;

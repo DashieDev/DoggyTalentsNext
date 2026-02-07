@@ -1,8 +1,8 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.StripedScarfModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.StripedScarfModel;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
