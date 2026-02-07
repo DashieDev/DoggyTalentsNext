@@ -58,12 +58,14 @@ public class DogArmorContainer extends AbstractContainerMenu {
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
             var dogSlot = DogArmorItemHandlerImpl.DogArmorSlots.byEquipment(equipmentslot);
             this.addSlot(new SlotItemHandler(dogArmors, dogSlot.slotId, 17, 27 + i * 18) {
+                @Override
                 public void set(ItemStack p_219985_) {
                     var itemstack = this.getItem();
                     super.set(p_219985_);
                     dog.onEquipItem(equipmentslot, itemstack, p_219985_);
                 }
     
+                @Override
                 public int getMaxStackSize() {
                    return 1;
                 }

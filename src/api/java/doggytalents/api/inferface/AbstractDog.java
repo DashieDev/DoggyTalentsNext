@@ -223,6 +223,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
     }
     //End : Re-adjust armor behaviour
 
+    @Override
     public boolean isDefeated() {
         return this.getMode() == DogMode.INJURED;
     }

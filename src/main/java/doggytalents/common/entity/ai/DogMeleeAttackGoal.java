@@ -56,6 +56,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
    }
 
+   @Override
    public boolean canUse() {
 
       if (!this.dog.getMode().shouldAttack()) return false;
@@ -135,6 +136,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          --this.detectReachPenalty;
    }
 
+   @Override
    public boolean canContinueToUse() {
 
       if (!this.dog.getMode().shouldAttack()) return false;
@@ -173,6 +175,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       }
    }
 
+   @Override
    public void start() {
       if (this.initialPath != null)
          this.dog.getNavigation().moveTo(this.initialPath, this.speedModifier);
@@ -188,6 +191,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          attack_manager.setDogFarChasingTarget(true);
    }
 
+   @Override
    public void stop() {
       this.initialPath = null;
       
@@ -204,6 +208,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       attack_manager.setDogFarChasingTarget(false);
    }
 
+   @Override
    public boolean requiresUpdateEveryTick() {
       return true;
    }
@@ -212,6 +217,7 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
    //due to the dog move control inaccuracy, the dog may be failed to land on a safe platform because
    //of the "safe" area is only an 1-block edge which stick out a cliff or something. This is a part of
    //a bigger problem, the inaccuracy of the moveControl.
+   @Override
    public void tick() {
       
       var e = this.dog.getTarget();

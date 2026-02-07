@@ -21,6 +21,7 @@ public class DogBodyRotationControl extends BodyRotationControl {
         this.dog = dog;
     }
     
+    @Override
     public void clientTick() {
         if (this.isMoving()) {
             this.dog.yBodyRot = this.dog.getYRot();

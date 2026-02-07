@@ -40,6 +40,7 @@ public class DogFollowOwnerGoalDefeated extends Goal {
         return true;
     }
 
+    @Override
     public boolean canContinueToUse() {
         if (!this.dog.isDefeated())
             return false;

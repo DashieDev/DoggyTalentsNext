@@ -30,6 +30,7 @@ public class Wig extends DyeableAccessory implements IAccessoryHasModel {
         return AccessoryInstance.RENDER_TOP;
     }
 
+    @Override
     public AccessoryInstance getDefault() {
         return new Inst(this);
     }

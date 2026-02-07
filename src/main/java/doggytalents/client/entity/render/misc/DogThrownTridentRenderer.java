@@ -36,6 +36,7 @@ public class DogThrownTridentRenderer extends EntityRenderer<DogThrownTrident> {
         super.render(p_116111_, p_116112_, p_116113_, p_116114_, p_116115_, p_116116_);
     }
 
+    @Override
     public ResourceLocation getTextureLocation(DogThrownTrident p_116109_) {
         return ThrownTridentRenderer.TRIDENT_LOCATION;
     }

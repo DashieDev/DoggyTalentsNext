@@ -220,6 +220,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         return this.screen;
     }
 
+    @Override
     public boolean isMouseOver(double x, double y) {
         return x >= (double)this.getRealX() && y >= (double)this.getRealY() && x < (double)(this.getRealX() + this.getSizeX()) && y < (double)(this.getRealY() + this.getSizeY());
     }
