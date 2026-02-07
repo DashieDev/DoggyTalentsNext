@@ -1,9 +1,9 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.BakerHatModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
-import doggytalents.client.entity.model.WigModel;
+import doggytalents.client.entity.model.accessories.BakerHatModel;
+import doggytalents.client.entity.model.accessories.WigModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;

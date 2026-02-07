@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
-import doggytalents.client.entity.model.TenguMaskModel;
+import doggytalents.client.entity.model.accessories.TenguMaskModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
 import doggytalents.common.entity.Dog;

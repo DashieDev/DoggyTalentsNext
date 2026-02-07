@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.CeremonialGarbModel;
-import doggytalents.client.entity.model.LabCoatModel;
-import doggytalents.client.entity.model.MidiKeyboardModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.CeremonialGarbModel;
+import doggytalents.client.entity.model.accessories.LabCoatModel;
+import doggytalents.client.entity.model.accessories.MidiKeyboardModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;

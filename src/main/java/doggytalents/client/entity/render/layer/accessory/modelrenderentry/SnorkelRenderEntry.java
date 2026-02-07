@@ -1,9 +1,9 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.SmartyGlassesModel;
-import doggytalents.client.entity.model.SnorkelModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.SmartyGlassesModel;
+import doggytalents.client.entity.model.accessories.SnorkelModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;

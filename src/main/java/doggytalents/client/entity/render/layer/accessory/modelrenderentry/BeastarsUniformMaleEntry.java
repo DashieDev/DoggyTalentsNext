@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.BeastarsUniformMaleAugmentModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.BeastarsUniformMaleAugmentModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.entity.Dog;

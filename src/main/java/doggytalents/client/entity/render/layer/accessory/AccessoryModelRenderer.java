@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.api.inferface.IColoredObject;
 import doggytalents.client.ClientSetup;
-import doggytalents.client.entity.model.BowTieModel;
+import doggytalents.client.entity.model.accessories.BowTieModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;

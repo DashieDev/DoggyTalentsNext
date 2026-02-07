@@ -1,9 +1,9 @@
 package doggytalents.client.entity.render.layer.accessory.modelrenderentry;
 
 import doggytalents.api.registry.AccessoryInstance;
-import doggytalents.client.entity.model.DemonHornsModel;
-import doggytalents.client.entity.model.SnorkelModel;
 import doggytalents.client.entity.model.SyncedAccessoryModel;
+import doggytalents.client.entity.model.accessories.DemonHornsModel;
+import doggytalents.client.entity.model.accessories.SnorkelModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.common.entity.accessory.DemonHornsAccessory;
 import doggytalents.common.lib.Constants;
