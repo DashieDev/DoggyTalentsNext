@@ -72,6 +72,7 @@ public class DropdownMenuManager extends AbstractElement {
         return activeDropdownMenu;
     }
 
+    @Override
     public boolean mouseClicked(MouseButtonEvent mouseButtonEvent_1_21_9, boolean doubleClick_1_21_9) {
         double mouseX = mouseButtonEvent_1_21_9.x(); double mouseY = mouseButtonEvent_1_21_9.y();
         if (!this.hasDropdownMenu()) return false;

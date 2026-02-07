@@ -16,6 +16,7 @@ public class DogArrowRenderer extends ArrowRenderer<DogArrow, DogArrowRenderStat
         super(ctx);
     }
 
+    @Override
     public Identifier getTextureLocation(DogArrow arrow) {
         if (arrow.isDogSpectralArrow())
             return SPECTRAL_ARROW_LOCATION;

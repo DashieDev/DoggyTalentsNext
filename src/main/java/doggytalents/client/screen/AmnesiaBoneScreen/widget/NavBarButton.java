@@ -26,6 +26,7 @@ public class NavBarButton extends TextOnlyButton {
         this.dog = dog;
     }
 
+    @Override
     public void onPress() {
         Store.get(screen)
         //dispatch all to notify all slice of changetab so they can do setup before

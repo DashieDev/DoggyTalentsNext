@@ -23,6 +23,7 @@ public class TextOnlyButton extends AbstractButton_1_21_9 {
 
     
 
+    @Override
     public void onPress() {
         this.onPress.onPress(this);
     }

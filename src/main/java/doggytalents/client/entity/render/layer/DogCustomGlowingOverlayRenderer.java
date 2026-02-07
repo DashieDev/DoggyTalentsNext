@@ -20,6 +20,7 @@ public class DogCustomGlowingOverlayRenderer extends DogRenderLayer_21_3 {
         super(parentRenderer);
     }
 
+    @Override
     public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
         if (dog.isInvisible())
             return;

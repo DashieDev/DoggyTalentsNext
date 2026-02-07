@@ -32,6 +32,7 @@ public class BachWig extends Accessory implements IAccessoryHasModel {
         return AccessoryInstance.RENDER_TOP;
     }
 
+    @Override
     public AccessoryInstance getDefault() {
         return new Inst(this);
     }

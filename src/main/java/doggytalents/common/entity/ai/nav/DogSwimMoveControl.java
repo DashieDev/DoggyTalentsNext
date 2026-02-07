@@ -20,6 +20,7 @@ public class DogSwimMoveControl extends MoveControl {
         this.dog = dog;
     }
     
+    @Override
     public void tick() {
         if (
             this.operation == MoveControl.Operation.MOVE_TO 

@@ -169,6 +169,7 @@ public class TalentInstance implements IDogAlteration {
      *
      * @param dogIn The dog
      */
+    @Override
     public void init(AbstractDog dogIn) {
 
     }

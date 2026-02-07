@@ -17,6 +17,7 @@ import net.minecraft.resources.Identifier;
 
 public abstract class DoubleDyableRenderEntry extends Entry {
  
+    @Override
     public void renderAccessory(RenderLayer<DogRenderState_21_3, DogModel> layer, 
         PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
         Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 

@@ -255,6 +255,7 @@ public class WhistleScreen extends StringEntrySelectScreen {
         graphics.drawString(font, text, entry_x, entry_y, color);
     }
 
+    @Override
     public void tick() {
         updateCurrentHotKeys();
         this.pKey = findEmptyHotkey();
