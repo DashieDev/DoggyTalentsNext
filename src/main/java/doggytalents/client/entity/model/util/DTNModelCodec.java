@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model.util;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -15,6 +17,7 @@ import org.joml.Vector3fc;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.client.entity.model.util.ModelAccessUtil.PartAccess;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDefinition;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -111,6 +114,71 @@ public class DTNModelCodec {
             )
             .apply(builder, ParsedCube::of)
         );
+    }
+
+    public static ParsedModelResult parsedFromLayerDefintion(LayerDefinition layer) {
+        final var model = ModelAccessUtil.createAccess(layer);
+        
+        final var tex_size = model.texSize();
+        final var root = model.root();
+
+        final var all_ids = new HashSet<String>();
+        final var parts = new ArrayList<ParsedPart>();
+        for (var part : root) {
+            parts.add(encodePart(part, new Vector3f(), all_ids));
+        }
+
+        return new ParsedModelResult(tex_size.x(), tex_size.y(), parts);
+    }
+
+    private static ParsedPart encodePart(PartAccess part, 
+        Vector3fc global_offset, HashSet<String> ids) {
+
+        final var id = part.id();
+        if (ids.contains(id))
+            throw new IllegalArgumentException("Repeated part id: " + id);
+        
+        ids.add(id);
+        
+        final var part_pose = part.partPose();
+        final var rotation = (Vector3fc) new Vector3f(
+            part_pose.xRot, part_pose.yRot, part_pose.zRot
+        ); 
+        final var global_pos = new Vector3f(
+            part_pose.x, part_pose.y, part_pose.z
+        ).add(global_offset);
+        
+        final var encoded_rotation = vec(rotation);
+        COORDINATE_CODEC.encodeRotation(encoded_rotation);
+        zeroSanitizeMut(encoded_rotation);
+        encoded_rotation.mul(Mth.RAD_TO_DEG);
+
+        final var encoded_pivot = vec(global_pos);
+        COORDINATE_CODEC.encodePosition(encoded_pivot, true);
+        zeroSanitizeMut(encoded_pivot);
+
+        final var cubes = new ArrayList<ParsedCube>();
+        for (var cube : part.cubes()) {
+            final var uv = cube.uv();
+            final boolean mirror = cube.mirror();
+            var cube_args = COORDINATE_CODEC.encodeCubeArgs(
+                cube.origin(), cube.dimension(), global_pos);
+            final var from = cube_args.getLeft();
+            final var to = cube_args.getRight();
+            final var inflate = Optional.of(cube.inflate())
+                .filter(val -> !Mth.equal(val, 0));
+            var encoded_cube = new ParsedCube(uv.x(), uv.y(), 
+                from, to, mirror, inflate);
+            cubes.add(encoded_cube);
+        }
+
+        final var children = new ArrayList<ParsedPart>();
+        for (var child : part.children()) {
+            var encoded_child = encodePart(child, global_pos, ids);
+            children.add(encoded_child);
+        }
+        return new ParsedPart(id, encoded_pivot, 
+            encoded_rotation, encoded_pivot, cubes, children);
     }
 
     public static LayerDefinition layerDefinitionFromParsed(ParsedModelResult result) {
