@@ -2,6 +2,8 @@ package doggytalents.client.entity.model.util;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
@@ -61,15 +63,46 @@ public class DTNModelCodec {
         ]
     }
     */
+    public static final Codec<ParsedModelResult> CODEC = RecordCodecBuilder.create(
+        builder -> builder.group(
+            LocalUtil.VECTOR2I.fieldOf("texture_size")
+                .forGetter(ParsedModelResult::texSize),
+            parsedPartCodec().listOf().fieldOf("parts")
+                .forGetter(ParsedModelResult::parts)
+        )
+        .apply(builder, ParsedModelResult::of)
+    );
+
+    private static Codec<ParsedPart> parsedPartCodec() {
+        return Codec.recursive("DTNParsedPart", self -> {
+            return RecordCodecBuilder.create(
+                builder -> builder.group(
+                    Codec.STRING.fieldOf("id")
+                        .forGetter(ParsedPart::id),
+                    LocalUtil.VECTOR3F.optionalFieldOf("position", new Vector3f())
+                        .forGetter(ParsedPart::position),
+                    LocalUtil.VECTOR3F.optionalFieldOf("rotation", new Vector3f())
+                        .forGetter(ParsedPart::rotation),
+                    LocalUtil.VECTOR3F.optionalFieldOf("pivot")
+                        .forGetter(wrapOptional(ParsedPart::pivot)),
+                    parsedCubeCodec().listOf().optionalFieldOf("cubes")
+                        .forGetter(wrapOptional(ParsedPart::cubeList)),
+                    self.listOf().optionalFieldOf("children")
+                        .forGetter(wrapOptional(ParsedPart::children))
+                )
+                .apply(builder, ParsedPart::of)
+            );
+        });
+    }
 
     private static Codec<ParsedCube> parsedCubeCodec() {
         return RecordCodecBuilder.create(
             builder -> builder.group(
                 LocalUtil.VECTOR2I.fieldOf("uv")
                     .forGetter(ParsedCube::uv),
-                ExtraCodecs.VECTOR3F.fieldOf("from")
+                LocalUtil.VECTOR3F.fieldOf("from")
                     .forGetter(ParsedCube::from),
-                ExtraCodecs.VECTOR3F.fieldOf("to")
+                LocalUtil.VECTOR3F.fieldOf("to")
                     .forGetter(ParsedCube::to),
                 Codec.BOOL.optionalFieldOf("mirror", false)
                     .forGetter(ParsedCube::mirror),
@@ -90,7 +123,6 @@ public class DTNModelCodec {
         for (var part : result.parts()) {
             addParsedPartToDefinition(root, part, null);
         }
-        
         return LayerDefinition.create(mesh, tex_x, tex_y);
     }
 
@@ -243,9 +275,12 @@ public class DTNModelCodec {
 
     public static record ParsedModelResult(int textureX, int textureY,
         List<ParsedPart> parts) {
-        public ParsedModelResult of(Vector2i textureSize, List<ParsedPart> parts) {
+        public static ParsedModelResult of(Vector2i textureSize, List<ParsedPart> parts) {
             return new ParsedModelResult(textureSize.x(), textureSize.y(), 
                 parts == null ? List.of() : parts);
+        }
+        public Vector2i texSize() {
+            return new Vector2i(this.textureX(), this.textureY());
         }
     }
 
@@ -253,15 +288,14 @@ public class DTNModelCodec {
         Vector3f position, Vector3f rotation, Vector3f pivot, 
         List<ParsedCube> cubeList, List<ParsedPart> children
     ) {
-        public static ParsedPart of(String id, Optional<Vector3f> positionOptional, Optional<Vector3f> rotation,
-            Optional<Vector3f> pivotOptional, Optional<List<ParsedCube>> cubeList, 
+
+        public static ParsedPart of(String id, Vector3f position, Vector3f rotation,
+            Optional<Vector3f> pivot, Optional<List<ParsedCube>> cubeList, 
             Optional<List<ParsedPart>> children
         ) {
-            var position = positionOptional.orElse(new Vector3f());
-            var pivot = pivotOptional.orElse(position);
 
             return new ParsedPart(id, position, 
-                rotation.orElse(new Vector3f()), pivot, 
+                rotation, pivot.orElse(position), 
                 cubeList.orElse(List.of()), children.orElse(List.of()));
         }
     }
@@ -303,5 +337,8 @@ public class DTNModelCodec {
             Mth.equal(vec.y(), 0) ? 0 : vec.y(),
             Mth.equal(vec.z(), 0) ? 0 : vec.z()
         );
+    }
+    private static <A, T> Function<A, Optional<T>> wrapOptional(Function<A, T> wrapped) {
+        return val -> Optional.of(wrapped.apply(val));
     }
 }
