@@ -50,7 +50,12 @@ public class DTNModelCodec {
                         "id": "ear"
                         //...    
                     }
-                ]
+                ],
+
+                
+                //Optional. Default == false. Reserved to mark "synthetic parts"
+                //generated from Blockbench. Has no effect when parsing in-game. 
+                "bb_inline": true
             }
             //...
         ]
@@ -81,7 +86,7 @@ public class DTNModelCodec {
         
         var mesh = new MeshDefinition();
         var root = mesh.getRoot();
-        //Collect names and santizie first. 
+        
         for (var part : result.parts()) {
             addParsedPartToDefinition(root, part, null);
         }
@@ -248,12 +253,15 @@ public class DTNModelCodec {
         Vector3f position, Vector3f rotation, Vector3f pivot, 
         List<ParsedCube> cubeList, List<ParsedPart> children
     ) {
-        public static ParsedPart of(String id, Optional<Vector3f> position, Optional<Vector3f> rotation,
-            Optional<Vector3f> pivot, Optional<List<ParsedCube>> cubeList, 
+        public static ParsedPart of(String id, Optional<Vector3f> positionOptional, Optional<Vector3f> rotation,
+            Optional<Vector3f> pivotOptional, Optional<List<ParsedCube>> cubeList, 
             Optional<List<ParsedPart>> children
         ) {
-            return new ParsedPart(id, position.orElse(new Vector3f()), 
-                rotation.orElse(new Vector3f()), pivot.orElse(new Vector3f()), 
+            var position = positionOptional.orElse(new Vector3f());
+            var pivot = pivotOptional.orElse(position);
+
+            return new ParsedPart(id, position, 
+                rotation.orElse(new Vector3f()), pivot, 
                 cubeList.orElse(List.of()), children.orElse(List.of()));
         }
     }
