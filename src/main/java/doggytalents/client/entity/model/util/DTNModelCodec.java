@@ -37,7 +37,6 @@ public class DTNModelCodec {
         "parts": [
             {
                 "id": "head",
-                "position": [0, 0, 0], //Optional. Default == [0, 0, 0]
                 "pivot": [0, 0, 0], //Optional. Default == Position
                 "rotation": [0, 0, 0], //Optional. Default == [0, 0, 0]
                 "cubes": [ // Optional. Default == []
@@ -82,12 +81,10 @@ public class DTNModelCodec {
                 builder -> builder.group(
                     Codec.STRING.fieldOf("id")
                         .forGetter(ParsedPart::id),
-                    LocalUtil.VECTOR3F.optionalFieldOf("position", new Vector3f())
-                        .forGetter(ParsedPart::position),
+                    LocalUtil.VECTOR3F.optionalFieldOf("pivot", new Vector3f())
+                        .forGetter(ParsedPart::pivot),
                     LocalUtil.VECTOR3F.optionalFieldOf("rotation", new Vector3f())
                         .forGetter(ParsedPart::rotation),
-                    LocalUtil.VECTOR3F.optionalFieldOf("pivot")
-                        .forGetter(ParsedPart::pivotOptional),
                     parsedCubeCodec().listOf().optionalFieldOf("cubes")
                         .forGetter(wrapOptional(ParsedPart::cubeList)),
                     self.listOf().optionalFieldOf("children")
@@ -173,7 +170,7 @@ public class DTNModelCodec {
             children.add(encoded_child);
         }
         return new ParsedPart(id, encoded_pivot, 
-            encoded_rotation, encoded_pivot, cubes, children);
+            encoded_rotation, cubes, children);
     }
 
     public static LayerDefinition layerDefinitionFromParsed(ParsedModelResult result) {
@@ -348,24 +345,18 @@ public class DTNModelCodec {
     }
 
     public static record ParsedPart(String id, 
-        Vector3f position, Vector3f rotation, Vector3f pivot, 
+        Vector3f pivot, Vector3f rotation,
         List<ParsedCube> cubeList, List<ParsedPart> children
     ) {
 
-        public static ParsedPart of(String id, Vector3f position, Vector3f rotation,
-            Optional<Vector3f> pivot, Optional<List<ParsedCube>> cubeList, 
+        public static ParsedPart of(String id, Vector3f pivot, Vector3f rotation, 
+            Optional<List<ParsedCube>> cubeList, 
             Optional<List<ParsedPart>> children
         ) {
 
-            return new ParsedPart(id, position, 
-                rotation, pivot.orElse(position), 
+            return new ParsedPart(id, pivot, 
+                rotation,
                 cubeList.orElse(List.of()), children.orElse(List.of()));
-        }
-
-        public Optional<Vector3f> pivotOptional() {
-            var diff = vec(pivot()).sub(position());
-            zeroSanitizeMut(diff);
-            return Optional.of(vec(pivot())).filter(x -> !diff.equals(LocalUtil.ZERO_3));
         }
     }
 
