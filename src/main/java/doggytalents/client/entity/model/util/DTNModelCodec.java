@@ -31,6 +31,7 @@ import net.minecraft.util.Mth;
 public class DTNModelCodec {
     
     /*
+    // All rotations involved in this format are in Degrees.
     {
         "dtn_format_version" : 1.0,
         "texture_size": [0, 0],
