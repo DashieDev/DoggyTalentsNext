@@ -33,6 +33,7 @@ public class ModelComparator {
         }
 
         // Map for easy lookup by ID (Handling order differences)
+        // Do orderless compare here.
         var expected_map = expParts.stream()
             .collect(Collectors.toMap(ModelAccessUtil.PartAccess::id, p -> p));
         var actual_map = actParts.stream()
@@ -58,6 +59,7 @@ public class ModelComparator {
         compareFloats(path + ".zRot", expected_pose.zRot, actual_pose.zRot);
 
         // 2. Compare Cubes
+        // Do orderless compare here.
         var expected_cubes = exp.cubes();
         var actual_cubes = act.cubes();
         
