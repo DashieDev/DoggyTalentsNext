@@ -87,7 +87,7 @@ public class DTNModelCodec {
                     LocalUtil.VECTOR3F.optionalFieldOf("rotation", new Vector3f())
                         .forGetter(ParsedPart::rotation),
                     LocalUtil.VECTOR3F.optionalFieldOf("pivot")
-                        .forGetter(wrapOptional(ParsedPart::pivot)),
+                        .forGetter(ParsedPart::pivotOptional),
                     parsedCubeCodec().listOf().optionalFieldOf("cubes")
                         .forGetter(wrapOptional(ParsedPart::cubeList)),
                     self.listOf().optionalFieldOf("children")
@@ -122,23 +122,18 @@ public class DTNModelCodec {
         final var tex_size = model.texSize();
         final var root = model.root();
 
-        final var all_ids = new HashSet<String>();
         final var parts = new ArrayList<ParsedPart>();
         for (var part : root) {
-            parts.add(encodePart(part, new Vector3f(), all_ids));
+            parts.add(encodePart(part, new Vector3f()));
         }
 
         return new ParsedModelResult(tex_size.x(), tex_size.y(), parts);
     }
 
     private static ParsedPart encodePart(PartAccess part, 
-        Vector3fc global_offset, HashSet<String> ids) {
+        Vector3fc global_offset) {
 
         final var id = part.id();
-        if (ids.contains(id))
-            throw new IllegalArgumentException("Repeated part id: " + id);
-        
-        ids.add(id);
         
         final var part_pose = part.partPose();
         final var rotation = (Vector3fc) new Vector3f(
@@ -174,7 +169,7 @@ public class DTNModelCodec {
 
         final var children = new ArrayList<ParsedPart>();
         for (var child : part.children()) {
-            var encoded_child = encodePart(child, global_pos, ids);
+            var encoded_child = encodePart(child, global_pos);
             children.add(encoded_child);
         }
         return new ParsedPart(id, encoded_pivot, 
@@ -365,6 +360,12 @@ public class DTNModelCodec {
             return new ParsedPart(id, position, 
                 rotation, pivot.orElse(position), 
                 cubeList.orElse(List.of()), children.orElse(List.of()));
+        }
+
+        public Optional<Vector3f> pivotOptional() {
+            var diff = vec(pivot()).sub(position());
+            zeroSanitizeMut(diff);
+            return Optional.of(vec(pivot())).filter(x -> !diff.equals(LocalUtil.ZERO_3));
         }
     }
 
