@@ -89,7 +89,10 @@ public class DTNModelCodec {
                     parsedCubeCodec().listOf().optionalFieldOf("cubes")
                         .forGetter(wrapOptional(ParsedPart::cubeList)),
                     self.listOf().optionalFieldOf("children")
-                        .forGetter(wrapOptional(ParsedPart::children))
+                        .forGetter(wrapOptional(ParsedPart::children)),
+                    //temp
+                    Codec.BOOL.optionalFieldOf("bb_inline", false)
+                        .forGetter(x -> false)
                 )
                 .apply(builder, ParsedPart::of)
             );
@@ -352,8 +355,12 @@ public class DTNModelCodec {
 
         public static ParsedPart of(String id, Vector3f pivot, Vector3f rotation, 
             Optional<List<ParsedCube>> cubeList, 
-            Optional<List<ParsedPart>> children
+            Optional<List<ParsedPart>> children, boolean bb_in
         ) {
+
+            if (bb_in) {
+                cubeList = cubeList.map(x -> List.copyOf(x.reversed()));
+            }
 
             return new ParsedPart(id, pivot, 
                 rotation,

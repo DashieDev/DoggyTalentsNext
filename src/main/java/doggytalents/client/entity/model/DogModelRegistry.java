@@ -107,7 +107,7 @@ import net.neoforged.fml.ModLoader;
 
 public class DogModelRegistry {
     
-    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
+    public static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
 
     public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
         MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
@@ -140,6 +140,10 @@ public class DogModelRegistry {
                 throw new NoSuchElementException(msg);
             }   
         }
+    }
+
+    public static void resolveJson() {
+        
     }
 
     public static void init() {

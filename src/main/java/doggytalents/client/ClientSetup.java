@@ -2,6 +2,10 @@ package doggytalents.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import com.google.common.collect.Maps;
 
 import doggytalents.DoggyContainerTypes;
 import doggytalents.DoggyEntityTypes;
@@ -18,6 +22,7 @@ import doggytalents.client.entity.model.FisherDogModel;
 import doggytalents.client.entity.model.SyncedRenderFunctionWithHeadModel;
 import doggytalents.client.entity.model.TorchDogModel;
 import doggytalents.client.entity.model.animation.DTNAnimationLoader;
+import doggytalents.client.entity.model.animation.DTNModelLoader;
 import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
@@ -147,6 +152,7 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -274,111 +280,115 @@ public class ClientSetup {
         event.register(DoggyContainerTypes.RICE_MILL.get(), RiceMillScreen::new);
     }
 
+    public static final Map<ModelLayerLocation, Supplier<LayerDefinition>>
+        LAYER_DEFS = Maps.newHashMap();
+
     public static void setupEntityRenderers(final EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(DOG, DogModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_LEGACY, VariantDogModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_IWANKO, IwankoModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_LUCARIO, LucarioModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_DEATH, DeathModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_LEGOSHI, LegoshiModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_JACK, JackModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_JUNO, JunoModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ST_BERNARD, StBernardModel::createBodyLayer);
+        LAYER_DEFS.clear();
+        registerAndAddLayerDefintion(event, DOG, DogModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_LEGACY, VariantDogModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_IWANKO, IwankoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_LUCARIO, LucarioModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_DEATH, DeathModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_LEGOSHI, LegoshiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_JACK, JackModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_JUNO, JunoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_ST_BERNARD, StBernardModel::createBodyLayer);
 
-        event.registerLayerDefinition(OKAMI_AMATERASU, AmaterasuModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_CHI, AmmyChiModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_JIN, AmmyJinModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_REBIRTH, AmmyRebirthModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_REI, AmmyReiModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_SHIN, AmmyShinModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_SHIRANUI, AmmyShiranuiModel::createBodyLayer);
-        event.registerLayerDefinition(AMMY_TEI, AmmyTeiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OKAMI_AMATERASU, AmaterasuModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_CHI, AmmyChiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_JIN, AmmyJinModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_REBIRTH, AmmyRebirthModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_REI, AmmyReiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_SHIN, AmmyShinModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_SHIRANUI, AmmyShiranuiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, AMMY_TEI, AmmyTeiModel::createBodyLayer);
 
-        event.registerLayerDefinition(KUSA_HAYABUSA, HayabusaModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_CHI, ChiModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_KO, KoModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_REI, ReiModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_SHIN, ShinModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_TAKE, TakeModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_TEI, TeiModel::createBodyLayer);
-        event.registerLayerDefinition(KUSA_UME, UmeModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_HAYABUSA, HayabusaModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_CHI, ChiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_KO, KoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_REI, ReiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_SHIN, ShinModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_TAKE, TakeModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_TEI, TeiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, KUSA_UME, UmeModel::createBodyLayer);
 
-        event.registerLayerDefinition(OINA_KAIPOKU, KaipokuModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_KAWAUSO, KawausoModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_KEMUSHIRI, KemushiriModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_MERCHANT, OinaMerchant1Model::createBodyLayer);
-        event.registerLayerDefinition(OINA_MERCHANT2, OinaMerchant2Model::createBodyLayer);
-        event.registerLayerDefinition(OINA_OKIKURUMI, OkikurumiModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_PIRIKO, PirikoModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_RISU, RisuModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_SHAMIKURU, ShamikuruModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_TODO, TodoModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_TUSUKURU, TusukuruModel::createBodyLayer);
-        event.registerLayerDefinition(OINA_WARI, WariModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_SOL_HOPE, HopeModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_WOLF_LINK, WolfLinkModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_KAIPOKU, KaipokuModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_KAWAUSO, KawausoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_KEMUSHIRI, KemushiriModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_MERCHANT, OinaMerchant1Model::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_MERCHANT2, OinaMerchant2Model::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_OKIKURUMI, OkikurumiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_PIRIKO, PirikoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_RISU, RisuModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_SHAMIKURU, ShamikuruModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_TODO, TodoModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_TUSUKURU, TusukuruModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, OINA_WARI, WariModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_SOL_HOPE, HopeModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_WOLF_LINK, WolfLinkModel::createBodyLayer);
 
-        event.registerLayerDefinition(DOG_ARCANINE, ArcanineModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_POCHITA, PochitaModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_DACHSHUND, DachshundModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_DOBERMAN, DobermanModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_PUG, PugModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BORZOI, BorzoiModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BORZOI_LONG, BorzoiLongModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ENGLISH_BULLDOG, EnglishBulldogModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_FRENCH_BULLDOG, FrenchBulldogModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_POODLE, PoodleModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_CHIHUAHUA, ChihuahuaModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BOXER_FLOPPY, BoxerFloppyModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BOXER_POINTY, BoxerPointyModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_MINIATURE_PINSCHER, MiniaturePinscherModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_HUNGARIAN_PULI, HungarianPuliModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BASSET_HOUND, BassetHoundModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_COLLIE_SMOOTH, CollieSmoothModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_COLLIE_ROUGH, CollieRoughModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_COLLIE_BORDER, CollieBorderModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_COLLIE_BORDER_SHORT, CollieBorderShortModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BICHON_MALTAIS, BichonMaltaisModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BELGIAN_MALINOIS, BelgianMalinoisModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_OTTER, OtterModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_BULL_TERRIER, BullTerrierModel::createBodyLayer);
-        event.registerLayerDefinition(INU_AKITA, AkitaJapaneseModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_AKITA, AkitaAmericanModel::createBodyLayer);
-        event.registerLayerDefinition(INU_SHIBA, ShibaModel::createBodyLayer);
-        event.registerLayerDefinition(INU_SHIKOKU, ShikokuModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ZERO, ZeroModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_SCRAPS, ScrapsModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_SPARKY, SparkyModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_POINTER_SHORT, GermanPointerShorthaired::createBodyLayer);
-        event.registerLayerDefinition(DOG_POINTER_WIRE, GermanPointerWirehaired::createBodyLayer);
-        event.registerLayerDefinition(DOG_SAMOYED, SamoyedModel::createBodyLayer);
-        event.registerLayerDefinition(RANGA, RangaModel::createBodyLayer);
-        event.registerLayerDefinition(BOLT, BoltModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_NORFOLK_TERRIER, NorfolkTerrierModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_AUSTRALIAN_KELPIE, AustralianKelpieModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_NEWFOUNDLAND, NewfoundlandModel::createBodyLayer);
-        event.registerLayerDefinition(NA, Na::na);
-        event.registerLayerDefinition(MOCHI, MochiModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_CORGI, CorgiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_ARCANINE, ArcanineModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_POCHITA, PochitaModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_DACHSHUND, DachshundModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_DOBERMAN, DobermanModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_PUG, PugModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BORZOI, BorzoiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BORZOI_LONG, BorzoiLongModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_ENGLISH_BULLDOG, EnglishBulldogModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_FRENCH_BULLDOG, FrenchBulldogModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_POODLE, PoodleModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_CHIHUAHUA, ChihuahuaModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BOXER_FLOPPY, BoxerFloppyModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BOXER_POINTY, BoxerPointyModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_MINIATURE_PINSCHER, MiniaturePinscherModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_HUNGARIAN_PULI, HungarianPuliModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BASSET_HOUND, BassetHoundModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_COLLIE_SMOOTH, CollieSmoothModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_COLLIE_ROUGH, CollieRoughModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_COLLIE_BORDER, CollieBorderModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_COLLIE_BORDER_SHORT, CollieBorderShortModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BICHON_MALTAIS, BichonMaltaisModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BELGIAN_MALINOIS, BelgianMalinoisModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_GERMAN_SHEPHERD, GermanShepherdModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_OTTER, OtterModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BULL_TERRIER, BullTerrierModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, INU_AKITA, AkitaJapaneseModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_AKITA, AkitaAmericanModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, INU_SHIBA, ShibaModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, INU_SHIKOKU, ShikokuModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_HOUNDSTONE, HoundstoneModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_ZERO, ZeroModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_SCRAPS, ScrapsModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_SPARKY, SparkyModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_POINTER_SHORT, GermanPointerShorthaired::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_POINTER_WIRE, GermanPointerWirehaired::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_SAMOYED, SamoyedModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, RANGA, RangaModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, BOLT, BoltModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_NORFOLK_TERRIER, NorfolkTerrierModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_AUSTRALIAN_KELPIE, AustralianKelpieModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_NEWFOUNDLAND, NewfoundlandModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, NA, Na::na);
+        registerAndAddLayerDefintion(event, MOCHI, MochiModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_CORGI, CorgiModel::createBodyLayer);
 
-        event.registerLayerDefinition(DOG_ARMOR, DogArmorModel::createBodyLayer);
-        event.registerLayerDefinition(DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
-        event.registerLayerDefinition(DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
-        event.registerLayerDefinition(DOG_BACKPACK, DogBackpackModel::createChestLayer);
-        event.registerLayerDefinition(DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
-        event.registerLayerDefinition(DOG_SYNCED_FUNCTION_WITH_HEAD, SyncedRenderFunctionWithHeadModel::createLayer);
-        event.registerLayerDefinition(DOG_TORCHIE, TorchDogModel::createLayer);
-        event.registerLayerDefinition(DOG_FISHER_HAT, FisherDogModel::createLayer);
+        registerAndAddLayerDefintion(event, DOG_ARMOR, DogArmorModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_ARMOR_LEGACY, DogArmorModel::createLegacyLayer);
+        registerAndAddLayerDefintion(event, DOG_FRONT_LEGS_SEPERATE, DogFrontLegsSeperate::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_BACKPACK, DogBackpackModel::createChestLayer);
+        registerAndAddLayerDefintion(event, DOG_RESCUE_BOX, DogRescueModel::createRescueBoxLayer);
+        registerAndAddLayerDefintion(event, DOG_SYNCED_FUNCTION_WITH_HEAD, SyncedRenderFunctionWithHeadModel::createLayer);
+        registerAndAddLayerDefintion(event, DOG_TORCHIE, TorchDogModel::createLayer);
+        registerAndAddLayerDefintion(event, DOG_FISHER_HAT, FisherDogModel::createLayer);
 
-        event.registerLayerDefinition(DOG_NULL, NullDogModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, DOG_NULL, NullDogModel::createBodyLayer);
 
-        event.registerLayerDefinition(PIANO, GrandPianoModel::creatPianoLayer);
-        event.registerLayerDefinition(PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
-        event.registerLayerDefinition(DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
-        event.registerLayerDefinition(RICE_MILL, RiceMillModel::createLayer);
-        event.registerLayerDefinition(SAMOYED_PLUSHIE, SamoyedPlushieModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, PIANO, GrandPianoModel::creatPianoLayer);
+        registerAndAddLayerDefintion(event, PIANO_UPRIGHT, UprightPianoModel::createPianoLayer);
+        registerAndAddLayerDefintion(event, DOG_PLUSHIE, DogPlushieModel::createBodyLayer);
+        registerAndAddLayerDefintion(event, RICE_MILL, RiceMillModel::createLayer);
+        registerAndAddLayerDefintion(event, SAMOYED_PLUSHIE, SamoyedPlushieModel::createBodyLayer);
 
         AccessoryModelRenderEntries.registerEntries();
         AccessoryModelManager.registerLayerDef(event);
@@ -386,6 +396,13 @@ public class ClientSetup {
         DogAnimationRegistry.init();
         DogModelRegistry.init();
         gatherSkinJsonFromOtherMods();
+    }
+
+    private static void registerAndAddLayerDefintion(EntityRenderersEvent.RegisterLayerDefinitions event,
+        ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier
+    ) {
+        event.registerLayerDefinition(layerLocation, supplier);
+        LAYER_DEFS.put(layerLocation, supplier);
     }
 
     private static void gatherSkinJsonFromOtherMods() {
@@ -445,5 +462,6 @@ public class ClientSetup {
         event.registerReloadListener(DogTextureManager.INSTANCE);
         event.registerReloadListener(DogRandomNameRegistry.getInstance());
         event.registerReloadListener(DTNAnimationLoader.INSTANCE);
+        event.registerReloadListener(DTNModelLoader.INSTANCE);
     }
 }
