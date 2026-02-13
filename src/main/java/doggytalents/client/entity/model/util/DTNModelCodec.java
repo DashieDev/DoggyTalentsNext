@@ -14,9 +14,11 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import com.ibm.icu.impl.number.DecimalFormatProperties.ParseMode;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.util.ModelAccessUtil.PartAccess;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDefinition;
@@ -35,6 +37,22 @@ public class DTNModelCodec {
     {
         "dtn_format_version" : 1.0,
         "texture_size": [0, 0],
+        //Optional. The props fields bellow are for Dog Model.
+        //Accessories model will have their own props schema later.
+        //All Fields in this objects are Optional. The default values are shown below. 
+        "props": {
+            "root_pivot": [0, 9, 0], 
+            "scale": 1.0, 
+
+            "scale_baby": true, 
+            "wet_shade": true, 
+            "glowing_eyes_legacy": false, 
+            
+            "accessory_props": {
+                "compatibility_state": "have_not_tested", // not_compatible, some_will_fit, have_not_tested, recommended, model_only
+                "use_default_model": false
+            }
+        },
         "parts": [
             {
                 "id": "head",
@@ -345,8 +363,22 @@ public class DTNModelCodec {
         }
     }
 
-    public static record ModelProps() {
+    public static record DogModelProps(
+        Optional<Vector3f> rootPivot,
+        float scale, 
         
+        boolean scaleBabyDog,
+        boolean wetShade,
+        boolean glowingEyes
+    ) {
+
+    }
+
+    public static record DogModelAccessoryProps(
+        boolean forceDefaultModel,
+        DogModel.AccessoryState compatabilityState
+    ) {
+
     }
 
     public static record ParsedPart(String id, 
