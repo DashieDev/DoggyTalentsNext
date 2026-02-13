@@ -1,9 +1,12 @@
 package doggytalents.client.entity.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.checkerframework.checker.units.qual.cd;
 
@@ -101,19 +104,22 @@ import doggytalents.client.entity.model.dog.dogs.oina.WariModel;
 import doggytalents.client.entity.model.dog.dogs.oina.*;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModLoader;
 
 public class DogModelRegistry {
     
-    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
+    public static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
 
-    public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
+    public static <T extends AbstractDog> void register(ResourceLocation id, Function<BakeContext, DogModel>  getter) {
         MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
     }
 
-    public static void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
+    public static void register(String name, Function<BakeContext, DogModel>  getter) {
         register(Util.getResource(name), getter);
     }
 
@@ -131,15 +137,21 @@ public class DogModelRegistry {
         return getDogModelHolder(loc);
     }
 
-    public static void resolve(EntityRendererProvider.Context ctx) {
+    public static void resolve(BakeContext ctx) {
         for (var holder : MODEL_MAP.entrySet()) {
             try {
+                ctx.capturedId = holder.getKey();
                 holder.getValue().resolve(ctx);
+                ctx.capturedId = null;
             } catch (NoSuchElementException e) {
                 var msg = "Dog Model [" + holder.getKey() + "] is missing crucial parts! [" + e.getMessage() + "]";
                 throw new NoSuchElementException(msg);
             }   
         }
+    }
+
+    public static void resolveJson() {
+        
     }
 
     public static void init() {
@@ -254,9 +266,9 @@ public class DogModelRegistry {
 
     public static class DogModelHolder {
         private DogModel value;
-        private Function<EntityRendererProvider.Context, DogModel> getter;
+        private Function<BakeContext, DogModel> getter;
 
-        public DogModelHolder (Function<EntityRendererProvider.Context, DogModel>  getter) {
+        public DogModelHolder (Function<BakeContext, DogModel>  getter) {
             this.getter = getter;
         }
 
@@ -264,8 +276,43 @@ public class DogModelRegistry {
             return this.value;
         }
 
-        public void resolve(EntityRendererProvider.Context ctx) {
+        public void resolve(BakeContext ctx) {
             this.value = getter.apply(ctx);
+        }
+
+    }
+
+    public static class BakeContext {
+
+        private final Optional<EntityRendererProvider.Context> wrapped;
+        private final Map<ModelLayerLocation, Supplier<LayerDefinition>> modelMap;
+        private final Map<ModelLayerLocation, ResourceLocation> idMap = Maps.newHashMap();
+
+        private ResourceLocation capturedId = null;
+
+        public BakeContext(Optional<EntityRendererProvider.Context> wrapped, Map<ModelLayerLocation, Supplier<LayerDefinition>> modelMap) {
+            this.wrapped = wrapped;
+            this.modelMap = modelMap;
+        }
+
+        public ModelPart bakeLayer(ModelLayerLocation location) {
+            if (wrapped.isPresent()) {
+                return wrapped.get().bakeLayer(location);
+            }
+
+            if (capturedId == null) 
+                throw new IllegalStateException("no captured Id: " + location);
+            var layer = modelMap.get(location);
+            if (layer == null)
+                throw new IllegalArgumentException("Cannot find model: " + location);
+            if (idMap.get(location) != null)
+                throw new IllegalStateException("Multiple model id shares the same layer definition!!!!");
+            this.idMap.put(location, capturedId);
+            return layer.get().bakeRoot();
+        }
+
+        public Map<ModelLayerLocation, ResourceLocation> getIdMap() {
+            return idMap;
         }
 
     }
