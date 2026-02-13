@@ -345,6 +345,10 @@ public class DTNModelCodec {
         }
     }
 
+    public static record ModelProps() {
+        
+    }
+
     public static record ParsedPart(String id, 
         Vector3f pivot, Vector3f rotation,
         List<ParsedCube> cubeList, List<ParsedPart> children
