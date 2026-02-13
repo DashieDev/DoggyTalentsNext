@@ -7,6 +7,7 @@ import doggytalents.client.DoggyKeybinds;
 import doggytalents.client.DTNClientPettingManager;
 import doggytalents.client.data.DTBlockstateProvider;
 import doggytalents.client.data.DTItemModelProvider;
+import doggytalents.client.data.DogModelJsonProvider;
 import doggytalents.client.entity.render.DoggyArmorMapping;
 import doggytalents.client.entity.render.world.BedFinderRenderer;
 import doggytalents.client.entity.render.world.CanineTrackerLocateRenderer;
@@ -187,6 +188,7 @@ public class DoggyTalentsNext {
             DTBlockstateProvider blockstates = new DTBlockstateProvider(packOutput, event.getExistingFileHelper());
             gen.addProvider(true, blockstates);
             gen.addProvider(true, new DTItemModelProvider(packOutput, blockstates.getExistingHelper()));
+            gen.addProvider(true, new DogModelJsonProvider(packOutput));
         }
 
         if (event.includeServer()) {

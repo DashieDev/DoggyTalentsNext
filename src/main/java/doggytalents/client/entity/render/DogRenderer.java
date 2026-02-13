@@ -3,6 +3,7 @@ package doggytalents.client.entity.render;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.DogTextureManager;
 import doggytalents.client.entity.model.DogModelRegistry;
+import doggytalents.client.entity.model.DogModelRegistry.BakeContext;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
@@ -65,7 +67,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
         super(ctx, null, 0.5F);
 //        this.addLayer(new DogTalentLayer(this, ctx));
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
-        DogModelRegistry.resolve(ctx);
+        DogModelRegistry.resolve(new BakeContext(Optional.of(ctx), Map.of()));
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
         for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
