@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.dog;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
@@ -21,7 +22,7 @@ public class GlowingEyeDogModel extends DogModel {
         setupGlowingEyes();
     }
 
-    public GlowingEyeDogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
+    public GlowingEyeDogModel(ModelPart box, DogModelRenderType renderType) {
         super(box, renderType);
         setupGlowingEyes();
     }

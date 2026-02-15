@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.dog.dogs;
 
 import doggytalents.client.entity.model.dog.GlowingEyeDogModel;
+import doggytalents.client.entity.model.util.DogModelRenderType;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -13,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 public class ScrapsModel extends GlowingEyeDogModel {
 
     public ScrapsModel(ModelPart box) {
-        super(box, RenderType::entityTranslucent);
+        super(box, DogModelRenderType.TRANSLUCENT);
     }
     public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

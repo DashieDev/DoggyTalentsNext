@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.dog.dogs;
 
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,7 +19,7 @@ public class AmaterasuModel extends DogModel {
 	
 
     public AmaterasuModel(ModelPart box) {
-		super(box, RenderType::entityTranslucent);
+		super(box, DogModelRenderType.TRANSLUCENT);
 	}
 
 	public static LayerDefinition createBodyLayer() {
