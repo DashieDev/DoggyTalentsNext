@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.dog.dogs;
 
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -16,7 +17,7 @@ public class AmmyJinModel extends DogModel {
 	
 
     public AmmyJinModel(ModelPart box) {
-		super(box, RenderType::entityTranslucent);
+		super(box, DogModelRenderType.TRANSLUCENT);
 	}
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

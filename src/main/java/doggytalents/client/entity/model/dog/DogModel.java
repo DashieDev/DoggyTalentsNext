@@ -24,6 +24,7 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DTNAnimationLoader.DogAnimationHolder;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
+import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -42,6 +43,8 @@ import net.minecraft.util.Mth;
 
 public class DogModel extends EntityModel<Dog> {
 
+    public final DogModelRenderType dogModelRendserType;
+    
     public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
     public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
     public static final float[] TAIL_LYING_OFF = {0, 6f, 0};
@@ -73,11 +76,13 @@ public class DogModel extends EntityModel<Dog> {
     private final DogAnimationHolder WALK_GALLOP = DTNAnimationLoader.INSTANCE.getAnim("gallop");
 
     public DogModel(ModelPart box) {
-        initDogModel(box);
+        this(box, DogModelRenderType.CUTOUT);
     }
 
-    public DogModel(ModelPart box, Function<ResourceLocation, RenderType> renderType) {
-        super(renderType);
+    public DogModel(ModelPart box, DogModelRenderType renderType) {
+        super(renderType.renderType());
+        this.dogModelRendserType = renderType;
+
         initDogModel(box);
     }
 
