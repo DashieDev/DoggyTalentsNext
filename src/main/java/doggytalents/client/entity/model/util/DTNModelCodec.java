@@ -14,7 +14,6 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
-import com.ibm.icu.impl.number.DecimalFormatProperties.ParseMode;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -29,6 +28,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringRepresentable;
 
 public class DTNModelCodec {
     
@@ -93,6 +93,9 @@ public class DTNModelCodec {
         )
         .apply(builder, ParsedModelResult::of)
     );
+
+    public static final Codec<Pair<ParsedModelResult, DogModelProps>> DOG_MODEL_CODEC = 
+        pairCodec(CODEC, DogModelProps.CODEC.fieldOf("props").codec());
 
     private static Codec<ParsedPart> parsedPartCodec() {
         return Codec.recursive("DTNParsedPart", self -> {
@@ -369,16 +372,57 @@ public class DTNModelCodec {
         
         boolean scaleBabyDog,
         boolean wetShade,
-        boolean glowingEyes
+        boolean legacyGlowingEyes,
+
+        DogModelAccessoryProps accessoryProps
     ) {
 
+        public static final DogModelProps DEFAULT = 
+            new DogModelProps(Optional.empty(), 1, 
+            true, true, false, DogModelAccessoryProps.DEFAULT);
+
+            
+        public static final Codec<DogModelProps> CODEC = RecordCodecBuilder.create(
+            builder -> builder.group(
+                LocalUtil.VECTOR3F.optionalFieldOf("root_pivot")
+                    .forGetter(DogModelProps::rootPivot),
+                Codec.FLOAT.optionalFieldOf("scale", DEFAULT.scale())
+                    .forGetter(DogModelProps::scale),
+                Codec.BOOL.optionalFieldOf("scale_baby", DEFAULT.scaleBabyDog())
+                    .forGetter(DogModelProps::scaleBabyDog),
+                Codec.BOOL.optionalFieldOf("wet_shade", DEFAULT.wetShade())
+                    .forGetter(DogModelProps::wetShade),
+                Codec.BOOL.optionalFieldOf("glowing_eyes_legacy", DEFAULT.legacyGlowingEyes())
+                    .forGetter(DogModelProps::legacyGlowingEyes),
+                DogModelAccessoryProps.CODEC.optionalFieldOf("accessory_props", 
+                    DEFAULT.accessoryProps())
+                    .forGetter(DogModelProps::accessoryProps)
+            )
+            .apply(builder, DogModelProps::new)
+        );
+        
     }
 
     public static record DogModelAccessoryProps(
-        boolean forceDefaultModel,
-        DogModel.AccessoryState compatabilityState
+        DogModel.AccessoryState compatabilityState,
+        boolean forceDefaultModel
     ) {
 
+        public static final DogModelAccessoryProps DEFAULT 
+            = new DogModelAccessoryProps(DogModel.AccessoryState.HAVE_NOT_TESTED, false);
+
+        public static final Codec<DogModelAccessoryProps> CODEC = RecordCodecBuilder.create(
+            builder -> builder.group(
+                StringRepresentable.fromEnum(DogModel.AccessoryState::values)
+                    .optionalFieldOf("compatibility_state", 
+                        DEFAULT.compatabilityState())
+                    .forGetter(DogModelAccessoryProps::compatabilityState),
+                Codec.BOOL.optionalFieldOf("use_default_model", 
+                        DEFAULT.forceDefaultModel())
+                    .forGetter(DogModelAccessoryProps::forceDefaultModel)
+            )
+            .apply(builder, DogModelAccessoryProps::new)
+        );
     }
 
     public static record ParsedPart(String id, 
@@ -437,5 +481,13 @@ public class DTNModelCodec {
     }
     private static <A, T> Function<A, Optional<T>> wrapOptional(Function<A, T> wrapped) {
         return val -> Optional.of(wrapped.apply(val));
+    }
+    //Convert Mojang Pair to lang3 pair
+    private static <A, B> Codec<Pair<A, B>> pairCodec(Codec<A> first, Codec<B> second) {
+        return Codec.pair(first, second)
+            .xmap(
+                to_decode -> Pair.of(to_decode.getFirst(), to_decode.getSecond()), 
+                to_encode -> com.mojang.datafixers.util.Pair.of(
+                    to_encode.getLeft(), to_encode.getRight()));
     }
 }
