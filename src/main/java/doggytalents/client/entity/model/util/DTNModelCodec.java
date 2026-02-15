@@ -367,6 +367,8 @@ public class DTNModelCodec {
     }
 
     public static record DogModelProps(
+        DogModelRenderType rendserType,
+
         Optional<Vector3f> rootPivot,
         float scale, 
         
@@ -378,12 +380,14 @@ public class DTNModelCodec {
     ) {
 
         public static final DogModelProps DEFAULT = 
-            new DogModelProps(Optional.empty(), 1, 
+            new DogModelProps(DogModelRenderType.CUTOUT, Optional.empty(), 1, 
             true, true, false, DogModelAccessoryProps.DEFAULT);
 
             
         public static final Codec<DogModelProps> CODEC = RecordCodecBuilder.create(
             builder -> builder.group(
+                DogModelRenderType.CODEC.optionalFieldOf("render_type", DEFAULT.rendserType())
+                    .forGetter(DogModelProps::rendserType),
                 LocalUtil.VECTOR3F.optionalFieldOf("root_pivot")
                     .forGetter(DogModelProps::rootPivot),
                 Codec.FLOAT.optionalFieldOf("scale", DEFAULT.scale())
@@ -400,12 +404,11 @@ public class DTNModelCodec {
             )
             .apply(builder, DogModelProps::new)
         );
-        
     }
 
     public static record DogModelAccessoryProps(
         DogModel.AccessoryState compatabilityState,
-        boolean forceDefaultModel
+        boolean useDefaultModel
     ) {
 
         public static final DogModelAccessoryProps DEFAULT 
@@ -418,8 +421,8 @@ public class DTNModelCodec {
                         DEFAULT.compatabilityState())
                     .forGetter(DogModelAccessoryProps::compatabilityState),
                 Codec.BOOL.optionalFieldOf("use_default_model", 
-                        DEFAULT.forceDefaultModel())
-                    .forGetter(DogModelAccessoryProps::forceDefaultModel)
+                        DEFAULT.useDefaultModel())
+                    .forGetter(DogModelAccessoryProps::useDefaultModel)
             )
             .apply(builder, DogModelAccessoryProps::new)
         );
