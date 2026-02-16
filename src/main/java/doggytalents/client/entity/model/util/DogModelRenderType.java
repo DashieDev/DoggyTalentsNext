@@ -42,4 +42,9 @@ public class DogModelRenderType implements StringRepresentable {
     public String getSerializedName() {
         return this.id();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj;
+    }
 }
