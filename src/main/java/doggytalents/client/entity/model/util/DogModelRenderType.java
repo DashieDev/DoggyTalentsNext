@@ -10,23 +10,17 @@ import com.mojang.serialization.Codec;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 
-public class DogModelRenderType {
+public class DogModelRenderType implements StringRepresentable {
 
     public static final DogModelRenderType CUTOUT = 
         new DogModelRenderType("cutout_no_cull", RenderType::entityCutoutNoCull);
     public static final DogModelRenderType TRANSLUCENT = 
         new DogModelRenderType("translucent", RenderType::entityTranslucent);
     public static final List<DogModelRenderType> ALL = List.of(CUTOUT, TRANSLUCENT);
-    public static final BiMap<String, DogModelRenderType> BY_ID = HashBiMap.create(
-        ALL.stream().collect(Collectors.toMap(
-            DogModelRenderType::id, Function.identity()
-    )));
-    public static final Codec<DogModelRenderType> CODEC = 
-        Codec.STRING.xmap(
-            BY_ID::get
-            , to_encode -> BY_ID.inverse().get(to_encode)
-        );
+    public static final Codec<DogModelRenderType> CODEC = StringRepresentable
+        .fromValues(() -> ALL.toArray(DogModelRenderType[]::new));
     
     private final String id;
     private final Function<ResourceLocation, RenderType> renderType;
@@ -42,5 +36,10 @@ public class DogModelRenderType {
 
     public Function<ResourceLocation, RenderType> renderType() {
         return renderType;
+    }
+
+    @Override
+    public String getSerializedName() {
+        return this.id();
     }
 }
