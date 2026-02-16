@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.hash.Hashing;
 import com.google.common.hash.HashingOutputStream;
 import com.google.gson.Gson;
@@ -24,6 +26,7 @@ import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogModelRegistry.BakeContext;
 import doggytalents.client.entity.model.animation.DTNModelLoader;
 import doggytalents.client.entity.model.util.DTNModelCodec;
+import doggytalents.client.entity.model.util.ParsedDogModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.data.CachedOutput;
@@ -63,9 +66,14 @@ public class DogModelJsonProvider implements DataProvider {
             final var model_id = ctx.getIdMap().get(model_location);
             if (model_id == null)
                 continue;
-            final var model = entry.getValue().get();
-            var encoded_model = DTNModelCodec.parsedFromLayerDefintion(model);
-            var model_json = DTNModelCodec.CODEC.encodeStart(JsonOps.INSTANCE, encoded_model)
+            final var layer = entry.getValue().get();
+            final var model = DogModelRegistry.getDogModelHolder(model_id).getValue();
+            if (model == null)
+                throw new IllegalStateException("no resolved model for: " + model_id);
+            var encoded_layer = DTNModelCodec.parsedFromLayerDefintion(layer);
+            var props = ParsedDogModel.propsFrom(model);
+            var model_json = DTNModelCodec.DOG_MODEL_CODEC
+                .encodeStart(JsonOps.INSTANCE, Pair.of(encoded_layer, props))
                 .getOrThrow();
             var save_path = path_prov.json(model_id);
             var save_future = 
