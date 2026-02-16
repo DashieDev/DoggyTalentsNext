@@ -164,9 +164,9 @@ public class DTNModelCodec {
         
         final var encoded_rotation = vec(rotation);
         COORDINATE_CODEC.encodeRotation(encoded_rotation);
-        sanitizeEncodeVecMut(encoded_rotation);
         encoded_rotation.mul(Mth.RAD_TO_DEG);
-
+        sanitizeEncodeVecMut(encoded_rotation);
+        
         final var encoded_pivot = vec(global_pos);
         COORDINATE_CODEC.encodePosition(encoded_pivot, true);
         sanitizeEncodeVecMut(encoded_pivot);
