@@ -483,7 +483,7 @@ public class DTNModelCodec {
         return new Vector3f(vec);
     }
     public static float roundModel(float toRound) {
-        final float mul = 1000f;
+        final float mul = 10000f;
         return Math.round( toRound*mul )/ mul;
     }
     public static void sanitizeEncodeVecMut(Vector3f vec) {
