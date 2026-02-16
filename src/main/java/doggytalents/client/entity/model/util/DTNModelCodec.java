@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -108,9 +109,9 @@ public class DTNModelCodec {
                     LocalUtil.VECTOR3F.optionalFieldOf("rotation", new Vector3f())
                         .forGetter(ParsedPart::rotation),
                     parsedCubeCodec().listOf().optionalFieldOf("cubes")
-                        .forGetter(wrapOptional(ParsedPart::cubeList)),
+                        .forGetter(wrapOptionalList(ParsedPart::cubeList)),
                     self.listOf().optionalFieldOf("children")
-                        .forGetter(wrapOptional(ParsedPart::children))
+                        .forGetter(wrapOptionalList(ParsedPart::children))
                 )
                 .apply(builder, ParsedPart::of)
             );
@@ -503,8 +504,8 @@ public class DTNModelCodec {
             Mth.equal(vec.z(), 0) ? 0 : vec.z()
         );
     }
-    private static <A, T> Function<A, Optional<T>> wrapOptional(Function<A, T> wrapped) {
-        return val -> Optional.of(wrapped.apply(val));
+    private static <A, T extends Collection<?>> Function<A, Optional<T>> wrapOptionalList(Function<A, T> wrapped) {
+        return val -> Optional.ofNullable(wrapped.apply(val)).filter(x -> !x.isEmpty());
     }
     //Convert Mojang Pair to lang3 pair
     private static <A, B> Codec<Pair<A, B>> pairCodec(Codec<A> first, Codec<B> second) {
