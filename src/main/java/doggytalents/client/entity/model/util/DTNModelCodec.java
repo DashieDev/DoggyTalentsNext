@@ -367,7 +367,7 @@ public class DTNModelCodec {
     }
 
     public static record DogModelProps(
-        DogModelRenderType rendserType,
+        DogModelRenderType renderType,
 
         Optional<Vector3f> rootPivot,
         float scale, 
@@ -386,8 +386,8 @@ public class DTNModelCodec {
             
         public static final Codec<DogModelProps> CODEC = RecordCodecBuilder.create(
             builder -> builder.group(
-                DogModelRenderType.CODEC.optionalFieldOf("render_type", DEFAULT.rendserType())
-                    .forGetter(DogModelProps::rendserType),
+                DogModelRenderType.CODEC.optionalFieldOf("render_type", DEFAULT.renderType())
+                    .forGetter(DogModelProps::renderType),
                 LocalUtil.VECTOR3F.optionalFieldOf("root_pivot")
                     .forGetter(DogModelProps::rootPivot),
                 Codec.FLOAT.optionalFieldOf("scale", DEFAULT.scale())

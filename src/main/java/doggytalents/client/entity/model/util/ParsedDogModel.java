@@ -26,7 +26,7 @@ public class ParsedDogModel {
         var layer = DTNModelCodec.layerDefinitionFromParsed(result);
         var baked = layer.bakeRoot();
         
-        final var render_type = props.rendserType();
+        final var render_type = props.renderType();
 
         final var root_pivot = props.rootPivot().orElse(null);
         final boolean has_custom_scale = !Mth.equal(props.scale(), 1);
@@ -77,7 +77,7 @@ public class ParsedDogModel {
         var layer = DTNModelCodec.layerDefinitionFromParsed(result);
         var baked = layer.bakeRoot();
 
-        final var render_type = props.rendserType();
+        final var render_type = props.renderType();
 
         final var root_pivot = props.rootPivot().orElse(null);
         final boolean has_custom_scale = !Mth.equal(props.scale(), 1);
