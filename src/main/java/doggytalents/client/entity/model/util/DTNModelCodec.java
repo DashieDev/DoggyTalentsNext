@@ -164,12 +164,12 @@ public class DTNModelCodec {
         
         final var encoded_rotation = vec(rotation);
         COORDINATE_CODEC.encodeRotation(encoded_rotation);
-        zeroSanitizeMut(encoded_rotation);
+        sanitizeEncodeVecMut(encoded_rotation);
         encoded_rotation.mul(Mth.RAD_TO_DEG);
 
         final var encoded_pivot = vec(global_pos);
         COORDINATE_CODEC.encodePosition(encoded_pivot, true);
-        zeroSanitizeMut(encoded_pivot);
+        sanitizeEncodeVecMut(encoded_pivot);
 
         final var cubes = new ArrayList<ParsedCube>();
         for (var cube : part.cubes()) {
@@ -177,10 +177,16 @@ public class DTNModelCodec {
             final boolean mirror = cube.mirror();
             var cube_args = COORDINATE_CODEC.encodeCubeArgs(
                 cube.origin(), cube.dimension(), global_pos);
+
             final var from = cube_args.getLeft();
             final var to = cube_args.getRight();
+            sanitizeEncodeVecMut(from);
+            sanitizeEncodeVecMut(to);
+
             final var inflate = Optional.of(cube.inflate())
+                .map(DTNModelCodec::roundModel)
                 .filter(val -> !Mth.equal(val, 0));
+                
             var encoded_cube = new ParsedCube(uv.x(), uv.y(), 
                 from, to, mirror, inflate);
             cubes.add(encoded_cube);
@@ -474,6 +480,21 @@ public class DTNModelCodec {
 
     private static Vector3f vec(Vector3fc vec) {
         return new Vector3f(vec);
+    }
+    public static float roundModel(float toRound) {
+        final float mul = 1000f;
+        return Math.round( toRound*mul )/ mul;
+    }
+    public static void sanitizeEncodeVecMut(Vector3f vec) {
+        roundModelVecMut(vec);
+        zeroSanitizeMut(vec);
+    }
+    private static void roundModelVecMut(Vector3f vec) {
+        vec.set(
+            roundModel(vec.x()),
+            roundModel(vec.y()),
+            roundModel(vec.z())
+        );
     }
     private static void zeroSanitizeMut(Vector3f vec) {
         vec.set(

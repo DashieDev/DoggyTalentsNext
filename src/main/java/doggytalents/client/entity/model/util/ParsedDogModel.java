@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
@@ -127,8 +128,16 @@ public class ParsedDogModel {
     public static DogModelProps propsFrom(DogModel model) {
         final var render_type = model.dogModelRendserType;
 
-        final var root_pivot = Optional.ofNullable(model.getCustomRootPivotPoint());
-        final float scale = model.hasDefaultScale() ? model.getDefaultScale() : 1;
+        var model_root_pivot = model.getCustomRootPivotPoint();
+        if (model_root_pivot != null) {
+            model_root_pivot = vec(model_root_pivot);
+            DTNModelCodec.sanitizeEncodeVecMut(model_root_pivot);
+        }
+        final var root_pivot = Optional.ofNullable(model_root_pivot);
+            
+        final float scale = model.hasDefaultScale() ? 
+            DTNModelCodec.roundModel(model.getDefaultScale())
+            : 1;
 
         final boolean scale_baby = model.scaleBabyDog();
         final boolean wet_shade = model.renderDogWetShade();
@@ -149,4 +158,7 @@ public class ParsedDogModel {
         );
     }
 
+    private static Vector3f vec(Vector3fc vec) {
+        return new Vector3f(vec);
+    }
 }
