@@ -201,14 +201,20 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             } else {
                 text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
             }
+
             DogSkin skin;
-            if (use_model == null || use_model.equals("default") || use_model.equals("")) {
+            final boolean use_default_model = 
+                use_model == null || use_model.equals("default") || use_model.equals("");
+            if (!use_default_model) {
+                skin = new DogSkin(text_rl, true).setName(name);
+                prep.dogSkinWithCustomModel.add(Pair.of(skin, use_model));
+            } else {
                 skin = new DogSkin(text_rl).setName(name);
-            } else if (use_model.equals("variant")) {
-                var dogModel = DogModelRegistry.getDogModelHolder(use_model);
-                skin = (dogModel == null) ?
-                    new DogSkin(text_rl).setName(name)
-                    : new DogSkin(text_rl, dogModel).setName(name);
+            }
+
+            final boolean is_legacy_variant_model =
+                "variant".equals(use_model);
+            if (is_legacy_variant_model){
                 var tailOptional = skinObject.get("tail_id");
                 if (tailOptional != null) {
                     skin.setTail(tailOptional.getAsByte());
@@ -217,10 +223,6 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
                 if (earOptional != null) {
                     skin.setEar(earOptional.getAsByte());
                 }
-            } else {
-                var dogModel = DogModelRegistry.getDogModelHolder(use_model);
-                if (dogModel == null)  skin = new DogSkin(text_rl).setName(name);
-                else skin = new DogSkin(text_rl, dogModel).setName(name);
             }
 
             readSkinExtraInfo(skin, skinObject);
@@ -288,10 +290,28 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         var skin_list = new ArrayList<DogSkin>();
 
         skin_list.add(DogSkin.CLASSICAL);
+
+        //Model resolution
+        for (var entry : loadResult.dogSkinWithCustomModel) {
+            var skin = entry.getLeft();
+            var model_id = entry.getRight();
+            var model = DogModelRegistry.getDogModelHolder(model_id);
+            if (model != null) {
+                skin.setCustomModel(model);
+            } else {
+                DogTextureManager.LOGGER.warn(
+                    "Skin [ {} ] refers to the missing model: [ {} ]",
+                    skin.getPath().getPath(), model_id    
+                );
+            }
+        }
         
         for (var entry : loadResult.dogSkinsAndHash) {
             var skin = entry.getLeft();
             var hash = entry.getRight();
+            if (skin.useCustomModel() && skin.getCustomModel() == null) {
+                continue;
+            }
             if (isDogSkinBlacklisted(skin)) {
                 ++skipping_cnt;
                 continue;
@@ -348,10 +368,12 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
     protected static class DogSkinLoadResult {
 
         public final List<Pair<DogSkin, String>> dogSkinsAndHash;
+        public final List<Pair<DogSkin, String>> dogSkinWithCustomModel;
         private final Set<String> registeredHash;
 
         public DogSkinLoadResult() {
             this.dogSkinsAndHash = new ArrayList<>();
+            this.dogSkinWithCustomModel = new ArrayList<>();
             this.registeredHash = new HashSet<>();
         }
 

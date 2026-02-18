@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.checkerframework.checker.units.qual.cd;
 
@@ -17,89 +18,9 @@ import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.VariantDogModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
-import doggytalents.client.entity.model.dog.dogs.AkitaAmericanModel;
-import doggytalents.client.entity.model.dog.dogs.AkitaJapaneseModel;
-import doggytalents.client.entity.model.dog.dogs.AmaterasuModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyChiModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyJinModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyRebirthModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyReiModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyShinModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyShiranuiModel;
-import doggytalents.client.entity.model.dog.dogs.AmmyTeiModel;
-import doggytalents.client.entity.model.dog.dogs.ArcanineModel;
-import doggytalents.client.entity.model.dog.dogs.AustralianKelpieModel;
-import doggytalents.client.entity.model.dog.dogs.BassetHoundModel;
-import doggytalents.client.entity.model.dog.dogs.BelgianMalinoisModel;
-import doggytalents.client.entity.model.dog.dogs.BichonMaltaisModel;
-import doggytalents.client.entity.model.dog.dogs.BoltModel;
-import doggytalents.client.entity.model.dog.dogs.BorzoiLongModel;
-import doggytalents.client.entity.model.dog.dogs.BorzoiModel;
-import doggytalents.client.entity.model.dog.dogs.BoxerFloppyModel;
-import doggytalents.client.entity.model.dog.dogs.BoxerPointyModel;
-import doggytalents.client.entity.model.dog.dogs.BullTerrierModel;
-import doggytalents.client.entity.model.dog.dogs.ChihuahuaModel;
-import doggytalents.client.entity.model.dog.dogs.CollieBorderModel;
-import doggytalents.client.entity.model.dog.dogs.CollieBorderShortModel;
-import doggytalents.client.entity.model.dog.dogs.CollieRoughModel;
-import doggytalents.client.entity.model.dog.dogs.CollieSmoothModel;
-import doggytalents.client.entity.model.dog.dogs.CorgiModel;
-import doggytalents.client.entity.model.dog.dogs.DachshundModel;
-import doggytalents.client.entity.model.dog.dogs.DeathModel;
-import doggytalents.client.entity.model.dog.dogs.DobermanModel;
-import doggytalents.client.entity.model.dog.dogs.EnglishBulldogModel;
-import doggytalents.client.entity.model.dog.dogs.FrenchBulldogModel;
-import doggytalents.client.entity.model.dog.dogs.GermanPointerShorthaired;
-import doggytalents.client.entity.model.dog.dogs.GermanPointerWirehaired;
-import doggytalents.client.entity.model.dog.dogs.GermanShepherdModel;
-import doggytalents.client.entity.model.dog.dogs.HoundstoneModel;
-import doggytalents.client.entity.model.dog.dogs.HungarianPuliModel;
-import doggytalents.client.entity.model.dog.dogs.IwankoModel;
-import doggytalents.client.entity.model.dog.dogs.JackModel;
-import doggytalents.client.entity.model.dog.dogs.JunoModel;
-import doggytalents.client.entity.model.dog.dogs.LegoshiModel;
-import doggytalents.client.entity.model.dog.dogs.LucarioModel;
-import doggytalents.client.entity.model.dog.dogs.MiniaturePinscherModel;
-import doggytalents.client.entity.model.dog.dogs.MochiModel;
-import doggytalents.client.entity.model.dog.dogs.Na;
-import doggytalents.client.entity.model.dog.dogs.NewfoundlandModel;
-import doggytalents.client.entity.model.dog.dogs.NorfolkTerrierModel;
-import doggytalents.client.entity.model.dog.dogs.OtterModel;
-import doggytalents.client.entity.model.dog.dogs.PochitaModel;
-import doggytalents.client.entity.model.dog.dogs.PoodleModel;
-import doggytalents.client.entity.model.dog.dogs.PugModel;
-import doggytalents.client.entity.model.dog.dogs.RangaModel;
-import doggytalents.client.entity.model.dog.dogs.SamoyedModel;
-import doggytalents.client.entity.model.dog.dogs.ScrapsModel;
-import doggytalents.client.entity.model.dog.dogs.ShibaModel;
-import doggytalents.client.entity.model.dog.dogs.ShikokuModel;
-import doggytalents.client.entity.model.dog.dogs.SparkyModel;
-import doggytalents.client.entity.model.dog.dogs.StBernardModel;
-import doggytalents.client.entity.model.dog.dogs.WolfLinkModel;
-import doggytalents.client.entity.model.dog.dogs.ZeroModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.ChiModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.HayabusaModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.KoModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.ReiModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.ShinModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.TakeModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.TeiModel;
-import doggytalents.client.entity.model.dog.dogs.kusa.UmeModel;
-import doggytalents.client.entity.model.dog.dogs.oina.HopeModel;
-import doggytalents.client.entity.model.dog.dogs.oina.KaipokuModel;
-import doggytalents.client.entity.model.dog.dogs.oina.KawausoModel;
-import doggytalents.client.entity.model.dog.dogs.oina.KemushiriModel;
-import doggytalents.client.entity.model.dog.dogs.oina.OinaMerchant1Model;
-import doggytalents.client.entity.model.dog.dogs.oina.OinaMerchant2Model;
-import doggytalents.client.entity.model.dog.dogs.oina.OkikurumiModel;
-import doggytalents.client.entity.model.dog.dogs.oina.PirikoModel;
-import doggytalents.client.entity.model.dog.dogs.oina.RisuModel;
-import doggytalents.client.entity.model.dog.dogs.oina.ShamikuruModel;
-import doggytalents.client.entity.model.dog.dogs.oina.TodoModel;
-import doggytalents.client.entity.model.dog.dogs.oina.TusukuruModel;
-import doggytalents.client.entity.model.dog.dogs.oina.WariModel;
-import doggytalents.client.entity.model.dog.dogs.oina.*;
-import doggytalents.common.entity.Dog;
+import doggytalents.client.entity.model.util.DTNModelCodec;
+import doggytalents.client.entity.model.util.ParsedDogModel;
+import doggytalents.client.entity.model.util.DTNModelCodec.ParsedModelResult;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -110,11 +31,21 @@ public class DogModelRegistry {
     private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
 
     public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
-        MODEL_MAP.putIfAbsent(id, new DogModelHolder(getter));
+        MODEL_MAP.putIfAbsent(id, new LegacyDogModelHolder(getter));
     }
 
     public static void register(String name, Function<EntityRendererProvider.Context, DogModel>  getter) {
         register(Util.getResource(name), getter);
+    }
+
+    public static boolean registerParsed(ResourceLocation id, ParsedModelResult result,
+        DTNModelCodec.DogModelProps props) {
+
+        var model = wrapModelCreation(id, () -> ParsedDogModel.create(result, props));
+        if (MODEL_MAP.get(id) != null)
+            return false;
+        MODEL_MAP.put(id, new ResolvedDogModelHolder(model));
+        return true;
     }
 
     public static DogModelHolder getDogModelHolder(ResourceLocation id) {
@@ -133,105 +64,28 @@ public class DogModelRegistry {
 
     public static void resolve(EntityRendererProvider.Context ctx) {
         for (var holder : MODEL_MAP.entrySet()) {
-            try {
-                holder.getValue().resolve(ctx);
-            } catch (NoSuchElementException e) {
-                var msg = "Dog Model [" + holder.getKey() + "] is missing crucial parts! [" + e.getMessage() + "]";
-                throw new NoSuchElementException(msg);
-            }   
+            if (!(holder.getValue() instanceof LegacyDogModelHolder legacy_holder))
+                continue;
+            wrapModelCreation(holder.getKey(), () -> legacy_holder.resolve(ctx));
         }
+    }
+
+    private static DogModel wrapModelCreation(ResourceLocation id, Supplier<DogModel> creator) {
+        DogModel ret;
+        try {
+            ret = creator.get();
+        } catch (NoSuchElementException e) {
+            var msg = "Dog Model [" + id + "] is missing crucial parts! [" + e.getMessage() + "]";
+            throw new NoSuchElementException(msg);
+        }
+        return ret;
     }
 
     public static void init() {
         MODEL_MAP = Maps.newConcurrentMap();
         register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)).setAccessoryState(AccessoryState.RECOMMENDED));
         register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)).setAccessoryState(AccessoryState.RECOMMENDED));
-
-        register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_chi", ctx ->  new AmmyChiModel(ctx.bakeLayer(ClientSetup.AMMY_CHI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_shiranui", ctx ->  new AmmyShiranuiModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-        register("ammy_divine_rebirth", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_REBIRTH)));        
-        register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-
-        register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_ko", ctx ->  new KoModel(ctx.bakeLayer(ClientSetup.KUSA_KO)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_rei", ctx ->  new ReiModel(ctx.bakeLayer(ClientSetup.KUSA_REI)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_shin", ctx ->  new ShinModel(ctx.bakeLayer(ClientSetup.KUSA_SHIN)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_take", ctx ->  new TakeModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)).setAccessoryState(AccessoryState.RECOMMENDED));
-        register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)).setAccessoryState(AccessoryState.RECOMMENDED));
-        
-        register("oina_kaipoku", ctx ->  new KaipokuModel(ctx.bakeLayer(ClientSetup.OINA_KAIPOKU)));
-        register("oina_kawauso", ctx ->  new KawausoModel(ctx.bakeLayer(ClientSetup.OINA_KAWAUSO)));
-        register("oina_kemushiri", ctx ->  new KemushiriModel(ctx.bakeLayer(ClientSetup.OINA_KEMUSHIRI)));
-        register("oina_merchant", ctx ->  new OinaMerchant1Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT)));
-        register("oina_merchant2", ctx ->  new OinaMerchant2Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT2)));
-        register("oina_okikurumi", ctx ->  new OkikurumiModel(ctx.bakeLayer(ClientSetup.OINA_OKIKURUMI)));
-        register("oina_piriko", ctx ->  new PirikoModel(ctx.bakeLayer(ClientSetup.OINA_PIRIKO)));
-        register("oina_risu", ctx ->  new RisuModel(ctx.bakeLayer(ClientSetup.OINA_RISU)));
-        register("oina_shamikuru", ctx ->  new ShamikuruModel(ctx.bakeLayer(ClientSetup.OINA_SHAMIKURU)));
-        register("oina_todo", ctx ->  new TodoModel(ctx.bakeLayer(ClientSetup.OINA_TODO)));
-        register("oina_tusukuru", ctx ->  new TusukuruModel(ctx.bakeLayer(ClientSetup.OINA_TUSUKURU)));
-        register("oina_wari", ctx ->  new WariModel(ctx.bakeLayer(ClientSetup.OINA_WARI)));
-
-        register("sol_hope", ctx ->  new HopeModel(ctx.bakeLayer(ClientSetup.DOG_SOL_HOPE)));
-        register("wolf_link", ctx ->  new WolfLinkModel(ctx.bakeLayer(ClientSetup.DOG_WOLF_LINK)));
-        register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
-
-        register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
-        register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
-        register("doberman", ctx ->  new DobermanModel(ctx.bakeLayer(ClientSetup.DOG_DOBERMAN)));
-        register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
-        register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
-        register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
-        register("english_bulldog", ctx ->  new EnglishBulldogModel(ctx.bakeLayer(ClientSetup.DOG_ENGLISH_BULLDOG)));
-        register("french_bulldog", ctx ->  new FrenchBulldogModel(ctx.bakeLayer(ClientSetup.DOG_FRENCH_BULLDOG)));
-        register("poodle", ctx ->  new PoodleModel(ctx.bakeLayer(ClientSetup.DOG_POODLE)));
-        register("chihuahua", ctx ->  new ChihuahuaModel(ctx.bakeLayer(ClientSetup.DOG_CHIHUAHUA)));
-        register("boxer_floppy", ctx ->  new BoxerFloppyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_FLOPPY)));
-        register("boxer_pointy", ctx ->  new BoxerPointyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_POINTY)));
-        register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
-        register("hungarian_puli", ctx ->  new HungarianPuliModel(ctx.bakeLayer(ClientSetup.DOG_HUNGARIAN_PULI)));
-        register("basset_hound", ctx ->  new BassetHoundModel(ctx.bakeLayer(ClientSetup.DOG_BASSET_HOUND)));
-        register("collie_smooth", ctx ->  new CollieSmoothModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_SMOOTH)));
-        register("collie_rough", ctx ->  new CollieRoughModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_ROUGH)));
-        register("collie_border", ctx ->  new CollieBorderModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_BORDER)));
-        register("collie_border_short", ctx ->  new CollieBorderShortModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_BORDER_SHORT)));
-        register("bichon_maltais", ctx ->  new BichonMaltaisModel(ctx.bakeLayer(ClientSetup.DOG_BICHON_MALTAIS)));
-        register("belgian_malinois", ctx ->  new BelgianMalinoisModel(ctx.bakeLayer(ClientSetup.DOG_BELGIAN_MALINOIS)));
-        register("german_shepherd", ctx ->  new GermanShepherdModel(ctx.bakeLayer(ClientSetup.DOG_GERMAN_SHEPHERD)));
-        register("otter", ctx ->  new OtterModel(ctx.bakeLayer(ClientSetup.DOG_OTTER)));
-        register("bull_terrier", ctx ->  new BullTerrierModel(ctx.bakeLayer(ClientSetup.DOG_BULL_TERRIER)));
-        register("akita_inu", ctx ->  new AkitaJapaneseModel(ctx.bakeLayer(ClientSetup.INU_AKITA)));
-        register("akita_dog", ctx ->  new AkitaAmericanModel(ctx.bakeLayer(ClientSetup.DOG_AKITA)));
-        register("shiba_inu", ctx ->  new ShibaModel(ctx.bakeLayer(ClientSetup.INU_SHIBA)));
-        register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
-        register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
-        register("zero", ctx ->  new ZeroModel(ctx.bakeLayer(ClientSetup.DOG_ZERO)));
-        register("scraps", ctx ->  new ScrapsModel(ctx.bakeLayer(ClientSetup.DOG_SCRAPS)));
-        register("sparky", ctx ->  new SparkyModel(ctx.bakeLayer(ClientSetup.DOG_SPARKY)));
-        register("german_pointer_shorthaired", ctx ->  new GermanPointerShorthaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_SHORT)));
-        register("german_pointer_wirehaired", ctx ->  new GermanPointerWirehaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_WIRE)));
-        register("samoyed", ctx ->  new SamoyedModel(ctx.bakeLayer(ClientSetup.DOG_SAMOYED)));
-        register("ranga", ctx ->  new RangaModel(ctx.bakeLayer(ClientSetup.RANGA)));
-        register("bolt", ctx ->  new BoltModel(ctx.bakeLayer(ClientSetup.BOLT)));
-        register("norfolk_terrier", ctx ->  new NorfolkTerrierModel(ctx.bakeLayer(ClientSetup.DOG_NORFOLK_TERRIER)));
-        register("australian_kelpie", ctx ->  new AustralianKelpieModel(ctx.bakeLayer(ClientSetup.DOG_AUSTRALIAN_KELPIE)));
-        register("newfoundland", ctx ->  new NewfoundlandModel(ctx.bakeLayer(ClientSetup.DOG_NEWFOUNDLAND)));
-        register("na", ctx ->  new Na(ctx.bakeLayer(ClientSetup.NA)));
-        register("mochi", ctx ->  new MochiModel(ctx.bakeLayer(ClientSetup.MOCHI)));
-        register("corgi", ctx ->  new CorgiModel(ctx.bakeLayer(ClientSetup.DOG_CORGI)));
+        //81
 
         registerFromEvent();
     }
@@ -252,20 +106,37 @@ public class DogModelRegistry {
         }
     }
 
-    public static class DogModelHolder {
+    public static sealed interface DogModelHolder
+        permits LegacyDogModelHolder, ResolvedDogModelHolder {
+
+        DogModel getValue();
+
+    }
+
+    private static final class LegacyDogModelHolder implements DogModelHolder  {
         private DogModel value;
         private Function<EntityRendererProvider.Context, DogModel> getter;
 
-        public DogModelHolder (Function<EntityRendererProvider.Context, DogModel>  getter) {
+        public LegacyDogModelHolder(Function<EntityRendererProvider.Context, DogModel>  getter) {
             this.getter = getter;
         }
 
+        @Override
         public DogModel getValue() {
             return this.value;
         }
 
-        public void resolve(EntityRendererProvider.Context ctx) {
+        public DogModel resolve(EntityRendererProvider.Context ctx) {
             this.value = getter.apply(ctx);
+            return this.value;
+        }
+    }
+
+    private static final record ResolvedDogModelHolder(DogModel value) implements DogModelHolder {
+
+        @Override
+        public DogModel getValue() {
+            return this.value();
         }
 
     }
