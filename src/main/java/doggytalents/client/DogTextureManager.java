@@ -301,7 +301,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             } else {
                 DogTextureManager.LOGGER.warn(
                     "Skin [ {} ] refers to the missing model: [ {} ]",
-                    skin.getPath().getPath(), model_id    
+                    skin.getPath(), model_id    
                 );
             }
         }
