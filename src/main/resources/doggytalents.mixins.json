@@ -17,7 +17,12 @@
       "ClientLevelMixinAccessor",
       "CameraMixinAccessor",
       "ModelBakeryMixinAccessor",
-      "PackSelectionScreenMixin"
+      "PackSelectionScreenMixin",
+      "CubeDefinitionMixinAccessor",
+      "CubeDeformationMixinAccessor",
+      "PartDefinitionMixinAccessor",
+      "LayerDefinitionMixinAccessor",
+      "MaterialDefinitionMixinAccessor"
     ],
     "server": [],
     "injectors": {

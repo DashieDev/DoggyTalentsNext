@@ -20,7 +20,7 @@ import net.minecraft.client.model.geom.ModelPart;
 
 public class CustomDogModel extends DogModel {
 
-    private final DogModelProps props;
+    public final DogModelProps props;
     private ModelPart glowingEyes;
     private ModelPart realGlowingEyes;
 
