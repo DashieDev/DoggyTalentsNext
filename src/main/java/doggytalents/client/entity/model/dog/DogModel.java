@@ -1,6 +1,7 @@
 package doggytalents.client.entity.model.dog;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -41,6 +42,7 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringRepresentable;
 
 public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseDogModel_21_3 {
 
@@ -439,12 +441,17 @@ public class DogModel extends EntityModel<DogRenderState_21_3> implements IBaseD
         return 1f;
     }
 
-    public static enum AccessoryState {
+    public static enum AccessoryState implements StringRepresentable {
         NON_COMPATIBLE,
         SOME_WILL_FIT,
         HAVE_NOT_TESTED,
         RECOMMENDED,
-        MODEL_ONLY
+        MODEL_ONLY;
+
+        @Override
+        public String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
+        }
     }
 
     private AccessoryState accessoryState = AccessoryState.HAVE_NOT_TESTED;

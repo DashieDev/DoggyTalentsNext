@@ -66,13 +66,15 @@ public class DogSkin {
     private boolean mystery = false;
 
     public DogSkin(Identifier path) {
-        this.texturePath = path;
-        this.useCustomModel = false;
+        this(path, false);
     }
 
-    public DogSkin(Identifier path, @Nonnull DogModelHolder model) {
+    public DogSkin(Identifier path, boolean useCustomModel) {
         this.texturePath = path;
-        this.useCustomModel = true;
+        this.useCustomModel = useCustomModel;
+    }
+
+    public void setCustomModel(DogModelHolder model) {
         this.customModelHolder = model;
     }
 

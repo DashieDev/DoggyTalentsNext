@@ -25,6 +25,11 @@
       "CameraMixinAccessor",
       "ModelBakeryMixinAccessor",
       "PackSelectionScreenMixin",
+      "CubeDefinitionMixinAccessor",
+      "CubeDeformationMixinAccessor",
+      "PartDefinitionMixinAccessor",
+      "LayerDefinitionMixinAccessor",
+      "MaterialDefinitionMixinAccessor",
 
 
       "PlayerRendererMixin_1_21_3",
