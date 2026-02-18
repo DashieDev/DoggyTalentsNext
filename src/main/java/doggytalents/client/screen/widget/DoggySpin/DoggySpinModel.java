@@ -19,8 +19,6 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.client.entity.model.dog.DogModel;
-import doggytalents.client.entity.model.dog.dogs.AmaterasuModel;
-import doggytalents.client.entity.model.dog.dogs.oina.HopeModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.variant.DogVariant;
