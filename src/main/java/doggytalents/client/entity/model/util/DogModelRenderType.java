@@ -2,10 +2,7 @@ package doggytalents.client.entity.model.util;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.client.renderer.RenderType;

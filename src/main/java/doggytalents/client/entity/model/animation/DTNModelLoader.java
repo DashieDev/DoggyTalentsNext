@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
@@ -16,7 +15,6 @@ import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.util.DTNModelCodec;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
