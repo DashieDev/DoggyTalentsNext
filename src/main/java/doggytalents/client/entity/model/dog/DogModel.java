@@ -334,6 +334,10 @@ public class DogModel extends EntityModel<Dog> {
         return DogAnimationRegistry.getSequence(anim);
     }
 
+    public AnimationDefinition doGetAnimSequenece(DogAnimation anim) {
+        return this.getAnimationSequence(anim);
+    }
+
     public void resetAllPose() {
         this.root.getAllParts().forEach(x -> x.resetPose());
         this.realHead.resetPose();

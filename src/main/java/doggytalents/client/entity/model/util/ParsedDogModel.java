@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.anim.AltDogAnimationSequences;
 import doggytalents.api.anim.DogAnimation;
@@ -250,12 +251,22 @@ public class ParsedDogModel {
         final boolean use_default_model = model.useDefaultModelForAccessories();
 
         final var default_props = DogModelProps.DEFAULT;
+
+        boolean warn_head_accessory = false;
+        try {
+            warn_head_accessory = model.warnAccessory(null, DoggyAccessories.PROPELLAR.get());
+        } catch (Exception e) {
+
+        }
+        boolean use_alt_anim =
+            model.doGetAnimSequenece(DogAnimation.HOWL) == AltDogAnimationSequences.VICTORY_HOWL_ALT;
+
         return new DogModelProps(
             render_type, root_pivot, scale, 
             scale_baby, wet_shade, glowing_legacy, 
             default_props.renderIncap(), default_props.renderTalentModel(),
             new DogModelAccessoryProps(accessory_compat, use_default_model),
-            default_props.legacyProps()
+            new DTNModelCodec.DogModelLegacyProps(warn_head_accessory, use_alt_anim)
         );
     }
 
