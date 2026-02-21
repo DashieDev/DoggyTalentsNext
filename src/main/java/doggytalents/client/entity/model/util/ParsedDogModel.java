@@ -7,6 +7,10 @@ import javax.annotation.Nullable;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import doggytalents.DoggyAccessoryTypes;
+import doggytalents.api.anim.AltDogAnimationSequences;
+import doggytalents.api.anim.DogAnimation;
+import doggytalents.api.registry.Accessory;
 import doggytalents.api.registry.AccessoryInstance;
 import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.client.entity.model.dog.CustomDogModel;
@@ -16,6 +20,7 @@ import doggytalents.client.entity.model.util.DTNModelCodec.DogModelAccessoryProp
 import doggytalents.client.entity.model.util.DTNModelCodec.DogModelProps;
 import doggytalents.client.entity.model.util.DTNModelCodec.ParsedModelResult;
 import doggytalents.common.entity.Dog;
+import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.util.Mth;
 
 public class ParsedDogModel {
@@ -39,6 +44,9 @@ public class ParsedDogModel {
         final boolean scale_baby = props.scaleBabyDog();
         final boolean wet_shade = props.wetShade();
 
+        final boolean render_incap = props.renderIncap();
+        final boolean render_talent = props.renderTalentModel();
+
         var accessory_props = props.accessoryProps();
         final var accessory_compat = accessory_props.compatabilityState();
         final boolean use_default_model = accessory_props.useDefaultModel();
@@ -47,6 +55,13 @@ public class ParsedDogModel {
             accessory_compat != DogModel.AccessoryState.NON_COMPATIBLE;
         final boolean only_model_accessory = 
             accessory_compat == DogModel.AccessoryState.MODEL_ONLY;
+
+        final var legacy_props = props.legacyProps();
+        final boolean warn_head_legacy =
+            legacy_props.warnHeadAccessory();
+        final boolean use_alt_howl =
+            legacy_props.useAltVictoryHowl();
+        
 
         return new DogModel(baked, render_type) {
             @Override
@@ -72,6 +87,15 @@ public class ParsedDogModel {
             }
 
             @Override
+            public boolean incapShouldRender(Dog dog) {
+                return render_incap;
+            }
+            @Override
+            public boolean armorShouldRender(Dog dog) {
+                return render_talent;
+            }
+
+            @Override
             public AccessoryState getAccessoryState() {
                 return accessory_compat;
             }
@@ -85,6 +109,20 @@ public class ParsedDogModel {
                     return inst.getAccessory()
                         .getAccessoryRenderType() == AccessoryRenderType.MODEL; 
                 return accesory_render;
+            }
+
+            @Override
+            public boolean warnAccessory(Dog dog, Accessory inst) {
+                if (warn_head_legacy) {
+                    return inst.getType() == DoggyAccessoryTypes.HEAD.get();
+                }
+                return super.warnAccessory(dog, inst);
+            }
+            @Override
+            protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+                if (use_alt_howl && anim == DogAnimation.HOWL)
+                    return AltDogAnimationSequences.VICTORY_HOWL_ALT;
+                return super.getAnimationSequence(anim);
             }
         };
     }
@@ -102,6 +140,9 @@ public class ParsedDogModel {
         final boolean scale_baby = props.scaleBabyDog();
         final boolean wet_shade = props.wetShade();
 
+        final boolean render_incap = props.renderIncap();
+        final boolean render_talent = props.renderTalentModel();
+
         var accessory_props = props.accessoryProps();
         final var accessory_compat = accessory_props.compatabilityState();
         final boolean use_default_model = accessory_props.useDefaultModel();
@@ -110,6 +151,13 @@ public class ParsedDogModel {
             accessory_compat != DogModel.AccessoryState.NON_COMPATIBLE;
         final boolean only_model_accessory = 
             accessory_compat == DogModel.AccessoryState.MODEL_ONLY;
+
+        final var legacy_props = props.legacyProps();
+        final boolean warn_head_legacy =
+            legacy_props.warnHeadAccessory();
+        final boolean use_alt_howl =
+            legacy_props.useAltVictoryHowl();
+        
 
         return new GlowingEyeDogModel(baked, render_type) {
             @Override
@@ -135,6 +183,15 @@ public class ParsedDogModel {
             }
 
             @Override
+            public boolean incapShouldRender(Dog dog) {
+                return render_incap;
+            }
+            @Override
+            public boolean armorShouldRender(Dog dog) {
+                return render_talent;
+            }
+
+            @Override
             public AccessoryState getAccessoryState() {
                 return accessory_compat;
             }
@@ -148,6 +205,20 @@ public class ParsedDogModel {
                     return inst.getAccessory()
                         .getAccessoryRenderType() == AccessoryRenderType.MODEL; 
                 return accesory_render;
+            }
+
+            @Override
+            public boolean warnAccessory(Dog dog, Accessory inst) {
+                if (warn_head_legacy) {
+                    return inst.getType() == DoggyAccessoryTypes.HEAD.get();
+                }
+                return super.warnAccessory(dog, inst);
+            }
+            @Override
+            protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
+                if (use_alt_howl && anim == DogAnimation.HOWL)
+                    return AltDogAnimationSequences.VICTORY_HOWL_ALT;
+                return super.getAnimationSequence(anim);
             }
         };
     }
@@ -178,10 +249,13 @@ public class ParsedDogModel {
         final var accessory_compat = model.getAccessoryState();
         final boolean use_default_model = model.useDefaultModelForAccessories();
 
+        final var default_props = DogModelProps.DEFAULT;
         return new DogModelProps(
             render_type, root_pivot, scale, 
             scale_baby, wet_shade, glowing_legacy, 
-            new DogModelAccessoryProps(accessory_compat, use_default_model)
+            default_props.renderIncap(), default_props.renderTalentModel(),
+            new DogModelAccessoryProps(accessory_compat, use_default_model),
+            default_props.legacyProps()
         );
     }
 
