@@ -20,6 +20,7 @@ import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogModelRegistry.BakeContext;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.NullDogModel;
+import doggytalents.client.entity.model.dog.dogs.IwankoModel;
 import doggytalents.client.entity.render.layer.LayerFactory;
 import doggytalents.client.event.ClientEventHandler;
 import doggytalents.client.screen.widget.DoggySpin.DoggySpinModel;

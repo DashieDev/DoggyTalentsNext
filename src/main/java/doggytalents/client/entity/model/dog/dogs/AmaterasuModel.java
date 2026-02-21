@@ -1,4 +1,4 @@
-package doggytalents.client.screen.widget.DoggySpin;
+package doggytalents.client.entity.model.dog.dogs;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.util.DogModelRenderType;
@@ -14,7 +14,13 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleTypes;
 
-public class AmaterasuModel {
+public class AmaterasuModel extends DogModel {
+
+	
+
+    public AmaterasuModel(ModelPart box) {
+		super(box, DogModelRenderType.TRANSLUCENT);
+	}
 
 	public static LayerDefinition createBodyLayer() {
 		var meshdefinition = new MeshDefinition();
@@ -75,4 +81,12 @@ public class AmaterasuModel {
 
     }
 
+	public static void createAugment() {
+		
+	}
+
+	@Override
+    public boolean useDefaultModelForAccessories() {
+        return true;
+    }
 }

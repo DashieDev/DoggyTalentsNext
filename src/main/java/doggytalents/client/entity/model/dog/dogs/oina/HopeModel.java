@@ -1,4 +1,4 @@
-package doggytalents.client.screen.widget.DoggySpin;
+package doggytalents.client.entity.model.dog.dogs.oina;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -9,7 +9,11 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class HopeModel {
+public class HopeModel extends DogModel {
+
+    public HopeModel(ModelPart box) {
+		super(box);
+	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
