@@ -28,6 +28,9 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModLoader;
+import doggytalents.client.entity.model.dog.dogs.*;
+import doggytalents.client.entity.model.dog.dogs.oina.*;
+import doggytalents.client.entity.model.dog.dogs.kusa.*;
 
 public class DogModelRegistry {
     
@@ -90,7 +93,92 @@ public class DogModelRegistry {
         MODEL_MAP = Maps.newConcurrentMap();
         register("default", ctx -> new DogModel(ctx.bakeLayer(ClientSetup.DOG)).setAccessoryState(AccessoryState.RECOMMENDED));
         register("variant", ctx -> new VariantDogModel(ctx.bakeLayer(ClientSetup.DOG_LEGACY)).setAccessoryState(AccessoryState.RECOMMENDED));
-        //81
+        register("iwanko", ctx -> new IwankoModel(ctx.bakeLayer(ClientSetup.DOG_IWANKO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("lucario", ctx -> new LucarioModel(ctx.bakeLayer(ClientSetup.DOG_LUCARIO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("death", ctx -> new DeathModel(ctx.bakeLayer(ClientSetup.DOG_DEATH)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("legoshi", ctx -> new LegoshiModel(ctx.bakeLayer(ClientSetup.DOG_LEGOSHI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("jack", ctx -> new JackModel(ctx.bakeLayer(ClientSetup.DOG_JACK)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("juno", ctx -> new JunoModel(ctx.bakeLayer(ClientSetup.DOG_JUNO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("st_bernard", ctx -> new StBernardModel(ctx.bakeLayer(ClientSetup.DOG_ST_BERNARD)).setAccessoryState(AccessoryState.RECOMMENDED));
+
+        register("okami_amaterasu", ctx ->  new AmaterasuModel(ctx.bakeLayer(ClientSetup.OKAMI_AMATERASU)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_chi", ctx ->  new AmmyChiModel(ctx.bakeLayer(ClientSetup.AMMY_CHI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_jin", ctx ->  new AmmyJinModel(ctx.bakeLayer(ClientSetup.AMMY_JIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_rei", ctx ->  new AmmyReiModel(ctx.bakeLayer(ClientSetup.AMMY_REI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_shin", ctx ->  new AmmyShinModel(ctx.bakeLayer(ClientSetup.AMMY_SHIN)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_shiranui", ctx ->  new AmmyShiranuiModel(ctx.bakeLayer(ClientSetup.AMMY_SHIRANUI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+        register("ammy_divine_rebirth", ctx ->  new AmmyRebirthModel(ctx.bakeLayer(ClientSetup.AMMY_REBIRTH)));        
+        register("ammy_divine_tei", ctx ->  new AmmyTeiModel(ctx.bakeLayer(ClientSetup.AMMY_TEI)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+
+        register("kusa_hayabusa", ctx ->  new HayabusaModel(ctx.bakeLayer(ClientSetup.KUSA_HAYABUSA)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_chi", ctx ->  new ChiModel(ctx.bakeLayer(ClientSetup.KUSA_CHI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_ko", ctx ->  new KoModel(ctx.bakeLayer(ClientSetup.KUSA_KO)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_rei", ctx ->  new ReiModel(ctx.bakeLayer(ClientSetup.KUSA_REI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_shin", ctx ->  new ShinModel(ctx.bakeLayer(ClientSetup.KUSA_SHIN)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_take", ctx ->  new TakeModel(ctx.bakeLayer(ClientSetup.KUSA_TAKE)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_tei", ctx ->  new TeiModel(ctx.bakeLayer(ClientSetup.KUSA_TEI)).setAccessoryState(AccessoryState.RECOMMENDED));
+        register("kusa_ume", ctx ->  new UmeModel(ctx.bakeLayer(ClientSetup.KUSA_UME)).setAccessoryState(AccessoryState.RECOMMENDED));
+        
+        register("oina_kaipoku", ctx ->  new KaipokuModel(ctx.bakeLayer(ClientSetup.OINA_KAIPOKU)));
+        register("oina_kawauso", ctx ->  new KawausoModel(ctx.bakeLayer(ClientSetup.OINA_KAWAUSO)));
+        register("oina_kemushiri", ctx ->  new KemushiriModel(ctx.bakeLayer(ClientSetup.OINA_KEMUSHIRI)));
+        register("oina_merchant", ctx ->  new OinaMerchant1Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT)));
+        register("oina_merchant2", ctx ->  new OinaMerchant2Model(ctx.bakeLayer(ClientSetup.OINA_MERCHANT2)));
+        register("oina_okikurumi", ctx ->  new OkikurumiModel(ctx.bakeLayer(ClientSetup.OINA_OKIKURUMI)));
+        register("oina_piriko", ctx ->  new PirikoModel(ctx.bakeLayer(ClientSetup.OINA_PIRIKO)));
+        register("oina_risu", ctx ->  new RisuModel(ctx.bakeLayer(ClientSetup.OINA_RISU)));
+        register("oina_shamikuru", ctx ->  new ShamikuruModel(ctx.bakeLayer(ClientSetup.OINA_SHAMIKURU)));
+        register("oina_todo", ctx ->  new TodoModel(ctx.bakeLayer(ClientSetup.OINA_TODO)));
+        register("oina_tusukuru", ctx ->  new TusukuruModel(ctx.bakeLayer(ClientSetup.OINA_TUSUKURU)));
+        register("oina_wari", ctx ->  new WariModel(ctx.bakeLayer(ClientSetup.OINA_WARI)));
+
+        register("sol_hope", ctx ->  new HopeModel(ctx.bakeLayer(ClientSetup.DOG_SOL_HOPE)));
+        register("wolf_link", ctx ->  new WolfLinkModel(ctx.bakeLayer(ClientSetup.DOG_WOLF_LINK)));
+        register("arcanine", ctx ->  new ArcanineModel(ctx.bakeLayer(ClientSetup.DOG_ARCANINE)).setAccessoryState(AccessoryState.SOME_WILL_FIT));
+
+        register("pochita", ctx ->  new PochitaModel(ctx.bakeLayer(ClientSetup.DOG_POCHITA)));
+        register("dachshund", ctx ->  new DachshundModel(ctx.bakeLayer(ClientSetup.DOG_DACHSHUND)));
+        register("doberman", ctx ->  new DobermanModel(ctx.bakeLayer(ClientSetup.DOG_DOBERMAN)));
+        register("pug", ctx ->  new PugModel(ctx.bakeLayer(ClientSetup.DOG_PUG)));
+        register("borzoi", ctx ->  new BorzoiModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI)));
+        register("borzoi_long", ctx ->  new BorzoiLongModel(ctx.bakeLayer(ClientSetup.DOG_BORZOI_LONG)));
+        register("english_bulldog", ctx ->  new EnglishBulldogModel(ctx.bakeLayer(ClientSetup.DOG_ENGLISH_BULLDOG)));
+        register("french_bulldog", ctx ->  new FrenchBulldogModel(ctx.bakeLayer(ClientSetup.DOG_FRENCH_BULLDOG)));
+        register("poodle", ctx ->  new PoodleModel(ctx.bakeLayer(ClientSetup.DOG_POODLE)));
+        register("chihuahua", ctx ->  new ChihuahuaModel(ctx.bakeLayer(ClientSetup.DOG_CHIHUAHUA)));
+        register("boxer_floppy", ctx ->  new BoxerFloppyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_FLOPPY)));
+        register("boxer_pointy", ctx ->  new BoxerPointyModel(ctx.bakeLayer(ClientSetup.DOG_BOXER_POINTY)));
+        register("miniature_pinscher", ctx ->  new MiniaturePinscherModel(ctx.bakeLayer(ClientSetup.DOG_MINIATURE_PINSCHER)));
+        register("hungarian_puli", ctx ->  new HungarianPuliModel(ctx.bakeLayer(ClientSetup.DOG_HUNGARIAN_PULI)));
+        register("basset_hound", ctx ->  new BassetHoundModel(ctx.bakeLayer(ClientSetup.DOG_BASSET_HOUND)));
+        register("collie_smooth", ctx ->  new CollieSmoothModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_SMOOTH)));
+        register("collie_rough", ctx ->  new CollieRoughModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_ROUGH)));
+        register("collie_border", ctx ->  new CollieBorderModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_BORDER)));
+        register("collie_border_short", ctx ->  new CollieBorderShortModel(ctx.bakeLayer(ClientSetup.DOG_COLLIE_BORDER_SHORT)));
+        register("bichon_maltais", ctx ->  new BichonMaltaisModel(ctx.bakeLayer(ClientSetup.DOG_BICHON_MALTAIS)));
+        register("belgian_malinois", ctx ->  new BelgianMalinoisModel(ctx.bakeLayer(ClientSetup.DOG_BELGIAN_MALINOIS)));
+        register("german_shepherd", ctx ->  new GermanShepherdModel(ctx.bakeLayer(ClientSetup.DOG_GERMAN_SHEPHERD)));
+        register("otter", ctx ->  new OtterModel(ctx.bakeLayer(ClientSetup.DOG_OTTER)));
+        register("bull_terrier", ctx ->  new BullTerrierModel(ctx.bakeLayer(ClientSetup.DOG_BULL_TERRIER)));
+        register("akita_inu", ctx ->  new AkitaJapaneseModel(ctx.bakeLayer(ClientSetup.INU_AKITA)));
+        register("akita_dog", ctx ->  new AkitaAmericanModel(ctx.bakeLayer(ClientSetup.DOG_AKITA)));
+        register("shiba_inu", ctx ->  new ShibaModel(ctx.bakeLayer(ClientSetup.INU_SHIBA)));
+        register("shikoku_inu", ctx ->  new ShikokuModel(ctx.bakeLayer(ClientSetup.INU_SHIKOKU)));
+        register("houndstone", ctx ->  new HoundstoneModel(ctx.bakeLayer(ClientSetup.DOG_HOUNDSTONE)));
+        register("zero", ctx ->  new ZeroModel(ctx.bakeLayer(ClientSetup.DOG_ZERO)));
+        register("scraps", ctx ->  new ScrapsModel(ctx.bakeLayer(ClientSetup.DOG_SCRAPS)));
+        register("sparky", ctx ->  new SparkyModel(ctx.bakeLayer(ClientSetup.DOG_SPARKY)));
+        register("german_pointer_shorthaired", ctx ->  new GermanPointerShorthaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_SHORT)));
+        register("german_pointer_wirehaired", ctx ->  new GermanPointerWirehaired(ctx.bakeLayer(ClientSetup.DOG_POINTER_WIRE)));
+        register("samoyed", ctx ->  new SamoyedModel(ctx.bakeLayer(ClientSetup.DOG_SAMOYED)));
+        register("ranga", ctx ->  new RangaModel(ctx.bakeLayer(ClientSetup.RANGA)));
+        register("bolt", ctx ->  new BoltModel(ctx.bakeLayer(ClientSetup.BOLT)));
+        register("norfolk_terrier", ctx ->  new NorfolkTerrierModel(ctx.bakeLayer(ClientSetup.DOG_NORFOLK_TERRIER)));
+        register("australian_kelpie", ctx ->  new AustralianKelpieModel(ctx.bakeLayer(ClientSetup.DOG_AUSTRALIAN_KELPIE)));
+        register("newfoundland", ctx ->  new NewfoundlandModel(ctx.bakeLayer(ClientSetup.DOG_NEWFOUNDLAND)));
+        register("na", ctx ->  new Na(ctx.bakeLayer(ClientSetup.NA)));
+        register("mochi", ctx ->  new MochiModel(ctx.bakeLayer(ClientSetup.MOCHI)));
+        register("corgi", ctx ->  new CorgiModel(ctx.bakeLayer(ClientSetup.DOG_CORGI)));
 
         registerFromEvent();
     }
