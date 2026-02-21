@@ -379,14 +379,18 @@ public class DTNModelCodec {
         boolean wetShade,
         boolean legacyGlowingEyes,
 
-        DogModelAccessoryProps accessoryProps
+        boolean renderIncap,
+        boolean renderTalentModel,
+
+        DogModelAccessoryProps accessoryProps,
+        DogModelLegacyProps legacyProps
     ) {
 
         public static final DogModelProps DEFAULT = 
             new DogModelProps(DogModelRenderType.CUTOUT, Optional.empty(), 1, 
-            true, true, false, DogModelAccessoryProps.DEFAULT);
-
-            
+            true, true, false, true, true, 
+            DogModelAccessoryProps.DEFAULT, DogModelLegacyProps.DEFAULT);
+        
         public static final Codec<DogModelProps> CODEC = RecordCodecBuilder.create(
             builder -> builder.group(
                 DogModelRenderType.CODEC.optionalFieldOf("render_type", DEFAULT.renderType())
@@ -401,9 +405,16 @@ public class DTNModelCodec {
                     .forGetter(DogModelProps::wetShade),
                 Codec.BOOL.optionalFieldOf("glowing_eyes_legacy", DEFAULT.legacyGlowingEyes())
                     .forGetter(DogModelProps::legacyGlowingEyes),
+                Codec.BOOL.optionalFieldOf("render_incap", DEFAULT.renderIncap())
+                    .forGetter(DogModelProps::renderIncap),
+                Codec.BOOL.optionalFieldOf("render_talent_model", DEFAULT.renderTalentModel())
+                    .forGetter(DogModelProps::renderTalentModel),
                 DogModelAccessoryProps.CODEC.optionalFieldOf("accessory_props", 
                     DEFAULT.accessoryProps())
-                    .forGetter(DogModelProps::accessoryProps)
+                    .forGetter(DogModelProps::accessoryProps),
+                DogModelLegacyProps.CODEC.optionalFieldOf("legacy_props", 
+                    DEFAULT.legacyProps())
+                    .forGetter(DogModelProps::legacyProps)
             )
             .apply(builder, DogModelProps::new)
         );
@@ -428,6 +439,26 @@ public class DTNModelCodec {
                     .forGetter(DogModelAccessoryProps::useDefaultModel)
             )
             .apply(builder, DogModelAccessoryProps::new)
+        );
+    }
+
+    public static record DogModelLegacyProps(
+        boolean warnHeadAccessory,
+        boolean useAltVictoryHowl
+    ) {
+        public static final DogModelLegacyProps DEFAULT 
+            = new DogModelLegacyProps(false, false);
+        
+        public static final Codec<DogModelLegacyProps> CODEC = RecordCodecBuilder.create(
+            builder -> builder.group(
+                Codec.BOOL.optionalFieldOf("warn_head_accessory", 
+                        DEFAULT.warnHeadAccessory())
+                    .forGetter(DogModelLegacyProps::warnHeadAccessory),
+                Codec.BOOL.optionalFieldOf("use_alt_howl_anim", 
+                        DEFAULT.useAltVictoryHowl())
+                    .forGetter(DogModelLegacyProps::useAltVictoryHowl)
+            )
+            .apply(builder, DogModelLegacyProps::new)
         );
     }
 
