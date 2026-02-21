@@ -7,12 +7,15 @@ import javax.annotation.Nullable;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import doggytalents.api.registry.AccessoryInstance;
+import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.GlowingEyeDogModel;
 import doggytalents.client.entity.model.util.DTNModelCodec.DogModelAccessoryProps;
 import doggytalents.client.entity.model.util.DTNModelCodec.DogModelProps;
 import doggytalents.client.entity.model.util.DTNModelCodec.ParsedModelResult;
+import doggytalents.common.entity.Dog;
 import net.minecraft.util.Mth;
 
 public class ParsedDogModel {
@@ -39,6 +42,11 @@ public class ParsedDogModel {
         var accessory_props = props.accessoryProps();
         final var accessory_compat = accessory_props.compatabilityState();
         final boolean use_default_model = accessory_props.useDefaultModel();
+
+        final boolean accesory_render = 
+            accessory_compat != DogModel.AccessoryState.NON_COMPATIBLE;
+        final boolean only_model_accessory = 
+            accessory_compat == DogModel.AccessoryState.MODEL_ONLY;
 
         return new DogModel(baked, render_type) {
             @Override
@@ -70,7 +78,14 @@ public class ParsedDogModel {
             @Override
             public boolean useDefaultModelForAccessories() {
                 return use_default_model;
-            }    
+            }
+            @Override
+            public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+                if (!only_model_accessory)
+                    return inst.getAccessory()
+                        .getAccessoryRenderType() == AccessoryRenderType.MODEL; 
+                return accesory_render;
+            }
         };
     }
 
@@ -90,6 +105,11 @@ public class ParsedDogModel {
         var accessory_props = props.accessoryProps();
         final var accessory_compat = accessory_props.compatabilityState();
         final boolean use_default_model = accessory_props.useDefaultModel();
+
+        final boolean accesory_render = 
+            accessory_compat != DogModel.AccessoryState.NON_COMPATIBLE;
+        final boolean only_model_accessory = 
+            accessory_compat == DogModel.AccessoryState.MODEL_ONLY;
 
         return new GlowingEyeDogModel(baked, render_type) {
             @Override
@@ -121,7 +141,14 @@ public class ParsedDogModel {
             @Override
             public boolean useDefaultModelForAccessories() {
                 return use_default_model;
-            }    
+            }
+            @Override
+            public boolean acessoryShouldRender(Dog dog, AccessoryInstance inst) {
+                if (!only_model_accessory)
+                    return inst.getAccessory()
+                        .getAccessoryRenderType() == AccessoryRenderType.MODEL; 
+                return accesory_render;
+            }
         };
     }
 
