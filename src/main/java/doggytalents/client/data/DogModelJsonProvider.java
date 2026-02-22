@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonWriter;
 import com.mojang.serialization.JsonOps;
 
 import doggytalents.client.ClientSetup;
+import doggytalents.client.data.addon.AllAddonModel;
 import doggytalents.client.entity.model.AllDTNModelMapping;
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.DogModelRegistry.BakeContext;
@@ -54,26 +55,15 @@ public class DogModelJsonProvider implements DataProvider {
         var path_prov = this.output.createPathProvider(Target.RESOURCE_PACK, 
             DTNModelLoader.createRegistryPath());
         
-        AllDTNModelMapping.init();
-        
-        //Validate if all dog models is present in set and capture the id.
-        DogModelRegistry.init();
-        var ctx = new BakeContext(Optional.empty(), AllDTNModelMapping.MAPPING);
-        DogModelRegistry.resolve(ctx);
+        AllAddonModel.init();
 
-        for (var entry : AllDTNModelMapping.MAPPING.entrySet()) {
-            final var model_location = entry.getKey();
-            final var model_id = ctx.getIdMap().get(model_location);
-            if (model_id == null)
-                continue;
-            final var layer = entry.getValue().get();
-            final var model = DogModelRegistry.getDogModelHolder(model_id).getValue();
-            if (model == null)
-                throw new IllegalStateException("no resolved model for: " + model_id);
-            var encoded_layer = DTNModelCodec.parsedFromLayerDefintion(layer);
-            var props = ParsedDogModel.propsFrom(model);
+        for (var entry : AllAddonModel.getAllModels().entrySet()) {
+            final var model_id = entry.getKey();
+            final var result = entry.getValue();
+            final var layer = result.layer();
+            final var props = result.props();
             var model_json = DTNModelCodec.DOG_MODEL_CODEC
-                .encodeStart(JsonOps.INSTANCE, Pair.of(encoded_layer, props))
+                .encodeStart(JsonOps.INSTANCE, Pair.of(layer, props))
                 .getOrThrow();
             var save_path = path_prov.json(model_id);
             var save_future = 
