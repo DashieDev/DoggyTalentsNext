@@ -47,7 +47,7 @@ public class AllAddonModel {
         PropsRegisterer event_props = props -> {
             if (!id_set.add(props.id))
                 throw new IllegalArgumentException("props: " + props.id + " is already exist.");
-            PROPS.put(props.layer, props);
+            PROPS.put(props.layer, props.build());
         };
         registerAllProps(event_props);
 
@@ -96,7 +96,7 @@ public class AllAddonModel {
     @FunctionalInterface
     private static interface PropsRegisterer {
 
-        void register(RegisterCustomDogModelsEvent.DogModelProps props);
+        void register(RegisterCustomDogModelsEvent.DogModelProps.Builder props);
 
     }
 
