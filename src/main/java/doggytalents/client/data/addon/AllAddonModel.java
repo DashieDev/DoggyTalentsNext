@@ -103,7 +103,7 @@ public class AllAddonModel {
     @FunctionalInterface
     private static interface LayerRegisterer {
 
-        void register(ModelLayerLocation location, Supplier<LayerDefinition> layerCreator);
+        void registerLayerDefinition(ModelLayerLocation location, Supplier<LayerDefinition> layerCreator);
 
     }
 
