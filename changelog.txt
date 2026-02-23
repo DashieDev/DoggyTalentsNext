@@ -2144,3 +2144,31 @@ they can be obtained via the Show Info page of Style > Skins at the Dog GUI.
 * Fix wierd dog inventory behaviour when user clicks on the dog inventory button 
 located in their inventory while carrying a stack in their cursor, resulting in the
 stack temporarily vanishing clientside.
+
+**1.19.0 - 23th February 2026**
+First update of 2026.
+=======
+Dog Walk Animation overhaul!
++ Dogs now have not just a dedicated walk animation, but also a galloping animation.
++ When the dog's speed goes above a threshold for a certain amount of time, the walk animation
+smoothly transitions into the galloping animation.
++ The animation transition from between Standby, Walk, and Run is smoothed out to ensure minimal stuttering.
+
++ Centrifugal Banking: When galloping and taking a sharp turn, the dog will 
+naturally lean and bank with inertia. The more aggressively they turn, the deeper the lean!
+=======
+DogAnimations is now Data-Driven
++ Implemented Dedicated animation format
++ Created Blockbench plugin for exporting/importing.
++ DTN now loads animation from resource.
++ This allows modification of the animation via resourcepacks.
+=======
+DogModels is now Data-Driven!
++ Implemented Dedicated model format
++ Created Blockbench plugin for exporting/importing.
++ DTN now also loads its model from resource.
++ A dedicated mod is no longer required for addons that provide custom models.
++ Any DTN addons with custom models can now be implemented with a resource pack.
+They will be automatically compatible with every Minecraft version as long as DTN (1.19.0+)
+supports it.
+=======
