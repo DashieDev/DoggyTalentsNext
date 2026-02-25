@@ -48,7 +48,7 @@ public class DTNModelLoader extends SimpleJsonResourceReloadListener {
             var dynamic_data = new Dynamic<>(JsonOps.INSTANCE, model_json);
             try {
                 var result_pair = DTNModelCodec.DOG_MODEL_CODEC.parse(dynamic_data)
-                    .getOrThrow(JsonParseException::new);
+                    .getOrThrow(false, JsonParseException::new);
                 var result = result_pair.getLeft();
                 var props = result_pair.getRight();
                 

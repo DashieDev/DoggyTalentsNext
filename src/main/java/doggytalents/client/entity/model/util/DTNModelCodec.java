@@ -17,6 +17,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.util.ModelAccessUtil.PartAccess;
+import doggytalents.common.forward_imitate.CodecUtil_1_20_under;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -95,7 +96,7 @@ public class DTNModelCodec {
         pairCodec(CODEC, DogModelProps.CODEC.fieldOf("props").codec());
 
     private static Codec<ParsedPart> parsedPartCodec() {
-        return Codec.recursive("DTNParsedPart", self -> {
+        return CodecUtil_1_20_under.recursive("DTNParsedPart", self -> {
             return RecordCodecBuilder.create(
                 builder -> builder.group(
                     Codec.STRING.fieldOf("id")

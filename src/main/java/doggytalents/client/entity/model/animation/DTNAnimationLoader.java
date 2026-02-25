@@ -65,7 +65,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
             AnimationDefinition anim = null;
             try {
                 anim = DTNAnimationCodec.CODEC.parse(dynamic_data)
-                    .getOrThrow(JsonParseException::new);
+                    .getOrThrow(false, JsonParseException::new);
             } catch (Exception e) {
                 LOGGER.error("Failed to load animation: {} ", id, e);
             }

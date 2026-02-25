@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import com.mojang.serialization.Codec;
 
+import doggytalents.common.forward_imitate.CodecUtil_1_20_under;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
@@ -16,8 +17,8 @@ public class DogModelRenderType implements StringRepresentable {
     public static final DogModelRenderType TRANSLUCENT = 
         new DogModelRenderType("translucent", RenderType::entityTranslucent);
     public static final List<DogModelRenderType> ALL = List.of(CUTOUT, TRANSLUCENT);
-    public static final Codec<DogModelRenderType> CODEC = StringRepresentable
-        .fromValues(() -> ALL.toArray(DogModelRenderType[]::new));
+    public static final Codec<DogModelRenderType> CODEC = CodecUtil_1_20_under
+        .stringRepresentableCodecFromvValues(() -> ALL.toArray(DogModelRenderType[]::new));
     
     private final String id;
     private final Function<ResourceLocation, RenderType> renderType;

@@ -16,7 +16,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 public class DebugGraph {
     public static final DebugGraph COMMON_INSTANCE = new DebugGraph(0, 0, 480, 120);
@@ -90,7 +89,7 @@ public class DebugGraph {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         
         var tessellator = Tesselator.getInstance();
-        var buffer = tessellator.begin(Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        var buffer = tessellator.getBuilder(); buffer.begin(Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
 
         for (int i = 0; i < history.size() - 1; ++i) {
             float val = history.get(i);
@@ -112,11 +111,11 @@ public class DebugGraph {
             int g = FastColor.ARGB32.green(entry.color());
             int b = FastColor.ARGB32.blue(entry.color());
             int a = FastColor.ARGB32.alpha(entry.color());
-            buffer.addVertex(val_x, val_y, 0).setColor(r, g, b, a);
-            buffer.addVertex(val1_x, val1_y, 0).setColor(r, g, b, a);
+            buffer.vertex(val_x, val_y, 0).color(r, g, b, a);
+            buffer.vertex(val1_x, val1_y, 0).color(r, g, b, a);
         }
 
-        BufferUploader.drawWithShader(buffer.buildOrThrow());
+        BufferUploader.drawWithShader(buffer.end());
     }
 
     // public static void afterGuiRender(RenderGuiEvent.Post event) {

@@ -4908,7 +4908,7 @@ public class Dog extends AbstractDog {
         return this.dogArmors.armors();
     }
 
-    @Override
+    //@Override
     public Iterable<ItemStack> getArmorAndBodyArmorSlots() {
         return getArmorSlots();
     }
