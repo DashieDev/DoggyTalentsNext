@@ -42,7 +42,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private final List<Object> hookState = new ArrayList<>();
     private int hookIndex = 0;
 
-    private final Map<ContextKey<?>, Object> contexts = new HashMap<>();
+    private final Map<UIContextKey<?>, Object> contexts = new HashMap<>();
 
     private final Set<GuiEventListener> noClearFocus = new HashSet<>();
 
@@ -352,7 +352,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> Optional<T> useContext(ContextKey<T> key) {
+    protected <T> Optional<T> useContext(UIContextKey<T> key) {
         if (this.contexts.containsKey(key)) {
             final var value = (T) this.contexts.get(key);
             return Optional.ofNullable(value);
@@ -364,13 +364,13 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
             return Optional.empty();
     }
 
-    protected <T> T useContextOrThrow(ContextKey<T> key) {
+    protected <T> T useContextOrThrow(UIContextKey<T> key) {
         return useContext(key)
             .orElseThrow(() -> new IllegalStateException(
                 String.format("Trying to access unbounded context [ %s ]", key.name())));
     }
 
-    protected <T> void provideContext(ContextKey<T> key, T value) {
+    protected <T> void provideContext(UIContextKey<T> key, T value) {
         this.contexts.put(key, value);
     }
 
@@ -384,7 +384,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         public T value = null;
     }
 
-    public static record ContextKey<T>(String name) {}
+    public static record UIContextKey<T>(String name) {}
 
     @Override
     public final boolean isDragging() {
