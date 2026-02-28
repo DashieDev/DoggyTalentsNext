@@ -1,7 +1,14 @@
 package doggytalents.client.screen.framework.element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
@@ -31,6 +38,13 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private ElementPosition position;
     private ElementSize size;
     private int backgroundColor;
+
+    private final List<Object> hookState = new ArrayList<>();
+    private int hookIndex = 0;
+
+    private final Map<ContextKey<?>, Object> contexts = new HashMap<>();
+
+    private final Set<GuiEventListener> noClearFocus = new HashSet<>();
 
     public AbstractElement(AbstractElement parent, Screen screen) {
         if (this == parent) {
@@ -147,6 +161,14 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         } else {
             return false;
         }
+    }
+
+    public boolean addPersistentChildren(GuiEventListener element) {
+        boolean ret = addChildren(element);
+        if (!ret)
+            return false;
+        this.noClearFocus.add(element);
+        return true;
     }
 
     private boolean checkChildrenExistedInParents(GuiEventListener component) {
@@ -273,9 +295,11 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     }
 
     public void reRender() {
-        if (this.child.contains(getFocused()))
+        if (this.child.contains(getFocused()) && !this.noClearFocus.contains(getFocused()))
             setFocused(null);
+        this.noClearFocus.clear();
         this.child.clear();
+        this.hookIndex = 0;
         this.init();
     }
 
@@ -285,6 +309,82 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
             this.subscribedTo.add(slice);
         return Store.get(getScreen()).getStateOrDefault(slice, cast, defaultState); 
     }
+
+    @SuppressWarnings("unchecked")
+    protected <T> UIStatePair<T> useState(T initialValue) {
+        final int current_id = this.hookIndex;
+
+        if (hookState.size() == current_id) {
+            hookState.add(initialValue);
+        }
+        
+        final var value = (T) hookState.get(current_id);
+        final Consumer<T> setter = (newValue) -> {
+            hookState.set(current_id, newValue);
+            this.reRender();
+        };
+
+        this.hookIndex++;
+        return new UIStatePair<>(value, setter);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> UIRef<T> useRef(T initialValue) {
+        final int current_id = this.hookIndex;
+
+        if (hookState.size() == current_id) {
+            final var ref = new UIRef<T>();
+            ref.value = initialValue;
+            hookState.add(ref);
+        }
+
+        final var value = (UIRef<T>) hookState.get(current_id);
+        
+        this.hookIndex++;
+        return value;
+    }
+
+    protected <T> T useRefWithInit(Supplier<T> initializer) {
+        var ret = this.<T>useRef(null);
+        if (ret.value == null)
+            ret.value = initializer.get();
+        return ret.value;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> Optional<T> useContext(ContextKey<T> key) {
+        if (this.contexts.containsKey(key)) {
+            final var value = (T) this.contexts.get(key);
+            return Optional.ofNullable(value);
+        }
+
+        if (this.parent != null)
+            return this.parent.useContext(key);
+        else
+            return Optional.empty();
+    }
+
+    protected <T> T useContextOrThrow(ContextKey<T> key) {
+        return useContext(key)
+            .orElseThrow(() -> new IllegalStateException(
+                String.format("Trying to access unbounded context [ %s ]", key.name())));
+    }
+
+    protected <T> void provideContext(ContextKey<T> key, T value) {
+        this.contexts.put(key, value);
+    }
+
+    public static record UIStatePair<T>(T value, Consumer<T> setter) {
+        public void update(T newValue) {
+            setter().accept(newValue);
+        }
+    }
+
+    public static class UIRef<T> {
+        public T value = null;
+    }
+
+    public static record ContextKey<T>(String name) {}
 
     @Override
     public final boolean isDragging() {
