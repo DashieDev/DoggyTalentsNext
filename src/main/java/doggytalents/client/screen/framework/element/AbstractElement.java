@@ -370,7 +370,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
                 String.format("Trying to access unbounded context [ %s ]", key.name())));
     }
 
-    protected <T> void provideContext(UIContextKey<T> key, T value) {
+    public <T> void provideContext(UIContextKey<T> key, T value) {
         this.contexts.put(key, value);
     }
 
