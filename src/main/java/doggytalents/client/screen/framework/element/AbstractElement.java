@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -370,6 +371,42 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
                 String.format("Trying to access unbounded context [ %s ]", key.name())));
     }
 
+    @SuppressWarnings("unchecked")
+    protected <T> T useMemo(Supplier<T> compute, Object... dependencies) {
+        if (dependencies == null)
+            dependencies = new Object[0];
+
+        final int current_id = this.hookIndex;
+
+        if (hookState.size() == current_id) {
+            hookState.add(null);
+        }
+
+        var memo_state = (UIMemoState) hookState.get(current_id);
+
+        boolean deps_changed = false;
+        if (memo_state == null) {
+            deps_changed = true;
+        } else if (dependencies.length != memo_state.deps().length) {
+            deps_changed = true;
+        } else {
+            for (int i = 0; i < dependencies.length; i++) {
+                if (!Objects.equals(memo_state.deps()[i], dependencies[i])) {
+                    deps_changed = true;
+                    break;
+                }
+            }
+        }
+        if (deps_changed || memo_state == null) {
+            var new_val = compute.get();
+            memo_state = new UIMemoState(new_val, dependencies);
+            this.hookState.set(current_id, memo_state);
+        }
+
+        this.hookIndex++;
+        return (T) memo_state.value();
+    }
+
     public <T> void provideContext(UIContextKey<T> key, T value) {
         this.contexts.put(key, value);
     }
@@ -383,6 +420,8 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     public static class UIRef<T> {
         public T value = null;
     }
+
+    private record UIMemoState(Object value, Object[] deps) {}
 
     public static record UIContextKey<T>(String name) {}
 
