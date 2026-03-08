@@ -13,6 +13,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.Store;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,7 +33,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private GuiEventListener focused;
     private boolean isDragging;
 
-    private final @Nullable AbstractElement parent;
+    private @Nullable AbstractElement parent;
     private final ArrayList<GuiEventListener> child = new ArrayList<>();
     private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private final Screen screen;
@@ -48,15 +50,26 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private final Set<GuiEventListener> noClearFocus = new HashSet<>();
 
     public AbstractElement(AbstractElement parent, Screen screen) {
+        this(screen);
+        bindParent(parent);
+    }
+
+    public AbstractElement(Screen screen) {
+        this.position = ElementPosition.getDefault(this);
+        this.size = ElementSize.getDefault(this);
+        this.screen = screen;
+    }
+
+    public void bindParent(AbstractElement parent) {
         if (this == parent) {
             this.parent = null;
         } else {
             this.parent = parent;
         }
+    }
 
-        this.position = ElementPosition.getDefault(this);
-        this.size = ElementSize.getDefault(this);
-        this.screen = screen;
+    public ElementLayout getLayout() {
+        throw new NotImplementedException();
     }
 
     @Override
@@ -124,16 +137,6 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
 
     public AbstractElement setSize(int size) {
         this.size = new ElementSize(this, size);
-        return this;
-    }
-
-    public AbstractElement setSizeDynamicX(int sizeY) {
-        this.size = ElementSize.createDynamicX(this, sizeY);
-        return this;
-    }
-
-    public AbstractElement setSizeDynamicY(int sizeX) {
-        this.size = ElementSize.createDynamicY(this, sizeX);
         return this;
     }
     
@@ -424,6 +427,14 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     private record UIMemoState(Object value, Object[] deps) {}
 
     public static record UIContextKey<T>(String name) {}
+
+    public void unmount() {
+
+    }
+
+    public void mount() {
+        
+    }
 
     @Override
     public final boolean isDragging() {

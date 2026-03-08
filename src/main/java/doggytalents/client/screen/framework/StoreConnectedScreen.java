@@ -19,6 +19,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
 
     private final ArrayList<Class<? extends AbstractSlice>> subscribedTo = new ArrayList<>();
     private boolean isResizing = false;
+    private boolean doRelayout = false;
     protected AbstractElement rootView;
     
     protected StoreConnectedScreen(Component title) {
@@ -31,7 +32,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     private AbstractElement createRootView() {
-        return new RootView(null, this, this::renderRootView)
+        var ret = new RootView(null, this, this::renderRootView)
             .setPosition(PosType.ABSOLUTE, 0, 0)
             .setSize(this.width, this.height)
             .init();
@@ -64,6 +65,9 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
         if (this.isResizing) {
             reRenderRoot();
             this.isResizing = false;
+        }
+        if (this.rootView != null) {
+
         }
         if (doRenderBackground())
             this.renderBackground(graphics, mouseX, mouseY, pTicks);

@@ -27,6 +27,7 @@ import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
+import doggytalents.client.screen.framework.element.AbstractElement.UIContextKey;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
@@ -41,6 +42,8 @@ import net.minecraft.network.chat.Component;
 public class DogNewInfoScreen extends StoreConnectedScreen {
 
     public final Dog dog;
+
+    public static final UIContextKey<Dog> DOG = new UIContextKey<>("dog");
 
     private TextOnlyButton rightTabButton;
     private TextOnlyButton lefTabButton;
@@ -178,12 +181,15 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     public void renderRootView(AbstractElement rootView) {        
         int mX = this.width/2;
         int mY = this.height/2;
+
+        rootView.provideContext(DOG, this.dog);
+
         var navBar = new DogInfoNavBarElement(null, this, this.dog)
             .setPosition(PosType.FIXED, mX, this.height - 12)
             .setSize(200, 10)
             .init();
         rootView.addChildren(navBar);
-        var upperView = new DivElement(null, this)
+        var upperView = new DivElement(rootView, this)
             .setPosition(PosType.FIXED, 0, 0)
             .setSize(this.width, this.height - 16);
         rootView.addChildren(upperView);

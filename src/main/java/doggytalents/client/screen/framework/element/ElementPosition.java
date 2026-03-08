@@ -1,20 +1,22 @@
 package doggytalents.client.screen.framework.element;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 
 public class ElementPosition {
 
-    private AbstractElement element;
+    private Supplier<ElementPosition> childrenGetter;
     private int x;
     private int y;
-    private int originAbsoluteX;
-    private int originAbsoluteY;
     private ChildDirection dir = ChildDirection.ROW;
     private PosType type = PosType.FIXED;
-    private int scrollYOffset;
 
-    public ElementPosition(@Nonnull AbstractElement element, int x, int y, PosType type) {
-        this.element = element;
+    private int originAbsoluteX = 0;
+    private int originAbsoluteY = 0;
+
+    public ElementPosition(Supplier<ElementPosition> childrenGetter, int x, int y, PosType type) {
+        this.childrenGetter = childrenGetter;
         this.x = x;
         this.y = y;
         this.type = type;
@@ -103,6 +105,8 @@ public class ElementPosition {
             this.originAbsoluteX = 0; this.originAbsoluteY = 0;
             return;
         }
+
+        //This wierd logic is because I was not sure if the component was added to its children or not
         int indx = pChilds.size() -1;
         var lastChild = pChilds.get(indx);
         if (lastChild == this) {
