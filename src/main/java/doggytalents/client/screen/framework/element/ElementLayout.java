@@ -119,10 +119,6 @@ public class ElementLayout {
         return ret;
     }
 
-    private List<AbstractWidget> getVanillaWidgets() {
-        
-    }
-
     private ElementLayout getParentLayout() {
         var parent = this.owner.getParent();
         if (parent == null)
