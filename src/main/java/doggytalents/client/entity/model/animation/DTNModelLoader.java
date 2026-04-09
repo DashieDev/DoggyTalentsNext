@@ -13,14 +13,15 @@ import com.mojang.serialization.JsonOps;
 
 import doggytalents.client.entity.model.DogModelRegistry;
 import doggytalents.client.entity.model.util.DTNModelCodec;
+import doggytalents.common.backward_imitate.SimpleJsonResourceReloadListener_1_21_9;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-public class DTNModelLoader extends SimpleJsonResourceReloadListener {
+public class DTNModelLoader extends SimpleJsonResourceReloadListener_1_21_9 {
     
     // In charge of loading the json models files in DTN Format at
     // assets/<namespace>/doggytalents/dog_models
@@ -37,7 +38,7 @@ public class DTNModelLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> contents, ResourceManager resourceManager,
+    protected void apply(Map<Identifier, JsonElement> contents, ResourceManager resourceManager,
             ProfilerFiller profiler) {
         
         int load_count = 0;

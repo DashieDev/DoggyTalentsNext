@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import doggytalents.client.backward_imitate.RenderUtil_1_21_11.KeyFrameUtil_1_21_11;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -139,7 +140,7 @@ public class DTNAnimationCodec {
 
         var keyframes = new ArrayList<Keyframe>(rawKeyframes.size());
         for (var raw_keyframe : rawKeyframes) {
-            var value = raw_keyframe.target();
+            var value = KeyFrameUtil_1_21_11.keyframeValue(raw_keyframe);
             
             value = keyframe_processor.whenDecode()
                 .apply(value.x, value.y, value.z);
@@ -161,7 +162,7 @@ public class DTNAnimationCodec {
         var keyframes = channel.keyframes(); 
         var raw_keyframes = new ArrayList<Keyframe>(keyframes.length);
         for (var keyframe : keyframes) {
-            var value = keyframe.target();
+            var value = KeyFrameUtil_1_21_11.keyframeValue(keyframe);
 
             if (fix_rotation)
                 value = new Vector3f(-value.x, -value.y, value.z);
@@ -215,7 +216,7 @@ public class DTNAnimationCodec {
                 Codec.FLOAT.fieldOf("at")
                     .forGetter(Keyframe::timestamp),
                 ExtraCodecs.VECTOR3F.optionalFieldOf("value", new Vector3f())
-                    .forGetter(Keyframe::target),
+                    .forGetter(KeyFrameUtil_1_21_11::keyframeValue),
                 Codec.STRING.xmap(
                     DTNAnimationCodec::getInterpFromId, 
                     DTNAnimationCodec::getIdFromInterp

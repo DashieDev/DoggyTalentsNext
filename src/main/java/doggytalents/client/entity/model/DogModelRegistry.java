@@ -36,7 +36,7 @@ public class DogModelRegistry {
         register(Util.getResource(name), getter);
     }
 
-    public static boolean registerParsed(ResourceLocation id, ParsedModelResult result,
+    public static boolean registerParsed(Identifier id, ParsedModelResult result,
         DTNModelCodec.DogModelProps props) {
 
         var model = wrapModelCreation(id, () -> ParsedDogModel.create(result, props));
@@ -68,7 +68,7 @@ public class DogModelRegistry {
         }
     }
 
-    private static DogModel wrapModelCreation(ResourceLocation id, Supplier<DogModel> creator) {
+    private static DogModel wrapModelCreation(Identifier id, Supplier<DogModel> creator) {
         DogModel ret;
         try {
             ret = creator.get();

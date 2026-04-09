@@ -18,15 +18,16 @@ import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 
 import doggytalents.api.anim.DogAnimation;
+import doggytalents.common.backward_imitate.SimpleJsonResourceReloadListener_1_21_9;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
+public class DTNAnimationLoader extends SimpleJsonResourceReloadListener_1_21_9 {
     
     // In charge of loading the animation files at
     // assets/doggytalents/doggytalents/dog_animations
@@ -34,7 +35,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/animationLoader");
 
-    private final Map<ResourceLocation, DogAnimationHolder> holderMap = new MapMaker()
+    private final Map<Identifier, DogAnimationHolder> holderMap = new MapMaker()
         .concurrencyLevel(1).makeMap();
 
     private DTNAnimationLoader() {
@@ -47,12 +48,12 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> contents, ResourceManager resourceManager,
+    protected void apply(Map<Identifier, JsonElement> contents, ResourceManager resourceManager,
             ProfilerFiller profiler) {
         
         holderMap.values().forEach(DogAnimationHolder::invalidate);
 
-        var builtin_anims = new HashMap<ResourceLocation, AnimationDefinition>();
+        var builtin_anims = new HashMap<Identifier, AnimationDefinition>();
         for (var entry : contents.entrySet()) {
             final var id = entry.getKey();
             final var anim_json = entry.getValue();
@@ -124,7 +125,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
         return getAnim(Util.getResource(id));
     }
 
-    public DogAnimationHolder getAnim(ResourceLocation id) {
+    public DogAnimationHolder getAnim(Identifier id) {
         return this.holderMap.computeIfAbsent(id, 
             k -> new DogAnimationHolder(null));
     }

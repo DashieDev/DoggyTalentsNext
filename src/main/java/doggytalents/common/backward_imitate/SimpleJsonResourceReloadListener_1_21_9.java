@@ -29,6 +29,7 @@ public abstract class SimpleJsonResourceReloadListener_1_21_9 extends SimplePrep
       this.directory = dir;
    }
 
+   @Override
    protected Map<Identifier, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
       var jsons = new HashMap<Identifier, JsonElement>();
       scanDirectory(resourceManager, this.directory, this.gson, jsons);

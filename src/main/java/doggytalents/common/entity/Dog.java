@@ -4914,21 +4914,21 @@ public class Dog extends AbstractDog {
         return !this.wolfArmor().isEmpty();
     }
 
-    @Override
+    //@Override
     public Iterable<ItemStack> getHandSlots() {
         if (!this.canDogUseTools() || this.mouthStack == null)
             return List.of(); 
         return List.of(this.mouthStack);
     }
 
-    @Override
+    //@Override
     public Iterable<ItemStack> getArmorSlots() {
         if (!this.canDogWearArmor())
             return List.of();
         return this.dogArmors.armors();
     }
 
-    @Override
+    //@Override
     public Iterable<ItemStack> getArmorAndBodyArmorSlots() {
         return getArmorSlots();
     }
