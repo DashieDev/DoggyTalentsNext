@@ -75,7 +75,7 @@ public class DogAnimationJsonProvider implements DataProvider {
             } catch (IOException ioexception) {
                 LOGGER.error("Failed to save file to {}", path, ioexception);
             }
-        }, net.minecraft.Util.backgroundExecutor());
+        }, net.minecraft.util.Util.backgroundExecutor());
     }
 
     @Override

@@ -48,39 +48,39 @@ public interface CompoundTag_1_21_7 {
             this.wrapped = wrapped;
         }
 
-        public void putBoolean(String id, boolean val) {
+        @Override public void putBoolean(String id, boolean val) {
             this.wrapped.putBoolean(id, val);
         }
 
-        public void putByte(String id, byte val) {
+        @Override public void putByte(String id, byte val) {
             this.wrapped.putByte(id, val);
         }
         
-        public void putInt(String id, int val) {
+        @Override public void putInt(String id, int val) {
             this.wrapped.putInt(id, val);
         }
 
-        public void putLong(String id, long val) {
+        @Override public void putLong(String id, long val) {
             this.wrapped.putLong(id, val);
         }
 
-        public void putDouble(String id, double val) {
+        @Override public void putDouble(String id, double val) {
             this.wrapped.putDouble(id, val);
         }
 
-        public void putIntArray(String id, int[] val) {
+        @Override public void putIntArray(String id, int[] val) {
             this.wrapped.putIntArray(id, val);
         }
 
-        public void putString(String id, String val) {
+        @Override public void putString(String id, String val) {
             this.wrapped.putString(id, val);
         }
 
-        public void putUUID(String id, UUID val) {
+        @Override public void putUUID(String id, UUID val) {
             this.wrapped.store(id, UUIDUtil.CODEC, val);
         }
 
-        public void put(String id, Tag val) {
+        @Override public void put(String id, Tag val) {
             this.wrapped.put(id, val);
         }
     }
@@ -93,39 +93,39 @@ public interface CompoundTag_1_21_7 {
             this.wrapped = wrapped;
         }
 
-        public void putBoolean(String id, boolean val) {
+        @Override public void putBoolean(String id, boolean val) {
             this.wrapped.putBoolean(id, val);
         }
 
-        public void putByte(String id, byte val) {
+        @Override public void putByte(String id, byte val) {
             this.wrapped.putByte(id, val);
         }
         
-        public void putInt(String id, int val) {
+        @Override public void putInt(String id, int val) {
             this.wrapped.putInt(id, val);
         }
 
-        public void putLong(String id, long val) {
+        @Override public void putLong(String id, long val) {
             this.wrapped.putLong(id, val);
         }
 
-        public void putDouble(String id, double val) {
+        @Override public void putDouble(String id, double val) {
             this.wrapped.putDouble(id, val);
         }
 
-        public void putIntArray(String id, int[] val) {
+        @Override public void putIntArray(String id, int[] val) {
             this.wrapped.putIntArray(id, val);
         }
 
-        public void putString(String id, String val) {
+        @Override public void putString(String id, String val) {
             this.wrapped.putString(id, val);
         }
 
-        public void putUUID(String id, UUID val) {
+        @Override public void putUUID(String id, UUID val) {
             this.wrapped.store(id, UUIDUtil.CODEC, val);
         }
 
-        public void put(String id, Tag val) {
+        @Override public void put(String id, Tag val) {
             ValueOutputUtil_1_21_7.outputTagTo(wrapped, id, val);
         }
     }

@@ -16,7 +16,7 @@ public class DogArrowRenderer extends ArrowRenderer<DogArrow, DogArrowRenderStat
         super(ctx);
     }
 
-    @Override
+    //@Override
     public Identifier getTextureLocation(DogArrow arrow) {
         if (arrow.isDogSpectralArrow())
             return SPECTRAL_ARROW_LOCATION;
@@ -34,7 +34,7 @@ public class DogArrowRenderer extends ArrowRenderer<DogArrow, DogArrowRenderStat
     public DogArrowRenderState_21_3 createRenderState() {
         return new DogArrowRenderState_21_3();
     }
-    public void extractRenderState(DogArrow dog_arrow, DogArrowRenderState_21_3 render_state, float pticks) {
+    @Override public void extractRenderState(DogArrow dog_arrow, DogArrowRenderState_21_3 render_state, float pticks) {
         super.extractRenderState(dog_arrow, render_state, pticks);
         render_state.dogArrow = dog_arrow;
     };

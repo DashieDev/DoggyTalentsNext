@@ -5566,7 +5566,7 @@ public class Dog extends AbstractDog {
 
     //1.21.3+
     @Nullable
-    public Entity teleport(TeleportTransition transition) {
+    @Override public Entity teleport(TeleportTransition transition) {
         boolean is_change_dim = 
             transition.newLevel() != this.level();
         if (is_change_dim)
