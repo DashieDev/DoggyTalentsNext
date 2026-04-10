@@ -393,7 +393,7 @@ public class DogBedModel implements BlockStateModel {
 
                     @Override
                     public TextureAtlasSprite get(Material material, ModelDebugName p_404904_) {
-                        return AtlasUtil_1_21_9.getSpriteFromMaterial(material);
+                        return AtlasUtil_1_21_9.getSpriteFromMaterial(material, TextureAtlas.LOCATION_BLOCKS);
                     }
 
                     @Override
