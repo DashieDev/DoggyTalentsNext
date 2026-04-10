@@ -484,24 +484,31 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
     //     //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
     // }
 
-    // @Override
-    // protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
-    //         float p_115321_, float x) {
-    //     if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
-    //         if (p_115317_.deathTime > 0) {
-    //             float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
-    //             f = Mth.sqrt(f);
-    //             if (f > 1.0F) {
-    //                f = 1.0F;
-    //             }
+    @Override
+    protected void setupRotations(DogRenderState_21_3 p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_) {
+        // if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
+        //     if (p_115317_.deathTime > 0) {
+        //         float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
+        //         f = Mth.sqrt(f);
+        //         if (f > 1.0F) {
+        //            f = 1.0F;
+        //         }
        
-    //             p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
-    //         } else
-    //         p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
-    //         return;
-    //     }
-    //     super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_, x);
-    // }
+        //         p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
+        //     } else
+        //     p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
+        // } else {
+            super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_);
+        //}
+        
+        //Bank
+        if (p_115317_.deathTime <= 0 && p_115317_.dog.dogWalkAnimation.isBanking())  {
+            var dog = p_115317_.dog;
+            var bank_value = -dog.dogWalkAnimation.bankValue(p_115317_.partialTick);
+            var max_bank = dog.dogWalkAnimation.maxBankZRot();
+            p_115318_.mulPose(Axis.ZP.rotationDegrees(bank_value * max_bank));
+        }
+    }
 
 
 
@@ -537,6 +544,4 @@ public class DogRenderer extends MobRenderer<Dog, DogRenderState_21_3, DogModel>
         return OverlayTexture.pack(OverlayTexture.u(p_115340_), OverlayTexture.v(dog.hurtTime > 0 || dog.deathTime > 0));
     }
 
-    //TODO 
-    private static int implementDogBankingRotationZRotMatrixModify_1_21_11_TODO() {}
 }
