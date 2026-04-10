@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import com.google.common.collect.Maps;
 
+import doggytalents.client.backward_imitate.GuiUtil_1_21_9.Screen_1_21_9;
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.ScrollBar;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
@@ -20,7 +21,7 @@ import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 
-public class SODTunningScreen extends Screen {
+public class SODTunningScreen extends Screen_1_21_9 {
 
     private static final float MIN_VAL = 0f;
     private static final float MAX_VAL = 1f;

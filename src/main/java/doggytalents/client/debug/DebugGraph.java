@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
@@ -74,6 +72,7 @@ public class DebugGraph {
         
         for (var entry : this.historyMap.entrySet()) {
             renderEntry(x, y, width, height, entry.getValue());
+            graphics.blit(null, cl, cl, cl, cl, cl, cl, pticks, cl);
         }
     }
 
@@ -87,36 +86,36 @@ public class DebugGraph {
         
         //RenderSystem.enableBlend();
         //RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        // RenderSystem.setShader(GameRenderer::getPositionColorShader);
         
-        var tessellator = Tesselator.getInstance();
-        var buffer = tessellator.begin(Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        // var tessellator = Tesselator.getInstance();
+        // var buffer = tessellator.begin(Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
 
-        for (int i = 0; i < history.size() - 1; ++i) {
-            float val = history.get(i);
-            float val1 = history.get(i + 1);
+        // for (int i = 0; i < history.size() - 1; ++i) {
+        //     float val = history.get(i);
+        //     float val1 = history.get(i + 1);
             
-            //normalize & clamp
-            val = (val - min_value)/ (max_value - min_value);
-            val1 = (val1 - min_value)/ (max_value - min_value);
-            val = Mth.clamp(val, 0, 1);
-            val1 = Mth.clamp(val1, 0, 1);
+        //     //normalize & clamp
+        //     val = (val - min_value)/ (max_value - min_value);
+        //     val1 = (val1 - min_value)/ (max_value - min_value);
+        //     val = Mth.clamp(val, 0, 1);
+        //     val1 = Mth.clamp(val1, 0, 1);
 
-            float val_x = x + ((float)i / maxHistory) * w;
-            float val1_x = x + ((float)(i + 1) / maxHistory) * w;
+        //     float val_x = x + ((float)i / maxHistory) * w;
+        //     float val1_x = x + ((float)(i + 1) / maxHistory) * w;
 
-            float val_y = y + h - val * h;
-            float val1_y = y + h - val1 * h;
+        //     float val_y = y + h - val * h;
+        //     float val1_y = y + h - val1 * h;
             
-            int r = FastColor.ARGB32.red(entry.color());
-            int g = FastColor.ARGB32.green(entry.color());
-            int b = FastColor.ARGB32.blue(entry.color());
-            int a = FastColor.ARGB32.alpha(entry.color());
-            buffer.addVertex(val_x, val_y, 0).setColor(r, g, b, a);
-            buffer.addVertex(val1_x, val1_y, 0).setColor(r, g, b, a);
-        }
+        //     int r = FastColor.ARGB32.red(entry.color());
+        //     int g = FastColor.ARGB32.green(entry.color());
+        //     int b = FastColor.ARGB32.blue(entry.color());
+        //     int a = FastColor.ARGB32.alpha(entry.color());
+        //     buffer.addVertex(val_x, val_y, 0).setColor(r, g, b, a);
+        //     buffer.addVertex(val1_x, val1_y, 0).setColor(r, g, b, a);
+        // }
 
-        BufferUploader.drawWithShader(buffer.buildOrThrow());
+        // BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     // public static void afterGuiRender(RenderGuiEvent.Post event) {

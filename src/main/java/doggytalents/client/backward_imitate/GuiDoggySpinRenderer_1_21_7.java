@@ -28,7 +28,7 @@ public class GuiDoggySpinRenderer_1_21_7 extends PictureInPictureRenderer<DoggyS
         return DoggySpinModelRenderState_1_21_7.class;
     }
 
-    protected void renderToTexture(DoggySpinModelRenderState_1_21_7 renderState, PoseStack stack) {
+    @Override protected void renderToTexture(DoggySpinModelRenderState_1_21_7 renderState, PoseStack stack) {
         var mc = Minecraft.getInstance();
         mc.gameRenderer.getLighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
         var offset = renderState.offset();
