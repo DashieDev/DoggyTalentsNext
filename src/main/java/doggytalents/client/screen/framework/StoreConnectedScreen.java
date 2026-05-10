@@ -10,9 +10,11 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
 public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
@@ -49,7 +51,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     @Override
-    public void resize(Minecraft p_96575_, int width, int height) {
+    public void resize(int width, int height) {
         this.width = width;
         this.height = height;
         Store.get(this).dispatchAll(
@@ -59,20 +61,18 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         Store.get(this).update();
         if (this.isResizing) {
             reRenderRoot();
             this.isResizing = false;
         }
-        if (doRenderBackground())
-            this.renderBackground(graphics, mouseX, mouseY, pTicks);
+        // Background is already extracted by Screen.extractRenderStateWithTooltipAndSubtitles
+        // before extractRenderState is called; calling extractBackground here again would
+        // invoke blurBeforeThisStratum() twice, which crashes in 26.1.2.
 
-        // 1.21 only
-        renderDarkBackground_1_21_1_above(graphics);
-        
         for (var renderable : this.renderables) {
-            renderable.render(graphics, mouseX, mouseY, pTicks);
+            renderable.extractRenderState(graphics, mouseX, mouseY, pTicks);
         }
     }
 
@@ -80,42 +80,37 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     @Override
     public void setFocused(@Nullable GuiEventListener guiEventListener) {
         if (guiEventListener instanceof AbstractElement) {
-            //TODO Maybe AbstractElement::canFocus() in the future.
+            // AbstractElement::canFocus() could be used here in the future.
             return;
         }
         super.setFocused(guiEventListener);
     }
 
     @Override
-    protected void renderBlurredBackground(float p_330683_) {
-        super.renderBlurredBackground(p_330683_);
-    }
-
-    @Override
-    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
         //invalidate focus every click. Prefer focus to be null if the click is outside of any bound.
         this.setFocused(null);
-        return super.mouseClicked(p_94695_, p_94696_, p_94697_);
+        return super.mouseClicked(event, flag);
     }
 
     @Override
-    public boolean keyPressed(int p_96552_, int p_96553_, int p_96554_) {
+    public boolean keyPressed(KeyEvent event) {
         for (var child : this.children()) {
             if (child instanceof AbstractElement e) {
-                e.keyPressedRegardlessIfFocus(p_96552_, p_96553_, p_96554_);
+                e.keyPressedRegardlessIfFocus(event.key(), event.scancode(), event.modifiers());
             }
         }
-        return super.keyPressed(p_96552_, p_96553_, p_96554_);
+        return super.keyPressed(event);
     }
-    
+
     @Override
-    public boolean keyReleased(int p_94715_, int p_94716_, int p_94717_) {
+    public boolean keyReleased(KeyEvent event) {
         for (var child : this.children()) {
             if (child instanceof AbstractElement e) {
-                e.KeyReleasedRegardlessIfFocus(p_94715_, p_94716_, p_94717_);
+                e.KeyReleasedRegardlessIfFocus(event.key(), event.scancode(), event.modifiers());
             }
         }
-        return super.keyReleased(p_94715_, p_94716_, p_94717_);
+        return super.keyReleased(event);
     }
 
     public boolean doRenderBackground() { return true; }
@@ -154,7 +149,7 @@ public class StoreConnectedScreen extends Screen implements IStoreSubscriber {
     }
 
     //1.21+ only
-    private void renderDarkBackground_1_21_1_above(GuiGraphics graphics) {
+    private void renderDarkBackground_1_21_1_above(GuiGraphicsExtractor graphics) {
         graphics.fill(0, 0, this.width, this.height, 0x40000000);
     }
 }

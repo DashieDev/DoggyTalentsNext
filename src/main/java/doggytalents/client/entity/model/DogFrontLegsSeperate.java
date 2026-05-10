@@ -6,7 +6,6 @@ import java.util.Optional;
 import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.entity.Dog;
-import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

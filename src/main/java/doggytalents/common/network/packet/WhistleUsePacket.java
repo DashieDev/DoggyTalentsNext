@@ -37,7 +37,7 @@ public class WhistleUsePacket implements IPacket<WhistleUseData> {
             var whistle_stack = 
                 InventoryUtil.findStackWithItemFromHands(player, whistle);
             if (whistle_stack == null) return;
-            if (player.getCooldowns().isOnCooldown(whistle)) return;
+            if (player.getCooldowns().isOnCooldown(whistle_stack)) return;
             var whistle_modes = WhistleMode.VALUES;
             if (data.mode_id >= whistle_modes.length) return;
             if (data.mode_id < 0) return;

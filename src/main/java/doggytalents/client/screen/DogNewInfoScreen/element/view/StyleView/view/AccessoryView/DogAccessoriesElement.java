@@ -13,7 +13,7 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.language.I18n;
@@ -68,7 +68,7 @@ public class DogAccessoriesElement extends AbstractElement {
             for (int i = 0; i < 5; ++i) {
                 var accessoryHolder = new AccessoryHolder(
                     0, 0,
-                    this.mc.getItemRenderer(), this.dog, false);
+                    this.dog, false);
                 this.accessoryHolders.add(accessoryHolder);
             }
 
@@ -88,14 +88,14 @@ public class DogAccessoriesElement extends AbstractElement {
 
         int armorHolderX = this.getRealX() + 10;
         int armorHolderY = this.getRealY() + 10;
-        this.wolfArmorHolder = new AccessoryHolder(armorHolderX, armorHolderY, mc.getItemRenderer(), dog, false);
+        this.wolfArmorHolder = new AccessoryHolder(armorHolderX, armorHolderY, dog, false);
         this.addChildren(this.wolfArmorHolder);
 
         return this;
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         //dog div
         {
             int mX = dogDiv.getSizeX()/2;
@@ -154,7 +154,7 @@ public class DogAccessoriesElement extends AbstractElement {
         
     }
 
-    private void drawNoRenderAccessoryWarning(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks)  {
+    private void drawNoRenderAccessoryWarning(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks)  {
         var txt = Component.translatable("doggui.invalid_dog.accessory_no_render_warn");
         var lines = font.split(txt, this.getSizeX() - 30);
         int pX = this.getRealX() + this.getSizeX()/2;
@@ -162,7 +162,7 @@ public class DogAccessoriesElement extends AbstractElement {
         for (int i = lines.size() - 1; i >= 0; --i) {
             pX = this.getRealX() + this.getSizeX()/2 
                 - font.width(lines.get(i))/2;
-            graphics.drawString(font, lines.get(i), pX, pY, 0xffcda700);
+            graphics.text(font, lines.get(i), pX, pY, 0xffcda700);
             pY -= font.lineHeight + 3;
         }
     }

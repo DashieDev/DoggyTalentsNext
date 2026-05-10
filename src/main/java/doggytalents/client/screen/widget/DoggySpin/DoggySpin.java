@@ -1,7 +1,7 @@
 package doggytalents.client.screen.widget.DoggySpin;
 
 import doggytalents.common.config.ConfigHandler;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
@@ -22,7 +22,7 @@ public class DoggySpin extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         updateAcculumlatedMillis();
         // graphics.fill(this.getX(), this.getY(), 
         //     this.getX() + this.getWidth(), 
@@ -73,7 +73,7 @@ public class DoggySpin extends AbstractWidget {
         y += ConfigHandler.CLIENT.WORD_LOAD_ICON_Y.get();
         spinWidget.setX(x);
         spinWidget.setY(y);
-        spinWidget.render(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
+        spinWidget.extractRenderState(event.getGuiGraphics(), event.getMouseX(), event.getMouseY(), event.getPartialTick());
     }
 
     private static boolean isLevelLoadingScreen(ScreenEvent event) {

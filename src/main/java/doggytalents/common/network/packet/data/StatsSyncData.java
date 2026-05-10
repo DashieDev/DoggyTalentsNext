@@ -8,7 +8,6 @@ public class StatsSyncData {
 
         public Request(int entityId) {
             super(entityId);
-            //TODO Auto-generated constructor stub
         }
         
     }

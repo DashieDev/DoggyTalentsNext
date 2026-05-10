@@ -2,21 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:yellow_dye"
-    },
-    {
-      "item": "minecraft:red_dye"
-    },
-    {
-      "item": "minecraft:blue_dye"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "doggytalents:leather_jacket"
-    }
+    "minecraft:yellow_dye",
+    "minecraft:red_dye",
+    "minecraft:blue_dye",
+    "minecraft:iron_ingot",
+    "doggytalents:leather_jacket"
   ],
   "result": {
     "count": 1,

@@ -7,17 +7,23 @@ import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.misc.SamoyedPlushieModel;
 import doggytalents.common.entity.misc.SamoyedPlushie;
 import doggytalents.common.lib.Resources;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class SamoyedPlushieRenderer extends EntityRenderer<SamoyedPlushie> {
+public class SamoyedPlushieRenderer extends EntityRenderer<SamoyedPlushie, SamoyedPlushieRenderer.SamoyedPlushieRenderState> {
 
     private SamoyedPlushieModel model;
+
+    public static class SamoyedPlushieRenderState extends EntityRenderState {
+        public float yRot;
+    }
 
     public SamoyedPlushieRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
@@ -25,26 +31,29 @@ public class SamoyedPlushieRenderer extends EntityRenderer<SamoyedPlushie> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SamoyedPlushie plushie) {
-        return Resources.SAMOYED_PLUSHIE_TOY;
-    }
-
-    private RenderType getRenderType(SamoyedPlushie plushie) {
-        return RenderType.entityTranslucent(getTextureLocation(plushie));
+    public SamoyedPlushieRenderState createRenderState() {
+        return new SamoyedPlushieRenderState();
     }
 
     @Override
-    public void render(SamoyedPlushie piano, float p_114486_, float p_114487_, PoseStack stack,
-            MultiBufferSource bufferSource, int light) {
+    public void extractRenderState(SamoyedPlushie entity, SamoyedPlushieRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.yRot = Mth.wrapDegrees(entity.getYRot());
+    }
+
+    public Identifier getTextureLocation(SamoyedPlushieRenderState state) {
+        return Resources.SAMOYED_PLUSHIE_TOY;
+    }
+
+    @Override
+    public void submit(SamoyedPlushieRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
         stack.pushPose();
         stack.scale(-0.6F, -0.6F, 0.6F);
         stack.translate(0.0F, -1.5F, 0.0F);
-        stack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(piano.getYRot())));
-        var consumer = bufferSource.getBuffer(getRenderType(piano));
-        this.model.renderToBuffer(stack, consumer, light, OverlayTexture.NO_OVERLAY, 0xffffffff);
-
+        stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
+        collector.submitModel(model, state, stack,
+            RenderTypes.entityTranslucent(Resources.SAMOYED_PLUSHIE_TOY),
+            state.lightCoords, OverlayTexture.NO_OVERLAY, 0xffffffff, null);
         stack.popPose();
     }
-
-    
 }

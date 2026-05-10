@@ -139,7 +139,7 @@ public class DTNAnimationCodec {
 
         var keyframes = new ArrayList<Keyframe>(rawKeyframes.size());
         for (var raw_keyframe : rawKeyframes) {
-            var value = raw_keyframe.target();
+            var value = new org.joml.Vector3f(raw_keyframe.preTarget());
             
             value = keyframe_processor.whenDecode()
                 .apply(value.x, value.y, value.z);
@@ -161,7 +161,7 @@ public class DTNAnimationCodec {
         var keyframes = channel.keyframes(); 
         var raw_keyframes = new ArrayList<Keyframe>(keyframes.length);
         for (var keyframe : keyframes) {
-            var value = keyframe.target();
+            var value = new org.joml.Vector3f(keyframe.preTarget());
 
             if (fix_rotation)
                 value = new Vector3f(-value.x, -value.y, value.z);
@@ -215,7 +215,7 @@ public class DTNAnimationCodec {
                 Codec.FLOAT.fieldOf("at")
                     .forGetter(Keyframe::timestamp),
                 ExtraCodecs.VECTOR3F.optionalFieldOf("value", new Vector3f())
-                    .forGetter(Keyframe::target),
+                    .forGetter(Keyframe::preTarget),
                 Codec.STRING.xmap(
                     DTNAnimationCodec::getInterpFromId, 
                     DTNAnimationCodec::getIdFromInterp

@@ -10,7 +10,7 @@ import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 
@@ -36,7 +36,7 @@ public class ArtifactSlotElement extends AbstractElement {
         for (int i = 0; i < 3; ++i) {
             var artifactShowBox = new ArtifactShowBox(
                 0, 0,
-                this.mc.getItemRenderer(), this.dog, i);
+                this.dog, i);
             this.artifactBoxes.add(artifactShowBox);
         }
 
@@ -65,7 +65,7 @@ public class ArtifactSlotElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int holderIndx = 0;
         var artifacts = this.dog.getArtifactsList();
         for (int i = 0; i < artifacts.size(); ++i) {

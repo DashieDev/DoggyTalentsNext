@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -25,7 +25,7 @@ public class SamoyedPlushieItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         var level = context.getLevel();
-        if (level.isClientSide || !(level instanceof ServerLevel))
+        if (level.isClientSide() || !(level instanceof ServerLevel))
             return InteractionResult.SUCCESS;
         var player = context.getPlayer();
         var stack = context.getItemInHand();
@@ -41,7 +41,7 @@ public class SamoyedPlushieItem extends Item {
         }
         var plush = DoggyEntityTypes.SAMOYED_PLUSHIE_TOY.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (plush != null) {
@@ -53,18 +53,17 @@ public class SamoyedPlushieItem extends Item {
             stack.shrink(1);
 
         if (player != null)
-            player.getCooldowns().addCooldown(this, 20);
+            player.getCooldowns().addCooldown(stack, 20);
 
         return InteractionResult.SUCCESS;
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-            TooltipFlag flags) {
-        if (context.level() == null)    
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
+        if (context.level() == null)
             return;
         var desc_id = "items.doggytalents.piano_item_common.description";
-        components.add(Component.translatable(desc_id).withStyle(
+        componentConsumer.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

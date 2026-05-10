@@ -9,10 +9,12 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
@@ -21,16 +23,18 @@ public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
         super(dog);
     }
 
-    @Override
     public CompoundTag serializeNBT(HolderLookup.Provider prov) {
         ListTag itemsList = new ListTag();
+        var nbtOps = prov.createSerializationContext(NbtOps.INSTANCE);
 
         for(int i = 0; i < this.stacks.size(); i++) {
            ItemStack stack = this.stacks.get(i);
            if (!stack.isEmpty()) {
-              CompoundTag itemTag = new CompoundTag();
-              itemTag.putByte("Slot", (byte) i);
-              itemsList.add(stack.save(prov, itemTag));
+              var encoded = ItemStack.CODEC.encodeStart(nbtOps, stack).result().orElse(null);
+              if (encoded instanceof CompoundTag ct) {
+                  ct.putByte("Slot", (byte) i);
+                  itemsList.add(ct);
+              }
            }
         }
 
@@ -40,27 +44,27 @@ public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
         return compound;
     }
 
-    @Override
     public void deserializeNBT(HolderLookup.Provider prov, CompoundTag compound) {
-        if (compound.contains("dogArmors", Tag.TAG_LIST)) {
-            ListTag tagList = compound.getList("dogArmors", Tag.TAG_COMPOUND);
+        if (compound.contains("dogArmors")) {
+            ListTag tagList = compound.getListOrEmpty("dogArmors");
+            var nbtOps = prov.createSerializationContext(NbtOps.INSTANCE);
             for (int i = 0; i < tagList.size(); i++) {
-                CompoundTag itemTag = tagList.getCompound(i);
-                int slot = itemTag.getInt("Slot");
+                CompoundTag itemTag = tagList.getCompoundOrEmpty(i);
+                int slot = itemTag.getIntOr("Slot", 0);
 
-                var stack = ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY);
+                var stack = ItemStack.CODEC.parse(nbtOps, itemTag).result().orElse(ItemStack.EMPTY);
                 setArmorInSlot(stack);
-                
+
             }
             this.onLoad();
         }
     }
 
     public void setArmorInSlot(ItemStack stack) {
-        var item = stack.getItem();
-        if (!(item instanceof ArmorItem armor))
+        Equippable equippable = stack.get(DataComponents.EQUIPPABLE);
+        if (equippable == null)
             return;
-        var slot = armor.getType().getSlot();
+        var slot = equippable.slot();
         setArmorInSlot(stack, slot);
     }
 
@@ -92,10 +96,10 @@ public class DogArmorItemHandlerImpl extends DogArmorItemHandler {
             return false;
         var equip = dogSlot.val;
 
-        var item = stack.getItem();
-        if (!(item instanceof ArmorItem armor))
+        Equippable equippable = stack.get(DataComponents.EQUIPPABLE);
+        if (equippable == null)
             return false;
-        var wantSlot = armor.getType().getSlot();
+        var wantSlot = equippable.slot();
 
         if (wantSlot != equip)
             return false;

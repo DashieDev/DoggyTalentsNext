@@ -47,7 +47,7 @@ public class BunnyEars extends Accessory implements IAccessoryHasModel{
             final float chance = 0.15f;
             if (r > chance) return;
             var item = DoggyItems.EASTER_EGG_CANDY.get();
-            dog.spawnAtLocation(new ItemStack(item), 0.0F);
+            dog.spawnAtLocation((net.minecraft.server.level.ServerLevel) dog.level(), new ItemStack(item), 0.0F);
         }
         
     }

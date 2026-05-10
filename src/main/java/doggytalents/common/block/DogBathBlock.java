@@ -12,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -21,8 +20,9 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -49,12 +49,8 @@ public class DogBathBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
     protected static final VoxelShape SHAPE_COLLISION = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
 
-    public DogBathBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1F, 5.0F).sound(SoundType.METAL));
-    }
-
     public DogBathBlock(BlockBehaviour.Properties props) {
-        this();
+        super(props.mapColor(MapColor.METAL).strength(1F, 5.0F).sound(SoundType.METAL));
     }
 
     @Override
@@ -68,15 +64,15 @@ public class DogBathBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemInteractionResult useItemOn(
+    public InteractionResult useItemOn(
         ItemStack stack, BlockState state, Level level, 
         BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 
         if (stack.isEmpty()) {
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
             if (stack.getItem() == Items.GLASS_BOTTLE) {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     if (!player.getAbilities().instabuild) {
                         ItemStack bottleStack = PotionContents.createItemStack(Items.POTION, Potions.WATER);
                         stack.shrink(1);
@@ -90,9 +86,9 @@ public class DogBathBlock extends BaseEntityBlock {
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
 
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else {
-                return ItemInteractionResult.FAIL;
+                return InteractionResult.FAIL;
             }
         }
     }
@@ -103,12 +99,12 @@ public class DogBathBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState stateIn, LevelReader reader, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(reader));
         }
 
-        return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return facing == Direction.DOWN && !stateIn.canSurvive(reader, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, reader, tickAccess, currentPos, facing, facingPos, facingState, random);
     }
 
     @Override

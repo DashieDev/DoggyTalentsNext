@@ -36,7 +36,7 @@ public class DogSoundManager {
         if (dog.isSilent())
             return; 
         var data = new DogInterruptibleSoundData(dog.getId(), Optional.of(event), volume, pitch);
-        if (dog.level().isClientSide) {
+        if (dog.level().isClientSide()) {
             onDogInterruptableSoundUpdate(data);
         } else {
             PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), data);
@@ -46,14 +46,14 @@ public class DogSoundManager {
     public void playNonInterruptible(SoundEvent event, float volume, float pitch) {
         if (dog.isSilent())
             return;
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         dog.level().playSound(null, dog, event, SoundSource.AMBIENT, volume, pitch);
     }
 
     public void interuptPlaying() {
         var data = DogInterruptibleSoundData.stop(dog.getId());
-        if (dog.level().isClientSide) {
+        if (dog.level().isClientSide()) {
             onDogInterruptableSoundUpdate(data);
         } else {
             PacketHandler.send(PacketDistributor.TRACKING_ENTITY.with(() -> dog), data);

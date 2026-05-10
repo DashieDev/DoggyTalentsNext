@@ -67,7 +67,7 @@ public class DoggyCommands {
     public static void register(final CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 literal("dog")
-                    .requires(s -> s.hasPermission(Constants.OPERATOR_PERMISSION))
+                    .requires(s -> s.permissions().hasPermission(new net.minecraft.server.permissions.Permission.HasCommandLevel(net.minecraft.server.permissions.PermissionLevel.byId(Constants.OPERATOR_PERMISSION))))
                     .then(
                         Commands.literal("locate")
                         .then(
@@ -304,7 +304,7 @@ public class DoggyCommands {
             for (DogRespawnData data : respawnData) {
                 joiner.add(Objects.toString(data.getDogId()));
             }
-            throw AMBIGUOUS_NAME_EXCEPTION.create(dogName); //TODO!
+            throw AMBIGUOUS_NAME_EXCEPTION.create(dogName);
         }
 
         return respawn(respawnStorage, respawnData.get(0), source);
@@ -402,7 +402,7 @@ public class DoggyCommands {
         var posStr = bpos == null ? "[???]" : 
             "[ " + bpos.getX() + ", " + bpos.getY() + ", " + bpos.getZ() + " ]";
         var dim = loc.getDimension();
-        var dim_loc = dim == null ? null : dim.location(); 
+        net.minecraft.resources.Identifier dim_loc = dim == null ? null : dim.identifier();
         var dimStr = dim == null ? "[???]" :
             "[ " + (dim_loc == null ? "" : dim_loc) + " ]";
         var dogName = loc.getDogName();

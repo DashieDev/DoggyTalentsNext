@@ -9,7 +9,7 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,9 +22,9 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
     }
 
     @Override
-    public InteractionResultHolder<Float> setDogHunger(AbstractDog dogIn, float hunger, float diff) {
+    public DTNInteractionResultHolder<Float> setDogHunger(AbstractDog dogIn, float hunger, float diff) {
         hunger += diff / 10 * this.level();
-        return InteractionResultHolder.success(hunger);
+        return DTNInteractionResultHolder.success(hunger);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class HappyEaterTalent extends TalentInstance implements IDogFoodHandler 
 
     @Override
     public InteractionResult consume(AbstractDog dogIn, ItemStack stackIn, Entity entityIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return InteractionResult.SUCCESS;
 
         Item item = stackIn.getItem();

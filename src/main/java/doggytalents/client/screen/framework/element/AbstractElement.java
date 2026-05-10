@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.client.screen.framework.AbstractSlice;
 import doggytalents.client.screen.framework.Store;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -16,7 +16,7 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 
-//TODO: maybe implements LayoutElement too
+// could implement LayoutElement
 public abstract class AbstractElement implements Renderable, ContainerEventHandler, NarratableEntry {
 
     @Nullable
@@ -63,7 +63,7 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         if (this.backgroundColor != 0) {
             int aX = this.getRealX();
             int aY = this.getRealY();
@@ -73,14 +73,14 @@ public abstract class AbstractElement implements Renderable, ContainerEventHandl
         this.renderElement(graphics, mouseX, mouseY, partialTicks);
         for (var c : this.child) {
             if (c instanceof Renderable wid)
-            wid.render(graphics, mouseX, mouseY, partialTicks);
+            wid.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         }
     }
 
     /**
      * Never call render() here!!!
      */
-    public void renderElement(GuiGraphics stack, int mouseX, int mouseY, float partialTicks) {};
+    public void renderElement(GuiGraphicsExtractor stack, int mouseX, int mouseY, float partialTicks) {};
 
     public AbstractElement setPosition(ElementPosition.PosType type, int left, int top) {
         this.position = new ElementPosition(this, left, top, type);

@@ -6,13 +6,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.client.resources.model.ResolvedModel;
+import net.minecraft.resources.Identifier;
 
 @Mixin(ModelBakery.class)
 public interface ModelBakeryMixinAccessor {
-    
-    @Accessor("topLevelModels")
-    Map<ModelResourceLocation, UnbakedModel> dtn__getTopLevelModels();
+
+    @Accessor("resolvedModels")
+    Map<Identifier, ResolvedModel> dtn__getResolvedModels();
 
 }

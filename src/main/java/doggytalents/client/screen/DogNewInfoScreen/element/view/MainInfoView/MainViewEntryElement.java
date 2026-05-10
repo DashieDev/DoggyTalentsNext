@@ -9,7 +9,7 @@ import doggytalents.client.screen.DogNewInfoScreen.store.slice.MainPanelSlice.Ma
 import doggytalents.client.screen.framework.Store;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.TabPanelButton;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -56,7 +56,7 @@ public class MainViewEntryElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         
     }
 }

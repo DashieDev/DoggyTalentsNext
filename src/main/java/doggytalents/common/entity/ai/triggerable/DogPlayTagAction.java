@@ -51,10 +51,10 @@ public class DogPlayTagAction extends TriggerableAction {
         if (dog.distanceToSqr(owner) > RUN_AWAY_RADIUS*RUN_AWAY_RADIUS || timeLeft <= 0) {
             this.setState(ActionState.FINISHED);
             if (this.ownerBeenTagged) {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()));
+                if (owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("dog.msg.play_tag.dog_win", dog.getName().getString()));
                 dog.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             } else {
-                owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.you_win", dog.getName().getString()));
+                if (owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("dog.msg.play_tag.you_win", dog.getName().getString()));
                 owner.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
             }
             return;
@@ -95,8 +95,8 @@ public class DogPlayTagAction extends TriggerableAction {
         }
         if (checkAndTag(dog, owner)) {
             n.stop();
-            owner.sendSystemMessage(Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
-            this.dog.playSound(SoundEvents.WOLF_AMBIENT, 1, 1);
+            if (owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("dog.msg.play_tag.gotcha", dog.getName().getString() ));
+            this.dog.playSound(this.dog.dogMood.getAmbientSound(), 1, 1);
             this.ownerBeenTagged = true;
             this.cooldownChase = 30;
             this.timeLeft = TIME_LIMIT_PER_TURN;
@@ -164,8 +164,7 @@ public class DogPlayTagAction extends TriggerableAction {
 
     @Override
     public void onStop() {
-        // TODO Auto-generated method stub
-        
+
     }
 
     protected boolean canReachTarget(LivingEntity target, double distanceToTargetSqr) {

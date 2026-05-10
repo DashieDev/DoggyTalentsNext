@@ -2,8 +2,6 @@ package doggytalents.client;
 
 import java.util.Optional;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import doggytalents.DoggyEntityTypes;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.common.config.ConfigHandler;
@@ -11,7 +9,8 @@ import doggytalents.common.entity.Dog;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.FluidTags;
@@ -22,7 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class DTNWolfMountCustomGuiOverlay {
     
-    public static boolean onRenderVehicleHealth(GuiGraphics graphics, Gui gui) {
+    public static boolean onRenderVehicleHealth(GuiGraphicsExtractor graphics, Gui gui) {
         if (!isApplicable())
             return false;
 
@@ -38,8 +37,7 @@ public class DTNWolfMountCustomGuiOverlay {
             return false;
         
         int draw_x = graphics.guiWidth() / 2 + 91 - 80;
-        int draw_y = graphics.guiHeight() - gui.rightHeight;
-        RenderSystem.enableBlend();
+        int draw_y = graphics.guiHeight() - 39;
 
         var mc = Minecraft.getInstance();
         var font = mc.font;
@@ -76,16 +74,16 @@ public class DTNWolfMountCustomGuiOverlay {
 
         int pX = draw_x;
         int pY = draw_y;
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0, 9, 9);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16.0F, 0.0F, 9, 9, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 52.0F, 0.0F, 9, 9, 256, 256);
         pX += 11;
-        graphics.drawString(font, health_level_str, 
+        graphics.text(font, health_level_str, 
             pX + unit_str_offset - font.width(health_level_str), pY + unit_str_yoffset, 0xffffffff);
         pX += 32;
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 27, 9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 27, 9, 9);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16.0F, 27.0F, 9, 9, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 52.0F, 27.0F, 9, 9, 256, 256);
         pX += 11;
-        graphics.drawString(font, food_level_str, 
+        graphics.text(font, food_level_str, 
             pX + unit_str_offset - font.width(food_level_str), pY + unit_str_yoffset, 0xffffffff);
 
         var dog_name_str_0 = dog.getName().getString();
@@ -95,22 +93,18 @@ public class DTNWolfMountCustomGuiOverlay {
 
         pY -= 10;
         pX = draw_x;
-        graphics.drawString(font, dog_name_str, pX, pY + unit_str_yoffset, 0xffffffff);
+        graphics.text(font, dog_name_str, pX, pY + unit_str_yoffset, 0xffffffff);
         
         if (air_level_str.isPresent()) {
             pX = draw_x + 43;
-            graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 18, 9, 9);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16.0F, 18.0F, 9, 9, 256, 256);
             pX += 11;
-            graphics.drawString(font, air_level_str.get(), 
+            graphics.text(font, air_level_str.get(), 
                 pX + unit_str_offset - font.width(air_level_str.get()), 
                 pY + unit_str_yoffset, 0xffffffff);
         }
         
 
-        gui.rightHeight += 20;
-
-        RenderSystem.disableBlend();
-        
         return true;
     }
 

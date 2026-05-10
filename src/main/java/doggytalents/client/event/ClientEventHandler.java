@@ -1,6 +1,6 @@
 package doggytalents.client.event;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 
@@ -32,7 +32,6 @@ import doggytalents.common.util.InventoryUtil;
 import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
-import doggytalents.mixin.ModelBakeryMixinAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -40,13 +39,9 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -65,52 +60,82 @@ import java.util.List;
 
 public class ClientEventHandler {
 
-    public static void registerModelForBaking(final ModelEvent.RegisterAdditional event) {
-
-        try {
-            ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation unbakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
-            event.register(ModelResourceLocation.standalone(unbakedModelLoc));
-        }
-        catch(Exception e) {
-            DoggyTalentsNext.LOGGER.warn("Could not get base Dog Bed model. Reverting to default textures...");
-            e.printStackTrace();
-        }
+    public static void registerModelForBaking(final ModelEvent.RegisterStandalone event) {
+        // In 26.1, standalone model registration is no longer needed.
+        // The dog bed model is referenced by blockstate JSON and loaded automatically.
     }
 
     public static void modifyBakedModels(final ModelEvent.ModifyBakingResult event) {
+        DogBedModel.clearCache();
         try {
-            var modelRegistry = event.getModels();
+            var bakingResult = event.getBakingResult();
+            var textureGetter = event.getTextureGetter();
+            var modelBakery = event.getModelBakery();
 
-            ResourceLocation resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
-            ResourceLocation bakedModelLoc = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
+            // Get the dog bed block's identifier to locate the model
+            Identifier resourceLocation = BuiltInRegistries.BLOCK.getKey(DoggyBlocks.DOG_BED.get());
+            Identifier modelLocation = Util.getResource(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath());
 
-            var model = modelRegistry.get(ModelResourceLocation.standalone(bakedModelLoc));
+            // Get the resolved model for the dog bed so we can bake variants
+            var resolvedModels = ((doggytalents.mixin.ModelBakeryMixinAccessor) modelBakery).dtn__getResolvedModels();
+            var resolvedModel = resolvedModels.get(modelLocation);
+            if (resolvedModel == null) {
+                DoggyTalentsNext.LOGGER.warn("Could not find resolved model for dog bed: {}", modelLocation);
+                return;
+            }
 
-            var modelUnbaked = (BlockModel) (((ModelBakeryMixinAccessor)event.getModelBakery()).dtn__getTopLevelModels().get(ModelResourceLocation.standalone(bakedModelLoc)));
+            // Build default parts map per facing direction from the already-baked models
+            var defaultParts = new java.util.EnumMap<net.minecraft.core.Direction, net.minecraft.client.renderer.block.dispatch.BlockStateModelPart>(net.minecraft.core.Direction.class);
+            var dogBedBlock = DoggyBlocks.DOG_BED.get();
+            net.minecraft.client.renderer.block.dispatch.BlockStateModelPart missingPart = null;
 
-            BakedModel customModel = new DogBedModel(event.getModelBakery(), modelUnbaked, model, ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get());
+            for (var blockState : dogBedBlock.getStateDefinition().getPossibleStates()) {
+                var defaultModel = bakingResult.blockStateModels().get(blockState);
+                if (defaultModel == null) continue;
 
-            // Replace all valid block states
-            DoggyBlocks.DOG_BED.get().getStateDefinition().getPossibleStates().forEach(state -> {
-                modelRegistry.put(BlockModelShaper.stateToModelLocation(state), customModel);
-            });
+                // Extract the BlockStateModelPart from the default model
+                // SingleVariant has a single part; collect it
+                var tempParts = new java.util.ArrayList<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart>();
+                defaultModel.collectParts(net.minecraft.util.RandomSource.create(), tempParts);
+                if (!tempParts.isEmpty()) {
+                    net.minecraft.core.Direction facing = net.minecraft.core.Direction.NORTH;
+                    if (blockState.hasProperty(doggytalents.common.block.DogBedBlock.FACING)) {
+                        facing = blockState.getValue(doggytalents.common.block.DogBedBlock.FACING);
+                    }
+                    defaultParts.put(facing, tempParts.get(0));
+                    if (missingPart == null) missingPart = tempParts.get(0);
+                }
+            }
 
-            // Replace inventory model
-            modelRegistry.put(new ModelResourceLocation(resourceLocation, "inventory"), customModel);
-            
+            if (missingPart == null) {
+                DoggyTalentsNext.LOGGER.warn("No default dog bed model parts found, skipping custom model setup");
+                return;
+            }
+
+            // Create a ModelBaker for on-demand variant baking
+            var variantBaker = DogBedModel.createVariantBaker(modelBakery, textureGetter, missingPart);
+
+            // Create the DynamicBlockStateModel
+            var dynamicModel = new DogBedModel(
+                defaultParts,
+                resolvedModel,
+                variantBaker,
+                ConfigHandler.CLIENT.MAX_DOG_BED_MODEL_CACHE.get()
+            );
+
+            // Replace all dog bed block state models with the dynamic one
+            for (var blockState : dogBedBlock.getStateDefinition().getPossibleStates()) {
+                bakingResult.blockStateModels().put(blockState, dynamicModel);
+            }
+
+        } catch (Exception e) {
+            DoggyTalentsNext.LOGGER.warn("Error setting up DogBed custom model. Reverting to default textures...", e);
         }
-        catch(Exception e) {
-            DoggyTalentsNext.LOGGER.warn("Error modifying baking result. Reverting to default textures...");
-            e.printStackTrace();
-        }
-        
-
     }
 
     @SubscribeEvent
     public void onInputEvent(final MovementInputUpdateEvent event) {
-        if (!event.getInput().jumping)
+        if (!event.getInput().keyPresses.jump())
             return;
         var entity = event.getEntity();
         var vehicle = entity.getVehicle();
@@ -161,11 +186,11 @@ public class ClientEventHandler {
         }
         if (hotkey_use < 0) return;
 
-        if (player.getCooldowns().isOnCooldown(whistle)) return;
+        if (player.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(whistle))) return;
         
         var tag = ItemUtil.getTag(whistle_stack);
         if (tag == null) return;
-        var hotkeyarr = tag.getIntArray("hotkey_modes");
+        var hotkeyarr = tag.getIntArray("hotkey_modes").orElse(null);
         if (hotkeyarr == null) return;
         if (hotkeyarr.length != 4) return;
         
@@ -194,7 +219,7 @@ public class ClientEventHandler {
         // RenderSystem.enableBlend();
         // RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         // RenderSystem.setShaderColor(0.0F, 0.0F, 0.0F, 0.7F);
-        // //TODO Used when drawing outline of bounding box
+        // // Used when drawing outline of bounding box
         // RenderSystem.lineWidth(2.0F);
 
 
@@ -229,18 +254,18 @@ public class ClientEventHandler {
         }
     }
 
-    public static boolean vertifyBlockTexture(ResourceLocation loc) {
+    public static boolean vertifyBlockTexture(Identifier loc) {
         var path = getAbsoluteBlockTexture(loc);
         var res = Minecraft.getInstance().getResourceManager()
             .getResource(path);
         return res.isPresent();
     }
 
-    public static ResourceLocation getAbsoluteBlockTexture(ResourceLocation loc) {
+    public static Identifier getAbsoluteBlockTexture(Identifier loc) {
         return Util.getResource(loc.getNamespace(), "textures/" + loc.getPath() + ".png");
     }
 
-    public static boolean vertifyArmorTexture(ResourceLocation loc) {
+    public static boolean vertifyArmorTexture(Identifier loc) {
         var res = Minecraft.getInstance().getResourceManager()
             .getResource(loc);
         return res.isPresent();
@@ -322,6 +347,14 @@ public class ClientEventHandler {
         
         return true;
     } 
+
+    @SubscribeEvent
+    public void onRenderGuiLayer(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Pre event) {
+        if (!event.getName().equals(net.neoforged.neoforge.client.gui.VanillaGuiLayers.VEHICLE_HEALTH)) return;
+        if (doggytalents.client.DTNWolfMountCustomGuiOverlay.onRenderVehicleHealth(event.getGuiGraphics(), null)) {
+            event.setCanceled(true);
+        }
+    }
 
     public static boolean shouldRenderAnimDebugNametag(Dog dog) {
         var mc = Minecraft.getInstance();

@@ -24,7 +24,7 @@ public abstract class ToolAction extends TriggerableAction {
 
     @Override
     public void onStop() {
-        //TODO reset hotslot.
+        // future: reset hotslot after use
     }
 
     public abstract boolean shouldUse(ItemStack stack);

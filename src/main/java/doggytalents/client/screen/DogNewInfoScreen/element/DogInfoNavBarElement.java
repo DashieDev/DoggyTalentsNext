@@ -12,7 +12,7 @@ import doggytalents.client.screen.framework.UIAction;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -72,7 +72,17 @@ public class DogInfoNavBarElement extends AbstractElement {
 
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public boolean isMouseOver(double x, double y) {
+        // The declared bounds only cover the right half of the centered buttons.
+        // Delegate to children so that all buttons are hittable regardless of X.
+        for (var child : children()) {
+            if (child.isMouseOver(x, y)) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
     }
 
 

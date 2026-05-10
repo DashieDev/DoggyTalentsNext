@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 
@@ -19,11 +19,11 @@ public class BerserkerModeGoal extends NearestAttackableTargetGoal<Mob> {
     private final Dog dog;
 
     public BerserkerModeGoal(Dog dog) {
-        super(dog, Mob.class, false , (e) -> {
+        super(dog, Mob.class, false , (e, level) -> {
             if (targetingOwnerCheck(dog, e))
                 return true;
             if (!(e instanceof Enemy)) return false;
-            
+
             return true;
         });
         this.dog = dog;

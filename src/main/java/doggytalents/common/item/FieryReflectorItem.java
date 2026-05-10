@@ -17,18 +17,17 @@ public class FieryReflectorItem extends AccessoryItem {
 
     public FieryReflectorItem(Supplier<? extends Accessory> type, Properties properties) {
         super(type, properties);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
         var desc_id = "item.doggytalents.divine_retribution.description";
-        components.add(Component.translatable(desc_id).withStyle(
+        components.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var desc_id2 = "item.doggytalents.divine_retribution.description2";
-        components.add(Component.translatable(desc_id2).withStyle(
+        components.accept(Component.translatable(desc_id2).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

@@ -11,7 +11,6 @@ public class MainPanelSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        // TODO Auto-generated method stub
         return MainTab.MAIN;
     }
 

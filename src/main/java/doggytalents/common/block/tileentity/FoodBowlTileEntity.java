@@ -12,6 +12,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.effect.MobEffects;
@@ -54,21 +56,21 @@ public class FoodBowlTileEntity extends PlacedTileEntity implements MenuProvider
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.loadAdditional(compound, prov);
-        this.inventory.deserializeNBT(prov, compound);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.inventory.deserialize(input);
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.saveAdditional(compound, prov);
-        compound.merge(this.inventory.serializeNBT(prov));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        this.inventory.serialize(output);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
         if (level == null)
             return;
-        if (level.isClientSide)
+        if (level.isClientSide())
             return; 
         if (!(blockEntity instanceof FoodBowlTileEntity bowl)) {
             return;

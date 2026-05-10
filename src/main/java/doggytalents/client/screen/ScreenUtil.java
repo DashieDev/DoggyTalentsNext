@@ -2,7 +2,7 @@ package doggytalents.client.screen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 
@@ -39,12 +39,12 @@ public class ScreenUtil {
         return list;
     }
 
-    public static void renderEntityInInventoryFollowsMouse(GuiGraphics graphics, int dog_mX, int dog_mY, int size, float lookX, float lookY, AbstractDog dog) {
+    public static void renderEntityInInventoryFollowsMouse(GuiGraphicsExtractor graphics, int dog_mX, int dog_mY, int size, float lookX, float lookY, AbstractDog dog) {
         dog_mY -= size/2;
         var inflated_size = size + 60;
         lookX = dog_mX - lookX;
         lookY = dog_mY - lookY;
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, dog_mX - inflated_size/2, dog_mY - inflated_size/2,
+        InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, dog_mX - inflated_size/2, dog_mY - inflated_size/2,
             dog_mX + inflated_size/2, dog_mY + inflated_size/2, size, 
             0.0625F, lookX, lookY, dog);
     }

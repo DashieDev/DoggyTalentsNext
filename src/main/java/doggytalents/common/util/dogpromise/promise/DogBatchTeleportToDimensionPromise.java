@@ -21,7 +21,7 @@ import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ticket.ChunkTicketManager;
 import net.neoforged.neoforge.common.world.chunk.ForcedChunkManager;
@@ -98,10 +98,10 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
     }
 
     private boolean allChunkInvoledAtTargetIsLoaded(ServerLevel target, BlockPos ownerPos) {
-        var center = new ChunkPos(ownerPos);
+        var center = ChunkPos.containing(ownerPos);
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
-                if (!target.getChunkSource().hasChunk(center.x + i, center.z + j)) 
+                if (!target.getChunkSource().hasChunk(center.x() + i, center.z() + j)) 
                     return false;
             }
         }
@@ -112,7 +112,7 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         if (!dogValidator.test(dog0)) return;
 
         dog0.authorizeChangeDimension();
-        dog0.changeDimension(getDogTransition(targetLevel, dog0, pos));
+        dog0.teleport(getDogTransition(targetLevel, dog0, pos));
     }
 
     @Override
@@ -127,18 +127,17 @@ public class DogBatchTeleportToDimensionPromise extends AbstractPromise {
         for (var dog : dogs) {
             if (!dog.isDoingFine())
                 continue;
-            var chunkpos = new ChunkPos(dog.blockPosition());
+            var chunkpos = ChunkPos.containing(dog.blockPosition());
             this.accquireChunk(this.origin, chunkpos);
         }
     }
 
-    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
-        return new DimensionTransition(level, 
-            Vec3.atBottomCenterOf(safePos), 
-            Vec3.ZERO, 
+    private static TeleportTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new TeleportTransition(level,
+            Vec3.atBottomCenterOf(safePos),
+            Vec3.ZERO,
             dog.getYRot(), dog.getXRot(),
-            false,
-            DimensionTransition.DO_NOTHING);
+            TeleportTransition.DO_NOTHING);
     }
 
     // private static class DogTeleporter implements ITeleporter {

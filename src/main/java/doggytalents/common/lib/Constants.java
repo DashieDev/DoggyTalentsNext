@@ -1,7 +1,7 @@
 package doggytalents.common.lib;
 
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class Constants {
 
@@ -12,13 +12,13 @@ public class Constants {
     public static final String VANILLA_NAME = "Minecraft";
 
     // Network
-    public static final ResourceLocation CHANNEL_NAME = Util.getResource("channel");
+    public static final Identifier CHANNEL_NAME = Util.getResource("channel");
     public static final String PROTOCOL_VERSION = Integer.toString(3);
 
     // Storage
-    public static final String STORAGE_DOG_RESPAWN = MOD_ID + "DeadDogs";
-    public static final String STORAGE_DOG_LOCATION = MOD_ID + "DogLocations";
-    public static final String STORAGE_DOG_LOCATION_OLD = "dog_locations";
+    public static final String STORAGE_DOG_RESPAWN = "dead_dogs";
+    public static final String STORAGE_DOG_LOCATION = "dog_locations_dtn";
+    public static final String STORAGE_DOG_LOCATION_OLD = "minecraft:dog_locations";
 
     public static final int OPERATOR_PERMISSION = 4;
 

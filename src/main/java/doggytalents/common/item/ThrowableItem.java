@@ -11,7 +11,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -63,12 +62,12 @@ public class ThrowableItem extends Item implements IThrowableItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemStackIn = playerIn.getItemInHand(handIn);
 
-        worldIn.playSound((Player)null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.NEUTRAL, 0.5F, 0.4F / (worldIn.random.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound((Player)null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.NEUTRAL, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
 
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             ItemStack stack = itemStackIn.copy();
             stack.setCount(1);
             ItemEntity entityitem = new ItemEntity(playerIn.level(), playerIn.getX(), (playerIn.getY() - 0.30000001192092896D) + playerIn.getEyeHeight(), playerIn.getZ(), stack);
@@ -82,7 +81,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
             itemStackIn.shrink(1);
 
         playerIn.awardStat(Stats.ITEM_USED.get(this));
-        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, itemStackIn);
+        return InteractionResult.SUCCESS; // consumed stack: itemStackIn);
 
     }
 
@@ -104,7 +103,7 @@ public class ThrowableItem extends Item implements IThrowableItem {
     }
 
     public void setThrowableHeading(ItemEntity entityItem, double x, double y, double z, float velocity, float inaccuracy) {
-        Vec3 vec3d = (new Vec3(x, y, z)).normalize().add(entityItem.level().random.nextGaussian() * 0.0075F * inaccuracy, entityItem.level().random.nextGaussian() * 0.0075F * inaccuracy, entityItem.level().random.nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
+        Vec3 vec3d = (new Vec3(x, y, z)).normalize().add(entityItem.level().getRandom().nextGaussian() * 0.0075F * inaccuracy, entityItem.level().getRandom().nextGaussian() * 0.0075F * inaccuracy, entityItem.level().getRandom().nextGaussian() * 0.0075F * inaccuracy).scale(velocity);
         entityItem.setDeltaMovement(vec3d);
         float f = Mth.sqrt((float) (vec3d.x * vec3d.x + vec3d.z * vec3d.z));
         entityItem.setYRot((float)(Mth.atan2(vec3d.x, vec3d.z) * (180F / (float)Math.PI)));

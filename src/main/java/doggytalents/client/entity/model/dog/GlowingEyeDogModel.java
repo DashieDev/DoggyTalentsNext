@@ -6,8 +6,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -36,16 +36,10 @@ public class GlowingEyeDogModel extends DogModel {
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot,
             float headPitch) {
         super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
-        this.glowingEyes.copyFrom(this.head);
-        this.realGlowingEyes.copyFrom(this.realHead);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay,
-            int color_overlay) {
+        this.glowingEyes.loadPose(this.head.storePose());
+        this.realGlowingEyes.loadPose(this.realHead.storePose());
         this.glowingEyes.visible = false;
         this.realGlowingEyes.visible = false;
-        super.renderToBuffer(stack, vertex_consumer, light, overlay, color_overlay);
     }
 
     @Override

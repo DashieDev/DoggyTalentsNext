@@ -16,7 +16,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.StatsSyncData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import doggytalents.common.network.PacketDistributor;
 
@@ -98,7 +98,7 @@ public class StatsView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         // var font = getScreen().getMinecraft().font;
         // font.draw(stack, "stats", this.getRealX()+3, this.getRealY() + 40, 0xffffffff);
         

@@ -36,7 +36,7 @@ public class RiceMillMenu extends AbstractContainerMenu {
         this(containerId, inv, new SimpleContainer(RiceMillBlockEntity.TOTOAL_SLOTS), new SimpleContainerData(RiceMillBlockEntity.TOTOAL_DATA_SLOT));
         var player = inv.player;
         var level = player.level();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             findClientMill(level, millPos);
         }
     }
@@ -73,7 +73,6 @@ public class RiceMillMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(millContainer, RiceMillBlockEntity.BOWL_SLOT, 58, 35) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    // TODO Auto-generated method stub
                     return stack.is(Items.BOWL);
                 }
             });

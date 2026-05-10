@@ -15,6 +15,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.scores.Team;
 
 public class DogAllyCheck {
+
+    @Nullable
+    private static UUID getTamableOwnerUUID(TamableAnimal animal) {
+        var ref = animal.getOwnerReference();
+        return ref != null ? ref.getUUID() : null;
+    }
     
     public static boolean isAlliedToDog(Dog dog, Entity entity) {
         return isAlliedToDog(dog, entity, dog.getOwner());
@@ -51,7 +57,7 @@ public class DogAllyCheck {
             && owner.isAlliedTo(entity))
             return true;
 
-        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
+        if (entity instanceof TamableAnimal other_dog && getTamableOwnerUUID(other_dog) != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
 
@@ -69,7 +75,7 @@ public class DogAllyCheck {
     }
 
     private static boolean checkOwnerNotAvailable(Dog dog, Entity entity, UUID owner_uuid) {        
-        if (entity instanceof TamableAnimal other_dog && other_dog.getOwnerUUID() != null) {
+        if (entity instanceof TamableAnimal other_dog && getTamableOwnerUUID(other_dog) != null) {
             if (checkSameOwnerUUIDWithDog(owner_uuid, other_dog))
                 return true;
             return checkSameTeamWithOfflineOwnerTamable(dog, other_dog);
@@ -94,7 +100,7 @@ public class DogAllyCheck {
     }
 
     private static Optional<Team> findOwnerTeam(TamableAnimal other_dog) {
-        var uuid = other_dog.getOwnerUUID();
+        var uuid = getTamableOwnerUUID(other_dog);
         if (uuid == null)
             return Optional.empty();
         var server = other_dog.level().getServer();
@@ -123,7 +129,7 @@ public class DogAllyCheck {
     }
 
     private static boolean checkSameOwnerUUIDWithDog(UUID dog_owner_uuid, TamableAnimal entity) {
-        var other_owner_uuid = entity.getOwnerUUID();
+        var other_owner_uuid = getTamableOwnerUUID(entity);
         if (other_owner_uuid == null)
             return false;
         return dog_owner_uuid.equals(other_owner_uuid);
@@ -136,7 +142,7 @@ public class DogAllyCheck {
         if (entity instanceof Player) {
             return true;
         } else if (entity instanceof TamableAnimal other_dog) {
-            return other_dog.getOwnerUUID() != null;
+            return getTamableOwnerUUID(other_dog) != null;
         } else {
             return false;
         }

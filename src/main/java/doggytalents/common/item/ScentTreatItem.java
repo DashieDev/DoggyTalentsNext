@@ -33,9 +33,9 @@ public class ScentTreatItem extends Item {
         var pos = context.getClickedPos();
         var state = level.getBlockState(pos);
 
-        if (handleClearScent(state, context).shouldSwing())
+        if (handleClearScent(state, context).consumesAction())
             return InteractionResult.SUCCESS;
-        if (handleAddScent(state, context).shouldSwing())
+        if (handleAddScent(state, context).consumesAction())
             return InteractionResult.SUCCESS;
 
         return InteractionResult.FAIL;
@@ -50,7 +50,7 @@ public class ScentTreatItem extends Item {
         if (!tag.contains(SCENT_BLOCK_ID))
             return InteractionResult.PASS;
 
-        if (context.getLevel().isClientSide)
+        if (context.getLevel().isClientSide())
             return InteractionResult.SUCCESS;
         
         ItemUtil.clearTag(stack);
@@ -67,7 +67,7 @@ public class ScentTreatItem extends Item {
         if (tag.contains(SCENT_BLOCK_ID))
             return InteractionResult.PASS;
 
-        if (context.getLevel().isClientSide)
+        if (context.getLevel().isClientSide())
             return InteractionResult.SUCCESS;
 
         var block = state.getBlock();
@@ -80,10 +80,10 @@ public class ScentTreatItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        var desc_id = this.getDescriptionId() + ".description";
+        components.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var tag = ItemUtil.getTag(stack);
@@ -92,9 +92,9 @@ public class ScentTreatItem extends Item {
         var block = NBTUtil.getRegistryValue(tag, SCENT_BLOCK_ID, BuiltInRegistries.BLOCK);
         if (block == null)
             return;
-        components.add(Component.translatable(this.getDescriptionId() + ".scented_block")
+        components.accept(Component.translatable(this.getDescriptionId() + ".scented_block")
             .withStyle(Style.EMPTY.withColor(0xffffea2e).withBold(true)));
-        components.add(
+        components.accept(
             Component.translatable(block.asItem().getDescriptionId()).withStyle(
                 Style.EMPTY.withItalic(true).withColor(0xff6fe86b)
             )

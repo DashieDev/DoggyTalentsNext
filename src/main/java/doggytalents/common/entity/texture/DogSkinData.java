@@ -38,18 +38,18 @@ public class DogSkinData {
     }
     
     public static DogSkinData readFromTag(CompoundTag compound) {
-        if (compound.contains("doggytalents_dog_skin", Tag.TAG_COMPOUND)) {
-            return readNewer(compound.getCompound("doggytalents_dog_skin"));    
+        if (compound.contains("doggytalents_dog_skin")) {
+            return readNewer(compound.getCompoundOrEmpty("doggytalents_dog_skin"));    
         }
-        if (compound.contains("customSkinHash", Tag.TAG_STRING)) {
-            return readFromString(compound.getString("customSkinHash"));
+        if (compound.contains("customSkinHash")) {
+            return readFromString(compound.getStringOr("customSkinHash", ""));
         }
         return DogSkinData.NULL;
     }
 
     private static DogSkinData readNewer(CompoundTag tag) {
-        int version_int = tag.getInt("version");
-        String hash = tag.getString("hash");
+        int version_int = tag.getIntOr("version", 0);
+        String hash = tag.getStringOr("hash", "");
         return new DogSkinData(hash, Version.fromId(version_int));
     }
 

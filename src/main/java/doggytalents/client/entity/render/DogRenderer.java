@@ -28,34 +28,35 @@ import net.minecraft.ChatFormatting;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
 
-public class DogRenderer extends MobRenderer<Dog, DogModel> {
+public class DogRenderer extends MobRenderer<Dog, DogRenderState, DogModel> {
 
     private static final int TXTCLR_DIFFOWNER = 0x574a4a4a;
-    
+
     private static final int TXTCLR_HEALTH_70_100 = 0x0aff43;
     private static final int TXTCLR_HEALTH_30_70 = 0xeffa55;
     private static final int TXTCLR_HEALTH_0_30 = 0xff3636;
     private static final int TXTCLR_HEALTH_BKG = 0x4a4a4a;
-    
+
     private static final int TXCLR_SEPERATOR = 0xffa1a1a1;
 
     private DogModel defaultModel;
@@ -67,61 +68,86 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
 //        this.addLayer(new DogAccessoryLayer(this, ctx));
         DogModelRegistry.resolve(ctx);
         this.defaultModel = DogModelRegistry.getDogModelHolder("default").getValue();
-        for (LayerFactory<Dog, DogModel> layer : CollarRenderManager.getLayers()) {
+        for (LayerFactory<DogRenderState, DogModel> layer : CollarRenderManager.getLayers()) {
             this.addLayer(layer.createLayer(this, ctx));
         }
-        this.originalDogLayers = new ArrayList<>(this.layers);
-        
+
         this.nullDogModel = new NullDogModel(ctx.bakeLayer(ClientSetup.DOG_NULL));
         this.model = this.nullDogModel;
     }
 
     @Override
-    protected float getBob(Dog livingBase, float partialTicks) {
-        return super.getBob(livingBase, partialTicks);
+    public DogRenderState createRenderState() {
+        return new DogRenderState();
     }
 
     @Override
-    public void render(Dog dog, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-        
-        var skin = dog.getClientSkin();
+    public void extractRenderState(Dog dog, DogRenderState state, float partialTick) {
+        super.extractRenderState(dog, state, partialTick);
+        state.dog = dog;
+        state.walkAnimSpeed = dog.walkAnimation.speed(partialTick);
+        state.walkAnimPos = dog.walkAnimation.position(partialTick);
+        state.ageInTicksForAnim = dog.tickCount + partialTick;
+        state.headYawForAnim = Mth.wrapDegrees(
+            Mth.rotLerp(partialTick, dog.yHeadRotO, dog.yHeadRot)
+            - state.bodyRot
+        );
+        state.headPitchForAnim = Mth.lerp(partialTick, dog.xRotO, dog.getXRot());
 
+        // Capture skin at extraction time — dog skin may be temporarily changed for
+        // skin preview rendering and restored before submit() is called.
+        var skin = dog.getClientSkin();
+        state.activeSkin = skin;
+        state.skinTexture = DogTextureManager.INSTANCE.getTexture(dog);
         if (skin.useCustomModel()) {
-            this.model = dog.getClientSkin().getCustomModel().getValue();
+            this.model = skin.getCustomModel().getValue();
         } else {
             this.model = this.defaultModel;
         }
 
-        this.model.resetWetShade();
-        if (dog.isDogSoaked() && !dog.dogVariant().preventWetShade()) {
-            float f = dog.getShadingWhileWet(partialTicks);
-            this.model.setWetShade(f);
+        if (this.model != null) {
+            this.model.resetWetShade();
+            if (dog.isDogSoaked() && !dog.dogVariant().preventWetShade()) {
+                float f = dog.getShadingWhileWet(partialTick);
+                this.model.setWetShade(f);
+            }
         }
-
-        if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
-            MobRenderer_render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-        } else
-            super.render(dog, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-
-        this.model = this.nullDogModel;
-    }
-
-    private Component getNameUnknown(Dog dogIn) {
-        return Component.translatable(dogIn.getOwnerUUID() != null ? "entity.doggytalents.dog.unknown_owner" : "entity.doggytalents.dog.untamed");
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Dog dogIn) {
-        return DogTextureManager.INSTANCE.getTexture(dogIn);
+    public void submit(DogRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        // Restore model based on skin captured at extraction time
+        var skin = state.activeSkin;
+        if (skin != null) {
+            if (skin.useCustomModel()) {
+                this.model = skin.getCustomModel().getValue();
+            } else {
+                this.model = this.defaultModel;
+            }
+        }
+        if (this.model == null) {
+            this.model = this.nullDogModel;
+        }
+        super.submit(state, poseStack, submitNodeCollector, camera);
     }
 
     @Override
-    protected void scale(Dog dogIn, PoseStack matrixStackIn, float partialTickTime) {
-        float size = dogIn.isBaby() ? 0.5f 
+    public Identifier getTextureLocation(DogRenderState state) {
+        if (state.skinTexture != null) {
+            return state.skinTexture;
+        }
+        return doggytalents.common.lib.Resources.ENTITY_WOLF;
+    }
+
+    @Override
+    protected void scale(DogRenderState state, PoseStack matrixStackIn) {
+        if (state.dog == null) return;
+        Dog dogIn = state.dog;
+        float size = dogIn.isBaby() ? 0.5f
             : dogIn.getDogSize().getScale();
         this.shadowRadius = size * 0.5F;
-        var skin = dogIn.getClientSkin();
-        if (skin.useCustomModel()) {
+        var skin = state.activeSkin;
+        if (skin != null && skin.useCustomModel()) {
             var model = skin.getCustomModel().getValue();
             if (model.hasDefaultScale()) {
                 var default_scale = model.getDefaultScale();
@@ -132,149 +158,42 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     }
 
     @Override
-    protected boolean shouldShowName(Dog dog) {
-        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get() 
+    protected boolean shouldShowName(Dog dog, double distanceToCameraSq) {
+        if (ConfigHandler.CLIENT.ALWAYS_RENDER_DOG_NAME.get()
             && !dog.isVehicle() && dog.hasCustomName())
             return true;
-        return super.shouldShowName(dog);
+        return super.shouldShowName(dog, distanceToCameraSq);
     }
 
     @Override
-    protected void renderNameTag(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, int packedLight, float pTicks) {
-        double d0 = this.entityRenderDispatcher.distanceToSqr(dog);
+    protected void setupRotations(DogRenderState state, PoseStack poseStack, float bodyRot, float entityScale) {
+        Dog dog = state.dog;
+        if (dog != null && dog.deathTime <= 0 && dog.dogWalkAnimation.isBanking()) {
+            // Bank logic applied separately below
+        }
 
-        var player = Minecraft.getInstance().player;
-        boolean renderDiffOwnerName = 
-            ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_DIFFOWNER_NAME_DIFFERENT)
-            && dog != this.entityRenderDispatcher.crosshairPickEntity;
-        boolean isDiffOwner = 
-            (player == null || !Objects.equals(player.getUUID(), dog.getOwnerUUID()));
+        super.setupRotations(state, poseStack, bodyRot, entityScale);
 
-        if (isDiffOwner && ConfigHandler.CLIENT.DONT_RENDER_DIFFOWNER_NAME.get())
-            return;
-
-        if (net.neoforged.neoforge.client.ClientHooks.isNameplateInRenderDistance(dog, d0))
-            renderMainName(dog, text, stack, buffer, packedLight, renderDiffOwnerName && isDiffOwner, isDiffOwner, !isDiffOwner && WhistleItem.isHoldingDutyWhistle(player));
-        if (d0 <= 64 * 64)
-            renderExtraInfo(dog, text, stack, buffer, packedLight, d0, renderDiffOwnerName && isDiffOwner, isDiffOwner);
-        
+        if (dog != null && dog.deathTime <= 0 && dog.dogWalkAnimation.isBanking()) {
+            float partialTick = state.partialTick;
+            var bank_value = -dog.dogWalkAnimation.bankValue(partialTick);
+            var max_bank = dog.dogWalkAnimation.maxBankZRot();
+            poseStack.mulPose(Axis.ZP.rotationDegrees(bank_value * max_bank));
+        }
     }
 
-    private void renderMainName(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int light, boolean diffOwnerRender, boolean isDiffOwner, boolean renderDogOnDuty) {
-
-        text = modifyMainText(dog, text, diffOwnerRender, renderDogOnDuty);
-
-        renderDogText(dog, text, 0, 0.025f, stack, buffer, light, diffOwnerRender, isDiffOwner);
+    private Component getNameUnknown(Dog dogIn) {
+        return Component.translatable(dogIn.getOwnerUUID() != null ? "entity.doggytalents.dog.unknown_owner" : "entity.doggytalents.dog.untamed");
     }
 
     private int getBkgTextColorWithOpacity(boolean diffOwnerRender) {
         final int color = 0x0;
         float bkg_opacity = 0;
-        if (!diffOwnerRender) 
+        if (!diffOwnerRender)
             bkg_opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-        
+
         int alpha = (int)(bkg_opacity * 255.0F) << 24;
         return alpha | color;
-    }
-
-    private void renderDogText(Dog dog, Component text, double y_offset_from_default, float scale,
-        PoseStack stack, MultiBufferSource buffer, int light,
-        boolean render_diffowner, boolean is_diffowner) {
-
-        boolean dog_not_sneaking = !dog.isDiscrete();
-        double render_y_offset = dog.getBbHeight() + 0.5F + y_offset_from_default;
-
-        stack.pushPose();
-
-        stack.translate(0.0D, (double)render_y_offset, 0.0D);
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-        stack.scale(scale, -scale, scale);
-        
-        var pose = stack.last().pose();
-        var font = this.getFont();
-        float tX = (float)(-font.width(text) / 2);
-        float tY = 0;
-        
-        boolean bkg_see_through = dog_not_sneaking && !is_diffowner
-            && ConfigHandler.CLIENT.SHOW_DOG_NAME_THRU_WALL.get();
-        var bkg_display_mode = bkg_see_through ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL;
-        int bkg_color = getBkgTextColorWithOpacity(render_diffowner);
-        int bkg_txtcolor = 0x20FFFFFF;
-        font.drawInBatch(text, tX, tY, bkg_txtcolor, false, pose, buffer, bkg_display_mode, bkg_color, light);
-        
-        //for 1.21 to resolve text conflict, no effect on below versions.
-        stack.translate(0.0D, (double)0.0D, 0.1D);
-
-        boolean draw_fg_text = dog_not_sneaking;
-        if (draw_fg_text) {
-            var fg_display_mode = Font.DisplayMode.NORMAL;
-            int fg_color = 0x0;
-            int fg_txtcolor = 0xFFFFFFFF;
-            font.drawInBatch(text, tX, tY, fg_txtcolor, false, pose, buffer, fg_display_mode, fg_color, light);
-        }
-
-        stack.popPose();
-    }
-
-    private void renderExtraInfo(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
-        
-        renderInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
-        renderSecondaryInfoDogText(dog, text, stack, buffer, packedLight, d0, diffOwnerRender, isDiffOwner);
-    }
-
-    private void renderInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
-        
-        boolean renderHealthInNameActivated = 
-            this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
-            && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
-        final String seperator = ConfigHandler.CLIENT.DOG_INFO_SEPERATOR.get();
-        final Component seperator_c1 = createC1WithColor(seperator, TXCLR_SEPERATOR);
-
-        var extra_info_c1 = Component.translatable(dog.getMode().getTip());
-        
-        var hunger_c1_optional = getHungerC1(dog, renderHealthInNameActivated);
-        var gender_c1_optional = getGenderC1(dog);
-
-        if (hunger_c1_optional.isPresent()) {
-            extra_info_c1.append(seperator_c1);
-            var hunger_c1 = hunger_c1_optional.get();
-            extra_info_c1.append(hunger_c1);
-        }
-
-        if (gender_c1_optional.isPresent()) {
-            extra_info_c1.append(seperator_c1);
-            var gender_c1 = gender_c1_optional.get();
-            extra_info_c1.append(gender_c1);
-        }
-
-        if (diffOwnerRender) {
-            extra_info_c1 = createC1WithColor(extra_info_c1, TXTCLR_DIFFOWNER);
-        }
-
-        renderDogText(dog, extra_info_c1, 0.12f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
-
-    }
-
-    private void renderSecondaryInfoDogText(Dog dog, Component text, PoseStack stack, MultiBufferSource buffer, 
-        int packedLight, double d0, boolean diffOwnerRender, boolean isDiffOwner) {
-
-        if (d0 > 5 * 5)
-            return;
-        var camera_entity = this.entityRenderDispatcher.camera.getEntity();
-        if (!camera_entity.isShiftKeyDown())
-            return;
-        if (dog.getOwner() == camera_entity)
-            return;
-
-        var ownerC0 = dog.getOwnersName().orElseGet(() -> this.getNameUnknown(dog));
-        if (diffOwnerRender) {
-            ownerC0 = createC1WithColor(ownerC0, TXTCLR_DIFFOWNER);
-        }
-
-        renderDogText(dog, ownerC0, -0.25f, 0.01f, stack, buffer, packedLight, diffOwnerRender, isDiffOwner);
     }
 
     private Optional<Component> getHungerC1(Dog dog, boolean renderHealthInNameActivated) {
@@ -282,7 +201,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             return Optional.empty();
 
         final String hunger_format = ConfigHandler.CLIENT.DOG_INFO_HUNGER_FORMAT.get();
-        
+
         int hunger = 0;
         if (dog.isDefeated()) {
             hunger = -dog.getDogIncapValue();
@@ -290,7 +209,7 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             hunger = Mth.ceil(dog.getDogHunger());
         }
         var hunger_c1 = Component.literal(String.format(Locale.ROOT, hunger_format, hunger));
-        boolean hightlight_red = 
+        boolean hightlight_red =
             (dog.getDogHunger() <= 10 && renderHealthInNameActivated)
             || dog.isDefeated();
         if (hightlight_red) {
@@ -317,15 +236,15 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             if (dog.dogOnDuty())
                 text = createC1WithColor(text, 0xFFFF10F9);
             return text;
-        } 
+        }
 
         if (ClientEventHandler.shouldRenderAnimDebugNametag(dog)) {
             text = createC1WithColor(text, 0xffcda700);
             return text;
         }
 
-        boolean renderHealthInNameActive = 
-                this.entityRenderDispatcher.camera.getEntity().isShiftKeyDown()
+        boolean renderHealthInNameActive =
+                this.entityRenderDispatcher.camera.entity().isShiftKeyDown()
                 && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.RENDER_HEALTH_IN_NAME);
         if (renderHealthInNameActive) {
             text = colorTextWithHealth(dog, text);
@@ -367,133 +286,5 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
     private MutableComponent createC1WithColor(Component c1, int color) {
         return createC1WithColor(c1.getString(), color);
     }
-
-    //Super call Inlined without broastcasting any render event as an attempt to resolve render conflict, 
-    //if users opt for it.
-
-    private List<RenderLayer<Dog, DogModel>> originalDogLayers = List.of();
-
-     public void MobRenderer_render(Dog p_115455_, float p_115456_, float p_115457_, PoseStack p_115458_, MultiBufferSource p_115459_, int p_115460_) {
-        LivingEntityRenderer_render(p_115455_, p_115456_, p_115457_, p_115458_, p_115459_, p_115460_);
-    }
-    
-    public void LivingEntityRenderer_render(Dog p_115308_, float p_115309_, float p_115310_, PoseStack p_115311_, MultiBufferSource p_115312_, int p_115313_) {
-        //if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_))) return;
-        p_115311_.pushPose();
-        this.model.attackTime = this.getAttackAnim(p_115308_, p_115310_);
-  
-        boolean shouldSit = p_115308_.isPassenger() && (p_115308_.getVehicle() != null && p_115308_.getVehicle().shouldRiderSit());
-        this.model.riding = shouldSit;
-        this.model.young = p_115308_.isBaby();
-        float f = Mth.rotLerp(p_115310_, p_115308_.yBodyRotO, p_115308_.yBodyRot);
-        float f1 = Mth.rotLerp(p_115310_, p_115308_.yHeadRotO, p_115308_.yHeadRot);
-        float f2 = f1 - f;
-        if (shouldSit && p_115308_.getVehicle() instanceof LivingEntity) {
-           LivingEntity livingentity = (LivingEntity)p_115308_.getVehicle();
-           f = Mth.rotLerp(p_115310_, livingentity.yBodyRotO, livingentity.yBodyRot);
-           f2 = f1 - f;
-           float f3 = Mth.wrapDegrees(f2);
-           if (f3 < -85.0F) {
-              f3 = -85.0F;
-           }
-  
-           if (f3 >= 85.0F) {
-              f3 = 85.0F;
-           }
-  
-           f = f1 - f3;
-           if (f3 * f3 > 2500.0F) {
-              f += f3 * 0.2F;
-           }
-  
-           f2 = f1 - f;
-        }
-  
-        float f6 = Mth.lerp(p_115310_, p_115308_.xRotO, p_115308_.getXRot());
-        // if (isEntityUpsideDown(p_115308_)) {
-        //    f6 *= -1.0F;
-        //    f2 *= -1.0F;
-        // }
-  
-        // if (p_115308_.hasPose(Pose.SLEEPING)) {
-        //    Direction direction = p_115308_.getBedOrientation();
-        //    if (direction != null) {
-        //       float f4 = p_115308_.getEyeHeight(Pose.STANDING) - 0.1F;
-        //       p_115311_.translate((float)(-direction.getStepX()) * f4, 0.0F, (float)(-direction.getStepZ()) * f4);
-        //    }
-        // }
-  
-        float f7 = this.getBob(p_115308_, p_115310_);
-        this.setupRotations(p_115308_, p_115311_, f7, f, p_115310_, p_115308_.getScale());
-        p_115311_.scale(-1.0F, -1.0F, 1.0F);
-        this.scale(p_115308_, p_115311_, p_115310_);
-        p_115311_.translate(0.0F, -1.501F, 0.0F);
-        float f8 = 0.0F;
-        float f5 = 0.0F;
-        if (!shouldSit && p_115308_.isAlive()) {
-           f8 = p_115308_.walkAnimation.speed(p_115310_);
-           f5 = p_115308_.walkAnimation.position(p_115310_);
-           if (p_115308_.isBaby()) {
-              f5 *= 3.0F;
-           }
-  
-           if (f8 > 1.0F) {
-              f8 = 1.0F;
-           }
-        }
-  
-        this.model.prepareMobModel(p_115308_, f5, f8, p_115310_);
-        this.model.setupAnim(p_115308_, f5, f8, f7, f2, f6);
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean flag = this.isBodyVisible(p_115308_);
-        boolean flag1 = !flag && !p_115308_.isInvisibleTo(minecraft.player);
-        boolean flag2 = minecraft.shouldEntityAppearGlowing(p_115308_);
-        RenderType rendertype = this.getRenderType(p_115308_, flag, flag1, flag2);
-        if (rendertype != null) {
-           VertexConsumer vertexconsumer = p_115312_.getBuffer(rendertype);
-           int i = getOverlayCoords(p_115308_, this.getWhiteOverlayProgress(p_115308_, p_115310_));
-           this.model.renderToBuffer(p_115311_, vertexconsumer, p_115313_, i, flag1 ? 654311423 : -1);
-        }
-  
-        if (!p_115308_.isSpectator()) {
-           for(var renderlayer : this.originalDogLayers) {
-              renderlayer.render(p_115311_, p_115312_, p_115313_, p_115308_, f5, f8, p_115310_, f7, f2, f6);
-           }
-        }
-  
-        p_115311_.popPose();
-        if (this.shouldShowName(p_115308_)) {
-            this.renderNameTag(p_115308_, p_115308_.getDisplayName(), p_115311_, p_115312_, p_115313_, p_115310_);
-         }
-        //net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(p_115308_, this, p_115310_, p_115311_, p_115312_, p_115313_));
-    }
-
-    @Override
-    protected void setupRotations(Dog p_115317_, PoseStack p_115318_, float p_115319_, float p_115320_,
-            float p_115321_, float x) {
-        if (ConfigHandler.CLIENT.BLOCK_THIRD_PARTY_NAMETAG.get()) {
-            if (p_115317_.deathTime > 0) {
-                float f = ((float)p_115317_.deathTime + p_115321_ - 1.0F) / 20.0F * 1.6F;
-                f = Mth.sqrt(f);
-                if (f > 1.0F) {
-                   f = 1.0F;
-                }
-       
-                p_115318_.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees(p_115317_)));
-            } else
-            p_115318_.mulPose(Axis.YP.rotationDegrees(180.0F - p_115320_));
-        } else {
-            super.setupRotations(p_115317_, p_115318_, p_115319_, p_115320_, p_115321_, x);
-        }
-        
-        //Bank
-        if (p_115317_.deathTime <= 0 && p_115317_.dogWalkAnimation.isBanking())  {
-            var dog = p_115317_;
-            var bank_value = -dog.dogWalkAnimation.bankValue(p_115321_);
-            var max_bank = dog.dogWalkAnimation.maxBankZRot();
-            p_115318_.mulPose(Axis.ZP.rotationDegrees(bank_value * max_bank));
-        }
-    }
-
 
 }

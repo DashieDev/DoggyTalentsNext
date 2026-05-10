@@ -14,7 +14,7 @@ public class EntityMixin {
     @Inject(at = @At("HEAD"),  method = "isAlliedTo", cancellable = true)
     protected void dtn__isAlliedTo(Entity entity, CallbackInfoReturnable<Boolean> info) {
         var self = (Entity)(Object)this;
-        if (self.level().isClientSide)
+        if (self.level().isClientSide())
             return;
         boolean result = DogAllyCheck.onEntityIsAlliedToServer(self, entity);
         if (result)

@@ -18,7 +18,6 @@ public abstract class BaseDogPlushie extends Entity {
 
     public BaseDogPlushie(EntityType<?> type, Level level) {
         super(type, level);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
@@ -45,8 +44,7 @@ public abstract class BaseDogPlushie extends Entity {
         return true;
     }
     
-    @Override
-    public boolean isInvulnerableTo(DamageSource source) {
+    private boolean isInvulnerableToInternal(DamageSource source) {
         if (this.isRemoved())
             return true;
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
@@ -77,33 +75,33 @@ public abstract class BaseDogPlushie extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
-        if (this.isInvulnerableTo(source))
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level, DamageSource source, float damage) {
+        if (this.isInvulnerableToInternal(source))
             return false;
-        mayDropSelf(source);
+        mayDropSelf(level, source);
         this.discard();
         return true;
     }
 
-    private void mayDropSelf(DamageSource source) {
+    private void mayDropSelf(net.minecraft.server.level.ServerLevel level, DamageSource source) {
         var entity = source.getEntity();
         if (!(entity instanceof Player player))
             return;
         if (player.getAbilities().instabuild)
             return;
-        
+
         var drop = this.getDogPlusieItemDrop();
         if (!drop.isEmpty()) {
-            this.spawnAtLocation(drop);
+            this.spawnAtLocation(level, drop);
         }
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public InteractionResult interact(Player player, InteractionHand hand, net.minecraft.world.phys.Vec3 hitPos) {
         var stack = player.getItemInHand(hand);
         var item = stack.getItem();
         if (item == Items.TORCH) {
-            if (!this.level().isClientSide && player.isShiftKeyDown())
+            if (!this.level().isClientSide() && player.isShiftKeyDown())
                 this.setYRot(this.getYRot() + 45);
             return InteractionResult.SUCCESS;
         }
@@ -111,7 +109,7 @@ public abstract class BaseDogPlushie extends Entity {
     }
 
     private void pushOtherPlush() {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         var list = this.level().getEntities(EntityTypeTest.forClass(BaseDogPlushie.class), this.getBoundingBox(), e -> true);
         for (var e : list)

@@ -3,7 +3,7 @@ package doggytalents.api.registry;
 import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 
 public class AccessoryType {
 

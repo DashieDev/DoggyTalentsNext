@@ -28,11 +28,8 @@ public class NavBarButton extends TextOnlyButton {
     }
 
     @Override
-    public void onPress() {
-        Store.get(screen)
-        //dispatch all to notify all slice of changetab so they can do setup before
-        //appearing in the tab.
-        .dispatchAll(
+    public void onPress(net.minecraft.client.input.InputWithModifiers input) {
+        Store.get(screen).dispatchAll(
             ActiveTabSlice.UIActionCreator(dog, tab, CommonUIActionTypes.CHANGE_TAB)
         );
     }

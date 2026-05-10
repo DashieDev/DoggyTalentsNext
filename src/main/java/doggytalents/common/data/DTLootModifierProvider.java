@@ -14,8 +14,8 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -60,10 +60,10 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
     private RiceFromGrass createGrassRiceModifer() {
         var correct_id_codition = 
-            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().location())
+            LootTableIdCondition.builder(Blocks.SHORT_GRASS.getLootTable().orElseThrow().identifier())
             .build();
         var not_shear_condtion = 
-            MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS))
+            MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(net.minecraft.core.registries.Registries.ITEM), Items.SHEARS))
             .invert()
             .build();
         var random_condition =
@@ -74,7 +74,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
             not_shear_condtion,
             random_condition
         };
-        return new RiceFromGrass(conditions);
+        return new RiceFromGrass(conditions, 0);
     }
 
     private SoyFromZombies createSoyFromZombiesModifier() {
@@ -83,16 +83,18 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
                 .hasProperties(
                     EntityTarget.ATTACKER, 
                     EntityPredicate.Builder.entity().of(
-                        DoggyEntityTypes.DOG.get())
+                        this.registries.lookupOrThrow(net.minecraft.core.registries.Registries.ENTITY_TYPE), DoggyEntityTypes.DOG.get())
                 )
                 .build();
-        var drop_soy_condition =
-            LootItemEntityPropertyCondition
-                .hasProperties(
-                    EntityTarget.THIS, 
-                    EntityPredicate.Builder.entity().of(DoggyTags.DROP_SOY_WHEN_DOG_KILL)
-                )
-                .build();
+        // Tag-based conditions fail at parse time in 26.1.2 (tags not yet loaded).
+        // Use AnyOfCondition with the individual entity types from the tag instead.
+        var lookup = this.registries.lookupOrThrow(net.minecraft.core.registries.Registries.ENTITY_TYPE);
+        var drop_soy_condition = net.minecraft.world.level.storage.loot.predicates.AnyOfCondition.anyOf(
+            LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(lookup, net.minecraft.world.entity.EntityType.ZOMBIE)),
+            LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(lookup, net.minecraft.world.entity.EntityType.CREEPER)),
+            LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(lookup, net.minecraft.world.entity.EntityType.SKELETON)),
+            LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(lookup, net.minecraft.world.entity.EntityType.SPIDER))
+        ).build();
         var random_condition = 
             LootItemRandomChanceCondition.randomChance(SOY_FROM_ZOMBIE_DROP_CHANCE)
             .build();
@@ -101,7 +103,7 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
             drop_soy_condition,
             random_condition
         };
-        return new SoyFromZombies(conditions);
+        return new SoyFromZombies(conditions, 0);
     }
 
     public static class RiceFromGrass extends LootModifier {
@@ -111,8 +113,8 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
         public static MapCodec<LootModifier> getCodec() { return CODEC; }
 
-        protected RiceFromGrass(LootItemCondition[] conditionsIn) {
-            super(conditionsIn);
+        protected RiceFromGrass(LootItemCondition[] conditionsIn, int priority) {
+            super(conditionsIn, priority);
         }
 
         @Override
@@ -136,8 +138,8 @@ public class DTLootModifierProvider extends GlobalLootModifierProvider {
 
         public static MapCodec<LootModifier> getCodec() { return CODEC; }
 
-        protected SoyFromZombies(LootItemCondition[] conditionsIn) {
-            super(conditionsIn);
+        protected SoyFromZombies(LootItemCondition[] conditionsIn, int priority) {
+            super(conditionsIn, priority);
         }
 
         @Override

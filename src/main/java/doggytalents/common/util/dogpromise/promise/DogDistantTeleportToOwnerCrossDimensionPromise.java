@@ -20,7 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 
 public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractPromise {
@@ -87,7 +87,7 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         int r = dog.getRandom().nextInt(safePosList.size());
         var safePos = safePosList.get(r);
         dog.authorizeChangeDimension();
-        var dogafterTp = dog.changeDimension(getDogTransition(ownerLevel, dog, safePos));
+        var dogafterTp = dog.teleport(getDogTransition(ownerLevel, dog, safePos));
 
         if (dogafterTp instanceof Dog) {
             this.teleportedDog = (Dog) dogafterTp;
@@ -100,11 +100,11 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     public void onFulfilled() {
         if (this.teleportedDog == null || !this.teleportedDog.isAlive())
             return;
-        if (this.owner != null)
-            this.owner.sendSystemMessage(
+        if (this.owner instanceof net.minecraft.world.entity.player.Player ownerPlayer)
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
-                    "item.doggytalents.conducting_bone.fulfilled.tp_self", 
-                    this.teleportedDog.getName().getString()  
+                    "item.doggytalents.conducting_bone.fulfilled.tp_self",
+                    this.teleportedDog.getName().getString()
                 )
             );
         this.ownerLevel.sendParticles(
@@ -119,8 +119,8 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
     //Ressurect
     @Override
     public void onRejected() {
-        if (this.owner != null)
-            this.owner.sendSystemMessage(
+        if (this.owner instanceof net.minecraft.world.entity.player.Player ownerPlayer)
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(
@@ -152,29 +152,28 @@ public class DogDistantTeleportToOwnerCrossDimensionPromise extends AbstractProm
         }
 
         this.timeOutTick = TIMEOUT;
-        ChunkPos chunkpos = new ChunkPos(dogPos);
-        if (this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)) {
+        ChunkPos chunkpos = ChunkPos.containing(dogPos);
+        if (this.dogLevel.hasChunk(chunkpos.x(), chunkpos.z())) {
             return;
         }
 
         // ChopinLogger.l("hasChunk before ? : " 
-        //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
+        //     + this.dogLevel.hasChunk(chunkpos.x(), chunkpos.z())
         // );
 
         this.accquireChunk(this.dogLevel, chunkpos);
 
         // ChopinLogger.l("Does hasChunk return true immediately after forced? : " 
-        //     + this.dogLevel.hasChunk(chunkpos.x, chunkpos.z)
+        //     + this.dogLevel.hasChunk(chunkpos.x(), chunkpos.z())
         // );
     }
 
-    private static DimensionTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
-        return new DimensionTransition(level, 
-            Vec3.atBottomCenterOf(safePos), 
-            Vec3.ZERO, 
+    private static TeleportTransition getDogTransition(ServerLevel level, Dog dog, BlockPos safePos) {
+        return new TeleportTransition(level,
+            Vec3.atBottomCenterOf(safePos),
+            Vec3.ZERO,
             dog.getYRot(), dog.getXRot(),
-            false,
-            DimensionTransition.DO_NOTHING);
+            TeleportTransition.DO_NOTHING);
     }
     
     // private static class DogTeleporter implements ITeleporter {

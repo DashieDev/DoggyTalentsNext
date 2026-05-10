@@ -26,24 +26,23 @@ import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DTNAnimationLoader.DogAnimationHolder;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.client.entity.model.util.DogModelRenderType;
+import doggytalents.client.entity.render.DogRenderState;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.model.AgeableListModel;
-import net.minecraft.client.model.ColorableAgeableListModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 
-public class DogModel extends EntityModel<Dog> {
+public class DogModel extends EntityModel<DogRenderState> {
 
     public final DogModelRenderType dogModelRendserType;
     
@@ -82,7 +81,7 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public DogModel(ModelPart box, DogModelRenderType renderType) {
-        super(renderType.renderType());
+        super(box, renderType.renderType());
         this.dogModelRendserType = renderType;
 
         initDogModel(box);
@@ -121,7 +120,7 @@ public class DogModel extends EntityModel<Dog> {
 
     protected void correctInitalPose() {
         var tailPose = this.tail.getInitialPose();
-        float tailX = tailPose.x, tailY = tailPose.y, tailZ = tailPose.z;
+        float tailX = tailPose.x(), tailY = tailPose.y(), tailZ = tailPose.z();
         this.tail.setInitialPose(PartPose.offset(tailX, tailY, tailZ));
     }
 
@@ -162,7 +161,6 @@ public class DogModel extends EntityModel<Dog> {
         , PartPose.ZERO);
         return LayerDefinition.create(var0, 64, 32);
     }
-    @Override
     public void prepareMobModel(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
         this.resetAllPose();
@@ -277,7 +275,6 @@ public class DogModel extends EntityModel<Dog> {
     Vector3f vecObj = new Vector3f();
     private float headXRot0 = 0, headYRot0 = 0, realHeadZRot0 = 0;
 
-    @Override
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
         var pose = dog.getDogPose();
         var animationManager = dog.animationManager;
@@ -343,17 +340,24 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void copyFrom(DogModel dogModel) {
-        this.root.copyFrom(dogModel.root);
-        this.head.copyFrom(dogModel.head);
-        this.realHead.copyFrom(dogModel.realHead);
-        this.body.copyFrom(dogModel.body);
-        this.mane.copyFrom(dogModel.mane);
-        this.legBackRight.copyFrom(dogModel.legBackRight);
-        this.legBackLeft.copyFrom(dogModel.legBackLeft);
-        this.legFrontRight.copyFrom(dogModel.legFrontRight);
-        this.legFrontLeft.copyFrom(dogModel.legFrontLeft);
-        this.tail.copyFrom(dogModel.tail);
-        this.realTail.copyFrom(dogModel.realTail);
+        copyPartPose(this.root, dogModel.root);
+        copyPartPose(this.head, dogModel.head);
+        copyPartPose(this.realHead, dogModel.realHead);
+        copyPartPose(this.body, dogModel.body);
+        copyPartPose(this.mane, dogModel.mane);
+        copyPartPose(this.legBackRight, dogModel.legBackRight);
+        copyPartPose(this.legBackLeft, dogModel.legBackLeft);
+        copyPartPose(this.legFrontRight, dogModel.legFrontRight);
+        copyPartPose(this.legFrontLeft, dogModel.legFrontLeft);
+        copyPartPose(this.tail, dogModel.tail);
+        copyPartPose(this.realTail, dogModel.realTail);
+    }
+
+    public static void copyPartPose(ModelPart dest, ModelPart src) {
+        dest.x = src.x; dest.y = src.y; dest.z = src.z;
+        dest.xRot = src.xRot; dest.yRot = src.yRot; dest.zRot = src.zRot;
+        dest.xScale = src.xScale; dest.yScale = src.yScale; dest.zScale = src.zScale;
+        dest.visible = src.visible; dest.skipDraw = src.skipDraw;
     }
 
     public void resetPart(ModelPart part, Dog dog) {
@@ -476,10 +480,15 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     @Override
-    public void copyPropertiesTo(EntityModel<Dog> model) {
-        super.copyPropertiesTo(model);
-        if (!this.scaleBabyDog())
-            model.young = false;
+    public void setupAnim(DogRenderState state) {
+        if (state.dog != null) {
+            prepareMobModel(state.dog, state.walkAnimPos, state.walkAnimSpeed, state.ageInTicksForAnim);
+            setupAnim(state.dog, state.walkAnimPos, state.walkAnimSpeed, state.ageInTicksForAnim, state.headYawForAnim, state.headPitchForAnim);
+        }
+    }
+
+    public void copyPropertiesTo(EntityModel<DogRenderState> model) {
+        // young field removed in 26.1.2 - baby scaling now handled via isBaby in render state
     }
 
     protected float wetShade = 1f;
@@ -492,13 +501,12 @@ public class DogModel extends EntityModel<Dog> {
         wetShade = 1f;
     }
 
-    @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
+    public void renderDogToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {
         if (renderDogWetShade()) {
-            int wet_color = FastColor.ARGB32.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
-            color_overlay = FastColor.ARGB32.multiply(color_overlay, wet_color);
+            int wet_color = ARGB.colorFromFloat(1, this.wetShade, this.wetShade, this.wetShade);
+            color_overlay = ARGB.multiply(color_overlay, wet_color);
         }
-        
+
         var ctx = DogModelRenderContext.forDogModelRendering(this, vertex_consumer, light, overlay, color_overlay, this.getDogModelAdditionalHeadRenderer());
         renderDogModelFromRootWithPivot(stack, ctx);
     }
@@ -512,7 +520,8 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     protected boolean doScaleBabyHead() {
-        return this.young && this.scaleBabyDog();
+        // 'young' field removed in 26.1.2 - always disabled here; handled via render state
+        return false && this.scaleBabyDog();
     }
     
     public static void renderDogModelFromRootWithPivot(PoseStack stack, DogModelRenderContext ctx) {

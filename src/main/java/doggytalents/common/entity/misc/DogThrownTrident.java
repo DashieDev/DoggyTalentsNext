@@ -26,9 +26,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -63,7 +63,7 @@ public class DogThrownTrident extends AbstractArrow {
 
         var return_owner_optional = this.getDogOwnerForReturn();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             if (this.doDogTridentInvalidateSelf(return_owner_optional))
                 return;
         }
@@ -190,7 +190,7 @@ public class DogThrownTrident extends AbstractArrow {
         if (this.isOnFire()) {
             EntityUtil.setSecondsOnFire(target, 5);
         }
-        var result = target.hurt(trident_source, damage);
+        boolean result = target.hurtOrSimulate(trident_source, damage);
         if (!result)
             return false;
 
@@ -223,31 +223,31 @@ public class DogThrownTrident extends AbstractArrow {
     }
 
     public boolean isChanneling() {
-        var channel = this.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(Enchantments.CHANNELING);
+        var channel = this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.CHANNELING.identifier());
         if (!channel.isPresent())
             return false;
         return this.getPickupItemStackOrigin().getEnchantmentLevel(channel.get()) > 0;
     }
 
     private boolean maySummonLightningBolt(Entity target) {
-        if (!(this.level() instanceof ServerLevel))
+        if (!(this.level() instanceof ServerLevel sl))
             return false;
-        if (!this.level().isThundering())
+        if (!sl.isThundering())
             return false;
         if (!this.isChanneling())
             return false;
 
         var target_b0 = target.blockPosition();
-        if (!this.level().canSeeSky(target_b0))
+        if (!sl.canSeeSky(target_b0))
             return false;
-        
-        var lightningbolt = EntityType.LIGHTNING_BOLT.create(this.level());
+
+        var lightningbolt = EntityType.LIGHTNING_BOLT.create(sl, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
         if (lightningbolt == null)
             return false;
 
-        lightningbolt.moveTo(Vec3.atBottomCenterOf(target_b0));
+        lightningbolt.snapTo(Vec3.atBottomCenterOf(target_b0));
         lightningbolt.setCause(null);
-        this.level().addFreshEntity(lightningbolt);
+        sl.addFreshEntity(lightningbolt);
 
         return true;
     }

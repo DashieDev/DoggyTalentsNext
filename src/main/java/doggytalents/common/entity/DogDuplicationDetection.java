@@ -40,7 +40,7 @@ public class DogDuplicationDetection {
     }
 
     public static boolean isEffective(Level level) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return false;
         return !ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get();
     }
@@ -85,9 +85,9 @@ public class DogDuplicationDetection {
     public void load(CompoundTag compound, Consumer<UUID> owner_setter) {
         if (!isEffective(dog.level()))
             return;
-        if (!compound.contains(DUPE_DETECT_TAG_ID, Tag.TAG_COMPOUND))
+        if (!compound.contains(DUPE_DETECT_TAG_ID))
             return;
-        var tag = compound.getCompound(DUPE_DETECT_TAG_ID);
+        var tag = compound.getCompoundOrEmpty(DUPE_DETECT_TAG_ID);
         this.detectDuplicateContext = DetectDuplicateContext.load(tag);
         this.checkAndRecorrectOwner(owner_setter);
     }

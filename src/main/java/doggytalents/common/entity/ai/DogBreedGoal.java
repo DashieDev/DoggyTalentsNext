@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DogBreedGoal extends Goal {
 
-    private static final TargetingConditions breedPredicate = TargetingConditions.forNonCombat().range(8.0D).ignoreLineOfSight(); // TODO check this works
+    private static final TargetingConditions breedPredicate = TargetingConditions.forNonCombat().range(8.0D).ignoreLineOfSight(); // verify targeting conditions still work
     private final Dog dog;
     private final Level world;
     private final double moveSpeed;
@@ -71,6 +71,6 @@ public class DogBreedGoal extends Goal {
     }
 
     private boolean filterEntities(Dog dog) {
-        return breedPredicate.test(this.dog, dog) && this.dog.canMate(dog);
+        return this.world instanceof net.minecraft.server.level.ServerLevel breedSLevel && breedPredicate.test(breedSLevel, this.dog, dog) && this.dog.canMate(dog);
     }
 }

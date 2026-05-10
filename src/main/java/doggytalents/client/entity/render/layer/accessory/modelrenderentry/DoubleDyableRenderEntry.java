@@ -7,49 +7,48 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import doggytalents.client.entity.render.AccessoryModelManager.Entry;
+import doggytalents.client.entity.render.DogRenderState;
 import doggytalents.client.entity.render.layer.accessory.DefaultAccessoryRenderer;
-import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.accessory.DoubleDyableAccessory.DoubleDyableAccessoryInstance;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public abstract class DoubleDyableRenderEntry extends Entry {
- 
+
     @Override
-    public void renderAccessory(RenderLayer<Dog, DogModel> layer, 
-        PoseStack poseStack, MultiBufferSource buffer, int packedLight, 
-        Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, 
-        float ageInTicks, float relativeHeadYRot, float headPitch, AccessoryInstance inst) {
-        
+    public void renderAccessory(RenderLayer<DogRenderState, DogModel> layer,
+        PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight,
+        DogRenderState renderState, AccessoryInstance inst) {
+
         var model = this.getModel();
         var dogModel = layer.getParentModel();
         dogModel.copyPropertiesTo(model);
-        model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-        model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
+        model.setupAnim(renderState);
         model.sync(dogModel);
-        
+
         if (!(inst instanceof DoubleDyableAccessoryInstance dInst))
             return;
 
         float[] bgColor = dInst.getBgColor();
         float[] fgColor = dInst.getFgColor();
-        
-        doRenderLayer(isTranslucent(), model, getBgResource(dInst), 
-            poseStack, buffer, packedLight, dog, bgColor);
-        doRenderLayer(isTranslucent(), model, getFgResource(dInst), 
-            poseStack, buffer, packedLight, dog, fgColor);
-    };
+
+        doRenderLayer(isTranslucent(), model, getBgResource(dInst),
+            poseStack, submitNodeCollector, packedLight, renderState, bgColor);
+        doRenderLayer(isTranslucent(), model, getFgResource(dInst),
+            poseStack, submitNodeCollector, packedLight, renderState, fgColor);
+    }
 
     private static void doRenderLayer(boolean isTranslucent, SyncedAccessoryModel model,
-        ResourceLocation resource, PoseStack stack, MultiBufferSource buffer, int light, Dog dog,
-            float[] color) {
+        Identifier resource, PoseStack stack, SubmitNodeCollector collector, int light,
+        DogRenderState renderState, float[] color) {
         if (isTranslucent) {
-            DefaultAccessoryRenderer.renderTranslucentModel(model, resource, 
-            stack, buffer, light, dog, color[0], color[1], color[2], 1f);
-        } else
-        AccessoryModelManager.renderColoredCutoutModel(model, resource, 
-            stack, buffer, light, dog, color[0], color[1], color[2]);
+            DefaultAccessoryRenderer.renderTranslucentModel(model, resource,
+                stack, collector, light, renderState, color[0], color[1], color[2], 1f);
+        } else {
+            AccessoryModelManager.renderColoredCutoutModel(model, resource,
+                stack, collector, light, renderState, color[0], color[1], color[2]);
+        }
     }
 
     @Override
@@ -57,11 +56,11 @@ public abstract class DoubleDyableRenderEntry extends Entry {
         return true;
     }
 
-    protected abstract ResourceLocation getFgResource(AccessoryInstance inst);
-    protected abstract ResourceLocation getBgResource(AccessoryInstance inst);
+    protected abstract Identifier getFgResource(AccessoryInstance inst);
+    protected abstract Identifier getBgResource(AccessoryInstance inst);
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return getBgResource(inst);
     }
 

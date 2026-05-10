@@ -25,7 +25,7 @@ import doggytalents.common.talent.doggy_tools.tool_actions.DogBridgingAction;
 import doggytalents.common.util.DogUtil;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.ItemUtil;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -35,7 +35,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -43,7 +42,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.entity.vehicle.Minecart;
+import net.minecraft.world.entity.vehicle.minecart.Minecart;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -132,8 +131,8 @@ public class WhistleItem extends Item implements IDogItem {
         byte id_mode = 0;
 
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
-            id_mode = tag.getByte("mode");
+        if (tag.contains("mode")) {
+            id_mode = tag.getByteOr("mode", (byte)0);
         }
         if (id_mode >= WhistleMode.VALUES.length) id_mode = 0;
         var mode = WhistleMode.VALUES[id_mode];
@@ -146,25 +145,25 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isShiftKeyDown()) {
-            if (world.isClientSide) {
+            if (world.isClientSide()) {
                 WhistleScreen.open(stack);
             }
 
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS; // consumed stack: stack);
         }
         else {
             byte id_mode = 0;
             boolean on_duty_only = false;
 
             var tag = ItemUtil.getTag(stack);
-            if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
-                id_mode = tag.getByte("mode");
+            if (tag.contains("mode")) {
+                id_mode = tag.getByteOr("mode", (byte)0);
             }
-            on_duty_only = tag.getBoolean("dog_on_duty_only");
+            on_duty_only = tag.getBooleanOr("dog_on_duty_only", false);
 
             List<Dog> dogsList = world.getEntitiesOfClass(
                 Dog.class, 
@@ -176,7 +175,7 @@ public class WhistleItem extends Item implements IDogItem {
             var mode = WhistleMode.VALUES[id_mode];
 
             useMode(mode, on_duty_only, dogsList, world, player, hand, false);
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+            return InteractionResult.SUCCESS; // stack: player.getItemInHand(hand));
         }
     }
 
@@ -191,16 +190,16 @@ public class WhistleItem extends Item implements IDogItem {
             world.playSound(null, player.blockPosition(), 
                 DoggySounds.WHISTLE_LONG.get(), 
                 SoundSource.PLAYERS, 
-                0.6F + world.random.nextFloat() * 0.1F, 
-                0.8F + world.random.nextFloat() * 0.2F
+                0.6F + world.getRandom().nextFloat() * 0.1F, 
+                0.8F + world.getRandom().nextFloat() * 0.2F
             );
             break;
         case SHORT:
             world.playSound(null, player.blockPosition(),
                 DoggySounds.WHISTLE_SHORT.get(), 
                 SoundSource.PLAYERS, 
-                0.6F + world.random.nextFloat() * 0.1F, 
-                0.8F + world.random.nextFloat() * 0.2F
+                0.6F + world.getRandom().nextFloat() * 0.1F, 
+                0.8F + world.getRandom().nextFloat() * 0.2F
             );
             break;            
         }
@@ -208,7 +207,7 @@ public class WhistleItem extends Item implements IDogItem {
         boolean successful = false;
         switch (mode) {
         case STAND:
-            if (world.isClientSide) return;
+            if (world.isClientSide()) return;
             for (var dog : dogsList) {
                 if (dogOnDutyOnly && !dog.dogOnDuty())
                     continue;
@@ -226,11 +225,11 @@ public class WhistleItem extends Item implements IDogItem {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.come"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case HEEL:
-            if (world.isClientSide) return;
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+            if (world.isClientSide()) return;
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),40);
             int max_heel_count = ConfigHandler.ServerConfig.getConfig(
                 ConfigHandler.SERVER.MAX_HEEL_LIMIT
             );
@@ -264,7 +263,7 @@ public class WhistleItem extends Item implements IDogItem {
             player.sendSystemMessage(Component.translatable("dogcommand.heel"));
             return;
         case STAY:
-            if (world.isClientSide) return;
+            if (world.isClientSide()) return;
             for (Dog dog : dogsList) {
                 if (dogOnDutyOnly && !dog.dogOnDuty())
                     continue;
@@ -282,10 +281,10 @@ public class WhistleItem extends Item implements IDogItem {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.stay"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case STOP_ATTACKING:
-            if (world.isClientSide) return;
+            if (world.isClientSide()) return;
             for (var dog : dogsList) {
                 successful = true;
                 dog.setTarget(null);
@@ -293,35 +292,35 @@ public class WhistleItem extends Item implements IDogItem {
             if (successful) {
                 player.sendSystemMessage(Component.translatable("dogcommand.stop_attacking"));
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case SHELPERD:
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case TACTICAL:
-            if (world.isClientSide) return;
+            if (world.isClientSide()) return;
             var doggyBeam = new DoggyBeamEntity(world, player);
             doggyBeam.shootFromRotation(player, 
                 player.getXRot(), player.getYRot(), 0.0F, 2.0F, 1.0F);
             world.addFreshEntity(doggyBeam);
-            player.getCooldowns().addCooldown(this, 10);
+            player.getCooldowns().addCooldown(new ItemStack(this), 10);
             return;
         case ROAR:
             var cooldown_optional = RoaringGaleTalent.roar(dogsList, world, player);
             cooldown_optional.ifPresent(x -> {
-                player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), x);
+                player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),x);
             });
             return;
         case HEEL_BY_NAME:
-            if (world.isClientSide) {
+            if (world.isClientSide()) {
                 HeelByNameScreen.open(isKeyBind ? 200 : 0);
             }
             return;
         case TO_BED: 
         {
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             if (dogsList.isEmpty()) return;
-            if (player.level().isClientSide) return;
+            if (player.level().isClientSide()) return;
             boolean noDogs = true;
             for (var dog : dogsList) {
                 noDogs = false;
@@ -337,7 +336,7 @@ public class WhistleItem extends Item implements IDogItem {
         }
         case GO_BEHIND:
         {
-            if (player.level().isClientSide) return;
+            if (player.level().isClientSide()) return;
             boolean noDogs = true;
             for (var dog : dogsList) {
                 if (dogOnDutyOnly && !dog.dogOnDuty())
@@ -352,17 +351,17 @@ public class WhistleItem extends Item implements IDogItem {
                 dog.triggerAction(new DogGoBehindOwnerAction(dog, owner));
                 noDogs = false;
             }
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         }
         case HEEL_BY_GROUP:
-            if (world.isClientSide) 
+            if (world.isClientSide()) 
                 HeelByGroupScreen.open();
             return;
         case MOB_RETRIEVER:
-            if (world.isClientSide)
+            if (world.isClientSide())
                 return;
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             var retrieverOptional = MobRetrieverTalent.chooseNearestDog(player, world);
             if (retrieverOptional.isEmpty())
                 return;
@@ -393,17 +392,17 @@ public class WhistleItem extends Item implements IDogItem {
             return;
         case HEEL_BY_LOOK:
             heelByLook(world, player);
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case RIDE_WITH_ME:
             rideWithMe(world, player);
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
             return;
         case HOWL:
             howl(world, player);
             return;
         case ALL_STAND_SWITCH_MODE:
-            if (world.isClientSide) 
+            if (world.isClientSide()) 
                 AllStandSwitchModeScreen.open(player);
             return;
         case SSSSSHHHH:
@@ -419,7 +418,7 @@ public class WhistleItem extends Item implements IDogItem {
             allStandOnDuty(world, player, dogsList);
             return;
         case CARRY_ME:
-            if (world.isClientSide) 
+            if (world.isClientSide()) 
                 CarryMeScreen.open(player);
             return;
         case BRIDING:
@@ -432,7 +431,7 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     private void rideWithMe(Level level, Player player) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         final int reach_range = 30;
         var dog_optional = DogUtil.getLookingAtDog(player, reach_range, 
@@ -457,7 +456,7 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     private void heelByLook(Level level, Player player) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         final int reach_range = 30;
         var dog_optional = DogUtil.getLookingAtDog(player, reach_range, 
@@ -471,7 +470,7 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     private void howl(Level level, Player player) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         final int reach_range = 30;
         var dog_optional = DogUtil.getLookingAtDog(player, reach_range);
@@ -484,15 +483,15 @@ public class WhistleItem extends Item implements IDogItem {
         player.level().playSound(null, player.blockPosition(),
             DoggySounds.WHISTLE_SHORT.get(), 
             SoundSource.PLAYERS, 
-            0.6F + player.level().random.nextFloat() * 0.1F, 
-            0.8F + player.level().random.nextFloat() * 0.2F
+            0.6F + player.level().getRandom().nextFloat() * 0.1F, 
+            0.8F + player.level().getRandom().nextFloat() * 0.2F
         );
     }
 
     private void sssshhhh(Level level, Player player, List<Dog> dogs) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
         boolean shh_ed = false;
         for (var dog : dogs) {
             if (!canShh(player, dog))
@@ -506,15 +505,15 @@ public class WhistleItem extends Item implements IDogItem {
                 DoggySounds.WHISTLE_LONG.get(), 
                 SoundSource.PLAYERS, 
                 0.1f, 
-                0.8F + level.random.nextFloat() * 0.2F
+                0.8F + level.getRandom().nextFloat() * 0.2F
             );
         }
     }
 
     private void crossOriginTpForDogs(Level level, Player player, List<Dog> dogs) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
 
         dogs = dogs.stream().filter(x -> !x.isInSittingPose())
             .collect(Collectors.toList());
@@ -542,9 +541,9 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     private void allStandOnDuty(Level level, Player player, List<Dog> dogs) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+        player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),20);
 
         int on_duty_count = 0;
         int not_on_duty_count = 0;
@@ -572,9 +571,9 @@ public class WhistleItem extends Item implements IDogItem {
     }
 
     private void catchUp(Level level, Player player, List<Dog> dogs, boolean dogOnDutyOnly) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
-        player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+        player.getCooldowns().addCooldown(new ItemStack(DoggyItems.WHISTLE.get()),40);
         int max_heel_count = ConfigHandler.ServerConfig.getConfig(
             ConfigHandler.SERVER.MAX_HEEL_LIMIT
         );
@@ -612,7 +611,7 @@ public class WhistleItem extends Item implements IDogItem {
 
     public static boolean isDogOnDutyOnly(ItemStack stack) {
         var tag = ItemUtil.getTag(stack);
-        return tag.getBoolean("dog_on_duty_only");
+        return tag.getBooleanOr("dog_on_duty_only", false);
     }
 
     public static boolean isHoldingDutyWhistle(LivingEntity entity) {
@@ -621,21 +620,20 @@ public class WhistleItem extends Item implements IDogItem {
             return false;
         byte mode = 0;
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
-            mode = (byte) Mth.clamp(tag.getByte("mode"), 0, WhistleMode.VALUES.length - 1);
+        if (tag.contains("mode")) {
+            mode = (byte) Mth.clamp(tag.getByteOr("mode", (byte)0), 0, WhistleMode.VALUES.length - 1);
         }
         if (WhistleMode.VALUES[mode] != WhistleMode.DUTY_WHISTLE)
             return false;
         return true;
     }
 
-    @Override
     public String getDescriptionId(ItemStack stack) {
         byte mode = 0;
 
         var tag = ItemUtil.getTag(stack);
-        if (tag.contains("mode", Tag.TAG_ANY_NUMERIC)) {
-            mode = tag.getByte("mode");
+        if (tag.contains("mode")) {
+            mode = tag.getByteOr("mode", (byte)0);
         }
         return this.getDescriptionId() + "." + mode;
 
@@ -646,10 +644,9 @@ public class WhistleItem extends Item implements IDogItem {
     //     return Rarity.UNCOMMON;
     // }
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-            TooltipFlag flags) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
         var desc_id = this.getDescriptionId() + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        componentConsumer.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

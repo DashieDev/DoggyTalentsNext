@@ -51,19 +51,19 @@ public class StatsTracker {
     }
 
     public void readAdditional(CompoundTag compound) {
-        ListTag killList = compound.getList("entityKills", Tag.TAG_COMPOUND);
+        ListTag killList = compound.getListOrEmpty("entityKills");
         for (int i = 0; i < killList.size(); i++) {
-            CompoundTag stats = killList.getCompound(i);
+            CompoundTag stats = killList.getCompoundOrEmpty(i);
             EntityType<?> type = NBTUtil.getRegistryValue(stats, "type", BuiltInRegistries.ENTITY_TYPE);
-            this.ENTITY_KILLS.put(type, stats.getInt("count"));
+            this.ENTITY_KILLS.put(type, stats.getIntOr("count", 0));
         }
-        this.damageDealt = compound.getFloat("damageDealt");
-        this.distanceOnWater = compound.getInt("distanceOnWater");
-        this.distanceInWater = compound.getInt("distanceInWater");
-        this.distanceSprinting = compound.getInt("distanceSprinting");
-        this.distanceSneaking = compound.getInt("distanceSneaking");
-        this.distanceWalking = compound.getInt("distanceWalking");
-        this.distanceRidden = compound.getInt("distanceRidden");
+        this.damageDealt = compound.getFloatOr("damageDealt", 0f);
+        this.distanceOnWater = compound.getIntOr("distanceOnWater", 0);
+        this.distanceInWater = compound.getIntOr("distanceInWater", 0);
+        this.distanceSprinting = compound.getIntOr("distanceSprinting", 0);
+        this.distanceSneaking = compound.getIntOr("distanceSneaking", 0);
+        this.distanceWalking = compound.getIntOr("distanceWalking", 0);
+        this.distanceRidden = compound.getIntOr("distanceRidden", 0);
     }
 
     public int getKillCountFor(EntityType<?> type) {
@@ -183,7 +183,7 @@ public class StatsTracker {
         for (var entry : this.ENTITY_KILLS.entrySet()) {
             var typeId = BuiltInRegistries.ENTITY_TYPE.getKey(entry.getKey());
             var killCount = entry.getValue();
-            buf.writeResourceLocation(typeId);
+            buf.writeUtf(typeId.toString());
             buf.writeInt(killCount);
         }
     }
@@ -201,10 +201,10 @@ public class StatsTracker {
         this.ENTITY_KILLS.clear();
         int mapSize = buf.readInt();
         for (int i = 0; i < mapSize; ++i) {
-            var typeId = buf.readResourceLocation();
+            var typeId = net.minecraft.resources.Identifier.parse(buf.readUtf());
             var killCount = buf.readInt();
-            var type = BuiltInRegistries.ENTITY_TYPE.get(typeId);
-            this.ENTITY_KILLS.put(type, killCount);
+            var type = BuiltInRegistries.ENTITY_TYPE.get(typeId).map(net.minecraft.core.Holder::value).orElse(null);
+            if (type != null) this.ENTITY_KILLS.put(type, killCount);
         }
     }
 

@@ -14,7 +14,6 @@ public class TalentListSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        // TODO Auto-generated method stub
         return new TalentListData(
             DoggyTalentsAPI.TALENTS.get()
                 .entrySet()

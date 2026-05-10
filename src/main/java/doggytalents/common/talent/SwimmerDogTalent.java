@@ -15,11 +15,11 @@ import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -49,7 +49,7 @@ public class SwimmerDogTalent extends TalentInstance {
     
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level().isClientSide) {
+        if (abstractDog.level().isClientSide()) {
             return;
         }
 
@@ -72,21 +72,21 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Integer> decreaseAirSupply(AbstractDog dogIn, int air) {
+    public DTNInteractionResultHolder<Integer> decreaseAirSupply(AbstractDog dogIn, int air) {
         if (this.level() > 0 && dogIn.getRandom().nextInt(this.level() + 1) > 0) {
-            return InteractionResultHolder.success(air);
+            return DTNInteractionResultHolder.success(air);
         }
 
-        return InteractionResultHolder.pass(air);
+        return DTNInteractionResultHolder.pass(air);
     }
 
     @Override
-    public InteractionResultHolder<Integer> determineNextAir(AbstractDog dogIn, int currentAir) {
+    public DTNInteractionResultHolder<Integer> determineNextAir(AbstractDog dogIn, int currentAir) {
         if (this.level() > 0) {
-            return InteractionResultHolder.pass(currentAir + this.level());
+            return DTNInteractionResultHolder.pass(currentAir + this.level());
         }
 
-        return InteractionResultHolder.pass(currentAir);
+        return DTNInteractionResultHolder.pass(currentAir);
     }
 
     @Override
@@ -102,11 +102,11 @@ public class SwimmerDogTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type, InferTypeContext context) {
+    public DTNInteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type, InferTypeContext context) {
         //This allows the owner to help the dog to reach the surface.
         if (this.level() < this.getTalent().getMaxLevel() 
             && type == PathType.WATER && checkOverrideWalkableForWater(context)) {
-            return InteractionResultHolder.success(PathType.WALKABLE);
+            return DTNInteractionResultHolder.success(PathType.WALKABLE);
         }
         return super.inferType(dog, type, context);
     }

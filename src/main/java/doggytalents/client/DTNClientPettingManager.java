@@ -144,7 +144,7 @@ public class DTNClientPettingManager {
         //configurable
         var stack = event.getPoseStack();
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+        var pTicks = mc.getDeltaTracker().getGameTimeDeltaPartialTick(true);
         
         var player = event.getPlayer();
         float anim_timeline = (float)(player.tickCount + player.getId() + pTicks ) * 0.04f;
@@ -173,7 +173,8 @@ public class DTNClientPettingManager {
             return;
         var mc = Minecraft.getInstance();
         var button = event.getButton();
-        if (!mc.options.keyUse.matchesMouse(button))
+        var mouseButtonEvent = new net.minecraft.client.input.MouseButtonEvent(0, 0, event.getMouseButtonInfo());
+        if (!mc.options.keyUse.matchesMouse(mouseButtonEvent))
             return;
         if (mc.screen != null || mc.getOverlay() != null || mc.player == null)
             return;
@@ -264,14 +265,15 @@ public class DTNClientPettingManager {
 
     @SubscribeEvent
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        if (!isPettingPlayer(event.getEntity()))
-            return;
-        
-        var renderer = event.getRenderer();
-        var model = renderer.getModel();
-        
-        model.leftArmPose = PettingArmPose.VALUE;
-        model.rightArmPose = PettingArmPose.VALUE;
+        var mc = net.minecraft.client.Minecraft.getInstance();
+        if (mc.level == null) return;
+        var renderState = (net.minecraft.client.renderer.entity.state.AvatarRenderState) event.getRenderState();
+        var entity = mc.level.getEntity(renderState.id);
+        if (!(entity instanceof Player player)) return;
+        if (!isPettingPlayer(player)) return;
+
+        renderState.leftArmPose = PettingArmPose.VALUE;
+        renderState.rightArmPose = PettingArmPose.VALUE;
     }
 
     private boolean isPettingPlayer(Player player) {
@@ -283,7 +285,7 @@ public class DTNClientPettingManager {
 
     public void applyTransform(HumanoidModel<?> model, LivingEntity player, HumanoidArm arm) {
         var mc = Minecraft.getInstance();
-        var pTicks = mc.getTimer().getGameTimeDeltaPartialTick(true);
+        var pTicks = mc.getDeltaTracker().getGameTimeDeltaPartialTick(true);
         float anim_timeline = (float)(player.getId() + player.tickCount + pTicks ) * 0.04f;
         float occill, rotating_x;
         var petting_type = getPettingTypeFor(player);
@@ -376,12 +378,8 @@ public class DTNClientPettingManager {
         if (view_type.isFirstPerson())
             return;
         var input = event.getInput();
-        input.forwardImpulse = 0;
-        input.leftImpulse = 0;
-        input.up = false;
-        input.down = false;
-        input.left = false;
-        input.right = false;
+        var ki = input.keyPresses;
+        input.keyPresses = new net.minecraft.world.entity.player.Input(false, false, false, false, ki.jump(), ki.shift(), ki.sprint());
     }
 
     public void onPettingUpdate(Dog dog, DogPettingState state) {

@@ -31,7 +31,7 @@ import doggytalents.common.util.DogUtil;
 import doggytalents.common.network.packet.data.HideArmorData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
@@ -111,8 +111,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                        super.extractContents(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.regard_team_players.help"), 150, font));
                         }
@@ -133,8 +133,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                        super.extractContents(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.force_sit.help"), 150, font));
                         }
@@ -155,8 +155,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                        super.extractContents(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.cross_origin_tp.help"), 150, font));
                         }
@@ -177,8 +177,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                        super.extractContents(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.patrol_target_lock.help"), 150, font));
                         }
@@ -227,8 +227,8 @@ public class EditInfoView extends AbstractElement {
                     }     
                 ) {
                     @Override
-                    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                        super.renderWidget(graphics, mouseX, mouseY, pTicks);
+                    public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                        super.extractContents(graphics, mouseX, mouseY, pTicks);
                         if (this.isHovered) {
                             ToolTipOverlayManager.get().setComponents(ScreenUtil.splitInto(I18n.get("doggui.on_duty.help"), 150, font));
                         }
@@ -270,7 +270,7 @@ public class EditInfoView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
     }
 
     private static void requestNameChange(Dog dog, String value) {
@@ -381,13 +381,13 @@ public class EditInfoView extends AbstractElement {
                 this.randomButton.active = true;
             }) {
                 @Override
-                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+                public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
                     if (!this.active)
                         return;
                     if (this.isHovered) {
                         graphics.fill( this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, 0x835e5d5d);
                     }
-                    graphics.blit(Resources.HAMBURGER, this.getX(), this.getY(), 20, 0, 20, 20);
+                    graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, Resources.HAMBURGER, this.getX(), this.getY(), (float)20, (float)0, 20, 20, 256, 256);
                 }
             };
             this.randomButton.setTooltip(Tooltip.create(Component.translatable("doggui.newname.random.tooltip")));
@@ -401,18 +401,18 @@ public class EditInfoView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + PADDING_TOP;
 
-            graphics.drawString(font, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
+            graphics.text(font, I18n.get("doggui.newname"), startX, pY, 0xffffffff);
             
             if (this.replacingStr != null) {
                 renderReplacingStr(graphics, replacingStr);
             }
         }
 
-        private void renderReplacingStr(GuiGraphics graphics, String str) {
+        private void renderReplacingStr(GuiGraphicsExtractor graphics, String str) {
             var renderStr = I18n.get("doggui.home.edit_info.substitude_name", str);
             int maxLen = this.getSizeX() - 20 - PADDING_LEFT;
             var renderStrLen = font.width(renderStr);
@@ -422,7 +422,7 @@ public class EditInfoView extends AbstractElement {
             }
             int tX = this.getRealX() + PADDING_LEFT;
             int tY = this.getRealY() + PADDING_TOP + 37;
-            graphics.drawString(font, renderStr, tX, tY, 0xffcda700);
+            graphics.text(font, renderStr, tX, tY, 0xffcda700);
         }
 
         private void addEditNameBox(int x, int y, int w, int h) {
@@ -540,11 +540,11 @@ public class EditInfoView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
             int startX = this.getRealX() + PADDING_LEFT;
             int pY = this.getRealY() + 10;
 
-            graphics.drawString(font, "Groups: ", startX, pY, 0xffffffff);
+            graphics.text(font, "Groups: ", startX, pY, 0xffffffff);
         }
 
     }

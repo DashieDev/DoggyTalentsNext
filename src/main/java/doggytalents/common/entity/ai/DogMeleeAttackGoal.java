@@ -90,11 +90,11 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       } else if (!target.isAlive()) {
          this.dog.setTarget(null); // Disacrd dead target no matter what
          return false;
-      } else if (target.getY() >= dog.level().getMaxBuildHeight()) {
+      } else if (target.getY() >= dog.level().getMaxY()) {
          return false;
       } else if (this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
          return false; 
-      } else if (restriction && !this.dog.isWithinRestriction(target.blockPosition())) {
+      } else if (restriction && !this.dog.isWithinHome(target.blockPosition())) {
          return false;
       }
 
@@ -166,9 +166,9 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
          return false;
       } else if (!livingentity.isAlive()) {
          return false;
-      } else if (livingentity.getY() >= dog.level().getMaxBuildHeight()) {
+      } else if (livingentity.getY() >= dog.level().getMaxY()) {
          return false;
-      } else if (restriction && !this.dog.isWithinRestriction(livingentity.blockPosition())) {
+      } else if (restriction && !this.dog.isWithinHome(livingentity.blockPosition())) {
          return false;
       } else {
          return !(livingentity instanceof Player)
@@ -214,10 +214,10 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       return true;
    }
 
-   //TODO : Global problem : 
-   //due to the dog move control inaccuracy, the dog may be failed to land on a safe platform because
-   //of the "safe" area is only an 1-block edge which stick out a cliff or something. This is a part of
-   //a bigger problem, the inaccuracy of the moveControl.
+   // Global problem:
+   // due to the dog move control inaccuracy, the dog may be failed to land on a safe platform because
+   // of the "safe" area is only an 1-block edge which stick out a cliff or something. This is a part of
+   // a bigger problem, the inaccuracy of the moveControl.
    @Override
    public void tick() {
       
@@ -356,13 +356,14 @@ public class DogMeleeAttackGoal extends Goal implements IHasTickNonRunning {
       return true;
    }
 
-   //TODO make dog be able to attack in the air
+   // make dog be able to attack in the air
    protected boolean checkAndPerformAttack(LivingEntity target, double distanceToTargetSqr) {
       if (this.canReachTarget(target, distanceToTargetSqr) && this.ticksUntilNextAttack <= 0) {
          this.resetAttackCooldown();
 
          this.dog.swing(InteractionHand.MAIN_HAND);
-         this.dog.doHurtTarget(target);
+         if (this.dog.level() instanceof net.minecraft.server.level.ServerLevel sLevel)
+             this.dog.doHurtTarget(sLevel, target);
          return true;
       }
       return false;

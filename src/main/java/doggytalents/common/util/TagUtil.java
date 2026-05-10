@@ -12,12 +12,10 @@ public class TagUtil {
     public static final TagKey<EntityType<?>> CAPTURING_NOT_SUPPORTED = net.neoforged.neoforge.common.Tags.EntityTypes.CAPTURING_NOT_SUPPORTED;
     
     public static <T> List<T> queryAllValuesForTag(Registry<T> reg, TagKey<T> key) {
-        var tag = reg.getTag(key).orElse(null);
-        if (tag == null)
-            return List.of();
-        var ret = tag.stream()
-            .map(h -> h.value())
-            .collect(Collectors.toList());
+        var ret = new java.util.ArrayList<T>();
+        for (var h : reg.getTagOrEmpty(key)) {
+            ret.add(h.value());
+        }
         return ret;
     }
 }

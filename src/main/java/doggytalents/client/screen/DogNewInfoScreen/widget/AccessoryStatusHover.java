@@ -1,14 +1,12 @@
 package doggytalents.client.screen.DogNewInfoScreen.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import doggytalents.DoggyItems;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.DogModel.AccessoryState;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.util.ItemUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -36,19 +34,16 @@ public class AccessoryStatusHover extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         var render_icon = this.logoIcon;
         if (state == AccessoryState.MODEL_ONLY)
-            render_icon = this.modelIcon;    
+            render_icon = this.modelIcon;
 
         if (render_icon == ItemStack.EMPTY)
             return;
-        graphics.renderItem(render_icon, this.getX()+1, this.getY()+1);
+        graphics.item(render_icon, this.getX()+1, this.getY()+1);
         int iX = getIconXState();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        graphics.blit(Resources.STYLE_ADD_REMOVE, getX()+11, getY()+11, iX, 0, 9, 9);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, Resources.STYLE_ADD_REMOVE, getX()+11, getY()+11, (float)iX, (float)0, 9, 9, 256, 256);
     }
 
     private int getIconXState() {

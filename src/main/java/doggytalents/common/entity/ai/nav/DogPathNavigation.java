@@ -40,6 +40,11 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
     }
 
     @Override
+    public boolean canNavigateGround() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (this.isDone()) {
@@ -55,7 +60,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
 
         var currentPos = this.getTempMobPos();
         /*
-        * TODO Absoluteness of dog bbW.
+        * Absoluteness of dog bbW.
         * Currently this implementation relies on the fact that currently a dog's bbWidth never
         * surpass one block like DogSwimNodeEval
         */
@@ -84,7 +89,7 @@ public class DogPathNavigation extends PathNavigation implements IDogNavLock {
     }
 
     /*
-    * TODO Absoluteness of dog bbW.
+    * Absoluteness of dog bbW.
     * Currently this implementation relies on the fact that currently a dog's bbWidth never
     * surpass one block like DogSwimNodeEval
     */

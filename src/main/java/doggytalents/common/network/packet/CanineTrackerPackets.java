@@ -22,7 +22,8 @@ import doggytalents.common.network.packet.data.CanineTrackerData.ResponsePosUpda
 import doggytalents.common.network.packet.data.CanineTrackerData.StartLocatingData;
 import doggytalents.common.storage.DogLocationStorage;
 import doggytalents.common.util.ItemUtil;
-import net.minecraft.Util;
+import doggytalents.common.util.NBTUtil;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -167,7 +168,7 @@ public class CanineTrackerPackets {
                 if (tag == null) return;
 
                 var pos = BlockPos.containing(dogData.getPos());
-                tag.putUUID("uuid", data.uuid);
+                NBTUtil.putUniqueId(tag, "uuid", data.uuid);
                 tag.putString("name", dogData.getDogName());
                 tag.putInt("posX", pos.getX());
                 tag.putInt("posY",  pos.getY());

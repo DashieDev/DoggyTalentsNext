@@ -1,5 +1,6 @@
 package doggytalents.common.item;
 
+import java.util.List;
 import java.util.function.Function;
 
 import doggytalents.api.inferface.AbstractDog;
@@ -27,9 +28,17 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
 
     public DogEddibleBowlFoodItem(Properties itemProps, Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator) {
         this(
-            itemProps, 
-            propsCreator.apply(new FoodProperties.Builder())
-                .build()
+            itemProps,
+            propsCreator.apply(new FoodProperties.Builder()).build()
+        );
+    }
+
+    public DogEddibleBowlFoodItem(Properties itemProps, Function<FoodProperties.Builder, FoodProperties.Builder> propsCreator,
+            List<DogMobEffectEntry> effects) {
+        super(
+            itemProps.craftRemainder(Items.BOWL),
+            propsCreator.apply(new FoodProperties.Builder()).build(),
+            effects
         );
     }
 
@@ -53,7 +62,7 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
         if (!(user instanceof Player player))
             return returnStack;
 
-        if (player.level().isClientSide)
+        if (player.level().isClientSide())
             return returnStack;
 
         var bonusReturnStack = new ItemStack(Items.BOWL);
@@ -62,7 +71,7 @@ public abstract class DogEddibleBowlFoodItem extends DogEddibleItem {
         if (freeSlot >= 0)
             inv.add(bonusReturnStack);
         else
-            player.spawnAtLocation(bonusReturnStack);
+            player.spawnAtLocation((net.minecraft.server.level.ServerLevel) player.level(), bonusReturnStack);
         
         return returnStack;
     }

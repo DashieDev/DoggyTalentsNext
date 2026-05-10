@@ -8,7 +8,7 @@ public class DTNNeoForgeDataEntry {
         var gen = event.getGenerator();
         var packOutput = gen.getPackOutput();
         var lookup = event.getLookupProvider();
-        if (event.includeServer()) {
+        if (event instanceof net.neoforged.neoforge.data.event.GatherDataEvent.Server) {
             gen.addProvider(true, new DTNNeoForgeComposterProvider(packOutput, lookup));
         }
     }

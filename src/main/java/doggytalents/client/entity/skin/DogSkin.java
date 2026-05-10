@@ -13,13 +13,13 @@ import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class DogSkin {
 
     public static final DogSkin CLASSICAL = (new DogSkin(Resources.DOG_CLASSICAL){
         @Override
-        public ResourceLocation getPath() {
+        public Identifier getPath() {
             if (ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get())
                 return Resources.ENTITY_WOLF;
             return super.getPath();
@@ -40,7 +40,7 @@ public class DogSkin {
     }).setName("Classical");
     public static final DogSkin MISSING = (new DogSkin(Resources.DOG_CLASSICAL){
         @Override
-        public ResourceLocation getPath() {
+        public Identifier getPath() {
             if (ConfigHandler.CLIENT.USE_VANILLA_RES_FOR_CLASSICAL.get())
                 return Resources.ENTITY_WOLF;
             return super.getPath();
@@ -50,8 +50,8 @@ public class DogSkin {
     }).setName("<Mystery>");
 
     private String name = "";
-    private ResourceLocation texturePath;
-    private Optional<ResourceLocation> glowingOverlay = Optional.empty();
+    private Identifier texturePath;
+    private Optional<Identifier> glowingOverlay = Optional.empty();
     private boolean useCustomModel;
     private DogModelHolder customModelHolder;
     private byte tail = 0, ear = 0;
@@ -65,11 +65,11 @@ public class DogSkin {
     private String tags = "";
     private boolean mystery = false;
 
-    public DogSkin(ResourceLocation path) {
+    public DogSkin(Identifier path) {
         this(path, false);
     }
 
-    public DogSkin(ResourceLocation path, boolean useCustomModel) {
+    public DogSkin(Identifier path, boolean useCustomModel) {
         this.texturePath = path;
         this.useCustomModel = useCustomModel;
     }
@@ -112,7 +112,7 @@ public class DogSkin {
         return this.customModelHolder;
     }
 
-    public ResourceLocation getPath() {
+    public Identifier getPath() {
         return this.texturePath;
     }
 
@@ -150,7 +150,7 @@ public class DogSkin {
         this.mystery = val;
     }
 
-    public void setGlowingOverlay(ResourceLocation glow) {
+    public void setGlowingOverlay(Identifier glow) {
         this.glowingOverlay = Optional.ofNullable(glow);
     }
 
@@ -160,7 +160,7 @@ public class DogSkin {
     public String getPack() { return this.fromPack; }
     public String getDesc() { return this.description; }
     public String getTags() { return this.tags; }
-    public Optional<ResourceLocation> getGlowingOverlay() { return this.glowingOverlay; }
+    public Optional<Identifier> getGlowingOverlay() { return this.glowingOverlay; }
     public boolean hasGlowingOverlay() { return this.glowingOverlay.isPresent(); }
     public boolean mystery() { return this.mystery; }
     public boolean isCustom() {

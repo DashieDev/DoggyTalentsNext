@@ -17,7 +17,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -49,18 +49,18 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
+    public DTNInteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
         if (this.level() >= 5 && dogIn.isInLava()) {
-            return InteractionResultHolder.success(0f);
+            return DTNInteractionResultHolder.success(0f);
         }
         return super.calculateFallDistance(dogIn, distance);
     }
 
     @Override
-    public InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
+    public DTNInteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
         if (dogIn.isOnFire())
-            return InteractionResultHolder.pass(ticks);
-        return InteractionResultHolder.success(Mth.floor(ticks * this.getFireDecreasePercentage()));
+            return DTNInteractionResultHolder.pass(ticks);
+        return DTNInteractionResultHolder.success(Mth.floor(ticks * this.getFireDecreasePercentage()));
     }
 
     private float getFireDecreasePercentage() {
@@ -120,18 +120,18 @@ public class HellHoundTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+    public DTNInteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
         if (!source.is(DamageTypeTags.IS_FIRE)) {
-            return InteractionResultHolder.pass(damage);
+            return DTNInteractionResultHolder.pass(damage);
         }
         var resistValue = getResistValue(source);
         this.fireResistHealCooldown = 80;
         this.fireResistTickLeft = Math.min(fireResistTickLeft, resistValue);
         if (this.fireResistTickLeft > 0) {
-            return InteractionResultHolder.fail(0f);
+            return DTNInteractionResultHolder.fail(0f);
         }
         this.fireResistTickLeft = resistValue;
-        return InteractionResultHolder.pass(getFireDamageReduced(source, damage));
+        return DTNInteractionResultHolder.pass(getFireDamageReduced(source, damage));
     }
 
     private float getFireDamageReduced(DamageSource source, float amount) {
@@ -189,7 +189,7 @@ public class HellHoundTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog d) {
-        if (d.level().isClientSide)
+        if (d.level().isClientSide())
             return;
         if (this.level() < 5) {
             updateResistValues();
@@ -281,7 +281,7 @@ public class HellHoundTalent extends TalentInstance {
                     dog.getX(), dog.getY(), dog.getZ(), 
                     30, 
                     dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
-                    0.1 //TODO Tune
+                    0.1 // tune this value
                 );
         }
     }

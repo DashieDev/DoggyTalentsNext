@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.ai.village.ReputationEventType;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -41,7 +41,7 @@ public class PuppyEyesTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.cooldown = dogIn.tickCount + compound.getInt("cooldown");
+        this.cooldown = dogIn.tickCount + compound.getIntOr("cooldown", 0);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PuppyEyesTalent extends TalentInstance {
             return;
         }
 
-        if (dog.level().isClientSide) {
+        if (dog.level().isClientSide()) {
             return;
         }
 

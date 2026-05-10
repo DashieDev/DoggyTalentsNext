@@ -12,9 +12,12 @@ import com.mojang.blaze3d.platform.InputConstants;
 import doggytalents.client.screen.StringEntrySelectScreen.TextField.FocusState;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.Mth;
@@ -78,14 +81,14 @@ public class StringEntrySelectScreen extends Screen {
     }
     
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
         this.mouseUpdate.update(mouseX, mouseY);
         this.searchField.update();
 
-        super.render(graphics, mouseX, mouseY, partialTicks);
-        this.entryView.render(graphics);
-        this.searchField.render(graphics);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
+        this.entryView.extractRenderState(graphics);
+        this.searchField.extractRenderState(graphics);
         
         this.prevPageButton.active = this.entryView.prevPageActive();
         this.nextPageButton.active = this.entryView.nextPageActive();
@@ -95,7 +98,7 @@ public class StringEntrySelectScreen extends Screen {
         this.entryView.onMouseMoved(mouseX, mouseY);
     }
 
-    protected void drawSelectAreaBackground(GuiGraphics graphics) {
+    protected void drawSelectAreaBackground(GuiGraphicsExtractor graphics) {
         int half_width = this.width / 2;
         int half_height = this.height / 2; 
       
@@ -103,7 +106,7 @@ public class StringEntrySelectScreen extends Screen {
             half_width + getSelectAreaSize() / 2 , half_height + getSelectAreaSize() / 2 , Integer.MIN_VALUE);
     }
 
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y, 
+    protected void drawEntry(GuiGraphicsExtractor graphics, int entry_x, int entry_y, 
         int entry_id, boolean is_selected) {
         int color = 0xffffffff;
 
@@ -112,46 +115,50 @@ public class StringEntrySelectScreen extends Screen {
         Component text = Component.literal(this.entries.get(entry_id))
             .setStyle(Style.EMPTY.withColor(color));
         text = modifyEntryText(text, entry_id, is_selected);
-        graphics.drawString(font, text, entry_x, entry_y, 0xffffffff);
+        graphics.text(font, text, entry_x, entry_y, 0xffffffff);
     }
 
     protected Component modifyEntryText(Component entryText, int entryId, boolean is_selected) {
         return entryText;
     }
 
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
+    protected void drawNoEntryMsg(GuiGraphicsExtractor graphics, int x, int y) {
         
     }
 
-    protected void drawPageIndicator(GuiGraphics graphics, int pageCount, int activePage) {
+    protected void drawPageIndicator(GuiGraphicsExtractor graphics, int pageCount, int activePage) {
         int half_width = this.width / 2;
         int half_height = this.height / 2;
         
         var page_str = (activePage + 1) + "/" + pageCount;
         var page_str_width = font.width(page_str);
-        graphics.drawString(font, page_str, half_width - page_str_width/2, 
+        graphics.text(font, page_str, half_width - page_str_width/2, 
             half_height - this.getSelectAreaSize() / 2 - this.getPageIndicatorOffset(), 0xffffffff);
     }
 
     @Override
-    public boolean charTyped(char code, int p_231042_2_) {
-        return this.searchField.charTyped(code, p_231042_2_);
+    public boolean charTyped(CharacterEvent event) {
+        char code = (char) event.codepoint();
+        return this.searchField.charTyped(code, 0);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
+        int keyCode = event.key();
+        int scanCode = event.scancode();
+        int modifiers = event.modifiers();
         var mc = Minecraft.getInstance();
-        boolean text_field_focused = 
+        boolean text_field_focused =
             this.searchField.focusState() == TextField.FocusState.FOCUS;
-        
+
         if (keyCode == mc.options.keyShift.getKey().getValue())
             this.isSneakPressed = true;
 
         if (this.entryView.keyPressed(text_field_focused, keyCode, scanCode, modifiers)) {
             return true;
         }
-        
-        boolean focus_search_field = 
+
+        boolean focus_search_field =
             keyCode == mc.options.keyJump.getKey().getValue()
             && isSneakPressed
             && this.searchField.focusState() == TextField.FocusState.NONE;
@@ -165,7 +172,7 @@ public class StringEntrySelectScreen extends Screen {
         );
         if (move_left) {
             if (this.prevPageButton.active)
-            this.prevPageButton.onClick(0, 0);
+                this.prevPage();
             return true;
         }
         boolean move_right = !text_field_focused && (
@@ -174,31 +181,32 @@ public class StringEntrySelectScreen extends Screen {
         );
         if (move_right) {
             if (this.nextPageButton.active)
-            this.nextPageButton.onClick(0, 0);
+                this.nextPage();
             return true;
         }
 
         if (this.searchField.keyPressed(keyCode, scanCode, modifiers))
             return true;
 
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    public boolean keyReleased(KeyEvent event) {
+        int keyCode = event.key();
         var mc = Minecraft.getInstance();
-        boolean text_field_focus_ready = 
+        boolean text_field_focus_ready =
             this.searchField.focusState() == TextField.FocusState.READY
             && keyCode == mc.options.keyJump.getKey().getValue();
         if (text_field_focus_ready)
             this.searchField.setFocusState(TextField.FocusState.FOCUS);
-        
+
         if (keyCode == mc.options.keyShift.getKey().getValue())
             this.isSneakPressed = false;
 
         //Confirm when key released instead of pressed to avoid propagating
         //the key press outside of the screen lifetime.
-        boolean is_confirm = 
+        boolean is_confirm =
             keyCode == InputConstants.KEY_RETURN || (
                 keyCode == mc.options.keyJump.getKey().getValue()
                 && !isSneakPressed
@@ -209,24 +217,25 @@ public class StringEntrySelectScreen extends Screen {
             if (selected_indx.isPresent()) {
                 onEntrySelected(selected_indx.get());
             }
-            
+
             return true;
         }
-        return super.keyReleased(keyCode, scanCode, modifiers);
+        return super.keyReleased(event);
     }
-    
+
     @Override
-    public boolean mouseClicked(double x, double y, int p_94697_) {
-        
+    public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
+        double x = event.x();
+        double y = event.y();
         this.searchField.setFocusState(TextField.FocusState.NONE);
-        
+
         var clicked_id = this.entryView
             .getHoveringEntry(x, y, filteredIndexes);
         if (clicked_id.isPresent()) {
             onEntrySelected(clicked_id.get());
             return true;
         }
-        return super.mouseClicked(x, y, p_94697_);
+        return super.mouseClicked(event, flag);
     }
 
     protected void onEntrySelected(int id) {
@@ -334,7 +343,6 @@ public class StringEntrySelectScreen extends Screen {
 
         public boolean keyPressed(boolean textFieldFocused, int keyCode, int scanCode, int modifiers) {
             var mc = Minecraft.getInstance();
-            var mouseKey = InputConstants.getKey(keyCode, scanCode);
             
             boolean is_down = 
                 keyCode == InputConstants.KEY_DOWN || (
@@ -402,13 +410,13 @@ public class StringEntrySelectScreen extends Screen {
             }
         }
 
-        protected void render(GuiGraphics graphics) {
+        protected void extractRenderState(GuiGraphicsExtractor graphics) {
             parent.drawSelectAreaBackground(graphics);
             drawEntries(graphics);            
             parent.drawPageIndicator(graphics, pageCount, activePage);
         }
 
-        protected void drawEntries(GuiGraphics graphics) {
+        protected void drawEntries(GuiGraphicsExtractor graphics) {
             int half_width = parent.width / 2;
             int half_height = parent.height / 2;
     
@@ -560,7 +568,7 @@ public class StringEntrySelectScreen extends Screen {
             }
         }
 
-        public void render(GuiGraphics graphics) {
+        public void extractRenderState(GuiGraphicsExtractor graphics) {
             final int selected_area_size = parent.getSelectAreaSize();
 
             int half_width = parent.width / 2;
@@ -573,7 +581,7 @@ public class StringEntrySelectScreen extends Screen {
                 half_height + selected_area_size / 2 + 5, half_width + selected_area_size / 2, 
                 half_height + selected_area_size / 2 + 17, Integer.MIN_VALUE);
             if (this.isActive())
-                graphics.drawString(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
+                graphics.text(parent.font, this.searchString + "_", txtorgx, txtorgy,  0xffffffff);
         }
 
         public void insertText(String x) {

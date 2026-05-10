@@ -27,6 +27,5 @@
     "server": [],
     "injectors": {
       "defaultRequire": 1
-    },
-    "refmap": "doggytalents.refmap.json"
+    }
 } 

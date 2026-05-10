@@ -1,6 +1,6 @@
 package doggytalents.client.entity.render.world;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import doggytalents.DoggyTalents;
@@ -14,15 +14,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 
 import java.util.Optional;
 
 public class BedFinderRenderer {
 
-    public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_PARTICLES) 
-            return;
+    public static void onWorldRenderLast(RenderLevelStageEvent.AfterTranslucentParticles event) {
         Player player = Minecraft.getInstance().player;
         for (Entity passenger : player.getPassengers()) {
             if (passenger instanceof Dog) {
@@ -51,9 +48,8 @@ public class BedFinderRenderer {
         // RenderSystem.enableBlend();
         // RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
-        // // TODO: This line has no effect RenderSystem.lineWidth(2.0F);
+        // // This line has no effect RenderSystem.lineWidth(2.0F);
 
-        // //TODO 1.19.4 ??? 
         // //RenderSystem.disableTexture();
         // Vec3 vec3d = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         // double d0 = vec3d.x();

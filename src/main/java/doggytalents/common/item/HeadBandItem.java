@@ -21,12 +21,12 @@ public class HeadBandItem extends AccessoryItem{
         super(type, properties);
     }
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
         if (this == DoggyItems.HEAD_BAND_BLANK.get())
             return;
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id));
+        var desc_id = this.getDescriptionId() + ".description";
+        components.accept(Component.translatable(desc_id));
     }
 
 }

@@ -8,8 +8,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.element.ElementPosition.ChildDirection;
+import net.minecraft.client.input.MouseButtonEvent;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -43,12 +44,12 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         graphics.enableScissor(
             this.getRealX(), this.getRealY(), 
             this.getRealX() + this.getSizeX(), 
             this.getRealY() + this.getSizeY());
-        super.render(graphics, mouseX, mouseY, partialTicks);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 
         long millis = System.currentTimeMillis();
         long millis_elapsed = millis - millis0;
@@ -74,7 +75,7 @@ public class ScrollView extends AbstractElement {
         }
     }
 
-    private void drawScrollBar(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void drawScrollBar(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int fullBarSize = this.getSizeY() - 2*SCROLL_BAR_MARGIN_HORZ;
         int containerSize = this.container.getSizeY();
         if (containerSize <= 0) return;
@@ -111,7 +112,7 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
     }
 
     public void addScrollChildren(AbstractElement element) {
@@ -133,16 +134,15 @@ public class ScrollView extends AbstractElement {
     }
 
     @Override
-    public boolean mouseClicked(double x, double y, int p_94697_) {                                                                                                                                                                                                             
-        if (!this.isMouseOver(x, y)) return false;
-        return super.mouseClicked(x, y, p_94697_);
+    public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
+        if (!this.isMouseOver(event.x(), event.y())) return false;
+        return super.mouseClicked(event, flag);
     }
 
     private static class ScrollContentContainer extends AbstractElement {
         
         public ScrollContentContainer(AbstractElement parent, Screen screen) {
             super(parent, screen);
-            //TODO Auto-generated constructor stub
         }
 
         @Override
@@ -154,7 +154,7 @@ public class ScrollView extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         }
 
         public int getOffset() {

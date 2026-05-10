@@ -19,8 +19,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -39,7 +42,7 @@ public class DogRespawnData implements IDogData {
     private CompoundTag data;
     private IncapacitatedSyncState killedBy = IncapacitatedSyncState.NONE;
 
-    //TODO Make it list you can only add too
+    // consider making this append-only
     private static final List<String> TAGS_TO_REMOVE = Lists.newArrayList(
             "Pos", "Health", "Motion", "Rotation", "FallDistance", "Fire", "Air", "OnGround",
             "Dimension", "PortalCooldown", "Passengers", "Leash", "InLove", "Leash", "HurtTime",
@@ -77,12 +80,12 @@ public class DogRespawnData implements IDogData {
 
     public void populate(Dog dogIn) {
         this.data = new CompoundTag();
-        
+
         this.ownerUUID = dogIn.getOwnerUUID();
         var customName = dogIn.getCustomName();
         if (customName != null) {
             this.dogName = Optional.ofNullable(customName.getString());
-        } 
+        }
 
         var deathCauseOptional = dogIn.getDogDeathCause();
         if (deathCauseOptional.isPresent()) {
@@ -95,7 +98,7 @@ public class DogRespawnData implements IDogData {
         } else {
             writeImportantDataToKeep(dogIn, this.data);
         }
-        
+
         this.data.remove("UUID");
         this.data.remove("LoveCause");
 
@@ -104,7 +107,9 @@ public class DogRespawnData implements IDogData {
     }
 
     private void writeAlldataAndRemoveSpecific(Dog dog, CompoundTag target) {
-        dog.saveWithoutId(target);
+        var valueOutput = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+        dog.saveWithoutId(valueOutput);
+        target.merge(valueOutput.buildResult());
         // Remove tags that don't need to be saved
         for (String tag : TAGS_TO_REMOVE) {
             target.remove(tag);
@@ -128,11 +133,11 @@ public class DogRespawnData implements IDogData {
         target.putInt(STORAGE_AGE_TAG, dog.getAge());
         var owner_uuid = dog.getOwnerUUID();
         if (owner_uuid != null) {
-            target.putUUID(STORAGE_OWNER_TAG, owner_uuid);
+            target.putString(STORAGE_OWNER_TAG, owner_uuid.toString());
         }
         var custom_name = dog.getCustomName();
         if (custom_name != null) {
-            target.putString(STORAGE_NAME_TAG, Component.Serializer.toJson(custom_name, dog.registryAccess()));
+            target.putString(STORAGE_NAME_TAG, custom_name.getString());
         }
         keepAdditionalTag(target, dog);
     }
@@ -143,8 +148,9 @@ public class DogRespawnData implements IDogData {
             var extraTagsToKeep = ConfigHandler.RESPAWN_TAGS.TAGS_TO_KEEP.get();
             if (extraTagsToKeep == null || extraTagsToKeep.isEmpty())
                 return;
-            var nonDTNTags = new CompoundTag();
-            dog.addNonDTNAdditionalData(nonDTNTags);
+            var nonDTNOutput = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+            dog.addNonDTNAdditionalData(nonDTNOutput);
+            var nonDTNTags = nonDTNOutput.buildResult();
             for (var toKeepStr : extraTagsToKeep) {
                 if (!nonDTNTags.contains(toKeepStr))
                     continue;
@@ -159,14 +165,17 @@ public class DogRespawnData implements IDogData {
     }
 
     private void restoreAndConsumeImportantDataIfNeeded(Dog dog, CompoundTag tag) {
-        if (tag.contains(STORAGE_AGE_TAG, Tag.TAG_INT)) {
-            dog.setAge(tag.getInt(STORAGE_AGE_TAG));
+        if (tag.contains(STORAGE_AGE_TAG)) {
+            dog.setAge(tag.getIntOr(STORAGE_AGE_TAG, 0));
             tag.remove(STORAGE_AGE_TAG);
         }
-        if (tag.hasUUID(STORAGE_OWNER_TAG)) {
+        if (tag.contains(STORAGE_OWNER_TAG)) {
             var correct_owner_uuid = this.ownerUUID;
             try {
-                correct_owner_uuid = tag.getUUID(STORAGE_OWNER_TAG);
+                var uuidStr = tag.getStringOr(STORAGE_OWNER_TAG, "");
+                if (!uuidStr.isEmpty()) {
+                    correct_owner_uuid = UUID.fromString(uuidStr);
+                }
             } catch (Exception e) {
 
             }
@@ -176,37 +185,43 @@ public class DogRespawnData implements IDogData {
         }
         if (tag.contains(STORAGE_NAME_TAG)) {
             try {
-                var name_c1_str = tag.getString(STORAGE_NAME_TAG);
-                dog.setDogCustomName(Component.Serializer.fromJson(name_c1_str, dog.registryAccess()));
+                var name_str = tag.getStringOr(STORAGE_NAME_TAG, "");
+                if (!name_str.isEmpty()) {
+                    dog.setDogCustomName(Component.literal(name_str));
+                }
             } catch (Exception e) {
-    
+
             }
             tag.remove(STORAGE_NAME_TAG);
         }
-        
+
     }
 
     @Nullable
     public Dog respawn(ServerLevel worldIn, Player playerIn, BlockPos pos) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn);
+        Dog dog = DoggyEntityTypes.DOG.get().create(worldIn, EntitySpawnReason.LOAD);
 
         // Failed for some reason
         if (dog == null) {
             return null;
         }
-        
-        dog.moveTo(Vec3.atBottomCenterOf(pos));
+
+        dog.snapTo(Vec3.atBottomCenterOf(pos));
         restoreAndConsumeImportantDataIfNeeded(dog, this.data);
-        CompoundTag compoundnbt = dog.saveWithoutId(new CompoundTag());
+        var saveOutput = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+        dog.saveWithoutId(saveOutput);
+        CompoundTag compoundnbt = saveOutput.buildResult();
         UUID uuid = dog.getUUID();
         compoundnbt.merge(this.data);
-        dog.load(compoundnbt);
-        boolean useOldUUID = 
+        var loadInput = TagValueInput.create(ProblemReporter.DISCARDING, worldIn.registryAccess(), compoundnbt);
+        dog.load(loadInput);
+        boolean useOldUUID =
             !ConfigHandler.SERVER.DISABLE_PRESERVE_UUID.get()
             && worldIn.getEntity(this.uuid) == null;
         dog.setUUID(useOldUUID ? this.uuid : uuid);
 
         dog.setOrderedToSit(true);
+
         if (killedBy != null && killedBy != IncapacitatedSyncState.NONE) {
             if (dog.getDogIncapValue() <= 0)
                 dog.setDogIncapValue(dog.getDefaultInitIncapVal());
@@ -225,35 +240,40 @@ public class DogRespawnData implements IDogData {
         }
 
         DogDuplicationDetection.onAboutToRespawn(dog);
-        
+
         worldIn.addFreshEntityWithPassengers(dog);
         DogLocationStorage.setSessionUUIDFor(dog, uuid);
-        
+
 
         return dog;
     }
 
     public void read(CompoundTag compound) {
-        this.data = compound.getCompound("data");
-        if (compound.contains("dog_name", Tag.TAG_STRING)) {
+        this.data = compound.getCompoundOrEmpty("data");
+        if (compound.contains("dog_name")) {
             try {
-                var name_str = compound.getString("dog_name");
+                var name_str = compound.getStringOr("dog_name", "");
                 this.dogName = Optional.ofNullable(name_str);
             } catch (Exception e) {}
         }
-        if (compound.hasUUID("owner_uuid")) {
-            this.ownerUUID = compound.getUUID("owner_uuid");
+        if (compound.contains("owner_uuid")) {
+            try {
+                var uuidStr = compound.getStringOr("owner_uuid", "");
+                if (!uuidStr.isEmpty()) {
+                    this.ownerUUID = UUID.fromString(uuidStr);
+                }
+            } catch (Exception e) {}
         }
         readKilledBy(compound);
     }
 
     public CompoundTag write(CompoundTag compound) {
         compound.put("data", this.data);
-        if (this.dogName.isPresent()) { 
+        if (this.dogName.isPresent()) {
             compound.putString("dog_name", this.dogName.get());
         }
         if (this.ownerUUID != null) {
-            compound.putUUID("owner_uuid", this.ownerUUID);
+            compound.putString("owner_uuid", this.ownerUUID.toString());
         }
         writeKilledBy(compound);
         return compound;
@@ -271,12 +291,12 @@ public class DogRespawnData implements IDogData {
     }
 
     public void readKilledBy(CompoundTag compound) {
-        if (!compound.contains("dog_killed_by", Tag.TAG_COMPOUND))
+        if (!compound.contains("dog_killed_by"))
             return;
-        var killedByTag = compound.getCompound("dog_killed_by");
-        var typeId = killedByTag.getInt("typeId");
-        var poseId = killedByTag.getInt("poseId");
-        this.killedBy = 
+        var killedByTag = compound.getCompoundOrEmpty("dog_killed_by");
+        var typeId = killedByTag.getIntOr("typeId", 0);
+        var poseId = killedByTag.getIntOr("poseId", 0);
+        this.killedBy =
             new IncapacitatedSyncState(DefeatedType.byId(typeId), BandaidState.NONE, poseId);
     }
 

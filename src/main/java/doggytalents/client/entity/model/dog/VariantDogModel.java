@@ -143,8 +143,8 @@ public class VariantDogModel extends DogModel {
     @Override
     public void copyFrom(DogModel dogModel) {
         super.copyFrom(dogModel);
-        this.realTail2.copyFrom(this.realTail);
-        this.realTail3.copyFrom(this.realTail);
+        this.realTail2.loadPose(this.realTail.storePose());
+        this.realTail3.loadPose(this.realTail.storePose());
     }
 
     @Override

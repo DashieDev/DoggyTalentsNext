@@ -2,19 +2,19 @@ package doggytalents.api.events;
 
 import java.util.List;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.Event;
 import net.neoforged.fml.event.IModBusEvent;
 
 public class RegisterDogSkinJsonPathEvent extends Event implements IModBusEvent {
     
-    private List<ResourceLocation> paths;
+    private List<Identifier> paths;
 
-    public RegisterDogSkinJsonPathEvent(List<ResourceLocation> paths) {
+    public RegisterDogSkinJsonPathEvent(List<Identifier> paths) {
         this.paths = paths;
     }
 
-    public void register(ResourceLocation path) {
+    public void register(Identifier path) {
         this.paths.add(path);
     }
 }

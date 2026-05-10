@@ -6,22 +6,21 @@ import doggytalents.api.registry.IBeddingMaterial;
 import doggytalents.api.registry.ICasingMaterial;
 import doggytalents.common.block.DogBedMaterialManager;
 import doggytalents.common.util.DogBedUtil;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<CraftingInput>*/ {
 
-    public DogBedRecipe(CraftingBookCategory p_249010_) {
-        super(p_249010_);
+    public DogBedRecipe() {
+        
     }
 
     @Override
@@ -71,21 +70,20 @@ public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<Crafti
 
     //     for (int i = 0; i < nonnulllist.size(); ++i) {
     //         ItemStack itemstack = inv.getItem(i);
-    //         nonnulllist.set(i, net.minecraftforge.common.ForgeHooks.getCraftingRemainingItem(itemstack)); //TODO?
+    //         // NeoForge equivalent: nonnulllist.set(i, ForgeHooks.getCraftingRemainingItem(itemstack));
     //     }
 
     //     return nonnulllist;
     // }
 
-    //Is on a 3x3 grid or bigger
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= 3 && height >= 3;
-    }
+    public static final DogBedRecipe INSTANCE = new DogBedRecipe();
+    public static final MapCodec<DogBedRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, DogBedRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+    public static final RecipeSerializer<DogBedRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return DoggyRecipeSerializers.DOG_BED.get();
+    public RecipeSerializer<DogBedRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     // @Override
@@ -99,7 +97,7 @@ public class DogBedRecipe extends CustomRecipe /*implements IShapedRecipe<Crafti
     // }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider p_267165_) {
+    public ItemStack assemble(CraftingInput inv) {
         var beddingId = DogBedUtil.getBeddingFromStack(inv.getItem(1))
             .orElse(DogBedMaterialManager.NaniBedding.NULL);
         var casingId = DogBedUtil.getCasingFromStack(inv.getItem(0))

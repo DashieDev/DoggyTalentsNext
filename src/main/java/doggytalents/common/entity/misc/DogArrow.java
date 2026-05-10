@@ -12,6 +12,7 @@ import doggytalents.common.event.EventHandler;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SpellParticleOption;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,7 +24,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -95,7 +96,7 @@ public class DogArrow extends AbstractArrow {
         if (this.isDogSpectralArrow()) {
             updateSpectralArrow();
         } else {
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 makeClientArrowParticle();
             } else {
                 updateEffectTimeout();
@@ -105,7 +106,7 @@ public class DogArrow extends AbstractArrow {
 
     private void makeClientArrowParticle() {
         int color = this.getColor();
-        if (this.inGround) {
+        if (this.isInGround()) {
             if (this.inGroundTime % 5 == 0) {
                 this.makeParticle(1, color);
             }
@@ -116,7 +117,7 @@ public class DogArrow extends AbstractArrow {
 
     private void updateEffectTimeout() {
         boolean effect_expired = 
-            this.inGround && this.inGroundTime >= 600
+            this.isInGround() && this.inGroundTime >= 600
             && this.hasPotionContents();
         if (effect_expired) {
             this.clearPotionContents();
@@ -124,8 +125,8 @@ public class DogArrow extends AbstractArrow {
     }
 
     private void updateSpectralArrow() {
-        if (this.level().isClientSide && !this.inGround) {
-            this.level().addParticle(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+        if (this.level().isClientSide() && !this.isInGround()) {
+            this.level().addParticle(SpellParticleOption.create(ParticleTypes.INSTANT_EFFECT, 0xFFFFFF, 1.0F), this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
         }
     }
 
@@ -227,19 +228,24 @@ public class DogArrow extends AbstractArrow {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
+    public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        var compound = new net.minecraft.nbt.CompoundTag();
         this.dogOwnerUUID.ifPresent(x -> {
-            tag.putUUID("dtn_dog_owner_id", x);
+            compound.putIntArray("dtn_dog_owner_id", net.minecraft.core.UUIDUtil.uuidToIntArray(x));
         });
+        output.store(compound);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        if (tag.hasUUID("dtn_dog_owner_id")) {
-            var uuid = tag.getUUID("dtn_dog_owner_id");
-            this.dogOwnerUUID = Optional.ofNullable(uuid);
+    public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput input) {
+        super.readAdditionalSaveData(input);
+        @SuppressWarnings("deprecation")
+        var compound = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(
+            net.minecraft.nbt.CompoundTag.CODEC)).orElse(new net.minecraft.nbt.CompoundTag());
+        var uuidArr = compound.getIntArray("dtn_dog_owner_id").orElse(null);
+        if (uuidArr != null && uuidArr.length == 4) {
+            this.dogOwnerUUID = Optional.of(net.minecraft.core.UUIDUtil.uuidFromIntArray(uuidArr));
         }
     }
 

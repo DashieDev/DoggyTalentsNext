@@ -9,7 +9,7 @@ import doggytalents.common.util.DogBedUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -30,7 +30,7 @@ import static doggytalents.DoggyBlocks.*;
 
 public class DoggyItemGroups {
 
-    //TODO using vanilla key, not forge's key ??? 
+    // uses vanilla registry key (NeoForge no longer has a separate key here)
     public static final DeferredRegister<CreativeModeTab> ITEM_GROUP = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     public static DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN
         = register("main", () -> CreativeModeTab.builder()

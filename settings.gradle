@@ -4,3 +4,9 @@ pluginManagement {
         maven { url = 'https://maven.neoforged.net/releases' }
     }
 }
+
+// TODO: Enable toolchain auto-provisioning for Java 25 when available
+// plugins {
+//     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+// }
+

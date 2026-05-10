@@ -8,7 +8,7 @@ import doggytalents.common.util.Util;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
@@ -21,7 +21,7 @@ public class DoggyRegistries {
         public static final ResourceKey<Registry<DogVariant>> DOG_VARIANT = regKey("dog_variant");
         public static final ResourceKey<Registry<TalentOption<?>>> TALENT_OPTION = regKey("talent_options");
         // public static final ResourceKey<Registry<Bed>> BEDDING_REGISTRY = regKey("bedding");
-        // public static final ResourceLocation CASING_REGISTRY = regKey("casing");
+        // public static final Identifier CASING_REGISTRY = regKey("casing");
     }
 
     public static Supplier<Registry<DogVariant>> DOG_VARIANT;
@@ -60,7 +60,7 @@ public class DoggyRegistries {
     }
 
     private static <T> Supplier<Registry<T>> makeRegistry(NewRegistryEvent event, 
-        final ResourceKey<Registry<T>> key, Class<T> type, ResourceLocation defaultKey) {
+        final ResourceKey<Registry<T>> key, Class<T> type, Identifier defaultKey) {
         var builder = new RegistryBuilder<T>(key);
         builder.sync(true);
         builder.defaultKey(defaultKey);

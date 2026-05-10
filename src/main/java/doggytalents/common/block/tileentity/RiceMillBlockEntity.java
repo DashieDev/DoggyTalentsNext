@@ -16,7 +16,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -217,7 +220,7 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     private static void grindTick(Level level, BlockPos pos, BlockState blockState, RiceMillBlockEntity mill) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         
         var inputStack = mill.container.getItem(INPUT_SLOT[0]);
@@ -395,7 +398,7 @@ public class RiceMillBlockEntity extends BlockEntity {
 
     private int tickTillUpdateEject = 8;
     private static void ejectTick(Level level, RiceMillBlockEntity mill) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         if (--mill.tickTillUpdateEject > 0)
             return;
@@ -515,7 +518,7 @@ public class RiceMillBlockEntity extends BlockEntity {
         var state = this.getBlockState();
         var aabb = new AABB(pos/*, pos.offset(1, 1, 1)*/);
         var facing = RiceMillBlock.getFacing(state);
-        var facing_norm = facing.getNormal();
+        var facing_norm = facing.getUnitVec3i();
         var expand_vec = new Vec3(facing_norm.getX(), 1.5, facing_norm.getZ());
         aabb = aabb.expandTowards(expand_vec);
         var side_axis = facing.getClockWise().getAxis();
@@ -529,17 +532,24 @@ public class RiceMillBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider prov) {
-        super.loadAdditional(tag, prov);
-        container.deserializeNBT(tag, prov);
-        this.grindingTime = tag.getInt("grindingTime");
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        var prov = input.lookup();
+        @SuppressWarnings("deprecation")
+        var compound = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(
+            CompoundTag.CODEC)).orElse(new CompoundTag());
+        container.deserializeNBT(compound, prov);
+        this.grindingTime = compound.getIntOr("grindingTime", 0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider prov) {
-        super.saveAdditional(tag, prov);
-        container.serializeNBT(tag, prov);
-        tag.putInt("grindingTime", this.grindingTime);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        var prov = this.level != null ? this.level.registryAccess() : net.minecraft.core.RegistryAccess.EMPTY;
+        var compound = new CompoundTag();
+        container.serializeNBT(compound, prov);
+        compound.putInt("grindingTime", this.grindingTime);
+        output.store(compound);
     }
 
     public static class RiceMillSyncedData implements ContainerData {
@@ -623,13 +633,16 @@ public class RiceMillBlockEntity extends BlockEntity {
         
         public void serializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
             var itemsList = new ListTag();
+            var nbtOps = prov.createSerializationContext(NbtOps.INSTANCE);
 
             for(int i = 0; i < this.getContainerSize(); i++) {
                 ItemStack stack = this.getItem(i);
                 if (!stack.isEmpty()) {
-                    CompoundTag itemTag = new CompoundTag();
-                    itemTag.putByte("Slot", (byte) i);
-                    itemsList.add(stack.save(prov, itemTag));
+                    var encoded = ItemStack.CODEC.encodeStart(nbtOps, stack).result().orElse(null);
+                    if (encoded instanceof CompoundTag ct) {
+                        ct.putByte("Slot", (byte) i);
+                        itemsList.add(ct);
+                    }
                 }
             }
 
@@ -637,14 +650,15 @@ public class RiceMillBlockEntity extends BlockEntity {
         }
 
         public void deserializeNBT(CompoundTag compound, HolderLookup.Provider prov) {
-            if (compound.contains("MillItems", Tag.TAG_LIST)) {
-                ListTag tagList = compound.getList("MillItems", Tag.TAG_COMPOUND);
+            if (compound.contains("MillItems")) {
+                ListTag tagList = compound.getListOrEmpty("MillItems");
+                var nbtOps = prov.createSerializationContext(NbtOps.INSTANCE);
                 for (int i = 0; i < tagList.size(); i++) {
-                    CompoundTag itemTag = tagList.getCompound(i);
-                    int slot = itemTag.getInt("Slot");
+                    CompoundTag itemTag = tagList.getCompoundOrEmpty(i);
+                    int slot = itemTag.getIntOr("Slot", 0);
 
                     if (slot >= 0 && slot < this.getContainerSize()) {
-                        this.setItem(slot, ItemStack.parse(prov, itemTag).orElse(ItemStack.EMPTY));
+                        this.setItem(slot, ItemStack.CODEC.parse(nbtOps, itemTag).result().orElse(ItemStack.EMPTY));
                     }
                 }
             }

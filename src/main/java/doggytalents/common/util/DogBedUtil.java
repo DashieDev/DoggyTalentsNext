@@ -10,7 +10,7 @@ import doggytalents.common.block.tileentity.DogBedTileEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -76,7 +76,7 @@ public class DogBedUtil {
     }
 
     public static <T extends IDogBedMaterial> Optional<T> getBedMaterialFromStack(
-        ItemStack stack, Function<ResourceLocation, T> bed_material_getter) {
+        ItemStack stack, Function<Identifier, T> bed_material_getter) {
         
         if (stack.isEmpty())
             return Optional.empty();

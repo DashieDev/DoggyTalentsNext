@@ -11,7 +11,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -99,9 +99,9 @@ public class ItemUtil {
 
     public static CompoundTag getTagElement(ItemStack stack, String id) {
         var tag = getTag(stack);
-        if (!tag.contains(id, Tag.TAG_COMPOUND))
+        if (!tag.contains(id))
             return null;
-        return tag.getCompound(id);
+        return tag.getCompoundOrEmpty(id);
     }
 
     public static boolean hasTag(ItemStack stack) {
@@ -116,7 +116,7 @@ public class ItemUtil {
     }
 
     public static boolean fireResistant(ItemStack stack) {
-        return stack.has(DataComponents.FIRE_RESISTANT);
+        return stack.has(DataComponents.DAMAGE_RESISTANT);
     }
 
     public static boolean isEddible(ItemStack stack) {
@@ -144,13 +144,13 @@ public class ItemUtil {
         if (!stack.has(DataComponents.DYED_COLOR))
             return default_color;
         return stack.getOrDefault(
-            DataComponents.DYED_COLOR, 
-            new DyedItemColor(default_color, false)
+            DataComponents.DYED_COLOR,
+            new DyedItemColor(default_color)
         ).rgb() | color_mask;
     }
 
     public static void setDyeColorForStack(ItemStack stack, int color) {
-        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color, true));
+        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color));
     }
 
     public static Optional<ArmorTrim> getTrim(ItemStack stack) {
@@ -160,7 +160,7 @@ public class ItemUtil {
     }
 
     public static FoodProperties food(ItemStack stack) {
-        return stack.getFoodProperties(null);
+        return stack.get(DataComponents.FOOD);
     }
 
     public static CustomData getWrappedTag(ItemStack stack) {
@@ -169,8 +169,8 @@ public class ItemUtil {
     }
 
     public static int getEnchantmentLevelForItem(ResourceKey<Enchantment> key, RegistryAccess prov, ItemStack stack) {
-        var reg = prov.registryOrThrow(Registries.ENCHANTMENT);
-        var holder = reg.getHolder(key);
+        var reg = prov.lookupOrThrow(Registries.ENCHANTMENT);
+        var holder = reg.get(key);
         if (!holder.isPresent())
             return 0;
         return stack.getEnchantmentLevel(holder.get());

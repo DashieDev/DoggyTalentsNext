@@ -33,7 +33,8 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
     }
 
     public DogFoodProjectile(Level worldIn, LivingEntity livingEntityIn) {
-        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn, worldIn);
+        super(DoggyEntityTypes.DOG_FOOD_PROJ.get(), livingEntityIn.getX(), livingEntityIn.getEyeY() - 0.1, livingEntityIn.getZ(), worldIn);
+        this.setOwner(livingEntityIn);
     }
 
     // public DogFoodProjectile(PlayMessages.SpawnEntity packet, Level worldIn) {
@@ -42,17 +43,17 @@ public class DogFoodProjectile extends ThrowableProjectile implements IEntityWit
 
     @Override
     protected void onHit(HitResult hitResult) {
-        if (!this.level().isClientSide && !this.foodStack.isEmpty()) {
-            this.spawnAtLocation(foodStack);
+        if (!this.level().isClientSide() && !this.foodStack.isEmpty() && this.level() instanceof net.minecraft.server.level.ServerLevel sl) {
+            this.spawnAtLocation(sl, foodStack);
         }
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide())
             this.discard();
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide())
             scanDogAroundAndTrigger();
     }
 

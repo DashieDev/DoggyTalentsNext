@@ -38,12 +38,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.server.permissions.LevelBasedPermissionSet;
+import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
@@ -577,7 +579,7 @@ public class DogUtil {
                 if (dataDim == null) {
                     dataDim = Level.OVERWORLD;
                 }
-                var server = owner.getServer();
+                var server = sLevel.getServer();
                 if (server == null)
                     return;
                 var dogLevel = server.getLevel(dataDim);
@@ -603,9 +605,9 @@ public class DogUtil {
     public static void attemptToTeleportDogToBedOrSendPromise(@Nonnull Dog dog) {
         var bedPos = dog.getBedPos();
         if (!bedPos.isPresent()) return;
-        var chunkpos = new ChunkPos(bedPos.get());
+        var chunkpos = ChunkPos.containing(bedPos.get());
         var owner = dog.getOwner();
-        if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
+        if (dog.level().hasChunk(chunkpos.x(), chunkpos.z())) {
             if (isTeleportSafeBlockMidAir(dog, bedPos.get().above())) {
                 teleportDogAbs(dog, bedPos.get().above());
                 dog.setOrderedToSit(true);
@@ -639,7 +641,7 @@ public class DogUtil {
 
     public static void teleportDogAbs(Dog dog, BlockPos target) {
         dog.fallDistance = 0;
-        dog.moveTo(target.getX() + 0.5F, target.getY(), target.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
+        dog.setPos(target.getX() + 0.5, target.getY(), target.getZ() + 0.5);
         dog.getNavigation().stop();
         dog.breakMoveControl();
     }
@@ -652,8 +654,16 @@ public class DogUtil {
         return Mth.floor(dog.getY() + 0.5);
     }
 
+    public static boolean hasPermissions(Player player, int level) {
+        var perms = player.permissions();
+        if (perms instanceof LevelBasedPermissionSet lbps) {
+            return lbps.level().isEqualOrHigherThan(PermissionLevel.byId(level));
+        }
+        return false;
+    }
+
     public static boolean playerCanTrainTalent(Player player, Talent talent) {
-        if (player != null && player.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (player != null && DogUtil.hasPermissions(player, Constants.OPERATOR_PERMISSION))
             return true;
         return (ConfigHandler.TALENT.getFlag(talent));
     }
@@ -741,15 +751,14 @@ public class DogUtil {
     public static boolean isDangerPathType(PathType pathType) {
         switch (pathType) {
         case POWDER_SNOW:
-        case DANGER_POWDER_SNOW:
+        case ON_TOP_OF_POWDER_SNOW:
         case LAVA:
-        case DANGER_FIRE:
-        case DAMAGE_FIRE:
-        case DANGER_OTHER:
-        case DAMAGE_OTHER:
+        case FIRE:
+        case FIRE_IN_NEIGHBOR:
         case DAMAGE_CAUTIOUS:
-        case DANGER_TRAPDOOR:
         case TRAPDOOR:
+        case ON_TOP_OF_TRAPDOOR:
+        case BIG_MOBS_CLOSE_TO_DANGER:
             return true;
         default:
             return false;
@@ -757,8 +766,7 @@ public class DogUtil {
     }
 
     public static boolean isScute(ItemStack stack) {
-        return ArmorMaterials.ARMADILLO.value().repairIngredient()
-            .get().test(stack);
+        return stack.is(ArmorMaterials.ARMADILLO_SCUTE.repairIngredient());
     }
 
     public static int getWolfArmorRepairVal(ItemStack stack) {

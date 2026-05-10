@@ -25,7 +25,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 
 public class RescueDogTalent extends TalentInstance {
@@ -54,7 +54,7 @@ public class RescueDogTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level().isClientSide) {
+        if (abstractDog.level().isClientSide()) {
             return;
         }
 
@@ -84,7 +84,7 @@ public class RescueDogTalent extends TalentInstance {
         dog.triggerAction(new RescueAction(dog, this, target));
     }
 
-    //TODO Decrease the healCost due to healing is more difficult now.
+    // healCost may need tuning
     public int healCost(AbstractDog dog, LivingEntity target) {
         int cost;
         if (this.level() >= 5) {
@@ -96,7 +96,7 @@ public class RescueDogTalent extends TalentInstance {
         return cost;
     }
 
-    //TODO need tuned ? 
+    // may need tuning
     public float healAmount(AbstractDog dog, LivingEntity target) {
         //Bonus level 3+
         float bonus = 0;
@@ -273,7 +273,7 @@ public class RescueDogTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.renderBox = compound.getBoolean("renderBox");
+        this.renderBox = compound.getBooleanOr("renderBox", false);
     }
 
     @Override
@@ -358,7 +358,7 @@ public class RescueDogTalent extends TalentInstance {
                     }
                 }
             } else {
-                //TODO maintain some space ??
+                // consider maintaining space
                 //this.dog.getNavigation().stop();
                 if (this.talentInst.canHealTarget(dog, target))
                     this.talentInst.heal(dog, target);
@@ -437,7 +437,6 @@ public class RescueDogTalent extends TalentInstance {
     //             if (--this.ticksUntilPathRecalc <= 0) {
     //                 this.ticksUntilPathRecalc = 10;
     //                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-    //                     //TODO ?
     //                     // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
     //                     //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
     //                     // } else {
@@ -447,7 +446,7 @@ public class RescueDogTalent extends TalentInstance {
     //                 }
     //             }
     //         } else {
-    //             //TODO maintain some space ??
+    //             // consider maintaining space
     //             //this.dog.getNavigation().stop();
     //             if (this.talentInst.canHealTarget(dog, target))
     //                 this.talentInst.heal(dog, target);

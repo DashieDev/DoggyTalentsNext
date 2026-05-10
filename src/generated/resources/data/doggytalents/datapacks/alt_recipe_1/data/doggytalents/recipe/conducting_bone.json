@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "D": {
-      "item": "minecraft:diamond"
-    },
-    "S": {
-      "item": "minecraft:netherite_scrap"
-    },
-    "T": {
-      "item": "doggytalents:training_treat"
-    }
+    "B": "minecraft:bone",
+    "D": "minecraft:diamond",
+    "S": "minecraft:netherite_scrap",
+    "T": "doggytalents:training_treat"
   },
   "pattern": [
     " D ",

@@ -42,7 +42,7 @@ public class DogRandomStrollGoal extends RandomStrollGoal {
         return super.canContinueToUse();
     }
     
-    //  TODO : Make this more user friendly, maybe make this into a talent or mode
+    //  Make this more user friendly, maybe make this into a talent or mode
     //
     //  But i can see people is going to need this cause i once got my TorchDog into lava
     //Because this reason here.., and it is also kinda annoying to see dogs going in 
@@ -67,7 +67,7 @@ public class DogRandomStrollGoal extends RandomStrollGoal {
     @Nullable
     @Override
     protected Vec3 getPosition() {
-        boolean underwater_random = this.dog.isInWaterOrBubble()
+        boolean underwater_random = this.dog.isInWater()
             && this.dog.canSwimUnderwater()
             && this.dog.isDogSwimming();
         if (underwater_random)  
@@ -77,7 +77,7 @@ public class DogRandomStrollGoal extends RandomStrollGoal {
     }
 
     private Vec3 getDogWaterAvoidRandomPos() {
-        if (this.dog.isInWaterOrBubble()) {
+        if (this.dog.isInWater()) {
             Vec3 vec3 = LandRandomPos.getPos(this.dog, 15, 7);
             return vec3 == null ? super.getPosition() : vec3;
         } else {

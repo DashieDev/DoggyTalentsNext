@@ -29,7 +29,7 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
     private static final int STOP_FOLLOW_DISTANCE_SQR = 4;
 
     public GuardModeGoal(Dog dog) {
-        super(dog, Mob.class, 3, false, false, (e) -> {
+        super(dog, Mob.class, 3, false, false, (e, level) -> {
             if (!(e instanceof Enemy)) return false;
             return true;
         });
@@ -57,7 +57,8 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
 
     @Override
     protected void findTarget() {
-       this.target = this.dog.level().getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(GUARD_DISTANCE));
+       this.target = this.dog.level() instanceof net.minecraft.server.level.ServerLevel sLevel ?
+           sLevel.getNearestEntity(this.targetType, this.targetConditions, this.dog, this.owner.getX(), this.owner.getEyeY(), this.owner.getZ(), this.getTargetSearchArea(GUARD_DISTANCE)) : null;
     }
 
     @Override
@@ -168,24 +169,23 @@ public class GuardModeGoal extends NearestAttackableTargetGoal<Mob> {
                 //guard dogs' HEALTH instead
                 return;
             }
-            this.nearestDanger = this.dog.level()
-                .getNearestEntity(
+            this.nearestDanger = this.dog.level() instanceof net.minecraft.server.level.ServerLevel guardSLevel ?
+                guardSLevel.getNearestEntity(
                     Mob.class,
-                    TargetingConditions.forCombat().selector( target -> {
+                    TargetingConditions.forCombat().selector( (target, level) -> {
                         if (dog.getDogLevel(DoggyTalents.CREEPER_SWEEPER) > 0) {
-                            //Creeper Sweeper dog only detect creeper in this mode
                             return (target instanceof Creeper);
                         } else {
                             return target instanceof Enemy;
                         }
                     }
-                    ), 
+                    ),
                     this.dog,
                     this.owner.getX(),
                     this.owner.getEyeY(),
                     this.owner.getZ(),
                     new AABB(this.owner.blockPosition()).inflate(SEARCH_RADIUS, 4, SEARCH_RADIUS)
-                );
+                ) : null;
         }
 
         @Override

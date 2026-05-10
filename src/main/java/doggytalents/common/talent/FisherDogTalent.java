@@ -39,7 +39,7 @@ public class FisherDogTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (cookCooldown > 0)
             --cookCooldown;
@@ -47,7 +47,7 @@ public class FisherDogTalent extends TalentInstance {
 
     @Override
     public void onShakingDry(AbstractDog dogIn, WetSource source) {
-        if (dogIn.level().isClientSide) { // On client do nothing
+        if (dogIn.level().isClientSide()) { // On client do nothing
             return;
         }
 
@@ -61,7 +61,7 @@ public class FisherDogTalent extends TalentInstance {
         var fishItem = getRandomFishingLoot(dogIn);
         var fishStack = getFishedStack(dogIn, fishItem);
 
-        dogIn.spawnAtLocation(fishStack);
+        dogIn.spawnAtLocation((net.minecraft.server.level.ServerLevel) dogIn.level(), fishStack);
     }
 
     private ItemStack getRandomFishingLoot(AbstractDog dog) {
@@ -111,13 +111,15 @@ public class FisherDogTalent extends TalentInstance {
     }
 
     private ItemStack tryCookFish(AbstractDog dog, ItemStack fish_raw) {
-        var recipeMan = dog.level().getRecipeManager();
+        if (!(dog.level() instanceof net.minecraft.server.level.ServerLevel sLevel))
+            return fish_raw;
+        var recipeMan = sLevel.recipeAccess();
         var recipeOptional = recipeMan.getRecipeFor(RecipeType.SMELTING, 
             new SingleRecipeInput(fish_raw.copy()), dog.level());
         if (!recipeOptional.isPresent())
             return fish_raw;
         var recipe = recipeOptional.get();
-        var resultStack = recipe.value().getResultItem(dog.level().registryAccess());
+        var resultStack = recipe.value().assemble(new SingleRecipeInput(fish_raw.copy()));
         if (resultStack == null || resultStack.isEmpty())
             return fish_raw;
         return resultStack.copy();
@@ -127,7 +129,7 @@ public class FisherDogTalent extends TalentInstance {
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
 
-        this.renderHat = compound.getBoolean("renderHat");
+        this.renderHat = compound.getBooleanOr("renderHat", false);
     }
 
     @Override

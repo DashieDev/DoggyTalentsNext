@@ -7,7 +7,7 @@ import doggytalents.client.entity.model.accessories.WigModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.lib.Resources;
@@ -33,7 +33,7 @@ public class BakerHatRenderEntry extends AccessoryModelManager.Entry{
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return Resources.BAKER_HAT;
     }
 

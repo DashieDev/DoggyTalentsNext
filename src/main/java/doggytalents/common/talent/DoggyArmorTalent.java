@@ -19,8 +19,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -33,7 +34,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     protected int tickUntilXPSearch;
 
-    protected final int SEARCH_RADIUS = 2; //TODO
+    protected final int SEARCH_RADIUS = 2;
 
     protected int spareValue;
 
@@ -52,7 +53,7 @@ public class DoggyArmorTalent extends TalentInstance {
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level().isClientSide) return;
+        if (dog.level().isClientSide()) return;
         if (levelBefore > 0 && this.level() <= 0) {
             this.dropArmor(dog);
         }
@@ -73,7 +74,7 @@ public class DoggyArmorTalent extends TalentInstance {
         try {
             dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
             if (compound.contains("armors_spareXp")) {
-                this.spareValue = compound.getInt("armors_spareXp");
+                this.spareValue = compound.getIntOr("armors_spareXp", 0);
                 mayNeedsDataUpgrade = false;
             } else {
                 this.spareValue = 0;
@@ -89,15 +90,15 @@ public class DoggyArmorTalent extends TalentInstance {
             return;
         
         try {
-            if (compound.contains("dogArmors", Tag.TAG_LIST))
+            if (compound.contains("dogArmors"))
                 dogIn.dogArmors().deserializeNBT(dogIn.registryAccess(), compound);
-            this.spareValue = compound.getInt("armors_spareXp");
+            this.spareValue = compound.getIntOr("armors_spareXp", 0);
         } catch (Exception e) {}
     }
 
     @Override
     public void remove(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide) return;
+        if (dogIn.level().isClientSide()) return;
         
     }
 
@@ -113,9 +114,11 @@ public class DoggyArmorTalent extends TalentInstance {
     @Override
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
-        if (playerIn.getMainHandItem().getItem() instanceof ArmorItem) {
+        var heldEquippable = playerIn.getMainHandItem().get(DataComponents.EQUIPPABLE);
+        boolean heldIsArmor = heldEquippable != null && heldEquippable.slot().getType() == EquipmentSlot.Type.HUMANOID_ARMOR;
+        if (heldIsArmor) {
             if (!(dogIn instanceof Dog)) return InteractionResult.PASS;
-            if (!worldIn.isClientSide) {
+            if (!worldIn.isClientSide()) {
                 var owner = dogIn.getOwner();
                 if (owner instanceof ServerPlayer sOwner) {
                     Screens.openArmorScreen(sOwner, (Dog) dogIn);
@@ -140,7 +143,7 @@ public class DoggyArmorTalent extends TalentInstance {
     }
 
     private void scanForXpAndRepair(AbstractDog dog) {
-        if (dog.level().isClientSide) return;
+        if (dog.level().isClientSide()) return;
         if (--this.tickUntilXPSearch <= 0) {
             this.tickUntilXPSearch = 10;
 
@@ -170,7 +173,7 @@ public class DoggyArmorTalent extends TalentInstance {
                 dog.getBoundingBox().inflate(SEARCH_RADIUS)
             );
 
-            //TODO : In the future check if XP Collector Talent is present and ONLY get xp from there
+            // future: when XP Collector Talent is present, route XP through it instead
             for (var x : orbs) {
                 if (itemstack.getDamageValue() <= 0) break;
                 

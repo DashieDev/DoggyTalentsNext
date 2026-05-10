@@ -53,8 +53,8 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
         }
         var bedPos0 = bedPosOptional.get();
         this.bedPos = bedPos0;
-        var chunkpos = new ChunkPos(bedPos);
-        if (dog.level().hasChunk(chunkpos.x, chunkpos.z)) {
+        var chunkpos = ChunkPos.containing(bedPos);
+        if (dog.level().hasChunk(chunkpos.x(), chunkpos.z())) {
             this.rejectedMsg = "ALREADYREQUESTORLOADED";
             this.setState(State.REJECTED);
             return;
@@ -90,7 +90,7 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
             return;
         }
         this.dog.fallDistance = 0;
-        dog.moveTo(b1.getX() + 0.5F, b1.getY(), b1.getZ() + 0.5F, dog.getYRot(), dog.getXRot());
+        dog.setPos(b1.getX() + 0.5F, b1.getY(), b1.getZ() + 0.5F);
         dog.getNavigation().stop();
         dog.setOrderedToSit(true);
         this.dogTeleported = true;
@@ -100,10 +100,10 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     @Override
     public void onFulfilled() {
         var owner = this.dog.getOwner();
-        if (owner != null) {
-            owner.sendSystemMessage(
+        if (owner instanceof net.minecraft.world.entity.player.Player ownerPlayer) {
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
-                    "item.doggytalents.conducting_bone.fulfilled.tp_bed", 
+                    "item.doggytalents.conducting_bone.fulfilled.tp_bed",
                     this.dog.getName().getString(), this.dog.getGenderPossessiveAdj()
                 )
             );
@@ -113,8 +113,8 @@ public class DogDistantTeleportToBedPromise extends AbstractPromise {
     @Override
     public void onRejected() {
         var owner = this.dog.getOwner();
-        if (owner != null) {
-            owner.sendSystemMessage(
+        if (owner instanceof net.minecraft.world.entity.player.Player ownerPlayer) {
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(

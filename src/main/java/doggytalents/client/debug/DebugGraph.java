@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
@@ -66,18 +65,18 @@ public class DebugGraph {
         this.reset(0, EntriesBuilder.NULL);
     }
 
-    public void render(GuiGraphics graphics, float pticks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, float pticks) {
 
         //Background
         int cl = 0x005e5d5d | 0x48000000;
         graphics.fill(x, y, x+width, y+height, cl);
         
         for (var entry : this.historyMap.entrySet()) {
-            renderEntry(x, y, width, height, entry.getValue());
+            renderEntry(graphics, x, y, width, height, entry.getValue());
         }
     }
 
-    private void renderEntry(int x, int y, int w, int h, RecordEntry entry) {
+    private void renderEntry(GuiGraphicsExtractor graphics, int x, int y, int w, int h, RecordEntry entry) {
         final float min_value = entry.minValue();
         final float max_value = entry.maxValue();
         final var history = entry.history();
@@ -85,12 +84,8 @@ public class DebugGraph {
         if (history.size() < 2)
             return;
         
-        //RenderSystem.enableBlend();
-        //RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        
-        var tessellator = Tesselator.getInstance();
-        var buffer = tessellator.begin(Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        var bufferSource = net.minecraft.client.Minecraft.getInstance().renderBuffers().bufferSource();
+        var vertexConsumer = bufferSource.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.LINES);
 
         for (int i = 0; i < history.size() - 1; ++i) {
             float val = history.get(i);
@@ -108,15 +103,13 @@ public class DebugGraph {
             float val_y = y + h - val * h;
             float val1_y = y + h - val1 * h;
             
-            int r = FastColor.ARGB32.red(entry.color());
-            int g = FastColor.ARGB32.green(entry.color());
-            int b = FastColor.ARGB32.blue(entry.color());
-            int a = FastColor.ARGB32.alpha(entry.color());
-            buffer.addVertex(val_x, val_y, 0).setColor(r, g, b, a);
-            buffer.addVertex(val1_x, val1_y, 0).setColor(r, g, b, a);
+            int r = ARGB.red(entry.color());
+            int g = ARGB.green(entry.color());
+            int b = ARGB.blue(entry.color());
+            int a = ARGB.alpha(entry.color());
+            vertexConsumer.addVertex(val_x, val_y, 0).setColor(r, g, b, a);
+            vertexConsumer.addVertex(val1_x, val1_y, 0).setColor(r, g, b, a);
         }
-
-        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     // public static void afterGuiRender(RenderGuiEvent.Post event) {

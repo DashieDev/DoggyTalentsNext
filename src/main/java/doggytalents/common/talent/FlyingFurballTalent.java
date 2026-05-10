@@ -12,7 +12,7 @@ import doggytalents.common.entity.ai.nav.DogFlyingMoveControl;
 import doggytalents.common.entity.ai.nav.DogFlyingNavigation;
 import doggytalents.common.util.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,8 +24,8 @@ import java.util.UUID;
 
 public class FlyingFurballTalent extends TalentInstance {
 
-    private static ResourceLocation FLYING_FURBALL_BOOST_UUID = Util.getResource("flying_furball_boost");
-    private static ResourceLocation FLYING_FURBALL_GRAVITY_UUID = Util.getResource("flying_furball_gravity");
+    private static Identifier FLYING_FURBALL_BOOST_UUID = Util.getResource("flying_furball_boost");
+    private static Identifier FLYING_FURBALL_GRAVITY_UUID = Util.getResource("flying_furball_gravity");
 
     private DogFlyingMoveControl moveControl;
     private DogFlyingNavigation navigation;
@@ -42,7 +42,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     @Override
     public void init(AbstractDog dog) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         if (!(dog instanceof Dog d))
             return;
@@ -60,7 +60,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     @Override
     public void remove(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         dogIn.removeAttributeModifier(Attributes.FLYING_SPEED, FLYING_FURBALL_BOOST_UUID);
         dogIn.resetMoveControl();
@@ -74,7 +74,7 @@ public class FlyingFurballTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (!(dogIn instanceof Dog dog))
             return;
@@ -155,7 +155,7 @@ public class FlyingFurballTalent extends TalentInstance {
         return !this.allowFlying();
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, Identifier uuidIn) {
         if (this.level() > 0) {
             double speed = (this.level() - 1)* 0.1;
 
@@ -182,14 +182,14 @@ public class FlyingFurballTalent extends TalentInstance {
         dog.removeAttributeModifier(Attributes.GRAVITY, FLYING_FURBALL_GRAVITY_UUID);
     }
 
-    public AttributeModifier createGravityModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
+    public AttributeModifier createGravityModifier(AbstractDog dogIn, Identifier uuidIn) {
         return new AttributeModifier(uuidIn, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
     }
 
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.allowFlying = compound.getBoolean("allowFlying");
+        this.allowFlying = compound.getBooleanOr("allowFlying", false);
     }
 
     @Override

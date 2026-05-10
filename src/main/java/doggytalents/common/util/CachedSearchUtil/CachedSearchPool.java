@@ -14,7 +14,7 @@ public class CachedSearchPool {
         new byte[POOL_SIZE_XZ][POOL_SIZE_Y][POOL_SIZE_XZ];
 
     public byte getPoolValue(Level level, int x, int y, int z) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return ERR;
         }
         if (x >= POOL_SIZE_XZ || x < 0) return ERR;
@@ -24,7 +24,7 @@ public class CachedSearchPool {
     }
     
     public void setPoolValue(Level level, int x, int y, int z, byte value) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         if (x >= POOL_SIZE_XZ || x < 0) return;

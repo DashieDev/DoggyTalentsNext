@@ -21,7 +21,7 @@ import doggytalents.common.util.DogUtil;
 
 import static doggytalents.common.network.packet.data.ConductingBoneData.*;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -155,7 +155,7 @@ public class ConductingBonePackets {
                     if (item != DoggyItems.CONDUCTING_BONE.get()) return;
 
                     //And is not on cooldown
-                    if (sender.getCooldowns().isOnCooldown(DoggyItems.CONDUCTING_BONE.get())) return;
+                    if (sender.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.CONDUCTING_BONE.get()))) return;
 
                     var uuid = data.dogUUID;
                     if (uuid == null) return; 
@@ -178,7 +178,7 @@ public class ConductingBonePackets {
                         }
                     }
 
-                    sender.getCooldowns().addCooldown(DoggyItems.CONDUCTING_BONE.get(), 20);
+                    sender.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.CONDUCTING_BONE.get()), 20);
 
                 }
 

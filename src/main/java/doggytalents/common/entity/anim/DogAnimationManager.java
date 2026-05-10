@@ -58,7 +58,7 @@ public class DogAnimationManager {
                 this.dog.xRotO = 0;
             }
         }
-        if (started && (!this.dog.level().isClientSide) && !looping) {
+        if (started && (!this.dog.level().isClientSide()) && !looping) {
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
                 if (this.holdOnLastTick)
@@ -73,7 +73,7 @@ public class DogAnimationManager {
                 --this.animationTime;
             }
         }
-        if (started && (this.dog.level().isClientSide) && !looping) {
+        if (started && (this.dog.level().isClientSide()) && !looping) {
             if (this.animationTime <= 0) {
                 this.animationTime = 0;
                 if (this.holdOnLastTick)
@@ -88,7 +88,7 @@ public class DogAnimationManager {
     }
 
     public void onSyncTimeUpdated() {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             resolveLatencyIfNeeded();
     }
 
@@ -139,12 +139,12 @@ public class DogAnimationManager {
     }
 
     public void load(CompoundTag tag) {
-        if (!tag.contains("dtnDogAnimDebug", Tag.TAG_COMPOUND))
+        if (!tag.contains("dtnDogAnimDebug"))
             return;
-        var debug_tag = tag.getCompound("dtnDogAnimDebug");
-        int anim_id = debug_tag.getInt("anim_id");
-        int timestamp = debug_tag.getInt("timestamp");
-        float yrot = debug_tag.getFloat("yrot");
+        var debug_tag = tag.getCompoundOrEmpty("dtnDogAnimDebug");
+        int anim_id = debug_tag.getIntOr("anim_id", 0);
+        int timestamp = debug_tag.getIntOr("timestamp", 0);
+        float yrot = debug_tag.getFloatOr("yrot", 0f);
         var debug_state = DogAnimDebugState.of(anim_id, timestamp, yrot);
         setDogAnimDebugState(debug_state);
     }

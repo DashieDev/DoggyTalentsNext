@@ -38,9 +38,9 @@ public class ChangeAccessoryPacket extends DogPacket<ChangeAccessoriesData> {
         if (!dog.canInteract(sender)) return;
         if (data.add) {
             var inventory = sender.getInventory();
-            var items = inventory.items;
-            if (data.slotId >= items.size()) return;
-            var item = items.get(data.slotId);
+            var inventorySize = inventory.getContainerSize();
+            if (data.slotId >= inventorySize) return;
+            var item = inventory.getItem(data.slotId);
             if (item.getItem() instanceof AccessoryItem accessoryItem) {
                 var inst = accessoryItem.createInstance(dog, item, sender);
                 if (inst == null) return;

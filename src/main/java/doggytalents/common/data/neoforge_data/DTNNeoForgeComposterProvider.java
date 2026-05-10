@@ -17,7 +17,7 @@ public class DTNNeoForgeComposterProvider extends DataMapProvider {
     }
 
     @Override
-    protected void gather() {
+    protected void gather(net.minecraft.core.HolderLookup.Provider provider) {
         var compostables = DTNCompostables.getCompostables();
         var builder = this.builder(NeoForgeDataMaps.COMPOSTABLES);
         compostables.forEach((item, chance) -> {

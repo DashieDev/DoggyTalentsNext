@@ -55,7 +55,8 @@ public class Wig extends DyeableAccessory implements IAccessoryHasModel {
             final float chance = 0.15f;
             if (r > chance) return;
             int indx = dog.getRandom().nextInt(DISC_LIST.size());
-            dog.spawnAtLocation(new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
+            if (dog.level() instanceof net.minecraft.server.level.ServerLevel sl)
+                dog.spawnAtLocation(sl, new ItemStack(DISC_LIST.get(indx).get()), 0.0F);
         }
         
     }

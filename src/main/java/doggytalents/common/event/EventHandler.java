@@ -55,16 +55,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.WolfVariant;
-import net.minecraft.world.entity.animal.WolfVariants;
+import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.entity.animal.wolf.WolfVariant;
+import net.minecraft.world.entity.animal.wolf.WolfVariants;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.entity.projectile.ThrownEgg;
-import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.Snowball;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEgg;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -143,7 +143,7 @@ public class EventHandler {
             return;
         }
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             PacketHandler.send(PacketDistributor.SERVER.noArg(), 
                 new TrainWolfToDogData(wolf.getId(), wolf.yBodyRot, wolf.yHeadRot)
             );
@@ -154,7 +154,7 @@ public class EventHandler {
 
     public static void checkAndTrainWolf(Player trainer, Wolf wolf, float yBodyRot, float yHeadRot) {
         var level = trainer.level();
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         
         var stack = trainer.getMainHandItem();
@@ -226,7 +226,10 @@ public class EventHandler {
     }
 
     public static void trainWolf(Wolf wolf, Player owner, Level level) {
-        Dog dog = DoggyEntityTypes.DOG.get().create(level);
+        if (!(level instanceof ServerLevel sLevelForCreate)) {
+            throw new IllegalStateException("trainWolf called on client side");
+        }
+        Dog dog = DoggyEntityTypes.DOG.get().create(sLevelForCreate, net.minecraft.world.entity.EntitySpawnReason.BREEDING);
         if (dog == null) {
             throw new IllegalStateException("Creator function for the dog returned \"null\"");
         }
@@ -235,7 +238,7 @@ public class EventHandler {
         dog.maxHealth();
         dog.setOrderedToSit(false);
         dog.setAge(wolf.getAge());
-        dog.moveTo(wolf.getX(), wolf.getY(), wolf.getZ(), wolf.getYRot(), wolf.getXRot());
+        dog.setPos(wolf.getX(), wolf.getY(), wolf.getZ());
         dog.setYHeadRot(wolf.yBodyRot);
         dog.setYBodyRot(wolf.yBodyRot);
         dog.setYRot(wolf.yBodyRot);
@@ -273,7 +276,9 @@ public class EventHandler {
     }
 
     private static void migrateWolfVariant(Wolf wolf, Dog dog) {
-        var dog_variant = DogVariantUtil.fromVanila(wolf.getVariant().unwrapKey().orElse(WolfVariants.PALE));
+        var wolfVariantHolder = wolf.get(net.minecraft.core.component.DataComponents.WOLF_VARIANT);
+        var wolfVarKey = wolfVariantHolder != null ? wolfVariantHolder.unwrapKey().orElse(WolfVariants.PALE) : WolfVariants.PALE;
+        var dog_variant = DogVariantUtil.fromVanila(wolfVarKey);
         boolean random_var_on_pale = 
             dog_variant == DogVariantUtil.getDefault()
             && ConfigHandler.SERVER.RANDOM_VAR_ON_PALE.get();
@@ -289,7 +294,7 @@ public class EventHandler {
     }
 
     private static void migrateWolfArmor(Wolf wolf, Dog dog) {
-        if (!wolf.hasArmor())
+        if (!wolf.isWearingBodyArmor())
             return;
         var armor_stack = wolf.getBodyArmorItem().copyWithCount(1);
         dog.setWolfArmor(armor_stack);
@@ -299,7 +304,7 @@ public class EventHandler {
     public void onEntitySpawn(final EntityJoinLevelEvent event) {
         Entity entity = event.getEntity();
         var level = entity.level();
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
 
         if (entity instanceof AbstractSkeleton) {
@@ -312,7 +317,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerLoggedIn(final PlayerLoggedInEvent event) {
-        if (event.getEntity().level().isClientSide)
+        if (event.getEntity().level().isClientSide())
             return;
 
         if (isEnableStarterBundle()) {
@@ -325,9 +330,9 @@ public class EventHandler {
                 tag.put(Player.PERSISTED_NBT_TAG, new CompoundTag());
             }
 
-            CompoundTag persistTag = tag.getCompound(Player.PERSISTED_NBT_TAG);
+            CompoundTag persistTag = tag.getCompoundOrEmpty(Player.PERSISTED_NBT_TAG);
 
-            if (!persistTag.getBoolean("gotDTStartingItems")) {
+            if (!persistTag.getBooleanOr("gotDTStartingItems", false)) {
                 persistTag.putBoolean("gotDTStartingItems", true);
 
                 player.getInventory().add(new ItemStack(DoggyItems.STARTER_BUNDLE.get()));
@@ -337,7 +342,7 @@ public class EventHandler {
 
     private boolean isEnableStarterBundle() {
         final var retMut = new MutableBoolean(false);
-        if (FMLEnvironment.dist == Dist.CLIENT) {
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
             if (ConfigHandler.ClientConfig
                 .getConfig(ConfigHandler.CLIENT.ENABLE_STARTER_BUNDLE_BY_DEFAULT))
                 retMut.setTrue();
@@ -358,7 +363,7 @@ public class EventHandler {
         if (levelChecker == null)
             return;
         var level = levelChecker.level();
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
 
         var hitResult = event.getRayTraceResult();
@@ -421,14 +426,14 @@ public class EventHandler {
         level.addFreshEntity(resultEntity);
 
         projectile.playSound(SoundEvents.TURTLE_EGG_CRACK, 0.5F, 0.9F + 
-            level.random.nextFloat() * 0.2F);
+            level.getRandom().nextFloat() * 0.2F);
     }
 
     public final int COLLECT_RADIUS = 26;
     @SubscribeEvent
     public void onEntityChangeDimension(EntityTravelToDimensionEvent event) {
         var entity = event.getEntity();
-        if (entity.level().isClientSide) return;
+        if (entity.level().isClientSide()) return;
         if ((entity instanceof ServerPlayer owner)) {
             onOwnerChangeDimension(event, owner);
         }
@@ -585,14 +590,14 @@ public class EventHandler {
 
     @SubscribeEvent
     public void playerWakeUpEvent(PlayerWakeUpEvent event) {
-        if (!event.getEntity().level().isClientSide)
+        if (!event.getEntity().level().isClientSide())
             DogSleepOnManager.onPlayerWakeUp(event.getEntity());
     }
 
     @SubscribeEvent
     public void playerLoggedOut(PlayerLoggedOutEvent event) {
         var player = event.getEntity();
-        if (player.level().isClientSide)
+        if (player.level().isClientSide())
             return;
         if (!player.isVehicle())
             return;

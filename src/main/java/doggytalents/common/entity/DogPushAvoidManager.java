@@ -46,7 +46,7 @@ public class DogPushAvoidManager {
         if (checkPushAvoidOwner(target))
             return true;
 
-        if (!this.dog.level().isClientSide && checkPushAvoidDog(target))
+        if (!this.dog.level().isClientSide() && checkPushAvoidDog(target))
             return true;
         
         return false;
@@ -165,7 +165,7 @@ public class DogPushAvoidManager {
     }
 
     private boolean isDogInFluid(Dog dog) {
-        return !dog.getMaxHeightFluidType().isAir();
+        return dog.isInWater() || dog.isInLava();
     }
 
 }

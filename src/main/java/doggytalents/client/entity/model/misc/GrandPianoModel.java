@@ -1,11 +1,9 @@
 package doggytalents.client.entity.model.misc;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import doggytalents.common.entity.misc.Piano;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -13,13 +11,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class GrandPianoModel extends EntityModel<Piano> {
+public class GrandPianoModel extends EntityModel<EntityRenderState> {
 
     public ModelPart piano;
 	public ModelPart fallBoard;
 	public ModelPart fallBoardStick;
 
 	public GrandPianoModel(ModelPart root) {
+		super(root);
 		this.piano = root.getChild("piano");
 		this.fallBoard = piano.getChild("lid");
 		this.fallBoardStick = fallBoard.getChild("lid_prop");
@@ -216,14 +215,8 @@ public class GrandPianoModel extends EntityModel<Piano> {
 		this.setFallboard(!piano.isFallboardClosed());
 	}
 
-	@Override
-	public void setupAnim(Piano entity, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
+	public void setupAnim(EntityRenderState state) {
 
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color_overlay) {
-		piano.render(poseStack, vertexConsumer, packedLight, packedOverlay, color_overlay);
 	}
 
 	public void setFallboard(boolean open) {

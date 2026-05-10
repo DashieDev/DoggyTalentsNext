@@ -12,7 +12,7 @@ import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -39,7 +39,6 @@ public class AccessoryEditElement extends AbstractElement {
 
     public AccessoryEditElement(AbstractElement parent, Screen screen, Player player, Dog dog) {
         super(parent, screen);
-        //TODO Auto-generated constructor stub
         mc = Minecraft.getInstance();
         this.player = player;
         this.dog = dog;
@@ -55,7 +54,7 @@ public class AccessoryEditElement extends AbstractElement {
         for (int i = 0; i < 5; ++i) {
             var accessoryHolder = new AccessoryHolder(
                 0, 0,
-                this.mc.getItemRenderer(), this.dog, true);
+                this.dog, true);
             this.accessoryHolders.add(accessoryHolder);
         }
 
@@ -91,9 +90,9 @@ public class AccessoryEditElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int holderIndx = 0;
-        var items = this.inventory.items;
+        var items = this.inventory.getNonEquipmentItems();
         this.lastPage.active = startIndex > 0;
         this.nextPage.active = false;
         this.startIndex = Math.max(0, startIndex);
@@ -127,12 +126,12 @@ public class AccessoryEditElement extends AbstractElement {
                 var txt = Component.translatable("doggui.style.accessories.no_accessories_in_inv");
                 int tX = this.getRealX() + mX - mc.font.width(txt)/2;
                 int tY = this.getRealY() + mY - mc.font.lineHeight/2;
-                graphics.drawString(mc.font, txt, tX, tY, 0xffffffff);
+                graphics.text(mc.font, txt, tX, tY, 0xffffffff);
             }
         } else {
             int tX = this.getRealX() + 6;
             int tY = this.getRealY() + 6;
-            graphics.drawString(mc.font, I18n.get("doggui.style.accessories.your_accessories"), tX, tY, 0xffffffff);
+            graphics.text(mc.font, I18n.get("doggui.style.accessories.your_accessories"), tX, tY, 0xffffffff);
         }
         while (holderIndx < this.accessoryHolders.size()) {
             this.accessoryHolders.get(holderIndx).setStack(ItemStack.EMPTY);

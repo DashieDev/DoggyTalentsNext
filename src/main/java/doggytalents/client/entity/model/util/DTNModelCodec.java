@@ -153,10 +153,10 @@ public class DTNModelCodec {
         
         final var part_pose = part.partPose();
         final var rotation = (Vector3fc) new Vector3f(
-            part_pose.xRot, part_pose.yRot, part_pose.zRot
-        ); 
+            part_pose.xRot(), part_pose.yRot(), part_pose.zRot()
+        );
         final var global_pos = new Vector3f(
-            part_pose.x, part_pose.y, part_pose.z
+            part_pose.x(), part_pose.y(), part_pose.z()
         ).add(global_offset);
         
         final var encoded_rotation = vec(rotation);
@@ -498,12 +498,14 @@ public class DTNModelCodec {
         private static final Codec<Vector2i> VECTOR2I = Codec.INT
             .listOf()
             .comapFlatMap(
-                to_decode -> 
-                    net.minecraft.Util.fixedSize(to_decode, 2)
+                to_decode ->
+                    net.minecraft.util.Util.fixedSize(to_decode, 2)
                         .map(val -> new Vector2i(val.get(0), val.get(1))),
                 to_encode -> List.of(to_encode.x(), to_encode.y())
             );
-        private static final Codec<Vector3f> VECTOR3F = ExtraCodecs.VECTOR3F;
+        // ExtraCodecs.VECTOR3F is Codec<Vector3fc> in 26.1.2, map to mutable Vector3f
+        private static final Codec<Vector3f> VECTOR3F = ExtraCodecs.VECTOR3F
+            .xmap(v -> new Vector3f(v.x(), v.y(), v.z()), v -> v);
     }
 
     private static Vector3f vec(Vector3fc vec) {

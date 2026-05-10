@@ -1,10 +1,11 @@
 package doggytalents.client.screen.framework.widget;
 
 import doggytalents.client.screen.framework.element.AbstractElement;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -39,7 +40,7 @@ public class ScrollBar extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         if (!startedAnimate) {
             startedAnimate = true;
             prevAnimUpdateMillis = System.currentTimeMillis();
@@ -120,13 +121,13 @@ public class ScrollBar extends AbstractWidget {
     }
 
     @Override
-    protected void onDrag(double mouseX, double mouseY, double dY, double dX) {
+    protected void onDrag(MouseButtonEvent event, double dragX, double dragY) {
         holdInflate = true;
-        if (!checkAndHandleMouseOutBound(mouseX, mouseY))
+        if (!checkAndHandleMouseOutBound(event.x(), event.y()))
             return;
         double offset = this.dir == Direction.VERTICAL ?
-            dX : dY;
-        if (offset == 0) 
+            dragX : dragY;
+        if (offset == 0)
             return;
         offsetBar(offset);
         onValueUpdated();

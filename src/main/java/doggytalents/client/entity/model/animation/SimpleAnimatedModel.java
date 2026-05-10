@@ -5,14 +5,19 @@ import java.util.function.Function;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
 
-public abstract class SimpleAnimatedModel extends Model  {
+public abstract class SimpleAnimatedModel extends Model<net.minecraft.util.Unit> {
 
-    public SimpleAnimatedModel(Function<ResourceLocation, RenderType> p_103110_) {
-        super(p_103110_);
-        //TODO Auto-generated constructor stub
+    public SimpleAnimatedModel(ModelPart root, Function<Identifier, RenderType> p_103110_) {
+        super(root, p_103110_);
+    }
+
+    @Override
+    public void setupAnim(net.minecraft.util.Unit state) {
+        // no-op: animation is driven by custom calls
     }
 
     public abstract Optional<ModelPart> getPartFromName(String name);

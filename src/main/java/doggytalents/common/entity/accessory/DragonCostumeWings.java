@@ -35,10 +35,9 @@ public class DragonCostumeWings extends Accessory implements IAccessoryHasModel 
         }
 
         @Override
-        public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-                TooltipFlag flags) {
-            var desc_id = this.getDescriptionId(stack) + ".description";
-            components.add(Component.translatable(desc_id).withStyle(
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
+            var desc_id = this.getDescriptionId() + ".description";
+            componentConsumer.accept(Component.translatable(desc_id).withStyle(
                 Style.EMPTY.withItalic(true)
             ));
         }

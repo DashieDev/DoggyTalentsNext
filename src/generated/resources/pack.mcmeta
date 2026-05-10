@@ -1,10 +1,8 @@
 {
   "pack": {
     "description": "Doggy Talents Next Resources.",
-    "pack_format": 48,
-    "supported_formats": [
-      0,
-      2147483647
-    ]
+    "pack_format": 84,
+    "min_format": 84,
+    "max_format": 84
   }
 }

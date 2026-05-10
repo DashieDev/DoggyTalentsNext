@@ -23,10 +23,11 @@ import doggytalents.common.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -55,7 +56,7 @@ public class DogIncapacitatedMananger {
     private final Dog dog;
 
     private int recoveryMultiplier = 1;
-    private static final ResourceLocation INCAP_MOVEMENT = Util.getResource("injured_slowdown");
+    private static final Identifier INCAP_MOVEMENT = Util.getResource("injured_slowdown");
     private boolean appliedIncapChanges = false;
     
     private static final int MAX_BANDAID_COUNT = 8;
@@ -102,7 +103,7 @@ public class DogIncapacitatedMananger {
     }
 
     public void tick() {
-        if (this.dog.level().isClientSide) 
+        if (this.dog.level().isClientSide()) 
             incapacitatedClientTick();
         else
             incapacitatedTick();
@@ -110,7 +111,7 @@ public class DogIncapacitatedMananger {
 
     public InteractionResult interact(ItemStack stack, Player player, InteractionHand hand) {
         
-        if (proccessBandage(stack, player).shouldSwing())
+        if (proccessBandage(stack, player).consumesAction())
             return InteractionResult.SUCCESS;
 
         var item = stack.getItem();
@@ -118,13 +119,13 @@ public class DogIncapacitatedMananger {
             useTotem(stack, player);
             return InteractionResult.SUCCESS;
         }
-        
-        if (handleOwnerRide(stack, player).shouldSwing())
+
+        if (handleOwnerRide(stack, player).consumesAction())
             return InteractionResult.SUCCESS;
-        if (proccessSitStandOrder(player).shouldSwing())
+        if (proccessSitStandOrder(player).consumesAction())
             return InteractionResult.SUCCESS;
 
-        if (this.dog.level().isClientSide && player == this.dog.getOwner())
+        if (this.dog.level().isClientSide() && player == this.dog.getOwner())
             DogCannotInteractWithScreen.open(this.dog);
         return InteractionResult.SUCCESS;
     }
@@ -142,7 +143,7 @@ public class DogIncapacitatedMananger {
     }
 
     private void useBandage(ItemStack stack, Player player) {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             return;
         if (this.bandageCooldown > 0f)
             return;
@@ -150,7 +151,7 @@ public class DogIncapacitatedMananger {
             return;
 
         this.bandageCooldown = 10;
-        player.getCooldowns().addCooldown(stack.getItem(), 11);
+        player.getCooldowns().addCooldown(stack, 11);
         ++this.bandagesCount;
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
@@ -164,7 +165,7 @@ public class DogIncapacitatedMananger {
     }
 
     private void useTotem(ItemStack stack, Player player) {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             return;
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
@@ -187,7 +188,7 @@ public class DogIncapacitatedMananger {
 
     private InteractionResult handleOwnerRide(ItemStack stack, Player player) {
         if (player.hasPassenger(dog)) {
-            if (!dog.level().isClientSide)
+            if (!dog.level().isClientSide())
                 dog.unRide();
             return InteractionResult.SUCCESS;
         }
@@ -198,12 +199,12 @@ public class DogIncapacitatedMananger {
             return InteractionResult.PASS;
         if (dog.getOwner() != player)
             return InteractionResult.PASS;
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide()) {
             if (dog.startRiding(player))
-            player.displayClientMessage(
+            player.sendOverlayMessage(
                 Component.translatable(
-                    "talent.doggytalents.bed_finder.dog_mount", 
-                    dog.getGenderPronoun()), true);
+                    "talent.doggytalents.bed_finder.dog_mount",
+                    dog.getGenderPronoun()));
         }
         return InteractionResult.SUCCESS;
     }
@@ -211,10 +212,10 @@ public class DogIncapacitatedMananger {
     private InteractionResult proccessSitStandOrder(Player player) {
         if (!this.canMove())
             return InteractionResult.PASS;
-        var owner_uuid = this.dog.getOwnerUUID();
-        if (owner_uuid == null)
+        var owner_ref = this.dog.getOwnerReference();
+        if (owner_ref == null)
             return InteractionResult.PASS;
-        if (!owner_uuid.equals(player.getUUID()))
+        if (!owner_ref.getUUID().equals(player.getUUID()))
             return InteractionResult.PASS;
         this.dog.setOrderedToSit(!this.dog.isOrderedToSit());
         this.dog.getNavigation().stop();
@@ -254,10 +255,9 @@ public class DogIncapacitatedMananger {
     }
 
     private void displayToastIncapacitated(Player player) {
-        player.displayClientMessage(
+        player.sendOverlayMessage(
             Component.translatable("doggui.invalid_dog.incapacitated.title")
-            .withStyle(ChatFormatting.RED) 
-        , true);
+            .withStyle(ChatFormatting.RED));
     }
 
     public void incapacitatedClientTick() {
@@ -302,7 +302,7 @@ public class DogIncapacitatedMananger {
                     float f1 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     float f2 = (dog.getRandom().nextFloat() * 2.0F - 1.0F) * dog.getBbWidth() * 0.8F;
                     dog.level().addParticle(
-                        new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(Items.NETHER_WART)),
+                        new ItemParticleOption(ParticleTypes.ITEM, Items.NETHER_WART),
                         dog.getX() + f1,
                         dog.getY() + 0.4,
                         dog.getZ() + f2,
@@ -485,11 +485,11 @@ public class DogIncapacitatedMananger {
     }
 
     public void load(CompoundTag tag) {
-        var tg0 = tag.getCompound("doggyIncapacitated");
-        var type = DefeatedType.byId(tg0.getInt("type"));
-        var bandaid_count = tg0.getInt("bandaid");
-        var poseId = tg0.getInt("poseid");
-        this.incapMsg = tg0.getString("incapMsg");
+        var tg0 = tag.getCompoundOrEmpty("doggyIncapacitated");
+        var type = DefeatedType.byId(tg0.getIntOr("type", 0));
+        var bandaid_count = tg0.getIntOr("bandaid", 0);
+        var poseId = tg0.getIntOr("poseid", 0);
+        this.incapMsg = tg0.getStringOr("incapMsg", "");
         this.bandagesCount = bandaid_count;
         dog.setIncapSyncState(new IncapacitatedSyncState(type, 
             BandaidState.getState(bandaid_count), poseId));
@@ -520,12 +520,11 @@ public class DogIncapacitatedMananger {
     }
 
     private boolean isDogDeepInFluid() {
-        var type = this.dog.getMaxHeightFluidType();
-        if (type.isAir()) return false;
-        if (type == NeoForgeMod.LAVA_TYPE.value() && dog.fireImmune())
-            return false;
-        double height = this.dog.getFluidTypeHeight(type);
-        return height > 0.5;
+        double waterHeight = this.dog.getFluidHeight(net.minecraft.tags.FluidTags.WATER);
+        if (waterHeight > 0.5) return true;
+        double lavaHeight = this.dog.getFluidHeight(net.minecraft.tags.FluidTags.LAVA);
+        if (lavaHeight > 0.5 && !dog.fireImmune()) return true;
+        return false;
     }
 
     private boolean showDrownPose() {

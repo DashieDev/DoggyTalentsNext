@@ -1,19 +1,22 @@
 package doggytalents.common.storage;
 
 import com.google.common.collect.Maps;
+import com.mojang.serialization.Codec;
+
 import doggytalents.DoggyTalentsNext;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.NBTUtil;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraft.world.level.storage.DimensionDataStorage;
+import net.minecraft.world.level.saveddata.SavedDataType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,22 +29,29 @@ public class DogRespawnStorage extends SavedData {
 
     public DogRespawnStorage() {}
 
+    public static final Codec<DogRespawnStorage> CODEC = CompoundTag.CODEC.xmap(
+        DogRespawnStorage::loadFromTag,
+        DogRespawnStorage::saveToTag
+    );
+
+    public static final SavedDataType<DogRespawnStorage> TYPE = new SavedDataType<>(
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "dead_dogs"),
+        DogRespawnStorage::new,
+        CODEC,
+        DataFixTypes.SAVED_DATA_RANDOM_SEQUENCES
+    );
+
     public static DogRespawnStorage get(Level world) {
         if (!(world instanceof ServerLevel)) {
             throw new IllegalStateException("DogRespawnStorage is being accessed from the Client Side. Please report to the DTN Team.");
         }
-
         ServerLevel overworld = world.getServer().getLevel(Level.OVERWORLD);
-
-        DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogRespawnStorage.storageFactory(), Constants.STORAGE_DOG_RESPAWN);
+        return overworld.getDataStorage().computeIfAbsent(TYPE);
     }
 
     public static DogRespawnStorage get(MinecraftServer server) {
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-
-        DimensionDataStorage storage = overworld.getDataStorage();
-        return storage.computeIfAbsent(DogRespawnStorage.storageFactory(), Constants.STORAGE_DOG_RESPAWN);
+        return overworld.getDataStorage().computeIfAbsent(TYPE);
     }
 
     public Stream<DogRespawnData> getDogs(@Nonnull UUID ownerId) {
@@ -54,7 +64,6 @@ public class DogRespawnStorage extends SavedData {
         if (this.respawnDataMap.containsKey(uuid)) {
             return this.respawnDataMap.get(uuid);
         }
-
         return null;
     }
 
@@ -62,24 +71,18 @@ public class DogRespawnStorage extends SavedData {
     public DogRespawnData remove(UUID uuid) {
         if (this.respawnDataMap.containsKey(uuid)) {
             DogRespawnData storage = this.respawnDataMap.remove(uuid);
-
-            // Mark dirty so changes are saved
             this.setDirty();
             return storage;
         }
-
         return null;
     }
 
     @Nullable
     public DogRespawnData putData(Dog dogIn) {
         UUID uuid = dogIn.getUUID();
-
         DogRespawnData storage = new DogRespawnData(this, uuid);
         storage.populate(dogIn);
-
         this.respawnDataMap.put(uuid, storage);
-        // Mark dirty so changes are saved
         this.setDirty();
         return storage;
     }
@@ -92,15 +95,13 @@ public class DogRespawnStorage extends SavedData {
         return Collections.unmodifiableCollection(this.respawnDataMap.values());
     }
 
-    public static DogRespawnStorage load(CompoundTag nbt, HolderLookup.Provider prov) {
+    private static DogRespawnStorage loadFromTag(CompoundTag nbt) {
         DogRespawnStorage store = new DogRespawnStorage();
         store.respawnDataMap.clear();
 
-        ListTag list = nbt.getList("respawnData", Tag.TAG_COMPOUND);
-
+        ListTag list = nbt.getListOrEmpty("respawnData");
         for (int i = 0; i < list.size(); ++i) {
-            CompoundTag respawnCompound = list.getCompound(i);
-
+            CompoundTag respawnCompound = list.getCompoundOrEmpty(i);
             UUID uuid = NBTUtil.getUniqueId(respawnCompound, "uuid");
             DogRespawnData respawnData = new DogRespawnData(store, uuid);
             respawnData.read(respawnCompound);
@@ -110,38 +111,22 @@ public class DogRespawnStorage extends SavedData {
                 DoggyTalentsNext.LOGGER.info(respawnData);
                 continue;
             }
-
             store.respawnDataMap.put(uuid, respawnData);
         }
-
         return store;
     }
 
-    @Override
-    public CompoundTag save(CompoundTag compound, HolderLookup.Provider prov) {
+    private CompoundTag saveToTag() {
+        CompoundTag compound = new CompoundTag();
         ListTag list = new ListTag();
-
         for (Map.Entry<UUID, DogRespawnData> entry : this.respawnDataMap.entrySet()) {
             CompoundTag respawnCompound = new CompoundTag();
-
             DogRespawnData respawnData = entry.getValue();
             NBTUtil.putUniqueId(respawnCompound, "uuid", entry.getKey());
             respawnData.write(respawnCompound);
-
             list.add(respawnCompound);
         }
-
         compound.put("respawnData", list);
-
         return compound;
     }
-
-    private static SavedData.Factory<DogRespawnStorage> FACTORY
-        = new SavedData.Factory<>(DogRespawnStorage::new, DogRespawnStorage::load);
-    public static SavedData.Factory<DogRespawnStorage> storageFactory() {
-        return FACTORY;
-    }
-
-
-
 }

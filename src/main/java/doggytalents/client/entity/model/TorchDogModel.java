@@ -72,11 +72,6 @@ public class TorchDogModel extends AnimatedSyncedAccessoryModel {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_102034_, VertexConsumer p_102035_, int p_102036_, int p_102037_, int color_overlay) {
-        super.renderToBuffer(p_102034_, p_102035_, 15728880, p_102037_, color_overlay);
-    }
-
-    @Override
     public void resetAllPose() {
         this.root.resetPose();
         this.torchBig.resetPose();

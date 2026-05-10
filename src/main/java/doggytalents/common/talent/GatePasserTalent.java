@@ -24,7 +24,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -50,7 +50,7 @@ public class GatePasserTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dog) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
 
         if (!this.allowPassingGate) {
@@ -293,7 +293,7 @@ public class GatePasserTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.allowPassingGate = compound.getBoolean("DogGatePasser_allowPassingGate");
+        this.allowPassingGate = compound.getBooleanOr("DogGatePasser_allowPassingGate", false);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class CarryMePacket extends DogPacket<CarryMeData> {
         var owner = ctx.get().getSender();
         if (!dog.canInteract(owner)) 
             return;
-        if (owner.getCooldowns().isOnCooldown(DoggyItems.WHISTLE.get()))
+        if (owner.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.WHISTLE.get())))
             return;
         if (!ConfigHandler.SERVER.CARRY_ME_WHISTLE.get())
             return;
@@ -40,9 +40,9 @@ public class CarryMePacket extends DogPacket<CarryMeData> {
         dog.triggerAction(new DogGoAndCarryPlayerAction(dog, owner));
 
         if (ConfigHandler.WHISTLE_SOUNDS)
-            owner.level().playSound(null, owner.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + owner.level().random.nextFloat() * 0.1F, 0.4F + owner.level().random.nextFloat() * 0.2F);
-        owner.sendSystemMessage(Component.translatable("dogcommand.carry_me", dog.getName().getString()));
-        owner.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 20);
+            owner.level().playSound(null, owner.blockPosition(), DoggySounds.WHISTLE_LONG.get(), SoundSource.PLAYERS, 0.6F + owner.level().getRandom().nextFloat() * 0.1F, 0.4F + owner.level().getRandom().nextFloat() * 0.2F);
+        if (owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("dogcommand.carry_me", dog.getName().getString()));
+        owner.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.WHISTLE.get()), 20);
     }
 
 }

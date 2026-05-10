@@ -22,7 +22,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -33,27 +33,27 @@ import net.neoforged.neoforge.event.TagsUpdatedEvent.UpdateCause;
 public class DogBedMaterialManager {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
-    public static final ResourceLocation NANI_KEY = Util.getResource("textures/block/dog_bed_nani");
-    public static final ResourceLocation NANI_TEXTURE = Util.getResource("block/dog_bed_casing_nani");
+    public static final Identifier NANI_KEY = Util.getResource("textures/block/dog_bed_nani");
+    public static final Identifier NANI_TEXTURE = Util.getResource("block/dog_bed_casing_nani");
 
-    private static final Map<ResourceLocation, IBeddingMaterial> beddingMap = Maps.newConcurrentMap();
-    private static final Map<ResourceLocation, ICasingMaterial> casingMap = Maps.newConcurrentMap();
+    private static final Map<Identifier, IBeddingMaterial> beddingMap = Maps.newConcurrentMap();
+    private static final Map<Identifier, ICasingMaterial> casingMap = Maps.newConcurrentMap();
     
-    public static Map<ResourceLocation, IBeddingMaterial> getBeddings() {
+    public static Map<Identifier, IBeddingMaterial> getBeddings() {
         return beddingMap;
     }
-    public static Map<ResourceLocation, ICasingMaterial> getCasings() {
+    public static Map<Identifier, ICasingMaterial> getCasings() {
         return casingMap;
     }
 
-    public static IBeddingMaterial getBedding(ResourceLocation loc) {
+    public static IBeddingMaterial getBedding(Identifier loc) {
         var ret = beddingMap.get(loc);
         if (ret == null)
             return new NaniBedding(loc);
         return ret;
     }
 
-    public static ICasingMaterial getCasing(ResourceLocation loc) {
+    public static ICasingMaterial getCasing(Identifier loc) {
         var ret = casingMap.get(loc);
         if (ret == null)
             return new NaniCasing(loc);
@@ -70,14 +70,14 @@ public class DogBedMaterialManager {
         return getCasing(loc);
     }
 
-    public static ResourceLocation getKey(IBeddingMaterial loc) {
+    public static Identifier getKey(IBeddingMaterial loc) {
         var key = loc.getSaveKey();
         if (key == null)
             return NANI_KEY;
         return key;
     }
 
-    public static ResourceLocation getKey(ICasingMaterial loc) {
+    public static Identifier getKey(ICasingMaterial loc) {
         var key = loc.getSaveKey();
         if (key == null)
             return NANI_KEY;
@@ -185,9 +185,9 @@ public class DogBedMaterialManager {
 
         public static final NaniCasing NULL = new NaniCasing(null);
 
-        private Optional<ResourceLocation> missingLoc;
+        private Optional<Identifier> missingLoc;
 
-        public NaniCasing(ResourceLocation loc) {
+        public NaniCasing(Identifier loc) {
             if (loc == null)
                 this.missingLoc = Optional.empty();
             else
@@ -195,7 +195,7 @@ public class DogBedMaterialManager {
         }
 
         @Override
-        public ResourceLocation getTexture() {
+        public Identifier getTexture() {
             return NANI_TEXTURE;
         }
 
@@ -214,12 +214,12 @@ public class DogBedMaterialManager {
             return Optional.empty();
         }
 
-        public Optional<ResourceLocation> missingLoc() {
+        public Optional<Identifier> missingLoc() {
             return this.missingLoc;
         }
 
         @Override
-        public ResourceLocation getSaveKey() {
+        public Identifier getSaveKey() {
             return missingLoc().orElse(null);
         }
 
@@ -234,9 +234,9 @@ public class DogBedMaterialManager {
 
         public static final NaniBedding NULL = new NaniBedding(null);
 
-        private Optional<ResourceLocation> missingLoc;
+        private Optional<Identifier> missingLoc;
 
-        public NaniBedding(ResourceLocation loc) {
+        public NaniBedding(Identifier loc) {
             if (loc == null)
                 this.missingLoc = Optional.empty();
             else
@@ -244,7 +244,7 @@ public class DogBedMaterialManager {
         }
 
         @Override
-        public ResourceLocation getTexture() {
+        public Identifier getTexture() {
             return NANI_TEXTURE;
         }
 
@@ -263,7 +263,7 @@ public class DogBedMaterialManager {
             return Optional.empty();
         }
 
-        public Optional<ResourceLocation> missingLoc() {
+        public Optional<Identifier> missingLoc() {
             return this.missingLoc;
         }
 
@@ -273,7 +273,7 @@ public class DogBedMaterialManager {
         }
 
         @Override
-        public ResourceLocation getSaveKey() {
+        public Identifier getSaveKey() {
             return missingLoc().orElse(null);
         }
         

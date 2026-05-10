@@ -9,14 +9,8 @@ import net.minecraft.world.level.material.PushReaction;
 
 public class RiceCropBlock extends DogCropBlock {
 
-    public RiceCropBlock() {
-        super(Block.Properties.of()
-            .mapColor(MapColor.PLANT)
-            .noCollission()
-            .randomTicks()
-            .instabreak()
-            .sound(SoundType.CROP)
-            .pushReaction(PushReaction.DESTROY));
+    public RiceCropBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties props) {
+        super(props.mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY));
     }
 
     @Override

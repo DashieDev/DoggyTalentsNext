@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.client.screen.DogNewInfoScreen.element.MainButtonToolboxRowElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.DogInfoNavBarElement;
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.DogDescriptionViewBoxElement;
@@ -31,11 +29,14 @@ import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.network.chat.Component;
 
 public class DogNewInfoScreen extends StoreConnectedScreen {
@@ -49,10 +50,10 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     private DogNewInfoScreen(Dog dog) {
         super(Component.translatable("doggytalents.screen.dog.title"));
         this.dog = dog;
-        
+
         this.rightTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal(">"), b -> {
             var selectedTab = Store.get(this).getStateOrDefault(
-                ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
+                ActiveTabSlice.class, ActiveTabSlice.Tab.class,
                 ActiveTabSlice.Tab.HOME
             );
             Store.get(this).dispatchAll(
@@ -64,8 +65,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected = false;
 
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pticks) {
-                super.renderWidget(graphics, mouseX, mouseY, pticks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pticks) {
+                super.extractContents(graphics, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
@@ -78,25 +79,24 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
                 var tY = this.getY() + this.getHeight()/2 + 20;
-                graphics.drawString(font, key_str, tX, tY, 0xffffffff);
-                
-                graphics.fill(tX - 1, tY - 1, 
-                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
+                graphics.text(font, key_str, tX, tY, 0xffffffff);
+
+                graphics.fill(tX - 1, tY - 1,
+                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color);
             }
 
             @Override
-            public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            public boolean keyPressed(KeyEvent event) {
                 var mc = Minecraft.getInstance();
-                if (keyCode == mc.options.keyRight.getKey().getValue()) {
+                if (event.key() == mc.options.keyRight.getKey().getValue()) {
                     this.selected = true;
                 }
                 return false;
             }
 
             @Override
-            public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+            public boolean keyReleased(KeyEvent event) {
                 this.selected = false;
-
                 return false;
             }
 
@@ -104,7 +104,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
 
         this.lefTabButton = new TextOnlyButton(0, 0, 0, 0, Component.literal("<"), b -> {
             var selectedTab = Store.get(this).getStateOrDefault(
-                ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
+                ActiveTabSlice.class, ActiveTabSlice.Tab.class,
                 ActiveTabSlice.Tab.HOME
             );
             Store.get(this).dispatchAll(
@@ -116,8 +116,8 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             private boolean selected;
 
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pticks) {
-                super.renderWidget(graphics, mouseX, mouseY, pticks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pticks) {
+                super.extractContents(graphics, mouseX, mouseY, pticks);
 
                 //draw key hint
                 var mc = Minecraft.getInstance();
@@ -130,25 +130,24 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
                 var tX = this.getX() + this.getWidth()/2
                     - key_str_len/2;
                 var tY = this.getY() + this.getHeight()/2 + 20;
-                graphics.drawString(font, key_str, tX, tY, 0xffffffff);
-                
-                graphics.fill(tX - 1, tY - 1, 
-                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color); 
+                graphics.text(font, key_str, tX, tY, 0xffffffff);
+
+                graphics.fill(tX - 1, tY - 1,
+                    tX + key_str_len + 1, tY + font.lineHeight + 1, bg_color);
             }
 
             @Override
-            public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+            public boolean keyPressed(KeyEvent event) {
                 var mc = Minecraft.getInstance();
-                if (keyCode == mc.options.keyLeft.getKey().getValue()) {
+                if (event.key() == mc.options.keyLeft.getKey().getValue()) {
                     this.selected = true;
                 }
                 return false;
             }
 
             @Override
-            public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+            public boolean keyReleased(KeyEvent event) {
                 this.selected = false;
-
                 return false;
             }
 
@@ -157,7 +156,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     public static void open(Dog dog) { open(dog, ActiveTabSlice.Tab.HOME); }
-    
+
     public static void open(Dog dog, ActiveTabSlice.Tab initTab) {
         var mc = Minecraft.getInstance();
         var screen = new DogNewInfoScreen(dog);
@@ -175,7 +174,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void renderRootView(AbstractElement rootView) {        
+    public void renderRootView(AbstractElement rootView) {
         int mX = this.width/2;
         int mY = this.height/2;
         var navBar = new DogInfoNavBarElement(null, this, this.dog)
@@ -188,7 +187,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             .setSize(this.width, this.height - 16);
         rootView.addChildren(upperView);
         var selectedTab = rootView.getStateAndSubscribesTo(
-            ActiveTabSlice.class, ActiveTabSlice.Tab.class, 
+            ActiveTabSlice.class, ActiveTabSlice.Tab.class,
             null
         );
         if (selectedTab == null) return;
@@ -212,10 +211,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
             view
             .setPosition(PosType.ABSOLUTE, 0, 0)
             .setSize(1f, 1f)
-            //.setBackgroundColor(0xff32a852)
             .init()
         );
-        
+
         this.addSwitchTabButtons(rootView, selectedTab);
     }
 
@@ -245,7 +243,7 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         if (this.width < requiredX) return;
 
         final int CHANGE_TAB_BUTTON_MARGIN = 15;
-        
+
         this.lefTabButton.setX(CHANGE_TAB_BUTTON_MARGIN);
         this.lefTabButton.setWidth(30);
         this.lefTabButton.setHeight(100);
@@ -262,15 +260,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
 
-        super.render(graphics, mouseX, mouseY, pTicks);
-
-        //font.draw(stack, Component.literal("width : " + this.width ), 3 , 3, 0xffffffff);
-        //font.draw(stack, Component.literal("height : " + this.height ), 3 , 11, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorX : " + mouseX ), 3 , 19, 0xffffffff);
-        //font.draw(stack, Component.literal("cursorY : " + mouseY ), 3 , 27, 0xffffffff);
-        //this.font.draw(p_96562_, ActiveTabSlice.activeTab.title, 0, 0, 0xffffff);
+        super.extractRenderState(graphics, mouseX, mouseY, pTicks);
 
         //ToolTipManager
         var toolTipManager = ToolTipOverlayManager.get();
@@ -282,11 +274,10 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
         //Dropdown manager
         var dropdownMananger = DropdownMenuManager.get(this);
         if (dropdownMananger.hasDropdownMenu()) {
-            graphics.pose().pushPose();
-            graphics.pose().translate(0, 0, 200);
+            graphics.pose().pushMatrix();
             dropdownMananger.getDropdownMenu()
-                .render(graphics, mouseX, mouseY, pTicks);
-            graphics.pose().popPose();
+                .extractRenderState(graphics, mouseX, mouseY, pTicks);
+            graphics.pose().popMatrix();
         }
 
         if (!this.dog.isAlive()) {
@@ -297,45 +288,45 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
         if (this.getFocused() instanceof EditBox) {
-            return super.keyPressed(keyCode, scanCode, modifiers);
+            return super.keyPressed(event);
         }
 
         var mc = Minecraft.getInstance();
         var options = mc.options;
-        
+
         if (!this.sideTabNavLocked) {
             this.sideTabNavLocked = true;
-            if (keyCode == options.keyLeft.getKey().getValue()) {
+            if (options.keyLeft.matches(event)) {
                 this.lefTabButton.playDownSound(mc.getSoundManager());
-                this.lefTabButton.onClick(0, 0);
-                this.lefTabButton.keyPressed(keyCode, scanCode, modifiers);
-            } else if (keyCode == options.keyRight.getKey().getValue()) {
+                this.lefTabButton.onClick(new MouseButtonEvent(0, 0, new MouseButtonInfo(0, 0)), false);
+                this.lefTabButton.keyPressed(event);
+            } else if (options.keyRight.matches(event)) {
                 this.rightTabButton.playDownSound(mc.getSoundManager());
-                this.rightTabButton.onClick(0, 0);
-                this.rightTabButton.keyPressed(keyCode, scanCode, modifiers);
+                this.rightTabButton.onClick(new MouseButtonEvent(0, 0, new MouseButtonInfo(0, 0)), false);
+                this.rightTabButton.keyPressed(event);
             }
         }
-        
-        DropdownMenuManager.get(this).keyPressed(keyCode, scanCode, modifiers);
-        return super.keyPressed(keyCode, scanCode, modifiers);
+
+        DropdownMenuManager.get(this).keyPressed(event);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
+    public boolean keyReleased(KeyEvent event) {
         this.sideTabNavLocked = false;
-        this.lefTabButton.keyReleased(keyCode, scanCode, modifiers);
-        this.rightTabButton.keyReleased(keyCode, scanCode, modifiers);
-        return super.keyReleased(keyCode, scanCode, modifiers);
+        this.lefTabButton.keyReleased(event);
+        this.rightTabButton.keyReleased(event);
+        return super.keyReleased(event);
     }
 
     @Override
     public void setFocused(@Nullable GuiEventListener guiEventListener) {
-        if (guiEventListener == this.lefTabButton) 
+        if (guiEventListener == this.lefTabButton)
             return;
         if (guiEventListener == this.rightTabButton)
-            return;        
+            return;
         super.setFocused(guiEventListener);
     }
 
@@ -345,9 +336,9 @@ public class DogNewInfoScreen extends StoreConnectedScreen {
     }
 
     @Override
-    public void resize(Minecraft p_96575_, int width, int height) {
+    public void resize(int width, int height) {
         DropdownMenuManager.get(this).clearActiveDropdownMenu();
-        super.resize(p_96575_, width, height);
+        super.resize(width, height);
     }
 
     @Override

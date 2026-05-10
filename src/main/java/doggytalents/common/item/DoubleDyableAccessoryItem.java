@@ -32,10 +32,10 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
         var tag = ItemUtil.getTag(stack);
         if (tag == null)
             return defColor;
-        if (tag.contains("doggytalents_bg_color", Tag.TAG_INT)) {
-            return 0xff000000 | tag.getInt("doggytalents_bg_color");
-        } else if (tag.contains("color", Tag.TAG_INT)) {
-            return 0xff000000 | tag.getInt("color");
+        if (tag.contains("doggytalents_bg_color")) {
+            return 0xff000000 | tag.getIntOr("doggytalents_bg_color", 0);
+        } else if (tag.contains("color")) {
+            return 0xff000000 | tag.getIntOr("color", 0);
         }
         return defColor;
     }
@@ -45,10 +45,10 @@ public class DoubleDyableAccessoryItem extends AccessoryItem {
         var tag = ItemUtil.getTag(stack);
         if (tag == null)
             return defColor;
-        if (tag.contains("doggytalents_fg_color", Tag.TAG_INT)) {
-            return 0xff000000 | tag.getInt("doggytalents_fg_color");
-        } else if (tag.contains("dtn_bdhat_foreground", Tag.TAG_INT)) {
-            return 0xff000000 | tag.getInt("dtn_bdhat_foreground");
+        if (tag.contains("doggytalents_fg_color")) {
+            return 0xff000000 | tag.getIntOr("doggytalents_fg_color", 0);
+        } else if (tag.contains("dtn_bdhat_foreground")) {
+            return 0xff000000 | tag.getIntOr("dtn_bdhat_foreground", 0);
         }
         return defColor;
     }

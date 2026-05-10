@@ -27,7 +27,7 @@ public class BedDogTalent extends TalentInstance {
 
     public void onSuccessfulSleep(AbstractDog dog) {
         var level = dog.level();
-        this.cooldownDealine = level.getDayTime() + getCooldownTicks();
+        this.cooldownDealine = level.getDefaultClockTime() + getCooldownTicks();
         float set_hunger = dog.getDogHunger();
         final float base_threshold = getBaseMinHungerForSleep();
         if (set_hunger > base_threshold) {
@@ -41,12 +41,12 @@ public class BedDogTalent extends TalentInstance {
 
     public boolean isOnCooldown(AbstractDog dog) {
         var level = dog.level();
-        return level.getDayTime() < this.cooldownDealine;
+        return level.getDefaultClockTime() < this.cooldownDealine;
     }
 
     public int getCooldownDaysLeft(AbstractDog dog) {
         var level = dog.level();
-        long time_till = this.cooldownDealine - level.getDayTime();
+        long time_till = this.cooldownDealine - level.getDefaultClockTime();
         if (time_till <= 0)
             return 0;
         return Mth.ceil(time_till / 24000.0f);
@@ -55,7 +55,7 @@ public class BedDogTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.cooldownDealine = compound.getLong("cooldown_end");
+        this.cooldownDealine = compound.getLongOr("cooldown_end", 0L);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BedDogTalent extends TalentInstance {
     }
 
     public static void useBedDog(Level level, Player player) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             return;
         final int reach_range = 30;
         var dog_optional = DogUtil.getLookingAtDog(player, reach_range, 
@@ -85,7 +85,7 @@ public class BedDogTalent extends TalentInstance {
         var result = DogSleepOnManager.getServer(level.getServer()).setOrRequestSleepOn(dog, player);
         proccessResult(result, dog, player);
         if (result.isFailMsg(DogSleepOnFailMessage.NO_POS)) {
-            player.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 10);
+            player.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.WHISTLE.get()), 10);
         }
     }
 

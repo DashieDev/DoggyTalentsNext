@@ -1,0 +1,8 @@
+modLoader="minecraft"
+license="Minecraft EULA"
+[[mods]]
+modId="minecraft"
+version="26.1.2"
+displayName="Minecraft"
+authors="Mojang Studios"
+description=""

@@ -16,7 +16,7 @@ public class CherryWolfVariant extends DogVariant implements IDogAlteration {
     @Override
     public void tick(AbstractDog dog) {
 
-        if (!dog.level().isClientSide)
+        if (!dog.level().isClientSide())
             return;
         if (!ConfigHandler.CLIENT.DOG_VARIANT_CLIENT_EFFECT.get())
             return;

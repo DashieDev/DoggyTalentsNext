@@ -3,8 +3,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 import java.util.List;
 import java.util.Random;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.entity.render.DogScreenOverlays;
@@ -19,13 +17,13 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
@@ -49,8 +47,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
             PetSelectScreen.open();
         }) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                // TODO Auto-generated method stub
+            public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
                 // super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 if (this.isHovered) {
                     ToolTipOverlayManager.get().setComponents(
@@ -66,7 +63,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
         drawDogLevelKanji(graphics, mouseX, mouseY, partialTicks);
 
@@ -84,19 +81,16 @@ public class DogStatusViewBoxElement extends AbstractElement {
         renderHungerStatusStr(graphics, this.dog, this.getRealX(), this.getRealY());
     }
 
-    private void drawDogLevelKanji(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void drawDogLevelKanji(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // RenderSystem.setShaderColor removed - no longer needed for white tint
         //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int imgeSize = 128;
-        graphics.blit(getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2, 
-            this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        RenderSystem.disableBlend();
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, getKanjiDogLevel(this.dog), this.getRealX() + this.getSizeX()/2 - imgeSize/2,
+            this.getRealY() + this.getSizeY()/2 - imgeSize/2, 0.0F, 0.0F, imgeSize, imgeSize, imgeSize, imgeSize);
     }
 
-    public static ResourceLocation getKanjiDogLevel(Dog dog) {
+    public static Identifier getKanjiDogLevel(Dog dog) {
         var dogLevel = dog.getDogLevel();
         if (dogLevel.isFullKami())
             return Resources.KANJI_KAMI;
@@ -111,7 +105,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         return ret;
     }
 
-    public static void renderDogInside(GuiGraphics graphics, Dog dog, 
+    public static void renderDogInside(GuiGraphicsExtractor graphics, Dog dog, 
         int dog_mX, int dog_mY, int size, int lookX, int lookY) {
         var currentDogSize = dog.getDogSize();
         boolean dogTooBig = currentDogSize.getId() > DogSize.MODERATO.getId();
@@ -142,7 +136,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
     }
 
-    public void renderHealthBar(GuiGraphics graphics, Dog dog, int x, int y) {
+    public void renderHealthBar(GuiGraphicsExtractor graphics, Dog dog, int x, int y) {
         
         int pX = x;
         int pY = y;
@@ -167,11 +161,11 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
         
         pX += (80 - (8 + font.width(health_c0)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, (float)16, (float)0, 9, 9, 256, 256);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, (float)(16 + 36), (float)0, 9, 9, 256, 256);
         pX += 9;
         pY += 1;
-        graphics.drawString(font, health_c0, pX, pY, 0xffffffff);
+        graphics.text(font, health_c0, pX, pY, 0xffffffff);
         return;
         // Random random = new Random();
         // random.setSeed((long) (dog.tickCount * 312871));
@@ -194,7 +188,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         //     graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         //     pX += 9;
         //     pY += 1;
-        //     graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        //     graphics.text(font, healthStr, pX, pY, 0xffffffff);
         //     return;
         // }
         // if (totalHealth > 20f) {
@@ -260,25 +254,22 @@ public class DogStatusViewBoxElement extends AbstractElement {
         // this.minecraft.getProfiler().pop();
     }
 
-    private void renderHungerStatusStr(GuiGraphics graphics, Dog dog, int x, int y) {
+    private void renderHungerStatusStr(GuiGraphicsExtractor graphics, Dog dog, int x, int y) {
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get())
             return;
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, x, y, 16 + 36, 27, 9, 9);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, x, y, (float)(16 + 36), (float)27, 9, 9, 256, 256);
         int hunger = (int) dog.getDogHunger();
-        graphics.drawString(font, "" + hunger, x + 10, y + 1, 0xffffffff);
+        graphics.text(font, "" + hunger, x + 10, y + 1, 0xffffffff);
     }
 
-    private void renderVariantIcon(GuiGraphics graphics, Dog dog, int x, int y) {
+    private void renderVariantIcon(GuiGraphicsExtractor graphics, Dog dog, int x, int y) {
         var variant = dog.dogVariant();
         var iconLoc = variant.icon().orElse(null);
         if (iconLoc == null)
             return;
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        // RenderSystem.setShaderColor removed - no longer needed for white tint
         int imgeSize = 16;
-        graphics.blit(iconLoc, x, y, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        RenderSystem.disableBlend();
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, iconLoc, x, y, 0.0F, 0.0F, imgeSize, imgeSize, imgeSize, imgeSize);
     }
     
 }

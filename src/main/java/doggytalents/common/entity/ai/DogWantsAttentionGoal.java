@@ -110,7 +110,7 @@ public class DogWantsAttentionGoal extends Goal {
             }
             if (!whinedToAttention) {
                 whinedToAttention = true;
-                this.dog.playSound(SoundEvents.WOLF_WHINE, this.dog.getSoundVolume(), this.dog.getVoicePitch());
+                this.dog.playSound(this.dog.dogMood.getWhineAttentionSound(), this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }
             checkAndSwitchToAttention();
         }

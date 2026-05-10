@@ -91,22 +91,24 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.SynchedEntityData.DataItem;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.profiling.InactiveProfiler;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -127,29 +129,31 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
+import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.Snowball;
+import net.minecraft.world.entity.vehicle.minecart.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.entity.vehicle.DismountHelper;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -160,12 +164,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidType;
 import doggytalents.common.network.PacketDistributor;
@@ -244,7 +246,7 @@ public class Dog extends AbstractDog {
     private ArrayList<AccessoryInstance> clientAccessories
         = new ArrayList<AccessoryInstance>();
 
-    private ResourceLocation missingDogVariant = null;
+    private Identifier missingDogVariant = null;
         
     public final StatsTracker statsTracker = new StatsTracker();
     public final DogDataSyncManager dogSyncedDataManager
@@ -341,7 +343,7 @@ public class Dog extends AbstractDog {
         this.defaultNavigation = (DogPathNavigation) this.navigation;
         this.defaultMoveControl = (DogMoveControl) this.moveControl;
 
-        this.dogAi = new DogAiManager(this, this.level().getProfilerSupplier());
+        this.dogAi = new DogAiManager(this, () -> InactiveProfiler.INSTANCE);
         this.dogAi.init();
     }
 
@@ -378,7 +380,7 @@ public class Dog extends AbstractDog {
     @Override
     public void playStepSound(BlockPos pos, BlockState blockIn) {
         var vol = this.isDogSilent() ? 0.01f : 0.15f;
-        this.playSound(SoundEvents.WOLF_STEP, vol, 1.0F);
+        this.playSound(SoundEvents.WOLF_STEP.value(), vol, 1.0F);
     }
 
     @Override
@@ -391,7 +393,7 @@ public class Dog extends AbstractDog {
                     this.incapacitatedMananger.canMove() ? 5 : 8; 
                 return this.random.nextInt(chance_window) == 0 ? this.dogMood.getInjuredAmbient() : null;
             } else {
-                return SoundEvents.WOLF_PANT;
+                return this.dogMood.getAmbientSound();
             }
         }
         if (this.pettingManager.isPetting() || this.isDogSilent()) {
@@ -445,25 +447,25 @@ public class Dog extends AbstractDog {
         return dogMood.getDeathSound();
     }
 
-    protected SoundEvent getHowlSound() {
-        return SoundEvents.WOLF_HOWL;
+    protected @Nullable SoundEvent getHowlSound() {
+        return null;
     }
 
     public void howl() {
-        this.playSound(this.getHowlSound(), 1, this.getVoicePitch());
+        var howlSound = this.getHowlSound();
+        if (howlSound == null) return;
+        this.playSound(howlSound, 1, this.getVoicePitch());
     }
 
     public boolean isDogSoaked() {
         return this.wetSource.soaked();
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getShadingWhileWet(float partialTicks) {
         return Math.min(0.5F + Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) / 2.0F * 0.5F, 1.0F);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public float getShakeAngle(float partialTicks, float offset) {
         float f = (Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) + offset) / 1.8F;
         if (f < 0.0F) {
@@ -476,7 +478,6 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public float getInterestedAngle(float partialTicks) {
         return Mth.lerp(partialTicks, this.headRotationCourseOld, this.headRotationCourse) * 0.15F * (float)Math.PI;
     }
@@ -508,7 +509,7 @@ public class Dog extends AbstractDog {
             this.finishShaking();
             break;
         }
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             this.dogSoundManager.interuptPlaying();
         }
     }
@@ -646,7 +647,7 @@ public class Dog extends AbstractDog {
         }
 
         // On server side
-        if (this.isAlive() && !this.level().isClientSide) {
+        if (this.isAlive() && !this.level().isClientSide()) {
 
             // Every 2 seconds
             if (this.tickCount % 40 == 0) {
@@ -659,7 +660,7 @@ public class Dog extends AbstractDog {
         
         if (this.isAlive()) {
             this.animationManager.tick();
-            if (!this.level().isClientSide)
+            if (!this.level().isClientSide())
                 this.tickAnimAction();
         }
 
@@ -668,16 +669,16 @@ public class Dog extends AbstractDog {
         this.dogSoundManager.tick();
 
         //Client
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             
         }
 
-        if (this.level().isClientSide 
+        if (this.level().isClientSide() 
             && ConfigHandler.CLIENT.DISPLAY_SMOKE_WHEN_ON_FIRE.get()) {
             addAdditionalOnFireEffect();
         }
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.dogSyncedDataManager.tick();
         }
     }
@@ -752,15 +753,11 @@ public class Dog extends AbstractDog {
             this.wetSource = WetSource.RAIN;
             return true;
         }
-        if (this.isInWaterOrBubble()) {
-            this.wetSource = WetSource.BUBBLE_COLUMN;
-            return true;
-        }
         return false;
     }
 
     private void updateClassicalShakeAnim(boolean currentlyInWater) {
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             if (this.isShaking)
             if (!this.canDogDoShakeAnim() || currentlyInWater) {
                 this.finishShaking();
@@ -771,7 +768,7 @@ public class Dog extends AbstractDog {
         if (!this.isShaking)
             return;
 
-        if (this.timeWolfIsShaking == 0.0F && this.level().isClientSide) {
+        if (this.timeWolfIsShaking == 0.0F && this.level().isClientSide()) {
             if (!this.shakeFire) this.dogSoundManager.playInterruptible(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
         }
 
@@ -779,7 +776,7 @@ public class Dog extends AbstractDog {
         this.timeWolfIsShaking += 0.05F;
         if (this.prevTimeWolfIsShaking >= 2.0F) {
 
-            //TODO check if only called server side
+            // verify this is server-side only
             for (IDogAlteration alter : this.alterations) {
                 alter.onShakingDry(this, this.wetSource);
             }
@@ -871,9 +868,8 @@ public class Dog extends AbstractDog {
         
         validateGoalsAndTickNonRunningIfNeeded();
 
-        if (!this.level().isClientSide) {   
+        if (!this.level().isClientSide()) {   
             this.getSensing().tick();
-            this.lerpSteps = 0;
             this.lerpHeadSteps = 0;
             this.dogAi.tickServer();
             this.dogSwimmingManager.tickServer();
@@ -884,26 +880,26 @@ public class Dog extends AbstractDog {
 
         updateDogBeginShake();
         
-        if (!this.level().isClientSide && !this.isDefeated()) {
+        if (!this.level().isClientSide() && !this.isDefeated()) {
             this.hungerManager.tick();
             this.tickDogHealing();
             this.dogOwnerDistanceManager.tick();
             this.avoidGoInFrontOfOwnerManager.tick();
         }
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.dogMood.tickServer();
             this.dogPushAvoidManager.tickServer();
             this.dogAttackManager.tickServer();
         }
 
-        if (this.level().isClientSide && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.KAMI_PARTICLES)) {
+        if (this.level().isClientSide() && this.getDogLevel().isFullKami() && ConfigHandler.ClientConfig.getConfig(ConfigHandler.CLIENT.KAMI_PARTICLES)) {
             for (int i = 0; i < 2; i++) {
                 this.level().addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2D);
             }
         }
 
-        if (this.level().isClientSide && this.isInDrunkPose()) {
+        if (this.level().isClientSide() && this.isInDrunkPose()) {
             if (this.tickCount % 16 == 0) {
                 int color = 0x9a24e3;
                 // double d0 = (double)(color >> 16 & 255) / 255.0D;
@@ -955,21 +951,21 @@ public class Dog extends AbstractDog {
         if (this.silentTickLeft > 0)
             --this.silentTickLeft;
 
-        // if (!this.level().isClientSide && this.getMode().canWander()) {
+        // if (!this.level().isClientSide() && this.getMode().canWander()) {
         //     if (!this.getMode().shouldAttack()) {
         //         updateWanderRestState();
         //         boolean invalidated = invalidateWanderCenter(25*25);
         //         if (invalidated) {
-        //             this.restrictTo(this.blockPosition(), 12);
+        //             this.setHomeTo(this.blockPosition(), (int)(12));
         //         }
         //     }
         // }
 
-        if (!this.level().isClientSide && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
+        if (!this.level().isClientSide() && this.isInSittingPose() && !this.isDogResting() && this.tickUntilRest > 0 ) {
             --this.tickUntilRest;
         }
 
-        if (!this.level().isClientSide && this.fireImmune()) {
+        if (!this.level().isClientSide() && this.fireImmune()) {
             mayFloatDogInLava();
         }
 
@@ -987,7 +983,7 @@ public class Dog extends AbstractDog {
         for (var alter : this.alterations) {
             var result = alter.healingTick(this, healingTick_add);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 healingTick_add = result.getObject();
             }
         }
@@ -1005,7 +1001,7 @@ public class Dog extends AbstractDog {
     }
 
     private void updateDogBeginShake() {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         if (this.isShaking)
             return;
@@ -1027,7 +1023,7 @@ public class Dog extends AbstractDog {
 
     private void validateGoalsAndTickNonRunningIfNeeded() {
         //Valiate goals
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         var availableGoals = this.goalSelector.getAvailableGoals();
         if (!availableGoals.isEmpty())
@@ -1084,18 +1080,18 @@ public class Dog extends AbstractDog {
             return this.incapacitatedMananger
                 .interact(stack, player, hand);
         
-        if (handleOpenDogScreenDedicated(player, stack).shouldSwing())
+        if (handleOpenDogScreenDedicated(player, stack).consumesAction())
             return InteractionResult.SUCCESS;
-        if (handleTameDogIfNotTamed(player, stack, hand).shouldSwing())
+        if (handleTameDogIfNotTamed(player, stack, hand).consumesAction())
             return InteractionResult.SUCCESS;
-        if (dogCheckAndRidePlayer(player, stack).shouldSwing())
+        if (dogCheckAndRidePlayer(player, stack).consumesAction())
             return InteractionResult.SUCCESS;
 
-        if (handleSetWolfArmor(player, stack).shouldSwing())
+        if (handleSetWolfArmor(player, stack).consumesAction())
             return InteractionResult.SUCCESS;
-        if (handleRepairWolfArmor(player, stack).shouldSwing())
+        if (handleRepairWolfArmor(player, stack).consumesAction())
             return InteractionResult.SUCCESS;
-        if (handleUnsetWolfArmor(player, stack, hand).shouldSwing())
+        if (handleUnsetWolfArmor(player, stack, hand).consumesAction())
             return InteractionResult.SUCCESS;
 
         var otherHandlerResult = 
@@ -1103,17 +1099,17 @@ public class Dog extends AbstractDog {
         if (otherHandlerResult.isPresent())
             return otherHandlerResult.get();
 
-        if (handleBreeding(player, hand, stack).shouldSwing())
+        if (handleBreeding(player, hand, stack).consumesAction())
             return InteractionResult.SUCCESS;
 
-        if (handleOpenDogScreen(player).shouldSwing()) {
+        if (handleOpenDogScreen(player).consumesAction()) {
             return InteractionResult.SUCCESS;
         }
 
-        if (handleDogSitStand(player).shouldSwing())
+        if (handleDogSitStand(player).consumesAction())
             return InteractionResult.SUCCESS;
 
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             this.displayToastIfNoPermission(player);
         }
 
@@ -1148,10 +1144,10 @@ public class Dog extends AbstractDog {
         if (this.isProtesting())
             return InteractionResult.FAIL;
 
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide())
             checkAndDoBackFlip();
 
-        if (!this.level().isClientSide && !this.isOrderedToSit()) {
+        if (!this.level().isClientSide() && !this.isOrderedToSit()) {
             this.lastOrderedToSitTick = this.tickCount;
         }
 
@@ -1197,7 +1193,7 @@ public class Dog extends AbstractDog {
         if (!this.canInteract(player))
             return InteractionResult.PASS;
 
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             DogNewInfoScreen.open(this);
         return InteractionResult.SUCCESS;
     }
@@ -1208,7 +1204,7 @@ public class Dog extends AbstractDog {
         if (!this.isTame())
             return InteractionResult.FAIL;
 
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide())
             return InteractionResult.SUCCESS;
         
         if (this.canInteract(player))
@@ -1221,7 +1217,7 @@ public class Dog extends AbstractDog {
 
     private InteractionResult dogCheckAndRidePlayer(Player player, ItemStack stack) {
         if (player.hasPassenger(this)) {
-            if (!this.level().isClientSide)
+            if (!this.level().isClientSide())
                 this.unRide();
             return InteractionResult.SUCCESS;
         }
@@ -1233,12 +1229,12 @@ public class Dog extends AbstractDog {
             return InteractionResult.PASS;
         if (!this.canInteract(player))
             return InteractionResult.PASS;
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             if (this.startRiding(player))
-            player.displayClientMessage(
+            player.sendOverlayMessage(
                 Component.translatable(
-                    "talent.doggytalents.bed_finder.dog_mount", 
-                    this.getGenderPronoun()), true);
+                    "talent.doggytalents.bed_finder.dog_mount",
+                    this.getGenderPronoun()));
         }
         return InteractionResult.SUCCESS;
     }
@@ -1251,7 +1247,7 @@ public class Dog extends AbstractDog {
         if (!this.canInteract(player))
             return InteractionResult.PASS;
 
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return InteractionResult.SUCCESS;
         this.setWolfArmor(stack.copyWithCount(1));
         stack.consume(1, player);
@@ -1271,7 +1267,7 @@ public class Dog extends AbstractDog {
             return InteractionResult.PASS;
 
         
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return InteractionResult.SUCCESS;
         stack.shrink(1);
         this.playSound(SoundEvents.WOLF_ARMOR_REPAIR);
@@ -1290,14 +1286,14 @@ public class Dog extends AbstractDog {
         if (!this.canInteract(player))
             return InteractionResult.PASS;
 
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return InteractionResult.SUCCESS;
-        stack.hurtAndBreak(1, player, getSlotForHand(hand));
+        stack.hurtAndBreak(1, player, hand);
         this.playSound(SoundEvents.ARMOR_UNEQUIP_WOLF);
 
         var wolf_armor0 = this.wolfArmor();
         this.setWolfArmor(ItemStack.EMPTY);
-        this.spawnAtLocation(wolf_armor0);
+        this.spawnAtLocation((ServerLevel) this.level(), wolf_armor0);
         return InteractionResult.SUCCESS;
     }
 
@@ -1332,7 +1328,7 @@ public class Dog extends AbstractDog {
             return InteractionResult.PASS;
         
 
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return InteractionResult.SUCCESS;
 
         int age = this.getAge();
@@ -1351,7 +1347,7 @@ public class Dog extends AbstractDog {
             return InteractionResult.FAIL;
         if (!isDogTameItem(stack))
             return InteractionResult.FAIL;
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return InteractionResult.SUCCESS;
         
         this.usePlayerItem(player, hand, stack);
@@ -1376,7 +1372,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean canStillEat() {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return false;
         if (ConfigHandler.SERVER.DISABLE_HUNGER.get()) {
             if(this.getHealth() < this.getMaxHealth()
@@ -1394,10 +1390,9 @@ public class Dog extends AbstractDog {
 
     private void displayToastIfNoPermission(Player player) {
         if (this.canInteract(player)) return;
-        player.displayClientMessage(
+        player.sendOverlayMessage(
             Component.translatable("doggui.invalid_dog.no_permission.title", this.getGenderPronoun())
-            .withStyle(ChatFormatting.RED) 
-        , true);
+            .withStyle(ChatFormatting.RED));
     }
 
     @Override
@@ -1408,7 +1403,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canBeRiddenInWater(this);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return false;
             } else if (result == InteractionResult.FAIL) {
                 return true;
@@ -1420,7 +1415,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void stopRiding() {
-        if (!this.level().isClientSide) { 
+        if (!this.level().isClientSide()) { 
             var e0 = this.getVehicle();
             super.stopRiding();
             var e1 = this.getVehicle();
@@ -1437,17 +1432,17 @@ public class Dog extends AbstractDog {
     private boolean ridingAuthorized = false;
 
     @Override
-    public boolean startRiding(Entity entity, boolean force_ride) {
+    public boolean startRiding(Entity entity, boolean force_ride, boolean updateMount) {
         var result = false;
-        boolean not_authorized = 
+        boolean not_authorized =
             requireRidingAuthorization(entity)
             && !isRidingAuthorized();
-        if (!not_authorized) {   
-            result = super.startRiding(entity, force_ride);
+        if (!not_authorized) {
+            result = super.startRiding(entity, force_ride, updateMount);
         }
         ridingAuthorized = false;
 
-        if (!this.level().isClientSide && result) {
+        if (!this.level().isClientSide() && result) {
             if (entity instanceof ServerPlayer player) {
                 PacketHandler.send(PacketDistributor.PLAYER.with(() -> player), 
                     new DogMountData(this.getId(), true)
@@ -1482,21 +1477,21 @@ public class Dog extends AbstractDog {
 
     @Override
     public boolean showVehicleHealth() {
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             return ClientEventHandler.showWolfMountHealth(); 
         }
         return super.showVehicleHealth();
     }
 
     @Override
-    public boolean canTrample(BlockState state, BlockPos pos, float fallDistance) {
+    public boolean canTrample(ServerLevel level, BlockState state, BlockPos pos, double fallDistance) {
         //Temporary to avoid wolf mount bug when trampling crops.
         return false;
     }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_332775_, 
-        DifficultyInstance p_332793_, MobSpawnType p_332761_, @Nullable SpawnGroupData p_332782_) {
+        DifficultyInstance p_332793_, EntitySpawnReason p_332761_, @Nullable SpawnGroupData p_332782_) {
         return null;
     }
 
@@ -1516,14 +1511,14 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(double distance, float damageMultiplier, DamageSource source) {
         if (dogFallImmune()) {
             return false;
         }
         for (IDogAlteration alter : this.alterations) {
-            InteractionResult result = alter.onLivingFall(this, distance, damageMultiplier); // TODO pass source
+            InteractionResult result = alter.onLivingFall(this, (float) distance, damageMultiplier); // DamageSource not yet threaded through alteration API
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -1531,27 +1526,27 @@ public class Dog extends AbstractDog {
         }
 
         // Start: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
-        float[] ret = net.neoforged.neoforge.common.CommonHooks.onLivingFall(this, distance, damageMultiplier);
-        if (ret == null) return false;
-        distance = ret[0];
-        damageMultiplier = ret[1];
+        var fallEvent = net.neoforged.neoforge.common.CommonHooks.onLivingFall(this, distance, damageMultiplier);
+        if (fallEvent.isCanceled()) return false;
+        distance = fallEvent.getDistance();
+        damageMultiplier = fallEvent.getDamageMultiplier();
 
         int i = this.calculateFallDamage(distance, damageMultiplier);
 
         if (i > 0) {
             if (this.isVehicle()) {
-                for(Entity e : this.getPassengers()) {
-                   e.hurt(this.damageSources().fall(), i);
+                for (Entity e : this.getPassengers()) {
+                    e.hurt(this.damageSources().fall(), i);
                 }
             }
 
             // Sound selection is copied from Entity#getFallDamageSound()
-           this.playSound(i > 4 ? this.getFallSounds().big() : this.getFallSounds().small(), 1.0F, 1.0F);
-           this.playBlockFallSound();
-           this.hurt(this.damageSources().fall(), (float)i);
-           return true;
+            this.playSound(i > 4 ? this.getFallSounds().big() : this.getFallSounds().small(), 1.0F, 1.0F);
+            this.playBlockFallSound();
+            this.hurt(this.damageSources().fall(), (float) i);
+            return true;
         } else {
-           return false;
+            return false;
         }
         // End: Logic copied from the super call and altered to apply the reduced fall damage to passengers too. #358
     }
@@ -1560,12 +1555,12 @@ public class Dog extends AbstractDog {
         return this.alterationProps.fallImmune();
     }
 
-    // TODO
+    // alteration loop below needs restoration when alteration API is stable
     @Override
     public int getMaxFallDistance() {
         // for (var a : this.alterations) {
         // var i = a.safeFallDistance(this);
-        // if (i.getResult().shouldSwing()) {
+        // if (i.getResult().consumesAction()) {
         // return i.getObject().intValue();
         // }
         // }
@@ -1576,21 +1571,21 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected int calculateFallDamage(float distance, float damageMultiplier) {
-        MobEffectInstance effectInst = this.getEffect(MobEffects.JUMP);
+    protected int calculateFallDamage(double distance, float damageMultiplier) {
+        MobEffectInstance effectInst = this.getEffect(MobEffects.JUMP_BOOST);
         float f = effectInst == null ? 0.0F : effectInst.getAmplifier() + 1;
-        distance -= f;
+        float distF = (float) distance - f;
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.calculateFallDistance(this, distance);
+            DTNInteractionResultHolder<Float> result = alter.calculateFallDistance(this, distF);
 
-            if (result.getResult().shouldSwing()) {
-                distance = result.getObject();
+            if (result.getResult().consumesAction()) {
+                distF = result.getObject();
                 break;
             }
         }
 
-        return Mth.ceil((distance - 3.0F - f) * damageMultiplier);
+        return Mth.ceil((distF - 3.0F - f) * damageMultiplier);
     }
 
     @Override
@@ -1614,9 +1609,9 @@ public class Dog extends AbstractDog {
     @Override
     protected int decreaseAirSupply(int air) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Integer> result = alter.decreaseAirSupply(this, air);
+            DTNInteractionResultHolder<Integer> result = alter.decreaseAirSupply(this, air);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 return result.getObject();
             }
         }
@@ -1636,7 +1631,7 @@ public class Dog extends AbstractDog {
     public boolean ignoreExplosion(Explosion x) {
         for (var alter : this.alterations) {
             var result = alter.negateExplosion(this);
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             }
         }
@@ -1648,9 +1643,9 @@ public class Dog extends AbstractDog {
     protected int increaseAirSupply(int currentAir) {
         currentAir += 4;
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Integer> result = alter.determineNextAir(this, currentAir);
+            DTNInteractionResultHolder<Integer> result = alter.determineNextAir(this, currentAir);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 currentAir = result.getObject();
                 break;
             }
@@ -1672,7 +1667,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canAttack(this, target);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -1693,19 +1688,19 @@ public class Dog extends AbstractDog {
         if (target instanceof AbstractPiglin) {
             var owner = this.getOwner();
             if (owner != null) {
-                for (var stack : owner.getArmorSlots()) {
+                for (var slot : new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD}) {
+                    var stack = owner.getItemBySlot(slot);
                     if (stack.makesPiglinsNeutral(owner)) {
                         return true;
                     }
                 }
             }
         }
-        if (target.getType().is(DoggyTags.DOG_SHOULD_IGNORE))
+        if (target.getType().builtInRegistryHolder().is(DoggyTags.DOG_SHOULD_IGNORE))
             return true;
         return false;
     }
 
-    @Override
     public boolean canAttackType(EntityType<?> entityType) {
         if (!this.getMode().shouldAttack()) {
             return false;
@@ -1725,7 +1720,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.shouldAttackEntity(this, target, owner);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -1739,7 +1734,7 @@ public class Dog extends AbstractDog {
         return !DogAllyCheck.isAlliedToDog(this, target, owner);
     }
 
-    // TODO
+    // override below disabled pending canAttack API verification
     //@Override
 //    public boolean canAttack(LivingEntity livingentityIn, EntityPredicate predicateIn) {
 //        return predicateIn.canTarget(this, livingentityIn);
@@ -1751,14 +1746,14 @@ public class Dog extends AbstractDog {
         if (this.isPassenger())
             return true;
         for (var alt : this.alterations) {
-            if (alt.stillIdleOrSitWhenHurt(this, source, amount).shouldSwing())
+            if (alt.stillIdleOrSitWhenHurt(this, source, amount).consumesAction())
                 return true;
         }
         return false;
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel level, DamageSource source, float amount) {
 
         var attacker = source.getEntity();
 
@@ -1777,9 +1772,9 @@ public class Dog extends AbstractDog {
         }
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.gettingAttackedFrom(this, source, amount);
+            DTNInteractionResultHolder<Float> result = alter.gettingAttackedFrom(this, source, amount);
 
-            // TODO
+            // only FAIL result is handled; may need full result type handling
             if (result.getResult() == InteractionResult.FAIL) {
                 return false;
             } else {
@@ -1787,11 +1782,11 @@ public class Dog extends AbstractDog {
             }
         }
 
-        if (this.isInvulnerableTo(source)) {
+        if (this.isInvulnerableTo(level, source)) {
             return false;
         }
 
-        boolean allPlayerCannotAttackDog = 
+        boolean allPlayerCannotAttackDog =
             ConfigHandler.ClientConfig.getConfig(ConfigHandler.SERVER.ALL_PLAYER_CANNOT_ATTACK_DOG);
 
         if (allPlayerCannotAttackDog && attacker instanceof Player) {
@@ -1807,19 +1802,19 @@ public class Dog extends AbstractDog {
         }
 
         float health0 = this.getHealth();
-        
+
         this.dogMood.onStartHurting(health0);
-        boolean ret = super.hurt(source, amount);
+        boolean ret = super.hurtServer(level, source, amount);
 
         float actual_hurt_amount = health0 - this.getHealth();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             mayStandUpAndPlayHurtAnim(source, actual_hurt_amount, health0);   
             if (actual_hurt_amount > 0)
                 DogSleepOnManager.onHurt(this);            
         }
 
-        if (this.level().isClientSide
+        if (this.level().isClientSide()
             && ConfigHandler.CLIENT.BLOCK_RED_OVERLAY_WHEN_HURT.get()) {
             this.hurtTime = 0;
             this.hurtDuration = 0;
@@ -1828,10 +1823,10 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    protected void actuallyHurt(DamageSource source, float amount) {
+    protected void actuallyHurt(ServerLevel level, DamageSource source, float amount) {
         if (mayWolfArmorAbsorb(source, amount))
             return;
-        super.actuallyHurt(source, amount);
+        super.actuallyHurt(level, source, amount);
     }
 
     private boolean mayWolfArmorAbsorb(DamageSource source, float amount) {
@@ -1863,7 +1858,7 @@ public class Dog extends AbstractDog {
         this.playSound(SoundEvents.WOLF_ARMOR_CRACK);
         if (this.level() instanceof ServerLevel sLevel) {
             sLevel.sendParticles(
-                new ItemParticleOption(ParticleTypes.ITEM, Items.ARMADILLO_SCUTE.getDefaultInstance()),
+                new ItemParticleOption(ParticleTypes.ITEM, Items.ARMADILLO_SCUTE),
                 this.getX(), this.getY() + 1.0, this.getZ(),
                 20,   0.2, 0.1, 0.2,   0.1
             );
@@ -1905,8 +1900,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean doHurtTarget(Entity target) {
-        
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
+
         for (IDogAlteration alter : this.alterations) {
             alter.doInitialAttackEffects(this, target);
         }
@@ -1941,7 +1936,7 @@ public class Dog extends AbstractDog {
 
         this.doInitialEnchantDamageEffects(this, target);
 
-        boolean flag = target.hurt(this.damageSources().mobAttack(this), damage);
+        boolean flag = target.hurtOrSimulate(this.damageSources().mobAttack(this), damage);
         if (!flag) return false;
 
         if (this.level() instanceof ServerLevel serverlevel1) {
@@ -1970,7 +1965,7 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean killedEntity(ServerLevel level, LivingEntity entity) {
+    public boolean killedEntity(ServerLevel level, LivingEntity entity, DamageSource source) {
         if (!ConfigHandler.SERVER.DISABLE_KILL_STATS.get())
             this.statsTracker.incrementKillCount(entity);
         return true;
@@ -1996,19 +1991,18 @@ public class Dog extends AbstractDog {
         }
     }
 
-    @Override
     public boolean isDamageSourceBlocked(DamageSource source) {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.canBlockDamageSource(this, source);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
             }
         }
 
-        return super.isDamageSourceBlocked(source);
+        return false;
     }
 
     @Override
@@ -2019,9 +2013,9 @@ public class Dog extends AbstractDog {
     @Override
     public void setRemainingFireTicks(int ticks) {
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Integer> result = alter.setFire(this, ticks);
+            DTNInteractionResultHolder<Integer> result = alter.setFire(this, ticks);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 ticks = result.getObject();
             }
         }
@@ -2043,7 +2037,7 @@ public class Dog extends AbstractDog {
         for (var alter : this.alterations) {
             var result = alter.shouldNotAfraidOfFire(this);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             }
         }
@@ -2052,18 +2046,18 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
+    public boolean isInvulnerableTo(ServerLevel level, DamageSource source) {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.isInvulnerableTo(this, source);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
             }
         }
 
-        return super.isInvulnerableTo(source);
+        return super.isInvulnerableTo(level, source);
     }
 
     @Override
@@ -2071,7 +2065,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.isInvulnerable(this);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -2102,7 +2096,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.isPotionApplicable(this, effectIn);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -2113,13 +2107,8 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean canHaveALeashAttachedToIt() {
+    public boolean canBeLeashed() {
         return false;
-    }
-
-    @Override
-    public void setLeashedTo(Entity p_21464_, boolean p_21465_) {
-        return;
     }
 
     @Override
@@ -2167,7 +2156,7 @@ public class Dog extends AbstractDog {
         //where a dog object is removed from the world, change the UUID and then re-added back in.
         if (!this.isAddedToWorld()) return;
 
-        if (this.level() != null && !this.level().isClientSide) {
+        if (this.level() != null && !this.level().isClientSide()) {
             DogLocationStorage.get(this.level()).remove(oldUniqueId);
             DogLocationStorage.get(this.level()).getOrCreateData(this).update(this);
         }
@@ -2277,7 +2266,7 @@ public class Dog extends AbstractDog {
         for (IDogAlteration alter : this.alterations) {
             InteractionResult result = alter.shouldSkipAttackFrom(this, entityIn);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return true;
             } else if (result == InteractionResult.FAIL) {
                 return false;
@@ -2287,7 +2276,6 @@ public class Dog extends AbstractDog {
         return false;
     }
 
-    @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(DoggyItems.DOGGY_CHARM.get());
     }
@@ -2324,7 +2312,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public AgeableMob getBreedOffspring(ServerLevel worldIn, AgeableMob partner) {
-        Dog child = DoggyEntityTypes.DOG.get().create(worldIn);
+        Dog child = DoggyEntityTypes.DOG.get().create(worldIn, EntitySpawnReason.BREEDING);
         UUID uuid = this.getOwnerUUID();
 
         if (uuid != null) {
@@ -2369,15 +2357,6 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public float getScale() {
-        if (this.isBaby()) {
-            return 0.5F;
-        } else {
-            return this.getDogSize().getScale();
-        }
-    }
-
-    @Override
     public float getAgeScale() {
         return 1;
     }
@@ -2390,11 +2369,11 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public Entity changeDimension(DimensionTransition tansition) {
+    public Entity teleport(TeleportTransition tansition) {
         if (checkBlockPortal())
             return null;
         this.DTN_dogChangingDim = true;
-        Entity transportedEntity = super.changeDimension(tansition);
+        Entity transportedEntity = super.teleport(tansition);
         this.DTN_dogChangingDim = false;
         if (transportedEntity instanceof Dog dog) {
             DogLocationStorage.get(this.level()).getOrCreateData(this).update(dog);
@@ -2466,7 +2445,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void remove(Entity.RemovalReason removalReason) {
-        if (this.level() != null && !this.level().isClientSide) {
+        if (this.level() != null && !this.level().isClientSide()) {
             boolean remove_trusted =
                 ConfigHandler.SERVER.TRUST_THIRD_PARTY_STORAGE.get()
                 && removalReason == RemovalReason.DISCARDED;
@@ -2502,11 +2481,11 @@ public class Dog extends AbstractDog {
     }
 
     @Override
-    public boolean save(CompoundTag compound) {
+    public boolean save(ValueOutput output) {
         if (doDogRidingPlayerSave()) {
-            return saveAsPassenger(compound);
+            return saveAsPassenger(output);
         }
-        return super.save(compound);
+        return super.save(output);
     }
 
     private boolean doDogRidingPlayerSave() {
@@ -2533,7 +2512,7 @@ public class Dog extends AbstractDog {
             && ConfigHandler.ServerConfig.getConfigOrDefault(
                 ConfigHandler.SERVER.DOG_MAX_BUILD_Y_CAP, false);
         if (max_build_height_check) {
-            int y_cap = this.level().getMaxBuildHeight();
+            int y_cap = this.level().getMaxY();
             if (y > y_cap) y = y_cap;
         }
         
@@ -2549,16 +2528,16 @@ public class Dog extends AbstractDog {
         if (!changed_xz)
             return;
         var current_chunk_pos = this.chunkPosition();
-        boolean changed_chunk = 
-            SectionPos.blockToSectionCoord(x) != current_chunk_pos.x 
-            || SectionPos.blockToSectionCoord(z) != current_chunk_pos.z;
+        boolean changed_chunk =
+            SectionPos.blockToSectionCoord(x) != current_chunk_pos.x()
+            || SectionPos.blockToSectionCoord(z) != current_chunk_pos.z();
         if (!changed_chunk)
             return;
         if (!ConfigHandler.SERVER.DOG_LOAD_CHUNK_BEFORE_MOVE.get())
             return;
         if (!this.dogTrackingTracker.isTracking())
             return;
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         if (this.isRemoved())
             return;
@@ -2569,18 +2548,6 @@ public class Dog extends AbstractDog {
         );
     }
 
-    @Override
-    public void lerpTo(double x, double y, double z, float yrot, float xrot,
-            int step) {
-        if (this.level().isClientSide && FixClientTeleportDesync_1_21.onDogLerpTo(this)) {
-            setPos(x, y, z);
-            setRot(yrot, xrot);
-            this.lerpSteps = 0;
-            return;
-        }
-        super.lerpTo(x, y, z, yrot, xrot, step);
-    }
-    
     private void startShaking() {
         if (this.isShaking) return; // don't shake if already shaking
         this.isShaking = true;
@@ -2597,7 +2564,7 @@ public class Dog extends AbstractDog {
      */
     public void startShakingAndBroadcast(boolean shakeFire) {
         if (this.isShaking) return; //Already shaking
-        if (this.level().isClientSide) return;
+        if (this.level().isClientSide()) return;
         if (shakeFire) {
             this.startShakingLava();
             ParticlePackets.DogShakingPacket.sendDogShakingPacket(this, DogShakingData.State.SHAKE_LAVA);
@@ -2673,7 +2640,7 @@ public class Dog extends AbstractDog {
         var entity = cause.getEntity();
         if (level instanceof ServerLevel) {
             ServerLevel serverlevel = (ServerLevel)level;
-            if (entity == null || entity.killedEntity(serverlevel, this)) {
+            if (entity == null || entity.killedEntity(serverlevel, this, cause)) {
                 this.gameEvent(GameEvent.ENTITY_DIE);
                 this.dropAllDeathLoot(serverlevel, cause);
             }
@@ -2682,15 +2649,16 @@ public class Dog extends AbstractDog {
         }
         
         var owner = this.getOwner();
-        if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && owner instanceof ServerPlayer) {
-            owner.sendSystemMessage(deathMessage);
+        if (!this.level().isClientSide()
+                && owner instanceof ServerPlayer sp) {
+            sp.sendSystemMessage(deathMessage);
         }
     }
 
     
 
     private boolean checkAndHandleIncapacitated(DamageSource cause) {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return false;
         if (!ConfigHandler.ServerConfig.getConfig(ConfigHandler.SERVER.IMMORTAL_DOGS)) 
             return false;
@@ -2776,7 +2744,9 @@ public class Dog extends AbstractDog {
         );
     
         msg.append(msg01);
-        owner.sendSystemMessage(msg);
+        if (owner instanceof ServerPlayer sp) {
+            sp.sendSystemMessage(msg);
+        }
     }
 
     public IncapacitatedSyncState createIncapSyncState(DamageSource source) {
@@ -2818,7 +2788,6 @@ public class Dog extends AbstractDog {
         }
     }
 
-    @Override
     public void dropEquipment() {
         this.alterations.forEach((alter) -> alter.dropInventory(this));
     }
@@ -2830,10 +2799,11 @@ public class Dog extends AbstractDog {
     // }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-
+    public void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        var compound = new CompoundTag();
         addDTNAdditionalSavedData(compound);
+        output.store(compound);
     }
 
     public void addDTNAdditionalSavedData(CompoundTag compound) {
@@ -2906,7 +2876,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bedsData.entrySet()) {
                 CompoundTag bedNBT = new CompoundTag();
-                NBTUtil.putResourceLocation(bedNBT, "dim", entry.getKey().location());
+                NBTUtil.putResourceLocation(bedNBT, "dim", entry.getKey().identifier());
                 NBTUtil.putBlockPos(bedNBT, "pos", entry.getValue());
                 bedsList.add(bedNBT);
             }
@@ -2921,7 +2891,7 @@ public class Dog extends AbstractDog {
 
             for (var entry : bowlsData.entrySet()) {
                 CompoundTag bowlsNBT = new CompoundTag();
-                NBTUtil.putResourceLocation(bowlsNBT, "dim", entry.getKey().location());
+                NBTUtil.putResourceLocation(bowlsNBT, "dim", entry.getKey().identifier());
                 NBTUtil.putBlockPos(bowlsNBT, "pos", entry.getValue());
                 bowlsList.add(bowlsNBT);
             }
@@ -2940,9 +2910,9 @@ public class Dog extends AbstractDog {
         if (this.isDefeated()) 
             this.incapacitatedMananger.save(compound);
 
-        if (this.getMode().canWander() && this.hasRestriction()) {
-            var restrict = this.getRestrictCenter();
-            int restrict_r = (int) this.getRestrictRadius();
+        if (this.getMode().canWander() && this.hasHome()) {
+            var restrict = this.getHomePosition();
+            int restrict_r = (int) this.getHomeRadius();
             if (restrict != null) {
                 var wanderTg = new CompoundTag();
                 wanderTg.putInt("wanderX", restrict.getX());
@@ -2954,30 +2924,37 @@ public class Dog extends AbstractDog {
         }
 
         //Duplication Detection
-        if (!this.level().isClientSide && !DTN_dogChangingDim) {
+        if (!this.level().isClientSide() && !DTN_dogChangingDim) {
             this.dogDuplicateDetection.save(compound);
         }
     }
 
-    public void addNonDTNAdditionalData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
+    public void addNonDTNAdditionalData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
     }
 
     @Override
-    public void load(CompoundTag compound) {
+    public void load(ValueInput input) {
 
         this.authorizedChangingOwner = true;
         this.authorizedChangingName = true;
 
-        super.load(compound);
+        super.load(input);
 
         this.authorizedChangingOwner = false;
         this.authorizedChangingName = false;
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
+    public void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        @SuppressWarnings("deprecation")
+        var compound = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(
+            CompoundTag.CODEC)).orElse(new CompoundTag());
+        readDTNAdditionalSavedData(compound);
+    }
+
+    public void readDTNAdditionalSavedData(CompoundTag compound) {
 
         var newTlInstLs = new ArrayList<TalentInstance>();
 
@@ -2997,11 +2974,11 @@ public class Dog extends AbstractDog {
         var artifactsList = new ArrayList<DoggyArtifactItem>(3);
         
         try {
-            if (compound.contains("doggy_artifacts", Tag.TAG_LIST)) {
-                var artifactsListTag = compound.getList("doggy_artifacts", Tag.TAG_COMPOUND);
+            if (compound.contains("doggy_artifacts")) {
+                var artifactsListTag = compound.getListOrEmpty("doggy_artifacts");
                 for (int i = 0; i < artifactsListTag.size(); ++i) {
                     var artifactItem = DoggyArtifactItem.readCompound(
-                        artifactsListTag.getCompound(i));
+                        artifactsListTag.getCompoundOrEmpty(i));
                     if (artifactItem != null) {
                         artifactsList.add(artifactItem);
                     }
@@ -3022,7 +2999,7 @@ public class Dog extends AbstractDog {
 
         try {
             this.setDogVariant(
-                DogVariantUtil.fromSaveString(compound.getString("classicalVariant"), 
+                DogVariantUtil.fromSaveString(compound.getStringOr("classicalVariant", ""), 
                     id -> { this.missingDogVariant = id; } )
             );
         } catch (Exception e) {
@@ -3034,10 +3011,10 @@ public class Dog extends AbstractDog {
             var dogSkinData = DogSkinData.readFromTag(compound);
             this.setDogSkinData(dogSkinData);
 
-            if (compound.contains("wolfArmorItem", Tag.TAG_COMPOUND)) {
+            if (compound.contains("wolfArmorItem")) {
                 this.setWolfArmor(NBTUtil.readItemStack(this.registryAccess(), compound, "wolfArmorItem"));
             }
-            if (compound.contains("fetchItem", Tag.TAG_COMPOUND)) {
+            if (compound.contains("fetchItem")) {
                 this.setBoneVariant(NBTUtil.readItemStack(this.registryAccess(), compound, "fetchItem"));
             }
         } catch (Exception e) {
@@ -3045,33 +3022,33 @@ public class Dog extends AbstractDog {
         }
 
         try {
-            this.setGender(DogGender.bySaveName(compound.getString("dogGender")));
+            this.setGender(DogGender.bySaveName(compound.getStringOr("dogGender", "")));
 
-            if (compound.contains("mode", Tag.TAG_STRING)) {
-                this.setMode(DogMode.bySaveName(compound.getString("mode")));
+            if (compound.contains("mode")) {
+                this.setMode(DogMode.bySaveName(compound.getStringOr("mode", "")));
             }
             
-            this.setHungerDirectly(compound.getFloat("dogHunger"));
-            this.setDogIncapValue(compound.getInt("dogIncapacitatedValue"));
+            this.setHungerDirectly(compound.getFloatOr("dogHunger", 0f));
+            this.setDogIncapValue(compound.getIntOr("dogIncapacitatedValue", 0));
             this.setOwnersName(NBTUtil.getTextComponent(compound, "lastKnownOwnerName"));
-            this.setWillObeyOthers(compound.getBoolean("willObey"));
-            this.setCanPlayersAttack(compound.getBoolean("friendlyFire"));
-            this.setRegardTeamPlayers(compound.getBoolean("regardTeamPlayers"));
-            this.setDogAutoMount(compound.getBoolean("dogAutoMount"));
-            this.setForceSit(compound.getBoolean("forceSit"));
-            this.setCrossOriginTp(compound.getBoolean("crossOriginTp"));
-            this.setPatrolTargetLock(compound.getBoolean("patrolTargetLock")); 
-            this.setHideArmor(compound.getBoolean("hideDogArmor"));
-            this.setDogOnDuty(compound.getBoolean("dogOnDuty"));
-            var low_health_strategy_id = compound.getByte("lowHealthStrategy");
+            this.setWillObeyOthers(compound.getBooleanOr("willObey", false));
+            this.setCanPlayersAttack(compound.getBooleanOr("friendlyFire", false));
+            this.setRegardTeamPlayers(compound.getBooleanOr("regardTeamPlayers", false));
+            this.setDogAutoMount(compound.getBooleanOr("dogAutoMount", false));
+            this.setForceSit(compound.getBooleanOr("forceSit", false));
+            this.setCrossOriginTp(compound.getBooleanOr("crossOriginTp", false));
+            this.setPatrolTargetLock(compound.getBooleanOr("patrolTargetLock", false)); 
+            this.setHideArmor(compound.getBooleanOr("hideDogArmor", false));
+            this.setDogOnDuty(compound.getBooleanOr("dogOnDuty", false));
+            var low_health_strategy_id = compound.getByteOr("lowHealthStrategy", (byte)0);
             this.setLowHealthStrategy(LowHealthStrategy.fromId(low_health_strategy_id));
-            var combat_return_strategy_id = compound.getByte("combatReturnStrategy");
+            var combat_return_strategy_id = compound.getByteOr("combatReturnStrategy", (byte)0);
             this.setCombatReturnStrategy(CombatReturnStrategy.fromId(combat_return_strategy_id));
-            if (compound.contains("dogSize", Tag.TAG_ANY_NUMERIC)) {
-                this.setDogSize(DogSize.fromId(compound.getInt("dogSize")));
+            if (compound.contains("dogSize")) {
+                this.setDogSize(DogSize.fromId(compound.getIntOr("dogSize", 0)));
             }
         } catch (Exception e) {
-            //TODO What?
+            // error logged above; no recovery needed
             DoggyTalentsNext.LOGGER.error("Failed to load levels: " + e.getMessage());
             e.printStackTrace();
         }
@@ -3079,15 +3056,15 @@ public class Dog extends AbstractDog {
         try {
             int level_normal = 0;
             int level_kami = 0;
-            if (compound.contains("level_normal", Tag.TAG_ANY_NUMERIC)) {
-                level_normal = compound.getInt("level_normal");
+            if (compound.contains("level_normal")) {
+                level_normal = compound.getIntOr("level_normal", 0);
             }
-            if (compound.contains("level_kami", Tag.TAG_ANY_NUMERIC)) {
-                level_kami = compound.getInt("level_kami");          
+            if (compound.contains("level_kami")) {
+                level_kami = compound.getIntOr("level_kami", 0);          
             } 
             //Old
-            else if (compound.contains("level_dire", Tag.TAG_ANY_NUMERIC)) {
-                level_kami = compound.getInt("level_dire");    
+            else if (compound.contains("level_dire")) {
+                level_kami = compound.getIntOr("level_dire", 0);    
             }
             this.entityData.set(DOG_LEVEL, new DogLevel(level_normal, level_kami));
         } catch (Exception e) {
@@ -3098,12 +3075,12 @@ public class Dog extends AbstractDog {
         var bedsData = new Dimension2BlockPosMap();
 
         try {
-            if (compound.contains("beds", Tag.TAG_LIST)) {
-                ListTag bedsList = compound.getList("beds", Tag.TAG_COMPOUND);
+            if (compound.contains("beds")) {
+                ListTag bedsList = compound.getListOrEmpty("beds");
 
                 for (int i = 0; i < bedsList.size(); i++) {
-                    CompoundTag bedNBT = bedsList.getCompound(i);
-                    ResourceLocation loc = NBTUtil.getResourceLocation(bedNBT, "dim");
+                    CompoundTag bedNBT = bedsList.getCompoundOrEmpty(i);
+                    Identifier loc = NBTUtil.getResourceLocation(bedNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bedNBT, "pos");
                     if (pos.isPresent())
@@ -3120,12 +3097,12 @@ public class Dog extends AbstractDog {
         var bowlsData = new Dimension2BlockPosMap();
 
         try {
-            if (compound.contains("bowls", Tag.TAG_LIST)) {
-                ListTag bowlsList = compound.getList("bowls", Tag.TAG_COMPOUND);
+            if (compound.contains("bowls")) {
+                ListTag bowlsList = compound.getListOrEmpty("bowls");
 
                 for (int i = 0; i < bowlsList.size(); i++) {
-                    CompoundTag bowlsNBT = bowlsList.getCompound(i);
-                    ResourceLocation loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
+                    CompoundTag bowlsNBT = bowlsList.getCompoundOrEmpty(i);
+                    Identifier loc = NBTUtil.getResourceLocation(bowlsNBT, "dim");
                     ResourceKey<Level> type = ResourceKey.create(Registries.DIMENSION, loc);
                     Optional<BlockPos> pos = NBTUtil.getBlockPos(bowlsNBT, "pos");
                     if (pos.isPresent())
@@ -3182,23 +3159,23 @@ public class Dog extends AbstractDog {
 
         try {
             if (this.getMode().canWander() 
-                && compound.contains("dogWanderCenter", Tag.TAG_COMPOUND)) {
-                var wanderTg = compound.getCompound("dogWanderCenter");
+                && compound.contains("dogWanderCenter")) {
+                var wanderTg = compound.getCompoundOrEmpty("dogWanderCenter");
                 var restrictPos = new BlockPos(
-                    wanderTg.getInt("wanderX"),
-                    wanderTg.getInt("wanderY"),
-                    wanderTg.getInt("wanderZ")
+                    wanderTg.getIntOr("wanderX", 0),
+                    wanderTg.getIntOr("wanderY", 0),
+                    wanderTg.getIntOr("wanderZ", 0)
                 );
-                int restrict_r = wanderTg.getInt("wanderR");
+                int restrict_r = wanderTg.getIntOr("wanderR", 0);
                 restrict_r = Math.max(0, restrict_r);
-                this.restrictTo(restrictPos, restrict_r);
+                this.setHomeTo(restrictPos, restrict_r);
             }
         } catch (Exception e) {
             
         }
 
         //Duplication Detection
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             try {
                 this.dogDuplicateDetection.load(compound, new_owner_uuid -> {
                     boolean prevAuthorized = this.authorizedChangingOwner;
@@ -3210,7 +3187,7 @@ public class Dog extends AbstractDog {
             }
         }
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             try {
                 this.setAnim(DogAnimation.NONE);
             } catch (Exception e) {
@@ -3220,12 +3197,12 @@ public class Dog extends AbstractDog {
 
     private void tryReadAllTalents(CompoundTag compound, ArrayList<TalentInstance> target) {
         try {
-            if (compound.contains("talents", Tag.TAG_LIST)) {
-                ListTag talentList = compound.getList("talents", Tag.TAG_COMPOUND);
+            if (compound.contains("talents")) {
+                ListTag talentList = compound.getListOrEmpty("talents");
     
                 for (int i = 0; i < talentList.size(); ++i) {
                     try {
-                        TalentInstance.readInstance(this, talentList.getCompound(i)).ifPresent(target::add);
+                        TalentInstance.readInstance(this, talentList.getCompoundOrEmpty(i)).ifPresent(target::add);
                     } catch (Exception e)  {
                         DoggyTalentsNext.LOGGER.error(e.getMessage());
                     }
@@ -3238,12 +3215,12 @@ public class Dog extends AbstractDog {
 
     private void tryReadAllAccessories(CompoundTag compound, ArrayList<AccessoryInstance> target) {
         try {
-            if (compound.contains("accessories", Tag.TAG_LIST)) {
-                ListTag accessoryList = compound.getList("accessories", Tag.TAG_COMPOUND);
+            if (compound.contains("accessories")) {
+                ListTag accessoryList = compound.getListOrEmpty("accessories");
     
                 for (int i = 0; i < accessoryList.size(); ++i) {
                     try {
-                        AccessoryInstance.readInstance(accessoryList.getCompound(i)).ifPresent(target::add);
+                        AccessoryInstance.readInstance(accessoryList.getCompoundOrEmpty(i)).ifPresent(target::add);
                     } catch (Exception e)  {
                         DoggyTalentsNext.LOGGER.error(e.getMessage());
                     }
@@ -3280,9 +3257,13 @@ public class Dog extends AbstractDog {
 
         if (DOG_SIZE.equals(key)) {
             this.refreshDimensions();
+            var scaleAttr = this.getAttribute(Attributes.SCALE);
+            if (scaleAttr != null) {
+                scaleAttr.setBaseValue(this.getDogSize().getScale());
+            }
         }
 
-        if (this.level().isClientSide && CUSTOM_SKIN.equals(key)) {
+        if (this.level().isClientSide() && CUSTOM_SKIN.equals(key)) {
             this.clientSkin = DogSkinHolder.pendingResolve();
         }
 
@@ -3297,7 +3278,7 @@ public class Dog extends AbstractDog {
             this.hungerManager.onHungerUpdated(this.getDogHunger());
         }
 
-        if (!this.level().isClientSide && MODE.equals(key)) {
+        if (!this.level().isClientSide() && MODE.equals(key)) {
             var mode = getMode();
             this.incapacitatedMananger.onModeUpdate(mode);
             if (mode == DogMode.INJURED) {
@@ -3307,13 +3288,13 @@ public class Dog extends AbstractDog {
         }
 
         if (DOG_PETTING_STATE.equals(key)) {
-            if (this.level().isClientSide)
+            if (this.level().isClientSide())
                 DTNClientPettingManager.get().onPettingUpdate(this, getPettingState());
         }
 
         if (DOG_ANIM_DEBUG_STATE.equals(key)) {
             var debug_state = getDogAnimDebugState();
-            if (!debug_state.isNone() && !this.level().isClientSide) {
+            if (!debug_state.isNone() && !this.level().isClientSide()) {
                 this.dogAi.forceStopAllGoal();
             }
             this.animationManager.onDebugUpdate(debug_state);
@@ -3329,11 +3310,11 @@ public class Dog extends AbstractDog {
             this.spendablePoints.markForRefresh();
         }
         if (talents) {
-            if (this.level().isClientSide)
+            if (this.level().isClientSide())
                 ClientEventHandler.onDogTalentUpdated(this);
         }
         if (accessories) {
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 this.clientAccessories = new ArrayList<>(this.getAccessories());
                 this.clientAccessories.sort(AccessoryInstance.RENDER_SORTER);
             }
@@ -3348,7 +3329,7 @@ public class Dog extends AbstractDog {
 
     private void updateWanderState(DogMode mode) {
         if (!mode.canWander()) {
-            this.clearRestriction();
+            this.clearHome();
             return;
         }
         var restrictPos = this.blockPosition();
@@ -3361,17 +3342,17 @@ public class Dog extends AbstractDog {
                 restrictPos = bowlPos;
             }
         }
-        this.restrictTo(restrictPos, restrictRadius);
+        this.setHomeTo(restrictPos, restrictRadius);
     }
 
     private boolean invalidateWanderCenter(int distanceSqr) {
-        if (!this.hasRestriction())
+        if (!this.hasHome())
             return false;
-        var restrict_pos = this.getRestrictCenter();
+        var restrict_pos = this.getHomePosition();
         if (restrict_pos == null)
             return false;
         if (restrict_pos.distSqr(this.blockPosition()) >= distanceSqr) {
-            this.clearRestriction();
+            this.clearHome();
             return true;
         }
         return false;
@@ -3428,7 +3409,7 @@ public class Dog extends AbstractDog {
     }
 
     private void onPropsUpdated() {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         this.dogArmors.onPropsUpdated(alterationProps);
         if (!alterationProps.canUseTools())
@@ -3629,9 +3610,9 @@ public class Dog extends AbstractDog {
         float maxHunger = ConfigHandler.DEFAULT_MAX_HUNGER;
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.getMaxHunger(this, maxHunger);
+            DTNInteractionResultHolder<Float> result = alter.getMaxHunger(this, maxHunger);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 maxHunger = result.getObject();
             }
         }
@@ -3654,9 +3635,9 @@ public class Dog extends AbstractDog {
         float diff = hunger - this.getDogHunger();
 
         for (IDogAlteration alter : this.alterations) {
-            InteractionResultHolder<Float> result = alter.setDogHunger(this, hunger, diff);
+            DTNInteractionResultHolder<Float> result = alter.setDogHunger(this, hunger, diff);
 
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 hunger = result.getObject();
                 diff = hunger - this.getDogHunger();
             }
@@ -4181,7 +4162,7 @@ public class Dog extends AbstractDog {
                     .move(newPos);
                 if (!DismountHelper.canDismountTo(this.level(), passenger, dismountBb)) 
                     continue;
-                passenger.setPose(pose); // TODO Should we keep this ugly side effect?
+                passenger.setPose(pose); // side effect: passenger pose forced by dog state
                 return newPos;
             }
         }
@@ -4194,10 +4175,10 @@ public class Dog extends AbstractDog {
     //     return this.getControllingPassenger() instanceof LivingEntity;
     // }
 
-    //TODO
+    // override needed to allow item pickup
     @Override
     public boolean isPickable() {
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
             if (ClientEventHandler.shouldClientBlockPick(this))
                 return false;
         }
@@ -4238,7 +4219,7 @@ public class Dog extends AbstractDog {
 
     public boolean canJump() {
         return true;
-        //TODO return this.TALENTS.getLevel(ModTalents.WOLF_MOUNT) > 0;
+        //        return this.TALENTS.getLevel(ModTalents.WOLF_MOUNT) > 0;
     }
 
     @Override
@@ -4295,11 +4276,14 @@ public class Dog extends AbstractDog {
         return true;
     }
 
+    private static final net.minecraft.world.phys.shapes.VoxelShape LAVA_STABLE_SHAPE =
+        net.minecraft.world.phys.shapes.Shapes.box(0, 0, 0, 1, 0.5, 1);
+
     private void mayFloatDogInLava() {
         if (!this.isInLava()) return;
         var collisioncontext = CollisionContext.of(this);
-        if (collisioncontext.isAbove(LiquidBlock.STABLE_SHAPE, 
-            this.blockPosition(), true) 
+        if (collisioncontext.isAbove(LAVA_STABLE_SHAPE,
+            this.blockPosition(), true)
             && !this.level().getFluidState(this.blockPosition().above()).is(FluidTags.LAVA)) {
             this.setOnGround(true);
         } else {
@@ -4350,7 +4334,7 @@ public class Dog extends AbstractDog {
     //             if (this.jumpPower > 0.0F && !this.isDogJumping() && this.onGround()) {
 
     //                 // Calculate jump value based of jump strength, power this jump and jump boosts
-    //                 double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
+    //                 double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER.get()).getValue() * this.getBlockJumpFactor() * this.jumpPower; // consider getJumpFactor
     //                 if (this.hasEffect(MobEffects.JUMP)) {
     //                     jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
     //                 }
@@ -4363,7 +4347,7 @@ public class Dog extends AbstractDog {
 
     //                 // If moving forward, propel further in the direction
     //                 if (forward > 0.0F) {
-    //                     final float amount = 0.4F; // TODO Allow people to change this value
+    //                     final float amount = 0.4F; // configurable jump amount
     //                     float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
     //                     float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
     //                     this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
@@ -4441,7 +4425,6 @@ public class Dog extends AbstractDog {
             this.fallDistance = 0.0F;
         }
 
-        // TODO 1.19.4 ???? 
         // double changeX = this.getX() - this.xo;
         // double changeY = this.getZ() - this.zo;
         // float f4 = Mth.sqrt((float) (changeX * changeX + changeY * changeY)) * 4.0F;
@@ -4525,20 +4508,19 @@ public class Dog extends AbstractDog {
 
     private void doDogRideJump(double forward) {
         // Calculate jump value based of jump strength, power this jump and jump boosts
-        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER).getValue() * this.getBlockJumpFactor() * this.jumpPower; //TODO do we want getJumpFactor?
-        if (this.hasEffect(MobEffects.JUMP)) {
-            jumpValue += (this.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.1F;
+        double jumpValue = this.getAttribute(DoggyAttributes.JUMP_POWER).getValue() * this.getBlockJumpFactor() * this.jumpPower; // consider getJumpFactor
+        if (this.hasEffect(MobEffects.JUMP_BOOST)) {
+            jumpValue += (this.getEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F;
         }
 
         // Apply jump
         Vec3 vec3d = this.getDeltaMovement();
         this.setDeltaMovement(vec3d.x, jumpValue, vec3d.z);
         this.setDogJumping(true);
-        this.hasImpulse = true;
 
         // If moving forward, propel further in the direction
         if (forward > 0.0F) {
-            final float amount = 0.4F; // TODO Allow people to change this value
+            final float amount = 0.4F; // configurable jump amount
             float compX = Mth.sin(this.getYRot() * ((float)Math.PI / 180F));
             float compZ = Mth.cos(this.getYRot() * ((float)Math.PI / 180F));
             this.setDeltaMovement(this.getDeltaMovement().add(-amount * compX * this.jumpPower, 0.0D, amount * compZ * this.jumpPower));
@@ -4600,7 +4582,7 @@ public class Dog extends AbstractDog {
         for (var alter : this.alterations) {
             InteractionResult result = alter.canResistPushFromFluidType(type);
 
-            if (result.shouldSwing()) {
+            if (result.consumesAction()) {
                 return false;
             }
         }
@@ -4645,7 +4627,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setInSittingPose(boolean sit) {
-        if (!this.level().isClientSide
+        if (!this.level().isClientSide()
             && this.animAction == null) {
             boolean sit0 = this.isInSittingPose();
             if (sit0 != sit) {
@@ -4692,7 +4674,7 @@ public class Dog extends AbstractDog {
     }
 
     private void mayDogCorrectSittingPose(boolean sit_ordered) {
-        if (this.level().isClientSide)
+        if (this.level().isClientSide())
             return;
         if (sit_ordered)
             return;
@@ -4794,8 +4776,8 @@ public class Dog extends AbstractDog {
                 return 0;
             break;
         case LAVA:
-        case DAMAGE_FIRE:
-        case DANGER_FIRE:
+        case FIRE:
+        case FIRE_IN_NEIGHBOR:
             if (fireImmune())
                 return 0;
             break;
@@ -4803,10 +4785,8 @@ public class Dog extends AbstractDog {
             if (this.canDogPassGate())
                 return 8;
             break;
-        case DANGER_POWDER_SNOW:
         case POWDER_SNOW:
             return -1;
-        case DANGER_TRAPDOOR:
         case TRAPDOOR:
             return -1;
         }
@@ -4900,21 +4880,18 @@ public class Dog extends AbstractDog {
         return !this.wolfArmor().isEmpty();
     }
 
-    @Override
     public Iterable<ItemStack> getHandSlots() {
         if (!this.canDogUseTools() || this.mouthStack == null)
-            return List.of(); 
+            return List.of();
         return List.of(this.mouthStack);
     }
 
-    @Override
     public Iterable<ItemStack> getArmorSlots() {
         if (!this.canDogWearArmor())
             return List.of();
         return this.dogArmors.armors();
     }
 
-    @Override
     public Iterable<ItemStack> getArmorAndBodyArmorSlots() {
         return getArmorSlots();
     }
@@ -4924,13 +4901,13 @@ public class Dog extends AbstractDog {
         var type = slot.getType();
         boolean getArmor = 
             type == EquipmentSlot.Type.HUMANOID_ARMOR
-            && (alterationProps.canWearArmor() || this.level().isClientSide);
+            && (alterationProps.canWearArmor() || this.level().isClientSide());
         if (getArmor) {
             return this.dogArmors.getArmorFromSlot(slot);
         }
         boolean getMouth = 
             slot == EquipmentSlot.MAINHAND 
-            && (alterationProps.canUseTools() || this.level().isClientSide)
+            && (alterationProps.canUseTools() || this.level().isClientSide())
             && mouthStack != null;
         if (getMouth) {
             return this.mouthStack;
@@ -4944,7 +4921,6 @@ public class Dog extends AbstractDog {
 
     @Override
     public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
-        this.verifyEquippedItem(stack);
         if (trySetDogArmorSlot(slot, stack))
             return;
         if (trySetDogToolSlot(slot, stack))
@@ -4956,7 +4932,7 @@ public class Dog extends AbstractDog {
     private boolean trySetDogArmorSlot(EquipmentSlot slot, ItemStack stack) {
         if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)
             return false;
-        if (!this.level().isClientSide && !this.canDogWearArmor())
+        if (!this.level().isClientSide() && !this.canDogWearArmor())
             return false;
         var oldStack =  this.dogArmors.getArmorFromSlot(slot);
         this.dogArmors.setArmorInSlot(stack, slot);
@@ -4967,7 +4943,7 @@ public class Dog extends AbstractDog {
     private boolean trySetDogToolSlot(EquipmentSlot slot, ItemStack stack) {
         if (slot != EquipmentSlot.MAINHAND)
             return false;
-        if (!this.level().isClientSide && !this.canDogUseTools())
+        if (!this.level().isClientSide() && !this.canDogUseTools())
             return false;
         var oldStack =  this.mouthStack == null ? ItemStack.EMPTY : this.mouthStack;
         this.mouthStack = stack;
@@ -5005,7 +4981,6 @@ public class Dog extends AbstractDog {
         super.onEquipItem(slot, oldStack, newStack);
     }
     
-    @Override
     public boolean canTakeItem(ItemStack stack) {
         if (checkEligibleArmorItemAndAvailableSlot(stack))
             return true;
@@ -5015,9 +4990,10 @@ public class Dog extends AbstractDog {
     private boolean checkEligibleArmorItemAndAvailableSlot(ItemStack stack) {
         if (!this.canDogWearArmor())
             return false;
-        if (!(stack.getItem() instanceof ArmorItem))
+        var equippable = stack.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
+        if (equippable == null)
             return false;
-        var slot = this.getEquipmentSlotForItem(stack);
+        var slot = equippable.slot();
         if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)
             return false;
         var current = this.getItemBySlot(slot);
@@ -5209,7 +5185,7 @@ public class Dog extends AbstractDog {
 
     public PathType inferType(PathType type, InferTypeContext context) {
         if (this.fireImmune()) {
-            if (type == PathType.DANGER_FIRE) {
+            if (type == PathType.FIRE_IN_NEIGHBOR) {
                 return PathType.WALKABLE;
             }
             if (type == PathType.LAVA) {
@@ -5225,7 +5201,7 @@ public class Dog extends AbstractDog {
         }
         for (var alt : this.alterations) {
             var result = alt.inferType(this, type, context);
-            if (result.getResult().shouldSwing()) {
+            if (result.getResult().consumesAction()) {
                 type = result.getObject();
                 break;
             }
@@ -5235,7 +5211,7 @@ public class Dog extends AbstractDog {
 
     public boolean canDogPassGate() {
         for (var alt : this.alterations) {
-            if (alt.canDogPassGate(this).shouldSwing())
+            if (alt.canDogPassGate(this).consumesAction())
                 return true;
         }
         return false;
@@ -5365,7 +5341,7 @@ public class Dog extends AbstractDog {
 
     @Override
     public float getClientAnimatedYBodyRotInRadians() {
-        if (!this.level().isClientSide)
+        if (!this.level().isClientSide())
             return this.yBodyRot * Mth.DEG_TO_RAD;
         return this.yBodyRot * Mth.DEG_TO_RAD + ClientEventHandler.getAnimatedYRot(this);
     }

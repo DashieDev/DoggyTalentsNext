@@ -1,6 +1,5 @@
 package doggytalents.common.util;
 
-//TODO
 public class RadialCoordinateIterator {
 
     private final int startX;

@@ -10,7 +10,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CarryMeData;
 import doggytalents.common.talent.WolfMountTalent;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -51,8 +51,8 @@ public class CarryMeScreen extends StringEntrySelectScreen {
 
         var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("item.doggytalents.whistle.20")
@@ -60,7 +60,7 @@ public class CarryMeScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, CarryMeScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, list, mouseX, mouseY);
             }
         };
         

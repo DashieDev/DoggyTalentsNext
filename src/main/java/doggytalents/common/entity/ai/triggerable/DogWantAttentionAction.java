@@ -96,8 +96,9 @@ public class DogWantAttentionAction extends TriggerableAction {
                 this.dog.dogSoundManager.playInterruptible(sound, 
                     this.dog.getSoundVolume() + 0.2f, this.dog.getVoicePitch());
                 int r = this.dog.getRandom().nextInt(3);
-                owner.sendSystemMessage(Component.translatable(
-                    "dog.msg.want_attention." + r, dog.getName().getString()));
+                if (owner instanceof net.minecraft.world.entity.player.Player ownerPlayer)
+                    ownerPlayer.sendSystemMessage(Component.translatable(
+                        "dog.msg.want_attention." + r, dog.getName().getString()));
             }
             checkAndSwitchToAttention();
         }

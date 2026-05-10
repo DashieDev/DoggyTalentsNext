@@ -8,8 +8,8 @@ import com.google.common.collect.ImmutableMap;
 import doggytalents.DogVariants;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.animal.WolfVariant;
-import net.minecraft.world.entity.animal.WolfVariants;
+import net.minecraft.world.entity.animal.wolf.WolfVariant;
+import net.minecraft.world.entity.animal.wolf.WolfVariants;
 
 public class VanillaToClassicalMapping {
    

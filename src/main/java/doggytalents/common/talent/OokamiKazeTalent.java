@@ -48,7 +48,7 @@ public class OokamiKazeTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (this.cooldown > 0)
             --this.cooldown;
@@ -198,9 +198,9 @@ public class OokamiKazeTalent extends TalentInstance {
             }
             --tickTillHowl;
             if (tickTillHowl == 0) {
-                dog.dogSoundManager.playInterruptible(SoundEvents.WOLF_HOWL, 1, dog.getVoicePitch());
+                dog.dogSoundManager.playInterruptible(dog.dogMood.getAmbientSound(), 1, dog.getVoicePitch());
             } else if (tickTillHowl == 30) {
-                this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
+                this.dog.playSound(dog.dogMood.getSeriousGrowl(), 0.3F, dog.getVoicePitch());
             }
 
             --tickTillBoom;
@@ -277,7 +277,7 @@ public class OokamiKazeTalent extends TalentInstance {
         }
 
         public void explode() {
-            if (dog.level().isClientSide)
+            if (dog.level().isClientSide())
                 return;
             dog.level().gameEvent(dog, GameEvent.EXPLODE, dog.position());
             hurtEntities();
@@ -345,7 +345,7 @@ public class OokamiKazeTalent extends TalentInstance {
             if (far_percent > 1)
                 return -1;
             var close_percent = 1 - far_percent;
-            var seen_percent = Explosion.getSeenPercent(dog_pos, e);
+            var seen_percent = net.minecraft.world.level.ServerExplosion.getSeenPercent(dog_pos, e);
             var impact_value = seen_percent * close_percent;
             return impact_value;
         }
@@ -413,10 +413,10 @@ public class OokamiKazeTalent extends TalentInstance {
     public static void explodeClient(Dog dog) {
         var level = dog.level();
         var dog_pos = dog.position();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             level.playLocalSound(dog_pos.x, dog_pos.y, dog_pos.z, 
                 SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, 
-                (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
+                (1.0F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2F) * 0.7F, false);
         }
         level.addParticle(ParticleTypes.EXPLOSION, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);
         level.addParticle(ParticleTypes.EXPLOSION_EMITTER, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);

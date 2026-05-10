@@ -1,38 +1,33 @@
 package doggytalents.client.entity.render.layer.accessory;
 
-
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import doggytalents.api.inferface.IColoredObject;
-import doggytalents.client.ClientSetup;
-import doggytalents.client.entity.model.accessories.BowTieModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.render.AccessoryModelManager;
+import doggytalents.client.entity.render.DogRenderState;
 import doggytalents.client.entity.render.layer.accessory.modelrenderentry.IAccessoryHasModel;
-import doggytalents.common.entity.Dog;
-import doggytalents.common.entity.accessory.BowTie;
-import doggytalents.common.lib.Resources;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 
-public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
+public class AccessoryModelRenderer extends RenderLayer<DogRenderState, DogModel>  {
 
-    public AccessoryModelRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
+    public AccessoryModelRenderer(RenderLayerParent<DogRenderState, DogModel> parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
         AccessoryModelManager.resolve(ctx);
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
-        //TODO Temporary disable baby dog rendering accesory model
-        if (dog.isInvisible()) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, DogRenderState renderState, float yRot, float xRot) {
+        var dog = renderState.dog;
+        if (dog == null || renderState.isInvisible) {
             return;
         }
 
+        var activeSkin = renderState.activeSkin;
         for (var accessoryInst : dog.getAccessories()) {
-            var skin = dog.getClientSkin();
+            var skin = activeSkin;
             if (skin.useCustomModel()) {
                 var model = skin.getCustomModel().getValue();
                 if (!model.acessoryShouldRender(dog, accessoryInst)) {
@@ -43,11 +38,9 @@ public class AccessoryModelRenderer extends RenderLayer<Dog, DogModel>  {
             if (!(accessory instanceof IAccessoryHasModel)) continue;
             var hasModelAccessory = (IAccessoryHasModel) accessory;
             hasModelAccessory.getRenderEntry().renderAccessory(
-                this, poseStack, buffer, packedLight, dog, limbSwing, 
-                limbSwingAmount, partialTicks, ageInTicks, relativeHeadYRot, headPitch, accessoryInst);
+                this, poseStack, submitNodeCollector, packedLight, renderState, accessoryInst);
         }
 
     }
-    
-}
 
+}

@@ -31,9 +31,9 @@ public class DualDyableAccessoryItem extends DyeableAccessoryItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_41421_, TooltipContext p_339594_, List<Component> list,
+    public void appendHoverText(ItemStack p_41421_, TooltipContext p_339594_, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> list,
             TooltipFlag p_41424_) {
-        super.appendHoverText(p_41421_, p_339594_, list, p_41424_);
-        list.add(Component.translatable("general.doggytalents.dual_accessories_item_help"));
+        super.appendHoverText(p_41421_, p_339594_, tooltipDisplay, list, p_41424_);
+        list.accept(Component.translatable("general.doggytalents.dual_accessories_item_help"));
     }
 }

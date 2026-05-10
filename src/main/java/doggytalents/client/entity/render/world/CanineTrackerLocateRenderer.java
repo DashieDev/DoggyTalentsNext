@@ -16,18 +16,19 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.CanineTrackerData.RequestPosUpdateData;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.font.FontManager;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -35,12 +36,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 import doggytalents.common.network.PacketDistributor;
 
 public class CanineTrackerLocateRenderer {
 
-    private static ResourceLocation DEFAULT_0 = Util.getVanillaResource("default/0");
+    private static Identifier DEFAULT_0 = Util.getVanillaResource("default/0");
 
     private static boolean locating;
     private static UUID locatingUUID;
@@ -50,23 +50,23 @@ public class CanineTrackerLocateRenderer {
 
     private static WeakReference<Dog> cachedDog = new WeakReference<Dog>(null);
     
-    public static void onWorldRenderLast(RenderLevelStageEvent event) {
-        if (event.getStage() != Stage.AFTER_TRANSLUCENT_BLOCKS) 
-            return;
+    public static void onWorldRenderLast(RenderLevelStageEvent.AfterTranslucentBlocks event) {
         if (!locating) return;
-        var player = Minecraft.getInstance().player;
+        var mc = Minecraft.getInstance();
+        var player = mc.player;
         if (player != null && player.isSpectator()) return;
+        var camera = mc.gameRenderer.getMainCamera();
+        float partialTick = mc.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         Vec3 dog_pos = null;
         if (cachedDog.get() != null) {
-            double d0 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().xOld, cachedDog.get().getX());
-            double d1 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().yOld, cachedDog.get().getY());
-            double d2 = Mth.lerp((double)event.getPartialTick().getGameTimeDeltaPartialTick(false), cachedDog.get().zOld, cachedDog.get().getZ());
+            double d0 = Mth.lerp((double)partialTick, cachedDog.get().xOld, cachedDog.get().getX());
+            double d1 = Mth.lerp((double)partialTick, cachedDog.get().yOld, cachedDog.get().getY());
+            double d2 = Mth.lerp((double)partialTick, cachedDog.get().zOld, cachedDog.get().getZ());
             dog_pos = new Vec3(d0, d1 + 1, d2);
         } else {
             dog_pos = new Vec3(locatingPos.getX(), locatingPos.getY() + 1, locatingPos.getZ());
         }
-        var camera = event.getCamera();
-        var camera_pos = camera.getPosition().add(0, -0.2, 0);
+        var camera_pos = camera.position().add(0, -0.2, 0);
         var off_dog_camera = dog_pos.subtract(camera_pos);
         var d_dog_camera = off_dog_camera.length();
         var off_txt = off_dog_camera;
@@ -119,8 +119,8 @@ public class CanineTrackerLocateRenderer {
 
         var bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 
-        //TODO For some reason, this line is required for the below lines to work...
-        bufferSource.getBuffer(RenderType.text(Resources.SMALL_WIDGETS));
+        // This line is required for the below lines to work (pipeline flush)
+        bufferSource.getBuffer(net.minecraft.client.renderer.rendertype.RenderTypes.text(Resources.SMALL_WIDGETS));
 
         float tX = (float)(-font.width(line1) / 2);
         float tY = 0;
@@ -162,7 +162,7 @@ public class CanineTrackerLocateRenderer {
                 stopLocating(); return;
             }
             var tag = tagOptional.get();
-            if (!tag.getUUID("uuid").equals(locatingUUID)) {
+            if (!NBTUtil.getUniqueId(tag, "uuid").equals(locatingUUID)) {
                 setLocating(tag);
             }
             updateCache(player);
@@ -185,7 +185,7 @@ public class CanineTrackerLocateRenderer {
         }
         if (locatingUUID == null || player.tickCount % 8 != 0) return;
         var dogs = player.level().getEntitiesOfClass(Dog.class, 
-            //TODO wider ?
+            // consider wider search radius
             player.getBoundingBox().inflate(24, 8, 24),
             dog -> dog.getUUID().equals(locatingUUID));
         if (!dogs.isEmpty()) {
@@ -204,7 +204,7 @@ public class CanineTrackerLocateRenderer {
         if (radar == null) return Optional.empty();
         if (!ItemUtil.hasTag(radar)) return Optional.empty();
         var tag = ItemUtil.getTag(radar);
-        if (tag == null || !tag.hasUUID("uuid")) return Optional.empty();
+        if (tag == null || !NBTUtil.hasUniqueId(tag, "uuid")) return Optional.empty();
         return Optional.of(tag);
     }
 
@@ -226,12 +226,12 @@ public class CanineTrackerLocateRenderer {
     }
 
     public static void setLocating(CompoundTag tag) {
-        var uuid = tag.getUUID("uuid");
-        var name = tag.getString("name");
-        var posX = tag.getInt("posX");
-        var posY = tag.getInt("posY");
-        var posZ = tag.getInt("posZ");
-        var color = tag.getInt("locateColor");
+        var uuid = NBTUtil.getUniqueId(tag, "uuid");
+        var name = tag.getStringOr("name", "");
+        var posX = tag.getIntOr("posX", 0);
+        var posY = tag.getIntOr("posY", 0);
+        var posZ = tag.getIntOr("posZ", 0);
+        var color = tag.getIntOr("locateColor", 0);
         setLocating(uuid, name, new BlockPos(posX, posY, posZ), color);
     }
 

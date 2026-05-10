@@ -31,7 +31,7 @@ public class ChopinRecordItem extends Item {
         var level = context.getLevel();
         var blockpos = context.getClickedPos();
         var blockstate = level.getBlockState(blockpos);
-        if (!level.isClientSide)
+        if (!level.isClientSide())
         if (blockstate.is(Blocks.JUKEBOX) && !blockstate.getValue(JukeboxBlock.HAS_RECORD)) {
             triggerChopinTailNearbyDogs(level, blockpos);
         }

@@ -13,7 +13,7 @@ import doggytalents.client.screen.framework.UIAction;
 import doggytalents.common.entity.Dog;
 import doggytalents.client.screen.framework.CommonUIActionTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ActiveSkinSlice implements AbstractSlice {
 

@@ -8,7 +8,7 @@ import doggytalents.DoggyItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,18 +22,18 @@ public class SoyPodsItem extends Item{
         super(p_41383_);
     }
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        var desc_id = this.getDescriptionId() + ".description";
+        components.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
-        if (level.isClientSide)
-            return InteractionResultHolder.success(stack);
+        if (level.isClientSide())
+            return InteractionResult.SUCCESS;
         
         float r = player.getRandom().nextFloat();
         int amount = r < 0.4f ? 3 : 2;
@@ -44,13 +44,13 @@ public class SoyPodsItem extends Item{
         if (freeSlot >= 0) {
             inv.add(retStack);
         } else {
-            player.spawnAtLocation(retStack);
+            player.spawnAtLocation((net.minecraft.server.level.ServerLevel) player.level(), retStack);
         }
 
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
         }
 
-        return InteractionResultHolder.success(stack);
+        return InteractionResult.SUCCESS;
     }
 }

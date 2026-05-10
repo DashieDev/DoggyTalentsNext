@@ -17,10 +17,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
+import net.neoforged.neoforge.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelProperty;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -46,8 +48,11 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.loadAdditional(compound, prov);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        @SuppressWarnings("deprecation")
+        var compound = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(
+            CompoundTag.CODEC)).orElse(new CompoundTag());
 
         this.casingType = DogBedMaterialManager.getCasing(compound, "casingId");
         this.beddingType = DogBedMaterialManager.getBedding(compound, "beddingId");
@@ -59,8 +64,9 @@ public class DogBedTileEntity extends PlacedTileEntity {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound, HolderLookup.Provider prov) {
-        super.saveAdditional(compound, prov);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        var compound = new CompoundTag();
 
         NBTUtil.putRegistryValue(compound, "casingId", DogBedMaterialManager.getKey( this.casingType) );
         NBTUtil.putRegistryValue(compound, "beddingId", DogBedMaterialManager.getKey( this.beddingType) );
@@ -68,6 +74,7 @@ public class DogBedTileEntity extends PlacedTileEntity {
         NBTUtil.putUniqueId(compound, "ownerId", this.dogUUID);
         NBTUtil.putTextComponent(compound, "name", this.name);
         NBTUtil.putTextComponent(compound, "ownerName", this.ownerName);
+        output.store(compound);
     }
 
     public void setCasing(ICasingMaterial casingType) {

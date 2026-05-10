@@ -21,14 +21,14 @@ import doggytalents.client.entity.model.util.ParsedDogModel;
 import doggytalents.client.entity.model.util.DTNModelCodec.ParsedModelResult;
 import doggytalents.common.util.Util;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.fml.ModLoader;
 
 public class DogModelRegistry {
     
-    private static Map<ResourceLocation, DogModelHolder> MODEL_MAP;
+    private static Map<Identifier, DogModelHolder> MODEL_MAP;
 
-    public static <T extends AbstractDog> void register(ResourceLocation id, Function<EntityRendererProvider.Context, DogModel>  getter) {
+    public static <T extends AbstractDog> void register(Identifier id, Function<EntityRendererProvider.Context, DogModel>  getter) {
         MODEL_MAP.putIfAbsent(id, new LegacyDogModelHolder(getter));
     }
 
@@ -36,7 +36,7 @@ public class DogModelRegistry {
         register(Util.getResource(name), getter);
     }
 
-    public static boolean registerParsed(ResourceLocation id, ParsedModelResult result,
+    public static boolean registerParsed(Identifier id, ParsedModelResult result,
         DTNModelCodec.DogModelProps props) {
 
         var model = wrapModelCreation(id, () -> ParsedDogModel.create(result, props));
@@ -46,14 +46,14 @@ public class DogModelRegistry {
         return true;
     }
 
-    public static DogModelHolder getDogModelHolder(ResourceLocation id) {
+    public static DogModelHolder getDogModelHolder(Identifier id) {
         return MODEL_MAP.get(id);
     }
 
     public static DogModelHolder getDogModelHolder(String name) {
-        ResourceLocation loc;
+        Identifier loc;
         if (name.indexOf(':') >= 0) {
-            loc = ResourceLocation.parse(name);
+            loc = Identifier.parse(name);
         } else {
             loc = Util.getResource(name);
         }
@@ -68,7 +68,7 @@ public class DogModelRegistry {
         }
     }
 
-    private static DogModel wrapModelCreation(ResourceLocation id, Supplier<DogModel> creator) {
+    private static DogModel wrapModelCreation(Identifier id, Supplier<DogModel> creator) {
         DogModel ret;
         try {
             ret = creator.get();

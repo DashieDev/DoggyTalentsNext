@@ -25,7 +25,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
@@ -43,7 +43,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
     @Override
     public InteractionResult useOn(UseOnContext context) {
         var level = context.getLevel();
-        if (level.isClientSide || !(level instanceof ServerLevel))
+        if (level.isClientSide() || !(level instanceof ServerLevel))
             return InteractionResult.SUCCESS;
         var player = context.getPlayer();
         var stack = context.getItemInHand();
@@ -59,7 +59,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         }
         var plush = DoggyEntityTypes.DOG_PLUSHIE_TOY.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (plush != null) {
@@ -77,22 +77,21 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
             stack.shrink(1);
 
         if (player != null)
-            player.getCooldowns().addCooldown(this, 20);
+            player.getCooldowns().addCooldown(stack, 20);
 
         return InteractionResult.SUCCESS;
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-            TooltipFlag flags) {
-        if (context.level() == null)    
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
+        if (context.level() == null)
             return;
         var desc_id = "item.doggytalents.dog_plushie_toy_item.description";
-        components.add(Component.translatable(desc_id).withStyle(
+        componentConsumer.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         var variant = getDogVariant(stack);
-        if (variant != DogVariantUtil.getDefault() && context.level().isClientSide) {
+        if (variant != DogVariantUtil.getDefault() && context.level().isClientSide()) {
             var variant_str = Component.translatable("doggui.classical.variant")
                 .getString() + " "
                 + ClientEventHandler.getTranslatedVariantStr(variant);
@@ -101,11 +100,11 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
                     Style.EMPTY.withBold(true)
                     .withColor(variant.guiColor())
                 );
-            components.add(variant_c1);
+            componentConsumer.accept(variant_c1);
         }
         boolean is_thicc_collar = getCollarThicc(stack);
         if (is_thicc_collar) {
-            components.add(Component.translatable(
+            componentConsumer.accept(Component.translatable(
                 DoggyItems.WOOL_COLLAR_THICC.get().getDescriptionId())
                     .setStyle(Style.EMPTY.withItalic(true)));
         }
@@ -128,9 +127,9 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         if (stack.getItem() != DoggyItems.DOG_PLUSHIE_TOY.get())
             return DogVariantUtil.getDefault();
         var tag = ItemUtil.getTag(stack);
-        if (!tag.contains("dogVariant", Tag.TAG_STRING))
+        if (!tag.contains("dogVariant"))
             return DogVariantUtil.getDefault();
-        var variant_str = tag.getString("dogVariant");
+        var variant_str = tag.getStringOr("dogVariant", "");
         return DogVariantUtil.fromSaveString(variant_str);
     }
 
@@ -146,7 +145,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         if (stack.getItem() != DoggyItems.DOG_PLUSHIE_TOY.get())
             return false;
         var tag = ItemUtil.getTag(stack);
-        return tag.getBoolean("collarThicc");
+        return tag.getBooleanOr("collarThicc", false);
     }
 
     @Override
@@ -169,7 +168,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
         var variant_dog = dog.dogVariant();
         var variant_stack = getDogVariant(stack);
         if (variant_dog != variant_stack) {
-            if (!dog.level().isClientSide)
+            if (!dog.level().isClientSide())
                 setDogVariant(stack, variant_dog);
             changed = true;
         }
@@ -179,7 +178,7 @@ public class DogPlushieItem extends Item implements IDyeableArmorItem, IDogItem 
             .isPresent();
         boolean collar_thicc_stack = getCollarThicc(stack);
         if (collar_thicc_dog != collar_thicc_stack) {
-            if (!dog.level().isClientSide)
+            if (!dog.level().isClientSide())
                 setCollarThicc(stack, collar_thicc_dog);
             changed = true;
         }

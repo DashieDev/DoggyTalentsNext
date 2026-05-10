@@ -3,7 +3,7 @@ package doggytalents.api.registry;
 import java.util.Optional;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public interface IDogBedMaterial {
@@ -11,7 +11,7 @@ public interface IDogBedMaterial {
     /**
      * Texture location that for material, eg 'minecraft:block/white_wool'
      */
-    ResourceLocation getTexture();
+    Identifier getTexture();
 
     /**
      * The translation key using for the tooltip
@@ -23,7 +23,7 @@ public interface IDogBedMaterial {
      */
     Optional<Ingredient> getIngredient();
 
-    ResourceLocation getSaveKey();
+    Identifier getSaveKey();
 
     boolean isNani();
 

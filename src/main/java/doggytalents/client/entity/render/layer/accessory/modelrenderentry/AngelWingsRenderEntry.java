@@ -9,7 +9,7 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.util.Util;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class AngelWingsRenderEntry extends Entry{
@@ -23,7 +23,7 @@ public class AngelWingsRenderEntry extends Entry{
     }
 
     @Override
-    public ResourceLocation getResources(AccessoryInstance inst) {
+    public Identifier getResources(AccessoryInstance inst) {
         return Resources.ANGEL_WINGS;
     }
 

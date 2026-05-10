@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +35,7 @@ public class PianoItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         var level = context.getLevel();
-        if (level.isClientSide || !(level instanceof ServerLevel))
+        if (level.isClientSide() || !(level instanceof ServerLevel))
             return InteractionResult.SUCCESS;
         var player = context.getPlayer();
         var stack = context.getItemInHand();
@@ -51,7 +51,7 @@ public class PianoItem extends Item {
         }
         var piano = pianoSup.get().create(
             (ServerLevel) level, null, spawnAt, 
-            MobSpawnType.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
+            EntitySpawnReason.TRIGGERED, !Objects.equals(pos, spawnAt) && face == Direction.UP
             , false);
 
         if (piano != null) {
@@ -66,10 +66,9 @@ public class PianoItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-            TooltipFlag flags) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
         var desc_id = "items.doggytalents.piano_item_common.description";
-        components.add(Component.translatable(desc_id).withStyle(
+        componentConsumer.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

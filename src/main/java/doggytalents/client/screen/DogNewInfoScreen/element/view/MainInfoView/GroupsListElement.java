@@ -2,8 +2,6 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.DogNewInfoScreen.element.view.MainInfoView.dropdown.AddGroupMenu.AddGroupMenu;
@@ -20,10 +18,9 @@ import doggytalents.common.network.packet.data.DogGroupsData;
 import doggytalents.common.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
@@ -73,19 +70,19 @@ public class GroupsListElement extends AbstractElement {
             static final int DEFAULT_HLCOLOR = 0x835e5d5d;
 
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+            public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
                 if (!this.active) return;
 
                 int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
-                
+
                 graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
-                
+
                 int mX = this.getX() + this.width/2;
                 int mY = this.getY() + this.height/2;
                 var msg = this.getMessage();
                 int tX = mX - font.width(msg)/2 + 1;
                 int tY = mY - font.lineHeight/2 + 1;
-                graphics.drawString(font, msg, tX, tY, 0xffffffff);
+                graphics.text(font, msg, tX, tY, 0xffffffff);
             }
         };
         pX += addButton.getWidth();
@@ -103,7 +100,7 @@ public class GroupsListElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         
     }
 
@@ -142,27 +139,27 @@ public class GroupsListElement extends AbstractElement {
         }
 
         @Override
-        public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        public void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
 
             if (!this.active) return;
 
             int cl = this.group.color;
-            
+
             graphics.fill(this.getX(), this.getY(), this.getX()+this.width, this.getY()+this.height, cl);
-            
+
             //draw text
             int mX = this.getX() + this.width/2;
             int mY = this.getY() + this.height/2;
             var msg = this.getMessage();
             int tX = mX - font.width(msg)/2;
             int tY = mY - font.lineHeight/2;
-            graphics.drawString(font, msg, tX, tY, textColor);
+            graphics.text(font, msg, tX, tY, textColor);
 
             if (this.isHovered) drawRemoveIcon(graphics, mouseX, mouseY, pTicks);
         }
 
         @Override
-        public void onPress() {
+        public void onPress(net.minecraft.client.input.InputWithModifiers input) {
             requestRemoveGroup();
         }
 
@@ -172,14 +169,9 @@ public class GroupsListElement extends AbstractElement {
                 new DogGroupsData.EDIT(this.dog.getId(), this.group, false));
         }
 
-        private void drawRemoveIcon(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        private void drawRemoveIcon(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
             int iX = ICON_REM_X;
-            graphics.blit(Resources.STYLE_ADD_REMOVE, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, iX, 0, 9, 9);
+            graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, Resources.STYLE_ADD_REMOVE, this.getX()+this.getWidth() - 4, getY()+this.getHeight() - 4, (float)iX, (float)0, 9, 9, 256, 256);
         }
 
         

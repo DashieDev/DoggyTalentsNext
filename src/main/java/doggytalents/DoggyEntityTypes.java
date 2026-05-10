@@ -124,7 +124,7 @@ public class DoggyEntityTypes {
     );
 
     private static <E extends Entity, T extends EntityType<E>> Supplier<EntityType<E>> register(final String name, final EntityType.EntityFactory<E> sup, final MobCategory classification, final Function<EntityType.Builder<E>, EntityType.Builder<E>> builder) {
-         return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(Util.getResourcePath(name)));
+         return register(name, () -> builder.apply(EntityType.Builder.of(sup, classification)).build(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ENTITY_TYPE, Util.getResource(name))));
     }
 
     private static <E extends Entity, T extends EntityType<E>> Supplier<T> register(final String name, final Supplier<T> sup) {
@@ -142,6 +142,7 @@ public class DoggyEntityTypes {
                  .add(DoggyAttributes.CRIT_CHANCE, 0.01D)
                  .add(DoggyAttributes.CRIT_BONUS, 1D)
                  .add(Attributes.FLYING_SPEED, 0.3D)
+                 .add(Attributes.SCALE, 1.0D)
                  .build()
          );
      }

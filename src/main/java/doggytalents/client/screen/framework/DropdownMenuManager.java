@@ -9,13 +9,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 
 public class DropdownMenuManager extends AbstractElement {
 
@@ -71,23 +73,23 @@ public class DropdownMenuManager extends AbstractElement {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int modifier) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
         if (!this.hasDropdownMenu()) return false;
-        if (!this.activeDropdownMenu.isMouseOver(mouseX, mouseY)) {
-            this.activeDropdownMenu = null; 
+        if (!this.activeDropdownMenu.isMouseOver(event.x(), event.y())) {
+            this.activeDropdownMenu = null;
             return false;
         }
-        activeDropdownMenu.mouseClicked(mouseX, mouseY, modifier);
+        activeDropdownMenu.mouseClicked(event, flag);
         return true;
     }
 
     @Override
-    public boolean keyPressed(int p_94710_, int p_94711_, int p_94712_) {
+    public boolean keyPressed(KeyEvent event) {
         if (!(this.getFocused() instanceof EditBox)) {
-            this.activeDropdownMenu = null; 
+            this.activeDropdownMenu = null;
             return false;
         }
-        return super.keyPressed(p_94710_, p_94711_, p_94712_);
+        return super.keyPressed(event);
     }
 
     public void attach(Screen screen, Consumer<DropdownMenuManager> screenChildrenAdder) {
@@ -124,7 +126,7 @@ public class DropdownMenuManager extends AbstractElement {
         this.activeDropdownMenu.setFocused(guiEventListener);
     }
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
     }
 }

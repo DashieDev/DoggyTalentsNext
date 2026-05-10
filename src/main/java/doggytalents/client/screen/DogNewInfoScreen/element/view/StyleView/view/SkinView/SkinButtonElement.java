@@ -3,7 +3,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.checkerframework.checker.units.qual.C;
+
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -22,12 +22,12 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogTextureData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import doggytalents.common.network.PacketDistributor;
 
 public class SkinButtonElement extends AbstractElement {
@@ -120,13 +120,13 @@ public class SkinButtonElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         
         int tX = this.getRealX() + 52;
         int tY = this.getRealY() + this.getSizeY()/2 - font.lineHeight/2;
         String str = (this.activeSkinId+1) + "/" + this.locList.size();
         tX -= font.width(str)/2;
-        graphics.drawString(font, str, tX, tY, 0xffffffff);
+        graphics.text(font, str, tX, tY, 0xffffffff);
     }
 
     public void applyAndRequestSkinChange(int id) {

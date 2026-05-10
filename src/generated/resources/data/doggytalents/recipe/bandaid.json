@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "doggytalents:koji"
-    },
-    {
-      "item": "minecraft:bone_meal"
-    }
+    "minecraft:paper",
+    "minecraft:paper",
+    "doggytalents:koji",
+    "minecraft:bone_meal"
   ],
   "result": {
     "count": 5,

@@ -1,24 +1,21 @@
 package doggytalents.client.entity.model;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.joml.Vector3f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 
-import doggytalents.api.inferface.AbstractDog;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.render.DogRenderState;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 
-public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
+public abstract class SyncedAccessoryModel extends EntityModel<DogRenderState> {
 
-    public final ModelPart root;
+    // root is inherited from Model as protected final ModelPart root
     private Vector3f pivot = DogModel.DEFAULT_ROOT_PIVOT;
     
     public Optional<ModelPart> head = Optional.empty();
@@ -33,14 +30,14 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     public Optional<ModelPart> realTail = Optional.empty();
 
     public SyncedAccessoryModel(ModelPart root) {
-        this.root = root;
+        super(root);
         populatePart(root);
     }
 
     protected abstract void populatePart(ModelPart box);
 
     public void sync(DogModel dogModel) {
-        syncPart(root, dogModel.root);
+        syncPart(this.root(), dogModel.root);
         syncPart(this.head, dogModel.head);
         syncPart(this.realHead, dogModel.realHead);
         syncPart(this.body, dogModel.body);
@@ -63,28 +60,26 @@ public abstract class SyncedAccessoryModel extends EntityModel<Dog> {
     }
 
     private void syncPart(ModelPart part, ModelPart dogPart) {
-        part.copyFrom(dogPart);
+        DogModel.copyPartPose(part, dogPart);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
+    public void renderAccessoryToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
         DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(p_103014_, p_103015_, p_103016_, color_overlay));
     }
 
     public DogModel.DogModelRenderContext createDogRenderContext(VertexConsumer p_103014_, int p_103015_, int p_103016_, int color_overlay) {
         var part_ctx = new DogModel.DogRenderPartContext(p_103014_, p_103015_, p_103016_, color_overlay);
-        return new DogModel.DogModelRenderContext(this.root, this.pivot, getDogModelBabyHead(head, young), Optional.of(part_ctx), Optional.empty());
+        // 'young' field removed in 26.1.2 - baby head scaling disabled in accessory models
+        return new DogModel.DogModelRenderContext(this.root(), this.pivot, getDogModelBabyHead(head, false), Optional.of(part_ctx), Optional.empty());
     }
     
     protected static Optional<ModelPart> getDogModelBabyHead(Optional<ModelPart> head, boolean young) {
         return young ? head : Optional.empty();
     }
 
-    @Override
     public void prepareMobModel(Dog dogIn, float limbSwing, float limbSwingAmount, float partialTickTime) {
     }
 
-    @Override
     public void setupAnim(Dog entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
 
     }

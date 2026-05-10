@@ -5,6 +5,7 @@
    "block.doggytalents.dog_bed.reclaim": "%s has reclaimed %s bed.",
    "block.doggytalents.food_bowl": "Food Bowl",
    "block.doggytalents.dog_bath": "Dog Bath",
+   "block.doggytalents.dog_bath.description": "Fill with water using a Water Bucket or Water Bottle. Dogs that walk through will be cleaned automatically.",
 
    "item.doggytalents.throw_bone": "Throw Bone",
    "item.doggytalents.throw_bone_wet": "Drool Throw Bone",
@@ -231,6 +232,7 @@
    "item.doggytalents.soul_reflector": "Soul Reflector",
 
    "item.doggytalents.rice_grains": "Rice Grains",
+   "item.doggytalents.rice_grains.description": "Use on a Grindstone to dehusk into Uncooked Rice, or plant on Farmland to grow a Rice Crop.",
    "block.doggytalents.rice_crop.description": "Right-click on Farmland to plant Rice Crops. Sneak + Right-Click on a Grindstone to Dehusk the rice.",
    "item.doggytalents.uncooked_rice": "Uncooked Rice",
    "item.doggytalents.uncooked_rice_bowl": "Uncooked Rice in a Bowl",

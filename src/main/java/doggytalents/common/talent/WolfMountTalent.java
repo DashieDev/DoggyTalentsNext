@@ -8,10 +8,10 @@ import doggytalents.api.registry.TalentInstance;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.util.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class WolfMountTalent extends TalentInstance {
 
-    private static final ResourceLocation WOLF_MOUNT_JUMP = Util.getResource("wolf_mount_jump");
+    private static final Identifier WOLF_MOUNT_JUMP = Util.getResource("wolf_mount_jump");
     private int lastClickTick;
 
     public WolfMountTalent(Talent talentIn, int levelIn) {
@@ -45,7 +45,7 @@ public class WolfMountTalent extends TalentInstance {
         dog.removeAttributeModifier(DoggyAttributes.JUMP_POWER, WOLF_MOUNT_JUMP);
     }
 
-    public AttributeModifier createSpeedModifier(AbstractDog dogIn, ResourceLocation uuidIn) {
+    public AttributeModifier createSpeedModifier(AbstractDog dogIn, Identifier uuidIn) {
         if (this.level() > 0) {
             double speed = 0.06D * this.level();
 
@@ -80,7 +80,7 @@ public class WolfMountTalent extends TalentInstance {
             return InteractionResult.PASS;
         }
 
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide()) {
             dog.setOrderedToSit(false);
             player.setYRot(dog.getYRot());
             player.setXRot(dog.getXRot());
@@ -94,29 +94,29 @@ public class WolfMountTalent extends TalentInstance {
         if (dog.isVehicle() && dog.getDogHunger() < 1) {
             var control = dog.getControllingPassenger();
             if (control != null)
-                control.sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
+                if (control instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("talent.doggytalents.wolf_mount.exhausted", dog.getName()));
 
             dog.ejectPassengers();
         }
     }
 
     @Override
-    public InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick_add) {
+    public DTNInteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick_add) {
         if (dogIn.getControllingPassenger() != null) {
             hungerTick_add += this.level() < 5 ? 3 : 1;
-            return InteractionResultHolder.success(hungerTick_add);
+            return DTNInteractionResultHolder.success(hungerTick_add);
         }
 
-        return InteractionResultHolder.pass(hungerTick_add);
+        return DTNInteractionResultHolder.pass(hungerTick_add);
     }
 
     @Override
-    public InteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
+    public DTNInteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
         if (this.level() >= 5) {
-            return InteractionResultHolder.success(distance - 1F);
+            return DTNInteractionResultHolder.success(distance - 1F);
         }
 
-        return InteractionResultHolder.pass(0F);
+        return DTNInteractionResultHolder.pass(0F);
     }
 
     @Override

@@ -10,7 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,13 +34,13 @@ public class StarterBundleItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
-        if (level.isClientSide)
-            return InteractionResultHolder.success(stack);
+        if (level.isClientSide())
+            return InteractionResult.SUCCESS;
         
         var inv = player.getInventory();
-        var items = inv.items;
+        var items = inv.getNonEquipmentItems();
         boolean hasEnoughSpace = false; 
         int freeSlot = 0;
         for (var item : items) {
@@ -52,11 +52,10 @@ public class StarterBundleItem extends Item {
             }
         }
         if (!hasEnoughSpace) {
-            player.displayClientMessage(
+            player.sendOverlayMessage(
                 Component.translatable("item.doggytalents.starter_bundle.fail")
-                    .withStyle(ChatFormatting.RED) 
-                , true);
-            return InteractionResultHolder.success(stack);
+                    .withStyle(ChatFormatting.RED));
+            return InteractionResult.SUCCESS;
         }
            
         
@@ -66,20 +65,20 @@ public class StarterBundleItem extends Item {
         }
         player.setItemInHand(hand, ItemStack.EMPTY);
 
-        return InteractionResultHolder.success(stack);
+        return InteractionResult.SUCCESS;
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        var desc_id = this.getDescriptionId() + ".description";
+        components.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
         for (var item : STARTER_ITEMS) {
             var c1 = Component.translatable("item.doggytalents.starter_bundle.contains", 
                 1, Component.translatable(item.get().getDescriptionId()));
-            components.add(c1);
+            components.accept(c1);
         }
     }
 

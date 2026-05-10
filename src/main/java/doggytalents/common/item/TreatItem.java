@@ -37,7 +37,7 @@ public class TreatItem extends Item implements IDogItem {
             return InteractionResult.FAIL;
         }
 
-        if (handleKamiBypass(dog, worldIn, playerIn, handIn).shouldSwing())
+        if (handleKamiBypass(dog, worldIn, playerIn, handIn).consumesAction())
             return InteractionResult.SUCCESS;
 
         return handleTreatTrain(dog, worldIn, playerIn, handIn);   
@@ -55,9 +55,9 @@ public class TreatItem extends Item implements IDogItem {
         if (!(dog instanceof Dog actual_dog))
             return InteractionResult.PASS;
         
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide()) {
             actual_dog.setLevel(DogLevel.kamiReady());
-            playerIn.getCooldowns().addCooldown(this, 40);
+            playerIn.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(this), 40);
         }
             
         playKamiBypassEffect(actual_dog);
@@ -67,12 +67,12 @@ public class TreatItem extends Item implements IDogItem {
 
     private void playKamiBypassEffect(Dog dog) {
         var level = dog.level();
-        if (!level.isClientSide)
+        if (!level.isClientSide())
             return;
         var dog_pos = dog.position();
         level.playLocalSound(dog_pos.x, dog_pos.y, dog_pos.z, 
             SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, 
-            (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
+            (1.0F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2F) * 0.7F, false);
         level.addParticle(ParticleTypes.EXPLOSION, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);
         level.addParticle(ParticleTypes.EXPLOSION_EMITTER, dog_pos.x, dog_pos.y, dog_pos.z, 1.0D, 0.0D, 0.0D);
         
@@ -117,7 +117,7 @@ public class TreatItem extends Item implements IDogItem {
             return InteractionResult.CONSUME;
         }
 
-        if (!playerIn.level().isClientSide) {
+        if (!playerIn.level().isClientSide()) {
             if (!playerIn.getAbilities().instabuild) {
                 playerIn.getItemInHand(handIn).shrink(1);
             }
@@ -132,14 +132,14 @@ public class TreatItem extends Item implements IDogItem {
     }
 
     private void treatFailPrompt(AbstractDog dog, Level worldIn, Player playerIn, Component msg) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_SMOKE);
             playerIn.sendSystemMessage(msg);
         }
     }
 
     private void treatSuccessPrompt(AbstractDog dog, Level worldIn, Player playerIn) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             worldIn.broadcastEntityEvent(dog, Constants.EntityState.WOLF_HEARTS);
             playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".level_up"));
         }

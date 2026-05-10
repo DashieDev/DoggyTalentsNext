@@ -89,7 +89,7 @@ public class DogFollowOwnerGoal extends Goal implements IHasTickNonRunning {
                 IThrowableItem throwableItem = this.dog.getThrowableItem();
                 ItemStack fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-                this.dog.spawnAtLocation(fetchItem, 0.0F);
+                if (this.dog.level() instanceof net.minecraft.server.level.ServerLevel sl) this.dog.spawnAtLocation(sl, fetchItem, 0.0F);
                 this.dog.setBoneVariant(ItemStack.EMPTY);
             }
         }

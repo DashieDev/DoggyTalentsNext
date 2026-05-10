@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bread"
-    },
-    "E": {
-      "item": "minecraft:egg"
-    }
+    "B": "minecraft:bread",
+    "E": "minecraft:egg"
   },
   "pattern": [
     " B ",

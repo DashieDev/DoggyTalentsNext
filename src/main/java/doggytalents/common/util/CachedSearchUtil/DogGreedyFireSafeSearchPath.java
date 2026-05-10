@@ -16,43 +16,81 @@ import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
-public class DogGreedyFireSafeSearchPath extends Path {
+public class DogGreedyFireSafeSearchPath {
 
-    private ArrayList<Node> nodes;
-    private Dog dog;
-    public boolean finished;
-    private int maxLength;
-    private Node startNode;
-    private int walkableCount = 0;
+    private final Path path;
+    private final int walkableCount;
 
-    private DogGreedyFireSafeSearchPath(Dog dog, ArrayList<Node> nodes, int maxLength) {
-        super(nodes, dog.blockPosition(), false);
-        this.nodes = nodes;
-        this.dog = dog;
-        this.maxLength = maxLength;
+    private DogGreedyFireSafeSearchPath(Path path, int walkableCount) {
+        this.path = path;
+        this.walkableCount = walkableCount;
     }
-    
+
+    public Path getPath() {
+        return path;
+    }
+
+    public int getWalkableCount() {
+        return this.walkableCount;
+    }
+
+    public boolean isDone() {
+        return this.path.isDone();
+    }
+
+    public Node getNode(int index) {
+        return this.path.getNode(index);
+    }
+
+    public Node getEndNode() {
+        return this.path.getEndNode();
+    }
+
     public static DogGreedyFireSafeSearchPath create(Dog dog, int maxLength) {
         var start_node_pair = getStartNode(dog);
         if (!start_node_pair.isPresent())
             return null;
         boolean skip_start = start_node_pair.get().getLeft();
         var start_node = start_node_pair.get().getRight();
-        var initNodes = new ArrayList<Node>(maxLength);
-        initNodes.add(start_node);
-        var ret = new DogGreedyFireSafeSearchPath(dog, initNodes, maxLength);
-        ret.startNode = start_node;
-        var node_optional = scanSurroundingForNextPos(ret);
-        if (!node_optional.isPresent())
-            return null;
-        if (skip_start) {
-            initNodes.clear();
-            initNodes.add(node_optional.get());
+        var nodes = new ArrayList<Node>(maxLength);
+        nodes.add(start_node);
+
+        // Build path upfront greedily
+        Node current = start_node;
+        Node startRef = start_node;
+        int walkableCount = 0;
+        boolean finished = false;
+
+        for (int i = 1; i < maxLength && !finished; i++) {
+            var node_optional = scanSurroundingForNextPos(dog, current, nodes, startRef);
+            if (!node_optional.isPresent()) {
+                finished = true;
+                break;
+            }
+            var node = node_optional.get();
+            if (node.type != PathType.WALKABLE && walkableCount > 0) {
+                finished = true;
+                break;
+            }
+            nodes.add(node);
+            if (node.type == PathType.WALKABLE)
+                ++walkableCount;
+            if (current.y == node.y || nodes.size() <= 2)
+                node.type = PathType.WALKABLE;
+            current = node;
         }
-        if (initNodes.isEmpty())
+
+        if (skip_start && !nodes.isEmpty()) {
+            nodes.remove(0);
+        }
+
+        if (nodes.isEmpty())
             return null;
-        initNodes.get(0).type = PathType.WALKABLE;
-        return ret;
+
+        nodes.get(0).type = PathType.WALKABLE;
+        var targetPos = nodes.get(nodes.size() - 1).asBlockPos();
+        var path = new Path(nodes, targetPos, false);
+        return new DogGreedyFireSafeSearchPath(path, walkableCount);
     }
 
     private static Optional<Pair<Boolean, Node>> getStartNode(Dog dog) {
@@ -64,7 +102,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         }
         if (isValidStart(dog, dog_b0))
             return blockPosToNodeOptional(true, dog_b0);
-        
+
         var dog_bb = dog.getBoundingBox();
         var check_pos = new BlockPos.MutableBlockPos()
             .setY(dog_b0.getY());
@@ -88,7 +126,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
     private static boolean isValidStart(Dog dog, BlockPos pos) {
         var pos_below = pos.below();
         var state_below = dog.level().getBlockState(pos_below);
-        return state_below.isCollisionShapeFullBlock(dog.level(), pos_below) 
+        return state_below.isCollisionShapeFullBlock(dog.level(), pos_below)
             || DogNodeEvaluator.dogGetPathTypeFromState(
                 dog.level(), pos_below) == PathType.BLOCKED;
     }
@@ -99,80 +137,34 @@ public class DogGreedyFireSafeSearchPath extends Path {
         return Optional.of(Pair.of(skipFirstNode, ret_node));
     }
 
-    @Override
-    public void advance() {
-        super.advance();
-        if (finished) return;
-        boolean append_result = tryAppendPath();
-        if (!append_result)
-            this.finished = true;
-    }
-
-    public int getWalkableCount() {
-        return this.walkableCount;
-    }
-
-    @Override
-    public boolean isDone() {
-        if (this.finished)
-            return true;
-        return this.getNextNodeIndex() >= this.nodes.size();
-    }
-
-    public boolean tryAppendPath() {
-        if (this.getNextNodeIndex() >= this.maxLength)
-            return false;
-        if (this.nodes.isEmpty())
-            return false;
-        
-        var old_end = this.nodes.get(this.nodes.size() - 1);
-        
-        var node_optional = scanSurroundingForNextPos(this);
-        if (!node_optional.isPresent())
-            return false;
-        var node = node_optional.get();
-        if (node.type != PathType.WALKABLE && this.walkableCount > 0)
-            return false;
-        
-        this.nodes.add(node);
-        if (node.type == PathType.WALKABLE)
-            ++this.walkableCount;
-
-        if (old_end.y == node.y || this.nodes.size() <= 2) {
-            node.type = PathType.WALKABLE;
-        }
-        return true;
-    }
-
-    private boolean containNode(Node node) {
-        for (var node1 : this.nodes) {
-            if (node1.equals(node)) 
+    private static boolean containNode(ArrayList<Node> nodes, Node startNode, Node node) {
+        if (startNode.equals(node)) return true;
+        for (var node1 : nodes) {
+            if (node1.equals(node))
                 return true;
         }
         return false;
     }
 
-    private static Optional<Node> scanSurroundingForNextPos(DogGreedyFireSafeSearchPath path) {
-        if (path.nodes.isEmpty()) 
-            return Optional.empty();
-        var b0 = path.nodes.get(path.nodes.size()-1).asBlockPos();
+    private static Optional<Node> scanSurroundingForNextPos(Dog dog, Node current, ArrayList<Node> nodes, Node startNode) {
+        var b0 = current.asBlockPos();
         float malus_min = Float.MAX_VALUE;
         Node node_chosen = null;
         boolean[] BLOCKED_0_Z = new boolean[2];
         boolean[] BLOCKED_X_0 = new boolean[2];
-        var pathtype_above = WalkNodeEvaluator.getPathTypeStatic(path.dog, b0.above());
+        var pathtype_above = WalkNodeEvaluator.getPathTypeStatic(dog, b0.above());
         Node last_resort = null;
         //Cross XZ
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
-                if (i == 0 && j == 0) 
+                if (i == 0 && j == 0)
                     continue;
-                if (i*j != 0) 
+                if (i * j != 0)
                     continue;
-                var node = findDogNode(path.dog, b0.offset(i, 0, j));
+                var node = findDogNode(dog, b0.offset(i, 0, j));
                 boolean require_jump = node.y > b0.getY();
-                boolean is_diagonally_block = 
-                    path.dog.getPathfindingMalus(node.type) < 0 
+                boolean is_diagonally_block =
+                    dog.getPathfindingMalus(node.type) < 0
                     || require_jump;
                 if (is_diagonally_block) {
                     if (i != 0) {
@@ -182,7 +174,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
                     }
                 }
 
-                if (!canAddNodeToPath(path, node))
+                if (!canAddNodeToPath(dog, nodes, startNode, node))
                     continue;
                 if (require_jump && pathtype_above == PathType.BLOCKED)
                     continue;
@@ -192,18 +184,17 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 if (clear_walkable) {
                     return Optional.of(node);
                 }
-                boolean is_last_resort = 
+                boolean is_last_resort =
                     require_jump && pathtype_above != PathType.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
                 } else {
-                    var malus = path.dog.getPathfindingMalus(node.type);
+                    var malus = dog.getPathfindingMalus(node.type);
                     if (node_chosen == null || malus < malus_min) {
                         node_chosen = node;
                         malus_min = malus;
                     }
                 }
-                
             }
         }
         //Corner XZ
@@ -211,17 +202,17 @@ public class DogGreedyFireSafeSearchPath extends Path {
             for (int j = -1; j <= 1; ++j) {
                 if (i == 0 && j == 0)
                     continue;
-                if (i*j == 0)
+                if (i * j == 0)
                     continue;
-                boolean diagonal_blocked = 
+                boolean diagonal_blocked =
                     BLOCKED_0_Z[j > 0 ? 1 : 0]
                     && BLOCKED_X_0[i > 0 ? 1 : 0];
                 if (diagonal_blocked)
                     continue;
-                var node = findDogNode(path.dog, b0.offset(i, 0, j));
+                var node = findDogNode(dog, b0.offset(i, 0, j));
                 boolean require_jump = node.y > b0.getY();
-                
-                if (!canAddNodeToPath(path, node))
+
+                if (!canAddNodeToPath(dog, nodes, startNode, node))
                     continue;
                 if (require_jump && pathtype_above == PathType.BLOCKED)
                     continue;
@@ -231,12 +222,12 @@ public class DogGreedyFireSafeSearchPath extends Path {
                 if (clear_walkable) {
                     return Optional.of(node);
                 }
-                boolean is_last_resort = 
+                boolean is_last_resort =
                     require_jump && pathtype_above != PathType.BLOCKED;
                 if (is_last_resort) {
                     last_resort = node;
                 } else {
-                    var malus = path.dog.getPathfindingMalus(node.type);
+                    var malus = dog.getPathfindingMalus(node.type);
                     if (node_chosen == null || malus < malus_min) {
                         node_chosen = node;
                         malus_min = malus;
@@ -258,7 +249,7 @@ public class DogGreedyFireSafeSearchPath extends Path {
         var b1_type = WalkNodeEvaluator.getPathTypeStatic(dog, b1.mutable());
         int offsetY = 0;
         if (b1_type == PathType.BLOCKED) {
-                offsetY= 1;
+            offsetY = 1;
         } else if (b1_type == PathType.OPEN) {
             offsetY = -1;
         }
@@ -271,16 +262,13 @@ public class DogGreedyFireSafeSearchPath extends Path {
         return ret_node;
     }
 
-    private static boolean canAddNodeToPath(DogGreedyFireSafeSearchPath path, Node node) {
-        boolean already_in_path = 
-            path.containNode(node) || path.startNode.equals(node);
-        if (already_in_path)
+    private static boolean canAddNodeToPath(Dog dog, ArrayList<Node> nodes, Node startNode, Node node) {
+        if (containNode(nodes, startNode, node))
             return false;
         if (node.type == PathType.OPEN)
             return false;
-        if (path.dog.getPathfindingMalus(node.type) < 0)
+        if (dog.getPathfindingMalus(node.type) < 0)
             return false;
         return true;
     }
-
 }

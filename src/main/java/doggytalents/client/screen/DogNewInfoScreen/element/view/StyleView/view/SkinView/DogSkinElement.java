@@ -2,7 +2,7 @@ package doggytalents.client.screen.DogNewInfoScreen.element.view.StyleView.view.
 
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.opengl.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -24,12 +24,12 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
@@ -187,14 +187,14 @@ public class DogSkinElement extends AbstractElement {
         }
 
         @Override
-        public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
             int pX = this.getRealX();
             int pY = this.getRealY() + LINE_SPACING;
-            graphics.drawString(font, title, pX, pY, 0xffffffff);
+            graphics.text(font, title, pX, pY, 0xffffffff);
             
             pY += font.lineHeight + LINE_SPACING;
             for (var line : components) {
-                graphics.drawString(font, line, pX, pY, 0xffffffff);
+                graphics.text(font, line, pX, pY, 0xffffffff);
                 pY += font.lineHeight + LINE_SPACING;
             }
         }
@@ -202,7 +202,7 @@ public class DogSkinElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.locList == null) return;
         if (this.locList.isEmpty()) return;
@@ -218,7 +218,7 @@ public class DogSkinElement extends AbstractElement {
          
     }
 
-    private void renderNonShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void renderNonShowInfo(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         int e_mX = this.getRealX() + mX;
@@ -237,7 +237,7 @@ public class DogSkinElement extends AbstractElement {
             
             int nameX = this.getRealX() + mX - font.width(c1)/2;
             int nameY = this.getRealY() + this.getSizeY() - 13;
-            graphics.drawString(font, c1, nameX, nameY, 0xffffffff);
+            graphics.text(font, c1, nameX, nameY, 0xffffffff);
         }
 
         
@@ -246,20 +246,20 @@ public class DogSkinElement extends AbstractElement {
         int nextId = this.activeSkinId + 1;
 
         if (nextId < locList.size()) {
-            this.renderSkinAndDogModel(nextId, false, graphics, 
-                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50, true);
+            this.renderSkinAndDogModel(nextId, false, graphics,
+                mouseX, mouseY, e_mX + 32 + 25 + 25, e_mY + 32, 50, false);
         }
 
         if (prevId >= 0) {
-            this.renderSkinAndDogModel(prevId, false, graphics, 
-                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, true);
+            this.renderSkinAndDogModel(prevId, false, graphics,
+                mouseX, mouseY, e_mX - 32 - 25 - 25, e_mY + 32, 50, false);
         }
 
-        this.renderSkinAndDogModel(activeSkinId, true, graphics, 
+        this.renderSkinAndDogModel(activeSkinId, true, graphics,
             mouseX, mouseY, e_mX, e_mY + 36, 64, false);
     }
 
-    private void renderShowInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void renderShowInfo(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
         int e_mX = this.getRealX() + mX;
@@ -277,7 +277,7 @@ public class DogSkinElement extends AbstractElement {
         
     }
 
-    private void renderNoInfo(GuiGraphics graphics,  int mouseX, int mouseY, float partialTicks) {
+    private void renderNoInfo(GuiGraphicsExtractor graphics,  int mouseX, int mouseY, float partialTicks) {
         int mX = this.getSizeX()/2;
         int mY = this.getSizeY()/2;
 
@@ -286,10 +286,10 @@ public class DogSkinElement extends AbstractElement {
         int tX = this.getRealX() + mX - 10;
         int tY = this.getRealY() + mY - font.lineHeight/2;
 
-        graphics.drawString(font, c1, tX, tY, 0xffffffff);
+        graphics.text(font, c1, tX, tY, 0xffffffff);
     }
 
-    private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphics graphics, int mouseX, 
+    private void renderSkinAndDogModel(int indx, boolean followMouse, GuiGraphicsExtractor graphics, int mouseX, 
         int mouseY, int e_mX, int e_mY, int size, boolean useDummy) {
         var oldSkin = dog.getClientSkinHolder();
         var manifestSkin = this.locList.get(indx);
@@ -324,25 +324,15 @@ public class DogSkinElement extends AbstractElement {
             int tX = e_mX - c1_len/2;
             int tY = e_mY + 28;
             
-            graphics.drawString(font, c1, tX, tY, 0xffffffff);
+            graphics.text(font, c1, tX, tY, 0xffffffff);
         }
     }
     
-    private void renderMysteriousKanji(GuiGraphics graphics, int x, int y) {
-        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        //RenderSystem.setShaderTexture(0, getKanjiDogLevel(this.dog));
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    private void renderMysteriousKanji(GuiGraphicsExtractor graphics, int x, int y) {
         int imgeSize = 100;
-        graphics.blit(Resources.KANJI_MYSTERY_BKG, x - imgeSize/2, 
-            y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        var stack = graphics.pose();
-        stack.pushPose();
-        stack.translate(0, 0, 400);
-        graphics.blit(Resources.KANJI_MYSTERY, x - imgeSize/2, 
-            y - imgeSize/2 - 27, 0, 0, 0, imgeSize, imgeSize, imgeSize, imgeSize);
-        stack.popPose();
-        RenderSystem.disableBlend();
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, Resources.KANJI_MYSTERY_BKG,
+            x - imgeSize/2, y - imgeSize/2 - 27, 0f, 0f, imgeSize, imgeSize, imgeSize, imgeSize);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, Resources.KANJI_MYSTERY,
+            x - imgeSize/2, y - imgeSize/2 - 27, 0f, 0f, imgeSize, imgeSize, imgeSize, imgeSize);
     }
 }

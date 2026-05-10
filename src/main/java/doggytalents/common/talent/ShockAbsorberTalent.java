@@ -6,7 +6,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -50,10 +50,10 @@ public class ShockAbsorberTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+    public DTNInteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
         if (isExplosionSource(source))
-            return InteractionResultHolder.success(damage * getExplosionResist());
-        return InteractionResultHolder.pass(damage);
+            return DTNInteractionResultHolder.success(damage * getExplosionResist());
+        return DTNInteractionResultHolder.pass(damage);
     }
 
     private boolean isExplosionSource(DamageSource source) {

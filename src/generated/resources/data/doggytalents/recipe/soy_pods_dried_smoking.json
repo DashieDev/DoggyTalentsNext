@@ -3,9 +3,7 @@
   "category": "food",
   "cookingtime": 100,
   "experience": 0.35,
-  "ingredient": {
-    "item": "doggytalents:soy_pods"
-  },
+  "ingredient": "doggytalents:soy_pods",
   "result": {
     "count": 1,
     "id": "doggytalents:soy_pods_dried"

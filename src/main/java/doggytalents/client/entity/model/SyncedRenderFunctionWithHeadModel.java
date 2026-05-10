@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.joml.Vector3f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import doggytalents.client.entity.model.dog.DogModel;
@@ -29,7 +28,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
 
     @Override
     public void sync(DogModel dogModel) {
-        root.copyFrom(dogModel.root);
+        DogModel.copyPartPose(root(), dogModel.root);
 
         syncPart(this.head, dogModel.head);
         syncPart(this.realHead, dogModel.realHead);
@@ -41,7 +40,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
     }
 
     private void syncPart(Optional<ModelPart> part, ModelPart dogPart) {
-        part.ifPresent(p -> p.copyFrom(dogPart));
+        part.ifPresent(p -> DogModel.copyPartPose(p, dogPart));
     }
 
     @Override
@@ -61,10 +60,6 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
 	}
 
 
-    @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer p_103014_, int p_103015_, int p_103016_, int unused) {
-    }
-
     public void startRenderFromRoot(PoseStack stack, Renderer actualRendering) {
         DogModel.renderDogModelFromRootWithPivot(stack, createDogRenderContext(actualRendering));
     }
@@ -74,7 +69,7 @@ public class SyncedRenderFunctionWithHeadModel extends SyncedAccessoryModel {
             (stack, part_ctx) -> {
                 this.startRenderItemFromHead(stack, actualRendering);
             };
-        return new DogModel.DogModelRenderContext(this.root, this.pivot, SyncedAccessoryModel.getDogModelBabyHead(head, young), Optional.empty(), Optional.of(additional_head_renderer));
+        return new DogModel.DogModelRenderContext(this.root(), this.pivot, SyncedAccessoryModel.getDogModelBabyHead(head, false), Optional.empty(), Optional.of(additional_head_renderer));
     }
 
     public void startRenderItemFromHead(PoseStack matrixStack, Renderer renderer) {

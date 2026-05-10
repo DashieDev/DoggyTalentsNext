@@ -6,6 +6,8 @@ import doggytalents.common.block.tileentity.FoodBowlTileEntity;
 import doggytalents.common.block.tileentity.RiceMillBlockEntity;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.registries.BuiltInRegistries;
+import java.util.Set;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,7 +25,7 @@ public class DoggyTileEntityTypes {
     public static final Supplier<BlockEntityType<DogBathBlockEntity>> DOG_BATH = register("dog_bath", DogBathBlockEntity::new, DoggyBlocks.DOG_BATH);
 
     private static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(final String name, final BlockEntityType.BlockEntitySupplier<T> sup, Supplier<? extends Block> validBlock) {
-        return register(name, () -> BlockEntityType.Builder.of(sup, validBlock.get()).build(null));
+        return register(name, () -> new BlockEntityType<>(sup, Set.of(validBlock.get())));
     }
 
     private static <T extends BlockEntityType<?>> Supplier<T> register(final String name, final Supplier<T> sup) {

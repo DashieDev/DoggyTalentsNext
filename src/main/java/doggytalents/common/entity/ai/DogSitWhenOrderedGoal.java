@@ -28,7 +28,7 @@ public class DogSitWhenOrderedGoal extends Goal {
         //Passaenger dog always wants to sit down.
         if (!dog.onGround())
             return false;
-        if (dog.isInWaterOrBubble())
+        if (dog.isInWater())
             return false;
         return dog.isOrderedToSit() || dog.getOwner() == null;
     }

@@ -36,14 +36,14 @@ public class DogDataSyncManager {
     }
 
     public void setTalentsDirty() {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             return;
         this.talentsDirty = true;
         this.dog.onDogSyncedDataUpdated(true, false);
     }
 
     public void setAccessoriesDirty() {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             return;
         this.accessoriesDirty = true;
         this.dog.onDogSyncedDataUpdated(false, true);

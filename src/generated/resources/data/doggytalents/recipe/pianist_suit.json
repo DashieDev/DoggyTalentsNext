@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:black_wool"
-    },
-    "D": {
-      "item": "doggytalents:cape_coloured"
-    },
-    "G": {
-      "item": "minecraft:gray_wool"
-    },
-    "W": {
-      "item": "minecraft:white_wool"
-    }
+    "B": "minecraft:black_wool",
+    "D": "doggytalents:cape_coloured",
+    "G": "minecraft:gray_wool",
+    "W": "minecraft:white_wool"
   },
   "pattern": [
     "GWG",

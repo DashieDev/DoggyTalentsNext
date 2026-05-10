@@ -12,7 +12,7 @@ public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
     private final Dog dog;
 
     public PatrolAssistTargetGoal(Dog dog) {
-        super(dog, Mob.class, false , (e) -> {
+        super(dog, Mob.class, false , (e, level) -> {
             if (!(e instanceof Mob mob))
                 return false;
             var target = mob.getTarget();
@@ -27,7 +27,7 @@ public class PatrolAssistTargetGoal extends NearestAttackableTargetGoal<Mob> {
                 return false;
             if (targetDog.patrolTargetLock())
                 return false;
-            return dog.isWithinRestriction(targetDog.blockPosition());
+            return dog.isWithinHome(targetDog.blockPosition());
         });
         this.dog = dog;
     }

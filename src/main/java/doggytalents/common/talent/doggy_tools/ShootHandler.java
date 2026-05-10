@@ -22,7 +22,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
@@ -341,7 +341,7 @@ public interface ShootHandler {
             }
             if (item_list.isEmpty()) 
                 return;
-            crossbow_stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(item_list));
+            crossbow_stack.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.ofNonEmpty(item_list));
             
             if (inv != null) {
                 arrow_stack = arrow_stack.copy();

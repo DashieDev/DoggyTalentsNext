@@ -48,23 +48,20 @@ public class DogPlushie extends BaseDogPlushie implements IEntityWithComplexSpaw
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("PlushCollarColor", Tag.TAG_INT))
-            this.setCollarColor(compound.getInt("PlushCollarColor"));
-        if (compound.contains("classicalVariant", Tag.TAG_STRING)) {
-            this.setDogVariant(DogVariantUtil.fromSaveString(
-                compound.getString("classicalVariant")
-            ));
-        }
-        this.setCollarThicc(compound.getBoolean("collarThicc"));
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput input) {
+        if (input.getInt("PlushCollarColor").isPresent())
+            this.setCollarColor(input.getIntOr("PlushCollarColor", 0));
+        input.getString("classicalVariant").ifPresent(s ->
+            this.setDogVariant(DogVariantUtil.fromSaveString(s))
+        );
+        this.setCollarThicc(input.getBooleanOr("collarThicc", false));
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        compound.putInt("PlushCollarColor", this.getCollarColor());
-        compound.putString("classicalVariant", 
-            DogVariantUtil.toSaveString(this.getDogVariant()));
-        compound.putBoolean("collarThicc", this.getCollarThicc());
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput output) {
+        output.putInt("PlushCollarColor", this.getCollarColor());
+        output.putString("classicalVariant", DogVariantUtil.toSaveString(this.getDogVariant()));
+        output.putBoolean("collarThicc", this.getCollarThicc());
     }
 
     @Override

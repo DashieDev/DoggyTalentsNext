@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.mojang.blaze3d.platform.InputConstants;
-
 import doggytalents.client.screen.framework.widget.FlatButton;
+import net.minecraft.client.input.KeyEvent;
 import doggytalents.common.entity.DogGroupsManager.DogGroup;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.HeelByGroupData;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -45,8 +44,8 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
 
         var help = new FlatButton(mX - 100 - 20 - 2, mY - 100, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.heel_by_group.help_title")
@@ -54,7 +53,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByGroupScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, list, mouseX, mouseY);
             }
         };
         
@@ -62,8 +61,8 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font, 
+    protected void drawNoEntryMsg(GuiGraphicsExtractor graphics, int x, int y) {
+        graphics.text(font, 
             I18n.get("doggytalents.screen.heel_by_group.no_group_found"), 
             x, y, 0xf50a0a);
     }
@@ -78,7 +77,7 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawEntry(GuiGraphics graphics, int entry_x, int entry_y,
+    protected void drawEntry(GuiGraphicsExtractor graphics, int entry_x, int entry_y,
         int entry_id, boolean is_selected) {
 
         super.drawEntry(graphics, entry_x + 12, entry_y, entry_id, is_selected);
@@ -87,19 +86,19 @@ public class HeelByGroupScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == InputConstants.KEY_LSHIFT) {
+    public boolean keyPressed(KeyEvent event) {
+        if (event.key() == com.mojang.blaze3d.platform.InputConstants.KEY_LSHIFT) {
             this.heelAndSit = true;
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == InputConstants.KEY_LSHIFT) {
+    public boolean keyReleased(KeyEvent event) {
+        if (event.key() == com.mojang.blaze3d.platform.InputConstants.KEY_LSHIFT) {
             this.heelAndSit = false;
         }
-        return super.keyReleased(keyCode, scanCode, modifiers);
+        return super.keyReleased(event);
     }
 
     @Override

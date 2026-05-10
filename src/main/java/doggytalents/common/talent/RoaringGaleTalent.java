@@ -62,19 +62,19 @@ public class RoaringGaleTalent extends TalentInstance {
     }
 
     public static Optional<Integer> roar(List<Dog> dogsList, Level world, Player player) {
-        if (world.isClientSide) return Optional.empty();
+        if (world.isClientSide()) return Optional.empty();
         var roarDogs = dogsList.stream()
             .filter(dog -> dog.getDogLevel(DoggyTalents.ROARING_GALE) > 0)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.level"), true);
+            player.sendOverlayMessage(Component.translatable("talent.doggytalents.roaring_gale.level"));
             return Optional.empty();
         }
         roarDogs = roarDogs.stream()
             .filter(RoaringGaleTalent::isNotOnRoarCooldown)
             .collect(Collectors.toList());
         if (roarDogs.isEmpty()) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.cooldown"), true);
+            player.sendOverlayMessage(Component.translatable("talent.doggytalents.roaring_gale.cooldown"));
             return Optional.empty();
         }
         boolean anyHits = false;
@@ -92,7 +92,7 @@ public class RoaringGaleTalent extends TalentInstance {
                 if (!(mob instanceof Enemy)) continue;
                 hit = true;
                 mob.hurt(mob.damageSources().generic(), damage);
-                mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, effectDuration, 127, false, false));
+                mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, effectDuration, 127, false, false));
                 mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, effectDuration, 1, false, false));
                 mob.push(
                     Mth.sin(mob.getYRot() * Mth.DEG_TO_RAD) * knockback * 0.5F, 
@@ -103,11 +103,11 @@ public class RoaringGaleTalent extends TalentInstance {
 
             int cooldown = 0;
             if (hit) {
-                dog.playSound(SoundEvents.WOLF_GROWL, 0.7F, 1.0F);
+                dog.playSound(dog.dogMood.getSeriousGrowl(), 0.7F, 1.0F);
                 cooldown = level >= 5 ? 60 : 100;
                 anyHits = true;
             } else {
-                dog.playSound(SoundEvents.WOLF_AMBIENT, 1F, 1.2F);
+                dog.playSound(dog.dogMood.getAmbientSound(), 1F, 1.2F);
                 cooldown = level >= 5 ? 30 : 50;
             }
 
@@ -118,7 +118,7 @@ public class RoaringGaleTalent extends TalentInstance {
         }
 
         if (!anyHits) {
-            player.displayClientMessage(Component.translatable("talent.doggytalents.roaring_gale.miss"), true);
+            player.sendOverlayMessage(Component.translatable("talent.doggytalents.roaring_gale.miss"));
         }
         if (whistle_cooldown <= 0)
             return Optional.empty();

@@ -2,26 +2,22 @@ package doggytalents.common.inventory.recipe;
 
 import java.util.ArrayList;
 
-import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.item.DoubleDyableAccessoryItem;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class DoubleDyableRecipe extends CustomRecipe {
 
-    public DoubleDyableRecipe(CraftingBookCategory p_249010_) {
-        super(p_249010_);
+    public DoubleDyableRecipe() {
     }
 
     @Override
@@ -56,7 +52,7 @@ public class DoubleDyableRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput container, HolderLookup.Provider registryAccess) {
+    public ItemStack assemble(CraftingInput container) {
         ItemStack paperStack = null;
         var dyeList = new ArrayList<DyeColor>();
         ItemStack targetStack = null;
@@ -78,8 +74,9 @@ public class DoubleDyableRecipe extends CustomRecipe {
                 targetStack = stack;
                 continue;
             }
-            if (stack.getItem() instanceof DyeItem dye) {
-                dyeList.add(dye.getDyeColor());
+            if (stack.getItem() instanceof DyeItem) {
+                var color = DyeColor.getColor(stack);
+                if (color != null) dyeList.add(color);
                 continue;
             }
         }
@@ -88,13 +85,13 @@ public class DoubleDyableRecipe extends CustomRecipe {
         return DoubleDyableAccessoryItem.copyAndSetColorForStack(targetStack, dyeList, fg_color);
     }
 
-    @Override
-    public boolean canCraftInDimensions(int p_43759_, int p_43760_) {
-        return p_43759_ * p_43760_ >= 2;
-    }
+    public static final DoubleDyableRecipe INSTANCE = new DoubleDyableRecipe();
+    public static final MapCodec<DoubleDyableRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+    public static final StreamCodec<RegistryFriendlyByteBuf, DoubleDyableRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
+    public static final RecipeSerializer<DoubleDyableRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return DoggyRecipeSerializers.DOUBLE_DYABLE.get();
+    public RecipeSerializer<DoubleDyableRecipe> getSerializer() {
+        return SERIALIZER;
     }
 }

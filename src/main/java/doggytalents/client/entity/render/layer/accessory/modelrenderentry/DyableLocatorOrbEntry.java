@@ -5,7 +5,7 @@ import doggytalents.client.entity.model.SyncedAccessoryModel;
 import doggytalents.client.entity.model.dog.dogs.kusa.LocatorOrbModel;
 import doggytalents.common.lib.Resources;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions;
 
 public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
@@ -26,12 +26,12 @@ public class DyableLocatorOrbEntry extends DoubleDyableRenderEntry {
     }
 
     @Override
-    protected ResourceLocation getFgResource(AccessoryInstance inst) {
+    protected Identifier getFgResource(AccessoryInstance inst) {
         return Resources.DYABLE_ORB_FG;
     }
 
     @Override
-    protected ResourceLocation getBgResource(AccessoryInstance inst) {
+    protected Identifier getBgResource(AccessoryInstance inst) {
         return Resources.DYABLE_ORB_BG;
     }
 

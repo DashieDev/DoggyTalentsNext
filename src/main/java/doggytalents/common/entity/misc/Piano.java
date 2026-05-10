@@ -45,14 +45,14 @@ public class Piano extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        boolean bigLidClosed = compound.getBoolean("pianoFallboardClosed");
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput input) {
+        boolean bigLidClosed = input.getBooleanOr("pianoFallboardClosed", false);
         this.setFallboardClosed(bigLidClosed);
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        compound.putBoolean("pianoFallboardClosed", isFallboardClosed());
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput output) {
+        output.putBoolean("pianoFallboardClosed", isFallboardClosed());
     }
 
     private boolean getPianoFlag(int bit) {
@@ -72,8 +72,7 @@ public class Piano extends Entity {
         this.setPianoFlag(1, val);
     }
 
-    @Override
-    public boolean isInvulnerableTo(DamageSource source) {
+    private boolean isInvulnerableToInternal(DamageSource source) {
         if (this.isRemoved())
             return true;
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
@@ -102,27 +101,27 @@ public class Piano extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float damage) {
-        if (this.isInvulnerableTo(source))
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level, DamageSource source, float damage) {
+        if (this.isInvulnerableToInternal(source))
             return false;
         var killer = source.getDirectEntity();
-        boolean killedByCreative = 
+        boolean killedByCreative =
             (killer instanceof Player player)
             && player.getAbilities().instabuild;
         var drop = this.getPianoDrop();
         if (!drop.isEmpty() && !killedByCreative) {
-            this.spawnAtLocation(drop);
+            this.spawnAtLocation(level, drop);
         }
         this.discard();
         return true;
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public InteractionResult interact(Player player, InteractionHand hand, net.minecraft.world.phys.Vec3 hitPos) {
         var stack = player.getItemInHand(hand);
         var item = stack.getItem();
         if (item == Items.TORCH) {
-            if (!this.level().isClientSide && player.isShiftKeyDown())
+            if (!this.level().isClientSide() && player.isShiftKeyDown())
                 this.setYRot(this.getYRot() + 45);
             return InteractionResult.SUCCESS;
         }

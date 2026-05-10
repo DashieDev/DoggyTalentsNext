@@ -41,7 +41,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
@@ -55,7 +55,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import javax.annotation.Nonnull;
 
 public class PackPuppyTalent extends TalentInstance {
 
@@ -82,7 +82,7 @@ public class PackPuppyTalent extends TalentInstance {
     public void tick(AbstractDog dogIn) {
         if (!dogIn.isDoingFine())
             return;
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         
         tickDogCollectItems(dogIn);
@@ -100,7 +100,7 @@ public class PackPuppyTalent extends TalentInstance {
     private final double COLLECT_RADIUS = 2;
     private int tickTillUpdateCollect = 10;
     private void tickDogCollectItems(AbstractDog dog) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         
         if (!canCollectItems() || !this.pickupItems)
@@ -142,7 +142,7 @@ public class PackPuppyTalent extends TalentInstance {
     private final int TRIGGER_RADIUS = 12;
     private int tickTillUpdateFood = 30;
     private void tickOfferFoodToTeammate(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
 
         if (!canOfferFood() || !this.offerFood)
@@ -222,12 +222,13 @@ public class PackPuppyTalent extends TalentInstance {
 
     @Override
     public void dropInventory(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
-        if (dogIn.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+        if (dogIn.level() instanceof net.minecraft.server.level.ServerLevel sl
+                && (Boolean) sl.getGameRules().get(GameRules.KEEP_INVENTORY))
             return;
 
-        //TODO either drop inventory or save to respawn data, currently does both
+        // currently does both: drop and save to respawn data
         // No need to drop anything if dog didn't have pack puppy
         for (int i = 0; i < this.packPuppyHandler.getSlots(); ++i) {
             Containers.dropItemStack(dogIn.level(), dogIn.getX(), dogIn.getY(), dogIn.getZ(), this.packPuppyHandler.getStackInSlot(i));
@@ -249,10 +250,10 @@ public class PackPuppyTalent extends TalentInstance {
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
         this.packPuppyHandler.deserializeNBT(dogIn.registryAccess(), compound);
-        this.renderChest = compound.getBoolean("renderChest");
-        this.pickupItems = compound.getBoolean("pickupNearby");
-        this.offerFood = compound.getBoolean("offerFood");
-        this.collectKillLoot = compound.getBoolean("collectKillLoot");
+        this.renderChest = compound.getBooleanOr("renderChest", false);
+        this.pickupItems = compound.getBooleanOr("pickupNearby", false);
+        this.offerFood = compound.getBooleanOr("offerFood", false);
+        this.collectKillLoot = compound.getBooleanOr("collectKillLoot", false);
     }
 
     // Left in for backwards compatibility for versions <= 2.0.0.5
@@ -453,7 +454,7 @@ public class PackPuppyTalent extends TalentInstance {
         // var killer = source.getEntity();
         // if (killer == null)
         //     return;
-        // if (killer.level().isClientSide)
+        // if (killer.level().isClientSide())
         //     return;
 
         // var drops = event.getDrops();
@@ -554,7 +555,7 @@ public class PackPuppyTalent extends TalentInstance {
 
         private BlockPos target;
 
-        public DogCollectLootAction(Dog dog, @NonNull BlockPos target) {
+        public DogCollectLootAction(Dog dog, @Nonnull BlockPos target) {
             super(dog, false, false);
             this.target = target;
         }

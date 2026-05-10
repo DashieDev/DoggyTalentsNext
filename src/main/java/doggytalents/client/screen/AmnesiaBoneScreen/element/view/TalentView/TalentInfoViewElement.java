@@ -20,7 +20,7 @@ import doggytalents.common.network.packet.data.DogTalentData;
 import doggytalents.common.network.packet.data.OpenDogScreenData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -75,8 +75,7 @@ public class TalentInfoViewElement extends AbstractElement {
             }
         ) {
             //@Override
-            public void renderWidgetMain(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                // TODO Auto-generated method stub
+            public void renderWidgetMain(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
                 //super.renderWidget(graphics, mouseX, mouseY, pTicks);
                 int tX = this.getX();
                 int tY = this.getY() - LINE_SPACING - font.lineHeight;
@@ -93,7 +92,7 @@ public class TalentInfoViewElement extends AbstractElement {
                     costStr = I18n.get("doggui.talents.cost") + talent.getDeTrainXPCost(dogLevel);
                     costStrColor = 0xffffffff;
                 }
-                graphics.drawString(font, costStr, tX, tY, costStrColor);
+                graphics.text(font, costStr, tX, tY, costStrColor);
                 var player = Minecraft.getInstance().player;
                 this.active = 
                     dogLevel > 0
@@ -101,8 +100,8 @@ public class TalentInfoViewElement extends AbstractElement {
             }
 
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 renderWidgetMain(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 MutableComponent c1;
@@ -121,7 +120,7 @@ public class TalentInfoViewElement extends AbstractElement {
                         );
                     }
                 }
-                graphics.renderComponentTooltip(font, List.of(c1), mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, List.of(c1), mouseX, mouseY);
             }
         };
         var player = Minecraft.getInstance().player;
@@ -148,14 +147,14 @@ public class TalentInfoViewElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         if (this.talent == null) {
             int mX = this.getSizeX()/2;
             int mY = this.getSizeY()/2;
             var txt = I18n.get("doggui.talents.no_talents_selected");
             int tX = this.getRealX() + mX - this.font.width(txt)/2;
             int tY = this.getRealY() + mY - this.font.lineHeight/2;
-            graphics.drawString(font, txt, tX, tY, 0xffffffff);
+            graphics.text(font, txt, tX, tY, 0xffffffff);
             return;
         } 
 
@@ -170,17 +169,17 @@ public class TalentInfoViewElement extends AbstractElement {
                 .withBold(true)
                 .withColor(0xffF4FF00)
             );
-        graphics.drawString(font, title, pX, pY, 0xffffffff);
+        graphics.text(font, title, pX, pY, 0xffffffff);
         pY += 2*LINE_SPACING + this.font.lineHeight;
         var desc = Component.translatable(this.talent.getInfoTranslationKey());
         var desc_lines = this.font.split(desc, this.getSizeX() - (PADDING_LEFT + PADDING_RIGHT));
         var lines_cnt = 0;
         for (var line : desc_lines) {
             if (lines_cnt >= 6) {
-                graphics.drawString(font, ".. (View more in Dog's Menu)", pX, pY, 0xffffffff);
+                graphics.text(font, ".. (View more in Dog's Menu)", pX, pY, 0xffffffff);
                 break;
             }
-            graphics.drawString(font, line, pX, pY, 0xffffffff);
+            graphics.text(font, line, pX, pY, 0xffffffff);
             pY += font.lineHeight + LINE_SPACING;
             ++lines_cnt;
         }
@@ -190,9 +189,9 @@ public class TalentInfoViewElement extends AbstractElement {
         pY = this.getRealY() + this.getSizeY() - 45;
         var currentLevelStr = I18n.get("doggui.pointsleft");
         var currentLevelStr1 = "" + this.dog.getSpendablePoints();
-        graphics.drawString(font, currentLevelStr, startX, pY, 0xffffffff);
+        graphics.text(font, currentLevelStr, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        graphics.drawString(font, currentLevelStr1, startX, pY, 0xffffffff);
+        graphics.text(font, currentLevelStr1, startX, pY, 0xffffffff);
 
         //Current level:
         startX = this.getRealX() + 80;
@@ -200,9 +199,9 @@ public class TalentInfoViewElement extends AbstractElement {
         currentLevelStr = I18n.get("doggui.talents.current_talent_level");
         currentLevelStr1 = this.dog.getDogLevel(talent) 
             + "/" + this.talent.getMaxLevel();
-        graphics.drawString(font, currentLevelStr, startX, pY, 0xffffffff);
+        graphics.text(font, currentLevelStr, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
-        graphics.drawString(font, currentLevelStr1, startX, pY, 0xffffffff);
+        graphics.text(font, currentLevelStr1, startX, pY, 0xffffffff);
         
     }
     

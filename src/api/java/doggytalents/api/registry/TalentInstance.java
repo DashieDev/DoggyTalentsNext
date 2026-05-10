@@ -12,7 +12,7 @@ import doggytalents.api.inferface.AbstractDog;
 import doggytalents.api.inferface.IDogAlteration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TalentInstance implements IDogAlteration {
 
@@ -76,7 +76,7 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public final void doReadFromNBT(AbstractDog dogIn, CompoundTag compound) {
-        this.setLevel(compound.getInt("level"));
+        this.setLevel(compound.getIntOr("level", 0));
         readFromNBT(dogIn, compound);
     }
 
@@ -127,7 +127,7 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public final void writeInstance(AbstractDog dogIn, CompoundTag compound) {
-        ResourceLocation rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
+        Identifier rl = DoggyTalentsAPI.TALENTS.get().getKey(this.talent);
         if (rl != null) {
             compound.putString("type", rl.toString());
         }
@@ -136,9 +136,10 @@ public class TalentInstance implements IDogAlteration {
     }
 
     public static Optional<TalentInstance> readInstance(AbstractDog dogIn, CompoundTag compound) {
-        ResourceLocation rl = ResourceLocation.tryParse(compound.getString("type"));
-        if (DoggyTalentsAPI.TALENTS.get().containsKey(rl)) {
-            TalentInstance inst = DoggyTalentsAPI.TALENTS.get().get(rl).getDefault();
+        Identifier rl = Identifier.tryParse(compound.getStringOr("type", ""));
+        var talentOpt = DoggyTalentsAPI.TALENTS.get().getOptional(rl);
+        if (talentOpt.isPresent()) {
+            TalentInstance inst = talentOpt.get().getDefault();
             inst.doReadFromNBT(dogIn, compound);
             return Optional.of(inst);
         } else {

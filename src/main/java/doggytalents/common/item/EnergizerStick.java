@@ -31,9 +31,9 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, Entity entityIn) {
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide()) {
             dog.addEffect(new MobEffectInstance(MobEffects.GLOWING, 100, 1, false, true));
-            dog.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 6, false, true));
+            dog.addEffect(new MobEffectInstance(MobEffects.SPEED, 200, 6, false, true));
             dog.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2, false, true));
             dog.consumeItemFromStack(entityIn, stack);
 
@@ -42,7 +42,7 @@ public class EnergizerStick extends Item implements IDogFoodHandler {
                     dog, new ItemStack(DoggyItems.ENERGIZER_STICK.get()));
             }
             dog.playSound(
-                SoundEvents.GENERIC_EAT, 
+                SoundEvents.GENERIC_EAT.value(), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );

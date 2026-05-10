@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:brown_dye"
-    },
-    "E": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "L": {
-      "item": "minecraft:leather"
-    }
+    "B": "minecraft:brown_dye",
+    "E": "minecraft:phantom_membrane",
+    "L": "minecraft:leather"
   },
   "pattern": [
     "BLB",

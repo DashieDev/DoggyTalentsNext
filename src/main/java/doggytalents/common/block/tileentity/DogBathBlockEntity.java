@@ -26,7 +26,7 @@ public class DogBathBlockEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
         if (level == null)
             return;
-        if (level.isClientSide)
+        if (level.isClientSide())
             return; 
         if (!(blockEntity instanceof DogBathBlockEntity bath)) {
             return;
@@ -154,8 +154,8 @@ public class DogBathBlockEntity extends BlockEntity {
             ++animTick;
             if (5 <= animTick && animTick <= 35) {
                 if (animTick % 4 == 0)
-                    this.dog.playSound(SoundEvents.GENERIC_DRINK, 
-                        0.2F, dog.level().random.nextFloat() * 0.1F + 0.9F); 
+                    this.dog.playSound(SoundEvents.GENERIC_DRINK.value(),
+                        0.2F, dog.level().getRandom().nextFloat() * 0.1F + 0.9F); 
             }
             if (animTick == 50) {
                 if (dog.level() instanceof ServerLevel sLevel) {

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import doggytalents.api.DoggyTalentsAPI;
 import doggytalents.api.inferface.AbstractDog;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 
 /**
  * @author ProPercivalalb

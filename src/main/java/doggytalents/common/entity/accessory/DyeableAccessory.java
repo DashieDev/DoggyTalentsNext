@@ -48,7 +48,7 @@ public class DyeableAccessory extends Accessory {
 
     @Override
     public AccessoryInstance read(CompoundTag compound) {
-        return this.create(compound.getInt("color"));
+        return this.create(compound.getIntOr("color", 0));
     }
 
     @Override

@@ -18,7 +18,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public boolean isFood(ItemStack stackIn) {
-        if (stackIn.getFoodProperties(null) == null)
+        if (stackIn.get(net.minecraft.core.component.DataComponents.FOOD) == null)
             return false;
         return isWhiteListFood(stackIn) && !isBlackListFood(stackIn);
     }
@@ -30,14 +30,14 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return InteractionResult.SUCCESS;
 
         if (dog.canStillEat()) {
-            if (!dog.level().isClientSide) {
+            if (!dog.level().isClientSide()) {
                 var item = stack.getItem();
 
-                var props = stack.getFoodProperties(dog);
+                var props = stack.get(net.minecraft.core.component.DataComponents.FOOD);
 
                 if (props == null) return InteractionResult.FAIL;
                 
@@ -51,7 +51,7 @@ public class WhitelistFoodHandler implements IDogFoodHandler {
                         dog, new ItemStack(item));
                 }
                 dog.playSound(
-                    SoundEvents.GENERIC_EAT, 
+                    SoundEvents.GENERIC_EAT.value(), 
                     dog.getSoundVolume(), 
                     (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
                 );

@@ -2,16 +2,14 @@ package doggytalents.client.screen.AmnesiaBoneScreen.element.view.GeneralView;
 
 import java.util.Random;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.api.feature.DogSize;
+import net.minecraft.client.renderer.RenderPipelines;
 import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.screen.ScreenUtil;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
@@ -32,7 +30,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
         int e_mX = this.getRealX() + this.getSizeX()/2; 
         int e_mY = this.getRealY() + this.getSizeY()/2; 
@@ -42,10 +40,10 @@ public class DogStatusViewBoxElement extends AbstractElement {
         this.renderHealthBar(graphics, dog, e_mX - 41, this.getRealY() + this.getSizeY() - 10);
 
         var points = this.dog.getSpendablePoints();
-        graphics.drawString(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
+        graphics.text(font, "Pts: " + points, this.getRealX(), this.getRealY(), 0xffffffff);
     }
 
-    public static void renderDogInside(GuiGraphics graphics, Dog dog, 
+    public static void renderDogInside(GuiGraphicsExtractor graphics, Dog dog, 
         int dog_mX, int dog_mY, int size, int lookX, int lookY) {
         var currentDogSize = dog.getDogSize();
         boolean dogTooBig = currentDogSize.getId() > DogSize.MODERATO.getId();
@@ -76,7 +74,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         }
     }
 
-    public void renderHealthBar(GuiGraphics graphics, Dog dog, int x, int y) {
+    public void renderHealthBar(GuiGraphicsExtractor graphics, Dog dog, int x, int y) {
         int pX = x;
         int pY = y;
         
@@ -84,11 +82,11 @@ public class DogStatusViewBoxElement extends AbstractElement {
             + StatFormatter.DECIMAL_FORMAT.format(dog.getHealth()) + "/" 
             + ((int)dog.getMaxHealth());
         pX += (80 - (8 + font.width(healthStr)))/2; 
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16.0F, 0.0F, 9, 9, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 52.0F, 0.0F, 9, 9, 256, 256);
         pX += 9;
         pY += 1;
-        graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        graphics.text(font, healthStr, pX, pY, 0xffffffff);
         return;
         // Random random = new Random();
         // random.setSeed((long) (dog.tickCount * 312871));
@@ -107,7 +105,7 @@ public class DogStatusViewBoxElement extends AbstractElement {
         //     graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, pX, pY, 16 + 36, 0 ,9, 9);
         //     pX += 9;
         //     pY += 1;
-        //     graphics.drawString(font, healthStr, pX, pY, 0xffffffff);
+        //     graphics.text(font, healthStr, pX, pY, 0xffffffff);
             
         //     return;
         // }

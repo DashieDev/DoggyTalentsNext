@@ -13,7 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.phys.Vec3;
 
@@ -69,7 +69,7 @@ public class DogRangedAttackGoal extends Goal {
         } else if (!target.isAlive()) {
             this.dog.setTarget(null); // Disacrd dead target no matter what
             return false;
-        } else if (target.getY() >= dog.level().getMaxBuildHeight()) {
+        } else if (target.getY() >= dog.level().getMaxY()) {
             return false;
         } else if (!this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
             return false; 
@@ -112,7 +112,7 @@ public class DogRangedAttackGoal extends Goal {
             return false;
         } else if (!livingentity.isAlive()) {
             return false;
-        } else if (livingentity.getY() >= dog.level().getMaxBuildHeight()) {
+        } else if (livingentity.getY() >= dog.level().getMaxY()) {
             return false;
         } else if (!this.dog.getDogRangedAttack().isApplicable(this.dog)) { 
             return false; 
@@ -125,10 +125,10 @@ public class DogRangedAttackGoal extends Goal {
     }
 
     private boolean checkRestriction(LivingEntity target, Dog dog) {
-        var restrict_pos = dog.getRestrictCenter();
+        var restrict_pos = dog.getHomePosition();
         if (restrict_pos == null)
             return false;
-        var restrict_r = dog.getRestrictRadius();
+        var restrict_r = dog.getHomeRadius();
         if (restrict_r < 0)
             return false;
         var max_dist = getAttackRadius(target) - 2 + restrict_r; 

@@ -5,16 +5,13 @@ import doggytalents.DoggyItems;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -22,13 +19,8 @@ import java.util.function.Supplier;
 
 public class DTItemTagsProvider extends ItemTagsProvider {
 
-    public DTItemTagsProvider(
-        PackOutput p_275204_,
-        CompletableFuture<HolderLookup.Provider> p_275194_,
-        CompletableFuture<TagsProvider.TagLookup<Block>> p_275634_,
-        @javax.annotation.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper
-     ) {
-        super(p_275204_, p_275194_, p_275634_, Constants.MOD_ID, existingFileHelper);
+    public DTItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, Constants.MOD_ID);
     }
 
     @Override
@@ -44,30 +36,7 @@ public class DTItemTagsProvider extends ItemTagsProvider {
         createTag(DoggyTags.BREEDING_ITEMS, DoggyItems.BREEDING_BONE);
         createTag(DoggyTags.PACK_PUPPY_BLACKLIST, DoggyItems.THROW_BONE, DoggyItems.THROW_BONE_WET, DoggyItems.THROW_STICK, DoggyItems.THROW_STICK_WET);
         createTag(DoggyTags.TREATS, DoggyItems.TRAINING_TREAT, DoggyItems.SUPER_TREAT, DoggyItems.MASTER_TREAT, DoggyItems.KAMI_TREAT);
-        // tag(ItemTags.MUSIC_DISCS).add(
-        //     DoggyItems.MUSIC_DISC_BWV_1080_FUGUE_11_KIMIKO.get(), 
-        //     DoggyItems.MUSIC_DISC_BWV_849_FUGUE_KIMIKO.get(),
-        //     DoggyItems.MUSIC_DISC_OKAMI_1.get(),
-        //     DoggyItems.MUSIC_DISC_CHOPIN_OP64_NO1.get()
-        // );
-        tag(ItemTags.DYEABLE).add(
-            DoggyItems.WOOL_COLLAR.get(),
-            DoggyItems.WOOL_COLLAR_THICC.get(),
-            DoggyItems.CAPE_COLOURED.get(),
-            DoggyItems.BOWTIE.get(),
-            DoggyItems.WIG.get(),
-            DoggyItems.FRISBEE.get(),
-            DoggyItems.BAKER_HAT.get(),
-            DoggyItems.CHEF_HAT.get(),
-            DoggyItems.LAB_COAT.get(),
-            DoggyItems.FRISBEE_WET.get(),
-            DoggyItems.FLYING_CAPE.get(),
-            DoggyItems.CERE_GARB.get(),
-            DoggyItems.DOG_PLUSHIE_TOY.get(),
-            DoggyItems.ANGEL_WINGS.get(),
-            DoggyItems.MIDI_KEYBOARD.get(),
-            DoggyBlocks.DOG_BATH.get().asItem()
-        );
+        // ItemTags.DYEABLE removed in 26.x
     }
 
     @SafeVarargs

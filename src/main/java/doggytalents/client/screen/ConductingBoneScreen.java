@@ -20,7 +20,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
@@ -86,8 +86,8 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
         pY += toBedButton.getHeight() + 2;
         var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.conducting_bone.help_title")
@@ -95,7 +95,7 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.general.entry_select.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, ConductingBoneScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, list, mouseX, mouseY);
             }
         };
         help.setX(mX - 100 - help.getWidth() - 2);
@@ -107,12 +107,12 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(graphics, mouseX, mouseY, partialTicks);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void mayRenderShowUUID(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showUuid)
             return;
         var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
@@ -129,16 +129,16 @@ public class ConductingBoneScreen extends StringEntrySelectScreen {
             int uuid_width = font.width(uuid_c1);
             int tX = mX - uuid_width/2;
             int tY = mY + getSelectAreaSize()/2 + 23;
-            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+            graphics.text(font, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            graphics.setComponentTooltipForNextFrame(font,
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font,
+    protected void drawNoEntryMsg(GuiGraphicsExtractor graphics, int x, int y) {
+        graphics.text(font,
             I18n.get("doggytalents.screen.conducting_bone.no_dog_found"), 
             x, y, 0xf50a0a);
     }

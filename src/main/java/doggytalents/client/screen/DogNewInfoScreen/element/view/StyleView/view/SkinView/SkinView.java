@@ -23,14 +23,14 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.texture.DogAllowedSkinManager;
 import doggytalents.common.util.DogUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class SkinView extends AbstractElement {
@@ -142,7 +142,7 @@ public class SkinView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         // int pX = this.getRealX() + 40;
         // int pY = this.getRealY() + 40;
         // InventoryScreen.renderEntityInInventory(pX, pY + 32, 50, 
@@ -224,7 +224,7 @@ public class SkinView extends AbstractElement {
 
     private Dog createDummyDog() {
         var level = Minecraft.getInstance().level;
-        var dog = DoggyEntityTypes.DOG.get().create(level);
+        var dog = DoggyEntityTypes.DOG.get().create(level, net.minecraft.world.entity.EntitySpawnReason.LOAD);
         return dog;
     }
     

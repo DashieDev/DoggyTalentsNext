@@ -18,25 +18,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import doggytalents.common.lib.Constants;
-import doggytalents.common.util.dogpromise.promise.AbstractPromise;
 
 
 public class DebugUtil {
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/debug");
-    
+
     @SuppressWarnings("unchecked")
-    public static List<Pair<ChunkPos, Ticket<?>>> getAllTicketsOfType(ServerLevel level, TicketType<?> type) {
+    public static List<Pair<ChunkPos, Ticket>> getAllTicketsOfType(ServerLevel level, TicketType type) {
         var chunk_source = (ServerChunkCache) level.getChunkSource();
-        var distance_manager = ReflectionUtil.getPrivateField(ServerChunkCache.class, chunk_source, 
+        var distance_manager = ReflectionUtil.getPrivateField(ServerChunkCache.class, chunk_source,
             "distanceManager", DistanceManager.class).get();
-        var tickets = (Long2ObjectOpenHashMap<Set<Ticket<?>>>)
-            ReflectionUtil.getPrivateField(DistanceManager.class, distance_manager, 
+        var tickets = (Long2ObjectOpenHashMap<Set<Ticket>>)
+            ReflectionUtil.getPrivateField(DistanceManager.class, distance_manager,
             "tickets", Long2ObjectOpenHashMap.class).get();
-        var tickets_selected = new ArrayList<Pair<ChunkPos, Ticket<?>>>();
+        var tickets_selected = new ArrayList<Pair<ChunkPos, Ticket>>();
         var entry_set = tickets.long2ObjectEntrySet();
         for (var entry : entry_set) {
-            var chunk = new ChunkPos(entry.getLongKey());
+            var chunk = ChunkPos.unpack(entry.getLongKey());
             entry.getValue().stream()
                 .filter(filter_ticket -> filter_ticket.getType() == type)
                 .forEach(x -> tickets_selected.add(Pair.of(chunk, x)));
@@ -48,7 +47,7 @@ public class DebugUtil {
         var builder = new StringBuilder("\n");
         for (int i = 0; i < path.getNodeCount(); ++i) {
             var node = path.getNode(i);
-            builder.append(String.format("%s %s %s %s\n", 
+            builder.append(String.format("%s %s %s %s\n",
                 Integer.toString(node.x), Integer.toString(node.y), Integer.toString(node.z), node.type));
         }
         return builder.toString();

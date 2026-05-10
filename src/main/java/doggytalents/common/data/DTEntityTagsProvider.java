@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
-
 import doggytalents.DoggyEntityTypes;
 import doggytalents.DoggyTags;
 import doggytalents.common.lib.Constants;
@@ -21,9 +19,8 @@ import net.neoforged.neoforge.common.Tags;
 
 public class DTEntityTagsProvider extends EntityTypeTagsProvider {
 
-    public DTEntityTagsProvider(PackOutput p_256095_, CompletableFuture<HolderLookup.Provider> p_256572_, @org.jetbrains.annotations.Nullable net.neoforged.neoforge.common.data.ExistingFileHelper existingFileHelper) {
-        super(p_256095_, p_256572_, Constants.MOD_ID, existingFileHelper);
-        //TODO Auto-generated constructor stub
+    public DTEntityTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider);
     }
 
     @Override

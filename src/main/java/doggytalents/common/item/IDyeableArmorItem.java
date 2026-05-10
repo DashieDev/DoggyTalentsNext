@@ -8,7 +8,7 @@ public interface IDyeableArmorItem {
     //@Override
     // default int getColor(ItemStack stack) {
     //     CompoundTag compoundnbt = stack.getTagElement("display");
-    //     return compoundnbt != null && compoundnbt.contains("color", 99) ? compoundnbt.getInt("color") : this.getDefaultColor(stack);
+    //     return compoundnbt != null && compoundnbt.contains("color") ? compoundnbt.getIntOr("color", 0) : this.getDefaultColor(stack);
     // }
 
     default int getDefaultColor(ItemStack stack) {

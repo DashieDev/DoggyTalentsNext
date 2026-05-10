@@ -1,5 +1,7 @@
 package doggytalents.client.entity.model.animation;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -11,9 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.MapMaker;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.JsonOps;
 
@@ -21,42 +23,60 @@ import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
-    
+public class DTNAnimationLoader extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
+
     // In charge of loading the animation files at
     // assets/doggytalents/doggytalents/dog_animations
-    // Overriable via resourcepacks.
+    // Overridable via resourcepacks.
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/animationLoader");
 
-    private final Map<ResourceLocation, DogAnimationHolder> holderMap = new MapMaker()
+    private static final FileToIdConverter LISTER = FileToIdConverter.json(createRegistryPath());
+
+    private final Map<Identifier, DogAnimationHolder> holderMap = new MapMaker()
         .concurrencyLevel(1).makeMap();
 
     private DTNAnimationLoader() {
-        super(new Gson(), createRegistryPath());
     }
-    
+
     public static String createRegistryPath() {
         var registry = Util.getResource("dog_animations");
         return registry.getNamespace() + "/" + registry.getPath();
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> contents, ResourceManager resourceManager,
+    protected Map<Identifier, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+        Map<Identifier, JsonElement> result = new HashMap<>();
+        for (Map.Entry<Identifier, Resource> entry : LISTER.listMatchingResources(resourceManager).entrySet()) {
+            Identifier location = entry.getKey();
+            Identifier id = LISTER.fileToId(location);
+            try (Reader reader = entry.getValue().openAsReader()) {
+                result.put(id, JsonParser.parseReader(reader));
+            } catch (IOException | JsonParseException e) {
+                LOGGER.error("Couldn't parse data file '{}' from '{}'", id, location, e);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    protected void apply(Map<Identifier, JsonElement> contents, ResourceManager resourceManager,
             ProfilerFiller profiler) {
-        
+
         holderMap.values().forEach(DogAnimationHolder::invalidate);
 
-        var builtin_anims = new HashMap<ResourceLocation, AnimationDefinition>();
+        var builtin_anims = new HashMap<Identifier, AnimationDefinition>();
         for (var entry : contents.entrySet()) {
             final var id = entry.getKey();
             final var anim_json = entry.getValue();
-            
+
             //Don't load animations from different namespace for now.
             if (!id.getNamespace().equals(Constants.MOD_ID))
                 continue;
@@ -71,7 +91,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
             }
             if (anim == null)
                 continue;
-            builtin_anims.put(id, anim);     
+            builtin_anims.put(id, anim);
         }
 
         //Ensure that every DogAnimation has a sequence bound
@@ -92,7 +112,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
         if (!missing_set.isEmpty()) {
             final int max_missing_log = 5;
             int additional_missing = Math.max(0, missing_set.size() - max_missing_log);
-            var missing_list_str = 
+            var missing_list_str =
                 missing_set.stream().limit(max_missing_log)
                     .collect(Collectors.joining(", "))
                     + (missing_set.size() > max_missing_log ? ", +" + additional_missing : "");
@@ -111,7 +131,7 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
         }
 
         DogAnimationRegistry.update(updated_map);
-    
+
         for (var entry : this.holderMap.entrySet()) {
             var id = entry.getKey();
             var holder = entry.getValue();
@@ -119,13 +139,13 @@ public class DTNAnimationLoader extends SimpleJsonResourceReloadListener {
             holder.update(anim);
         }
     }
-    
+
     public DogAnimationHolder getAnim(String id) {
         return getAnim(Util.getResource(id));
     }
 
-    public DogAnimationHolder getAnim(ResourceLocation id) {
-        return this.holderMap.computeIfAbsent(id, 
+    public DogAnimationHolder getAnim(Identifier id) {
+        return this.holderMap.computeIfAbsent(id,
             k -> new DogAnimationHolder(null));
     }
 

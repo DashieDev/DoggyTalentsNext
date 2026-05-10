@@ -4,18 +4,26 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
 import doggytalents.common.entity.misc.DogThrownTrident;
-import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.model.object.projectile.TridentModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class DogThrownTridentRenderer extends EntityRenderer<DogThrownTrident> {
+public class DogThrownTridentRenderer extends EntityRenderer<DogThrownTrident, DogThrownTridentRenderer.DogThrownTridentRenderState> {
+
+    public static class DogThrownTridentRenderState extends EntityRenderState {
+        public float xRot;
+        public float yRot;
+        public boolean foil;
+    }
+
     private final TridentModel model;
 
     public DogThrownTridentRenderer(EntityRendererProvider.Context ctx) {
@@ -24,20 +32,35 @@ public class DogThrownTridentRenderer extends EntityRenderer<DogThrownTrident> {
     }
 
     @Override
-    public void render(DogThrownTrident p_116111_, float p_116112_, float p_116113_, PoseStack p_116114_, MultiBufferSource p_116115_, int p_116116_) {
-        p_116114_.pushPose();
-        p_116114_.mulPose(Axis.YP.rotationDegrees(Mth.lerp(p_116113_, p_116111_.yRotO, p_116111_.getYRot()) - 90.0F));
-        p_116114_.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(p_116113_, p_116111_.xRotO, p_116111_.getXRot()) + 90.0F));
-        var vertexconsumer = ItemRenderer.getFoilBufferDirect(
-            p_116115_, this.model.renderType(this.getTextureLocation(p_116111_)), false, p_116111_.isFoil()
-        );
-        this.model.renderToBuffer(p_116114_, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, 0xffffffff);
-        p_116114_.popPose();
-        super.render(p_116111_, p_116112_, p_116113_, p_116114_, p_116115_, p_116116_);
+    public DogThrownTridentRenderState createRenderState() {
+        return new DogThrownTridentRenderState();
     }
 
     @Override
-    public ResourceLocation getTextureLocation(DogThrownTrident p_116109_) {
+    public void extractRenderState(DogThrownTrident entity, DogThrownTridentRenderState state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.xRot = Mth.lerp(partialTick, entity.xRotO, entity.getXRot());
+        state.yRot = Mth.lerp(partialTick, entity.yRotO, entity.getYRot());
+        state.foil = entity.isFoil();
+    }
+
+    public Identifier getTextureLocation(DogThrownTridentRenderState state) {
         return ThrownTridentRenderer.TRIDENT_LOCATION;
+    }
+
+    @Override
+    public void submit(DogThrownTridentRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
+        stack.pushPose();
+        stack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
+        stack.mulPose(Axis.ZP.rotationDegrees(state.xRot + 90.0F));
+        collector.submitModel(model, net.minecraft.util.Unit.INSTANCE, stack,
+            model.renderType(ThrownTridentRenderer.TRIDENT_LOCATION),
+            state.lightCoords, OverlayTexture.NO_OVERLAY, 0xffffffff, null);
+        if (state.foil) {
+            collector.submitModel(model, net.minecraft.util.Unit.INSTANCE, stack,
+                net.minecraft.client.renderer.rendertype.RenderTypes.entityGlint(),
+                state.lightCoords, OverlayTexture.NO_OVERLAY, 0xffffffff, null);
+        }
+        stack.popPose();
     }
 }

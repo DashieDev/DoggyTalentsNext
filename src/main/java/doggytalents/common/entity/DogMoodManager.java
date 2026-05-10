@@ -14,8 +14,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.util.random.Weighted;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.damagesource.DamageSource;
 
 public class DogMoodManager {
@@ -85,14 +85,13 @@ public class DogMoodManager {
         DogSounds.CLASSIC_BARK3,
         DogSounds.CLASSIC_PANTING
     );
-    private static final WeightedRandomList
-        <WeightedEntry.Wrapper<Supplier<SoundEvent>>> 
-        augmented_neutral_ambient = WeightedRandomList.create(
-            WeightedEntry.wrap(DogSounds.GRUMPY_BARK2, 6),    
-            WeightedEntry.wrap(DogSounds.GRUMPY_BARK3, 6),
-            WeightedEntry.wrap(DogSounds.CUTE_BARK1, 4),
-            WeightedEntry.wrap(DogSounds.CUTE_BARK3, 4), 
-            WeightedEntry.wrap(DogSounds.PUGLIN_BARK2, 1)
+    private static final WeightedList<Supplier<SoundEvent>>
+        augmented_neutral_ambient = WeightedList.of(
+            new Weighted<>(DogSounds.GRUMPY_BARK2, 6),
+            new Weighted<>(DogSounds.GRUMPY_BARK3, 6),
+            new Weighted<>(DogSounds.CUTE_BARK1, 4),
+            new Weighted<>(DogSounds.CUTE_BARK3, 4),
+            new Weighted<>(DogSounds.PUGLIN_BARK2, 1)
         );
     private static final List<Supplier<SoundEvent>> major_ambient = List.of(
         DogSounds.SAD_BARK1,
@@ -106,7 +105,7 @@ public class DogMoodManager {
         DogSounds.GRUMPY_BARK3
     );
     public SoundEvent getAmbientSound() {
-        if (this.dog.level().isClientSide)
+        if (this.dog.level().isClientSide())
             return DogSounds.CLASSIC_BARK1.get();        
         
         int current_diff = this.happiness;
@@ -128,7 +127,7 @@ public class DogMoodManager {
         boolean is_aug = selected_list == perfect_neutral_ambient
             && dog.getRandom().nextFloat() <= aug_chance;
         if (is_aug)
-            return augmented_neutral_ambient.getRandom(dog.getRandom()).get().data().get();
+            return augmented_neutral_ambient.getRandom(dog.getRandom()).get().get();
         else 
             return LangUtil.getRandomItem(dog.getRandom(), selected_list).get().get();
     }
@@ -230,16 +229,15 @@ public class DogMoodManager {
         return LangUtil.getRandomItem(dog.getRandom(), sneeze_sounds).get().get();
     }
 
-    private static final WeightedRandomList
-        <WeightedEntry.Wrapper<Supplier<SoundEvent>>> 
-        greet_whine = WeightedRandomList.create(
-            WeightedEntry.wrap(DogSounds.CLASSIC_WHINE, 3),
-            WeightedEntry.wrap(DogSounds.SAD_WHINE, 3),
-            WeightedEntry.wrap(DogSounds.PUGLIN_WHINE, 1),
-            WeightedEntry.wrap(DogSounds.CUTE_WHINE, 1)
+    private static final WeightedList<Supplier<SoundEvent>>
+        greet_whine = WeightedList.of(
+            new Weighted<>(DogSounds.CLASSIC_WHINE, 3),
+            new Weighted<>(DogSounds.SAD_WHINE, 3),
+            new Weighted<>(DogSounds.PUGLIN_WHINE, 1),
+            new Weighted<>(DogSounds.CUTE_WHINE, 1)
         );
     public SoundEvent getGreetWhine() {
-        return greet_whine.getRandom(dog.getRandom()).get().data().get();
+        return greet_whine.getRandom(dog.getRandom()).get().get();
     }
 
     private static final List<Supplier<SoundEvent>> jealous_sound = List.of(

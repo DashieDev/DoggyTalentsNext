@@ -26,7 +26,7 @@ public class FireDrillTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (!(dogIn instanceof Dog dog))
             return;

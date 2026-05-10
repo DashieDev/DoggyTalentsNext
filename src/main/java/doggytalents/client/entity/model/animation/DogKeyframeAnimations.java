@@ -17,10 +17,6 @@ import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.AnimationChannel.Targets;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-
-@OnlyIn(Dist.CLIENT)
 public class DogKeyframeAnimations {
    public static void animate(DogModel model, Dog dog,
         AnimationDefinition animation, long elapsed_in_millis, float interpolation_scale, 
@@ -205,7 +201,7 @@ public class DogKeyframeAnimations {
             return Optional.of(root.getChild(name));
         if (check_root && name.equals("root"))
             return Optional.of(root);
-        var partOptional = root.getAllParts()
+        var partOptional = root.getAllParts().stream()
             .filter(part -> part.hasChild(name))
             .findFirst();
         return partOptional.map(part -> part.getChild(name));

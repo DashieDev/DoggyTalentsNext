@@ -8,7 +8,7 @@ import doggytalents.DoggyTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,7 +33,7 @@ public class WolfBegAtTreatGoal extends Goal {
 
    @Override
    public boolean canUse() {
-      this.player = this.level.getNearestPlayer(this.begTargeting, this.wolf);
+      this.player = this.level instanceof net.minecraft.server.level.ServerLevel begSLevel ? begSLevel.getNearestPlayer(this.begTargeting, this.wolf) : null;
       return this.player == null ? false : this.playerHoldingInteresting(this.player);
    }
 

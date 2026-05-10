@@ -13,7 +13,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.ai.triggerable.TriggerableAction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +33,7 @@ public class MobRetrieverTalent extends TalentInstance {
 
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (!(dogIn instanceof Dog dog))
             return;
@@ -67,7 +67,7 @@ public class MobRetrieverTalent extends TalentInstance {
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level().isClientSide) return;
+        if (dog.level().isClientSide()) return;
         if (levelBefore > 0 && this.level() <= 0) {
             dog.unRide();
         }
@@ -96,12 +96,14 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target instanceof Enemy)
             return false;
-        if (target.getType().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
+        if (target.getType().builtInRegistryHolder().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
             return false;
-        if (target instanceof TamableAnimal otherDog 
-            && otherDog.getOwnerUUID() != null
-            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
-            return false;
+        if (target instanceof TamableAnimal otherDog) {
+            var otherRef = otherDog.getOwnerReference();
+            var otherOwnerUUID = otherRef != null ? otherRef.getUUID() : null;
+            if (otherOwnerUUID != null && ObjectUtils.notEqual(otherOwnerUUID, dog.getOwnerUUID()))
+                return false;
+        }
         if (!canLevelRideTarget(dog, target))
             return false;
         return true;
@@ -127,20 +129,22 @@ public class MobRetrieverTalent extends TalentInstance {
             return false;
         if (target instanceof Enemy)
             return false;
-        if (target.getType().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
+        if (target.getType().builtInRegistryHolder().is(DoggyTags.MOB_RETRIEVER_MUST_IGNORE))
             return false;
-        if (target instanceof TamableAnimal otherDog 
-            && dog.getOwnerUUID() != null
-            && ObjectUtils.notEqual(otherDog.getOwnerUUID(), dog.getOwnerUUID()))
-            return false;
+        if (target instanceof TamableAnimal otherDog && dog.getOwnerUUID() != null) {
+            var otherRef = otherDog.getOwnerReference();
+            var otherOwnerUUID = otherRef != null ? otherRef.getUUID() : null;
+            if (ObjectUtils.notEqual(otherOwnerUUID, dog.getOwnerUUID()))
+                return false;
+        }
         if (!canLevelRideTarget(dog, target))
             return false;
         return true;
     }
 
     @Override
-    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
-        if (!dog.level().isClientSide)
+    public DTNInteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+        if (!dog.level().isClientSide())
             maybeDropRiding(dog);
         return super.gettingAttackedFrom(dog, source, damage);
     }

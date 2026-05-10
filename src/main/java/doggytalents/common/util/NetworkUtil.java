@@ -81,14 +81,14 @@ public class NetworkUtil {
 
     public static <T> void writeRegistryId(FriendlyByteBuf buf, ResourceKey<Registry<T>> regKey, T val) {
         var regBuf = (RegistryFriendlyByteBuf) buf;
-        var reg = regBuf.registryAccess().registryOrThrow(regKey);
+        var reg = regBuf.registryAccess().lookupOrThrow(regKey);
         int id = reg.getIdOrThrow(val);
         regBuf.writeInt(id);
     }
 
     public static <T> T readRegistryId(FriendlyByteBuf buf, ResourceKey<Registry<T>> regKey) {
         var regBuf = (RegistryFriendlyByteBuf) buf;
-        var reg = regBuf.registryAccess().registryOrThrow(regKey);
+        var reg = regBuf.registryAccess().lookupOrThrow(regKey);
         int id = regBuf.readInt();
 
         return reg.byIdOrThrow(id);

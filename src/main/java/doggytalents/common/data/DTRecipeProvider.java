@@ -1,151 +1,160 @@
 package doggytalents.common.data;
 
-import com.google.gson.JsonObject;
 import doggytalents.DoggyBlocks;
 import doggytalents.DoggyItems;
-import doggytalents.DoggyRecipeSerializers;
 import doggytalents.common.inventory.recipe.DogBedRecipe;
 import doggytalents.common.inventory.recipe.DoubleDyableRecipe;
 import doggytalents.common.util.Util;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
-import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class DTRecipeProvider extends RecipeProvider {
 
-    public DTRecipeProvider(PackOutput generatorIn, CompletableFuture<HolderLookup.Provider> prov) {
-        super(generatorIn, prov);
+    public DTRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+        super(registries, output);
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+            super(output, registries);
+        }
+
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+            return new DTRecipeProvider(registries, output);
+        }
+
+        @Override
+        public String getName() {
+            return "DTRecipeProvider";
+        }
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput consumer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
+    protected void buildRecipes() {
+
+        shaped(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
             .pattern(" X ")
             .pattern("XYX")
             .pattern(" X ").define('X', Items.BONE)
             .define('Y', Items.SLIME_BALL)
             .unlockedBy("has_bone", has(Items.BONE))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
+        shapeless(RecipeCategory.TOOLS, DoggyItems.THROW_BONE.get())
             .requires(DoggyItems.THROW_BONE_WET.get(), 1)
             .unlockedBy("has_throw_bone", has(DoggyItems.THROW_BONE.get()))
-            .save(consumer, Util.getResource("throw_bone_wet"));
+            .save(this.output, Util.getResourcePath("throw_bone_wet"));
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.THROW_STICK.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.THROW_STICK.get(), 1)
             .pattern(" X ")
             .pattern("XYX")
             .pattern(" X ")
             .define('X', Items.STICK)
             .define('Y', Items.SLIME_BALL)
             .unlockedBy("has_slime_ball", has(Items.SLIME_BALL))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.THROW_STICK.get(), 1)
+        shapeless(RecipeCategory.TOOLS, DoggyItems.THROW_STICK.get(), 1)
             .requires(DoggyItems.THROW_STICK_WET.get(), 1)
             .unlockedBy("has_throw_stick", has(DoggyItems.THROW_STICK.get()))
-            .save(consumer, Util.getResource("throw_stick_wet"));
+            .save(this.output, Util.getResourcePath("throw_stick_wet"));
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.SUPER_TREAT.get(), 5)
+        shapeless(RecipeCategory.FOOD, DoggyItems.SUPER_TREAT.get(), 5)
             .requires(DoggyItems.TRAINING_TREAT.get(), 5)
             .requires(Items.GOLDEN_APPLE, 1)
             .unlockedBy("has_golden_apple", has(Items.GOLDEN_APPLE))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.KAMI_TREAT.get(), 1)
+        shapeless(RecipeCategory.FOOD, DoggyItems.KAMI_TREAT.get(), 1)
             .requires(DoggyItems.MASTER_TREAT.get(), 5)
             .requires(Blocks.END_STONE, 1)
             .unlockedBy("has_master_treat", has(DoggyItems.MASTER_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.BREEDING_BONE.get(), 2)
+        shapeless(RecipeCategory.FOOD, DoggyItems.BREEDING_BONE.get(), 2)
             .requires(DoggyItems.MASTER_TREAT.get(), 1)
             .requires(Items.COOKED_BEEF, 1)
             .requires(Items.COOKED_PORKCHOP, 1)
             .requires(Items.COOKED_CHICKEN, 1)
             .requires(Items.COOKED_COD, 1)
             .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MASTER_TREAT.get(), 5)
+        shapeless(RecipeCategory.FOOD, DoggyItems.MASTER_TREAT.get(), 5)
             .requires(DoggyItems.SUPER_TREAT.get(), 5)
             .requires(Items.DIAMOND, 1)
             .unlockedBy("has_master_treat", has(DoggyItems.SUPER_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.TRAINING_TREAT.get(), 3)
+        shapeless(RecipeCategory.FOOD, DoggyItems.TRAINING_TREAT.get(), 3)
             .requires(Items.STRING)
             .requires(Items.BONE)
             .requires(Items.GUNPOWDER)
             .requires(Items.SUGAR)
             .requires(DoggyItems.RICE_BOWL.get())
             .unlockedBy("has_dtn_rice_grains", has(DoggyItems.RICE_GRAINS.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.WHISTLE.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.WHISTLE.get(), 1)
             .pattern("IRI")
             .pattern("II ")
             .define('I', Items.IRON_INGOT)
             .define('R', Items.REDSTONE)
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.FOOD_BOWL.get(), 1)
+        shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.FOOD_BOWL.get(), 1)
             .pattern("XXX")
             .pattern("XYX")
             .pattern("XXX")
             .define('X', Items.IRON_INGOT)
             .define('Y', Items.BOWL)
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BATH.get(), 1)
+        shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BATH.get(), 1)
             .pattern("XXX")
             .pattern("XYX")
             .pattern("XXX")
             .define('X', Items.IRON_INGOT)
             .define('Y', Items.WATER_BUCKET)
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR.get(), 1)
             .pattern("SSS")
             .pattern("S S")
             .pattern("SSS")
             .define('S', Items.STRING)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR_THICC.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.WOOL_COLLAR_THICC.get(), 1)
             .requires(DoggyItems.WOOL_COLLAR.get(), 2)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.TREAT_BAG.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.TREAT_BAG.get(), 1)
             .pattern("LCL")
             .pattern("LLL")
             .define('L', Items.LEATHER)
             .define('C', DoggyItems.ENERGIZER_STICK.get())
             .unlockedBy("has_leather", has(Items.LEATHER))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.GUARD_SUIT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.GUARD_SUIT.get(), 1)
             .pattern("S S")
             .pattern("BWB")
             .pattern("BWB")
@@ -153,18 +162,18 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', Blocks.WHITE_WOOL)
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.LEATHER_JACKET.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.LEATHER_JACKET.get(), 1)
             .pattern("L L")
             .pattern("LWL")
             .pattern("LWL")
             .define('L', Items.LEATHER)
             .define('W', ItemTags.WOOL)
             .unlockedBy("has_leather", has(Items.LEATHER))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1)
             .pattern("BWB")
             .pattern("WCW")
             .pattern("BSB")
@@ -173,9 +182,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', Items.WHITE_DYE)
             .define('S', Items.STRING)
             .unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.SPOTTED_COLLAR.get(), 1)
             .pattern("WBW")
             .pattern("BCB")
             .pattern("WSW")
@@ -183,9 +192,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BLACK_DYE)
             .define('W', Items.WHITE_DYE).define('S', Items.STRING)
             .unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get()))
-            .save(consumer, Util.getResource("spotted_collar_alt"));
+            .save(this.output, Util.getResourcePath("spotted_collar_alt"));
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.MULTICOLOURED_COLLAR.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.MULTICOLOURED_COLLAR.get(), 1)
             .requires(DoggyItems.WOOL_COLLAR.get())
             .requires(Items.STRING)
             .requires(Items.BLUE_DYE)
@@ -195,9 +204,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(Items.RED_DYE)
             .requires(Items.PURPLE_DYE)
             .unlockedBy("has_wool_collar", has(DoggyItems.WOOL_COLLAR.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PIANIST_SUIT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.PIANIST_SUIT.get(), 1)
             .pattern("GWG")
             .pattern("GDG")
             .pattern("BWB")
@@ -206,9 +215,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', Blocks.WHITE_WOOL)
             .define('B', Blocks.BLACK_WOOL)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyItems.AMNESIA_BONE.get(), 1)
+        shaped(RecipeCategory.MISC, DoggyItems.AMNESIA_BONE.get(), 1)
             .pattern(" RN")
             .pattern("WBR")
             .pattern("SW ")
@@ -218,22 +227,22 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', Items.BLAZE_ROD)
             .define('N', Items.NETHERITE_INGOT)
             .unlockedBy("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.ENERGIZER_STICK.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.ENERGIZER_STICK.get(), 1)
             .pattern("SW")
-            .pattern("WS").define('W', Items.WHEAT).define('S', Items.SUGAR).unlockedBy("has_sugar", has(Items.SUGAR)).save(consumer);
+            .pattern("WS").define('W', Items.WHEAT).define('S', Items.SUGAR).unlockedBy("has_sugar", has(Items.SUGAR)).save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.EGG_SANDWICH.get(), 3)
+        shaped(RecipeCategory.FOOD, DoggyItems.EGG_SANDWICH.get(), 3)
             .pattern(" B ")
             .pattern("EEE")
             .pattern(" B ")
             .define('B', Items.BREAD)
             .define('E', Items.EGG)
             .unlockedBy("has_egg", has(Items.EGG))
-            .save(consumer);
+            .save(this.output);
                     
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.TANTAN_CAPE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.TANTAN_CAPE.get(), 1)
             .pattern("S S")
             .pattern("RBR")
             .pattern("BYB")
@@ -241,71 +250,71 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.STRING)
             .define('B', Items.BLUE_WOOL)
             .define('Y', Items.YELLOW_WOOL)
-            .unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
+            .unlockedBy("has_leather", has(Items.LEATHER)).save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CAPE_COLOURED.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CAPE_COLOURED.get(), 1)
             .pattern("S S")
             .pattern("LWL")
             .pattern("WLW")
             .define('L', Items.LEATHER)
             .define('W', Items.WHITE_WOOL)
             .define('S', Items.STRING)
-            .unlockedBy("has_leather", has(Items.LEATHER)).save(consumer);
+            .unlockedBy("has_leather", has(Items.LEATHER)).save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BOWTIE.get(), 4)  
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BOWTIE.get(), 4)  
             .pattern("W W")
             .pattern("WSW")
             .define('W', Blocks.WHITE_WOOL)
             .define('S', Items.STRING)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.WIG.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.WIG.get(), 1)
             .pattern(" W ")
             .pattern("WCW")
             .pattern(" W ")
             .define('W', Blocks.WHITE_WOOL)
             .define('C', DoggyItems.WOOL_COLLAR.get())
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BACH_WIG.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BACH_WIG.get(), 1)
             .pattern("SSS")
             .pattern("SBS")
             .pattern("S S")
             .define('S', Items.STRING)
             .define('B', Items.BONE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SMARTY_GLASSES.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.SMARTY_GLASSES.get(), 1)
             .requires(DoggyItems.SUNGLASSES.get())
             .requires(Items.REDSTONE)
             .unlockedBy("has_redstone", has(Items.REDSTONE))
-            .save(consumer);
+            .save(this.output);
             
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DEATH_HOOD.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.DEATH_HOOD.get(), 1)
             .requires(DoggyItems.CAPE_COLOURED.get())
             .requires(Items.SOUL_TORCH)
             .requires(Items.NETHER_WART)
             .unlockedBy("has_soul_torch", has(Items.SOUL_TORCH))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SUNGLASSES.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.SUNGLASSES.get(), 1)
             .pattern("S S")
             .pattern("GSG")
             .define('S', Items.STICK)
             .define('G', Blocks.BLACK_STAINED_GLASS_PANE)
-            .unlockedBy("has_stick", has(Items.STICK)).save(consumer);
+            .unlockedBy("has_stick", has(Items.STICK)).save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.RADIO_COLLAR.get(), 1)
             .pattern("XX")
             .pattern("YX")
             .define('X', Items.IRON_INGOT)
             .define('Y', Items.REDSTONE)
-            .unlockedBy("has_redstone", has(Items.REDSTONE)).save(consumer);
+            .unlockedBy("has_redstone", has(Items.REDSTONE)).save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CONAN_SUIT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CONAN_SUIT.get(), 1)
             .pattern("BZB")
             .pattern("LCL")
             .pattern("R R")
@@ -315,9 +324,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BLUE_WOOL)
             .define('C', DoggyItems.CAPE_COLOURED.get())
             .unlockedBy("has_wool", has(Items.WHITE_WOOL))
-            .save(consumer); 
+            .save(this.output); 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_FEMALE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_FEMALE.get(), 1)
             .pattern("WBW")
             .pattern("WLW")
             .pattern("CCC")
@@ -326,9 +335,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.WHITE_CARPET)
             .define('L', DoggyItems.CAPE_COLOURED.get())
             .unlockedBy("has_wool", has(Items.WHITE_WOOL))
-            .save(consumer); 
+            .save(this.output); 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_MALE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BEASTARS_UNIFORM_MALE.get(), 1)
             .pattern("BCB")
             .pattern("WGW")
             .pattern("R R")
@@ -338,9 +347,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('G', Items.GRAY_WOOL)
             .define('C', DoggyItems.CAPE_COLOURED.get())
             .unlockedBy("has_wool", has(Items.WHITE_WOOL))
-            .save(consumer); 
+            .save(this.output); 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.CONDUCTING_BONE.get(), 1)
             .pattern(" B ")
             .pattern("RBR")
             .pattern("PEP")
@@ -349,9 +358,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BONE)
             .define('R', Items.NETHERITE_INGOT)
             .unlockedBy("has_bone", has(Items.BONE))
-            .save(consumer);  
+            .save(this.output);  
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SHRINKING_MALLET.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.SHRINKING_MALLET.get(), 1)
             .pattern("GGG")
             .pattern("GFG")
             .pattern(" B ")
@@ -359,9 +368,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('F', Items.REDSTONE_BLOCK)
             .define('B', Items.BONE)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.MAGNIFYING_BONE.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.MAGNIFYING_BONE.get(), 1)
             .pattern(" GF")
             .pattern("GPG")
             .pattern("BG ")
@@ -370,9 +379,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BONE)
             .define('P', Items.GLASS_PANE)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.CANINE_TRACKER.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.CANINE_TRACKER.get(), 1)
             .pattern(" GC")
             .pattern("GMG")
             .pattern(" G ")
@@ -380,16 +389,16 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.RADIO_COLLAR.get())
             .define('M', Items.MAP)
             .unlockedBy("has_gold_ingot", has(Items.GOLD_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 5)
+        shapeless(RecipeCategory.TOOLS, DoggyItems.BANDAID.get(), 5)
             .requires(Items.PAPER, 2)
             .requires(DoggyItems.KOJI.get())
             .requires(Items.BONE_MEAL)
             .unlockedBy("has_koji", has(DoggyItems.KOJI.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.FEATHERED_MANTLE.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.FEATHERED_MANTLE.get(), 1)
             .pattern(" FP")
             .pattern("FTF")
             .pattern("PF ")
@@ -397,9 +406,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PHANTOM_MEMBRANE)
             .define('T', DoggyItems.SUPER_TREAT.get())
             .unlockedBy("has_feather", has(Items.FEATHER))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.EMPTY_LOCATOR_ORB.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.EMPTY_LOCATOR_ORB.get(), 1)
             .pattern(" C ")
             .pattern("SRS")
             .pattern(" G ")
@@ -408,63 +417,63 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', DoggyItems.RADIO_COLLAR.get())
             .define('S', Items.STRING)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHI_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHI_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.MAGENTA_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHU_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.CHU_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.LIGHT_BLUE_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KO_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.KO_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.PURPLE_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.GI_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.GI_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.BLUE_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.TEI_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.TEI_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.YELLOW_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.REI_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.REI_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.LIME_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SHIN_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.SHIN_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.GREEN_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.JIN_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.JIN_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.RED_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DYED_ORB.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.DYED_ORB.get(), 1)
             .requires(DoggyItems.EMPTY_LOCATOR_ORB.get())
             .requires(Items.PAPER)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyItems.GENDER_BONE.get(), 1)
+        shaped(RecipeCategory.MISC, DoggyItems.GENDER_BONE.get(), 1)
             .pattern(" LB")
             .pattern("MAL")
             .pattern("PM ")
@@ -474,12 +483,12 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('P', Items.PINK_DYE)
             .define('M', Items.AMETHYST_SHARD)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        SpecialRecipeBuilder.special(DogBedRecipe::new).save(consumer, Util.getResourcePath("dog_bed"));
-        SpecialRecipeBuilder.special(DoubleDyableRecipe::new).save(consumer, Util.getResourcePath("birthday_hat"));
+        SpecialRecipeBuilder.special(DogBedRecipe::new).save(this.output, Util.getResourcePath("dog_bed"));
+        SpecialRecipeBuilder.special(DoubleDyableRecipe::new).save(this.output, Util.getResourcePath("birthday_hat"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.HOT_DOG.get(), 1)
             .pattern("RTY")
             .pattern("BCB")
             .define('R', Items.RED_DYE)
@@ -488,17 +497,17 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.SAUSAGE.get())
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_bread", has(Items.BREAD))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.GIANT_STICK.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.GIANT_STICK.get(), 1)
             .pattern(" S ")
             .pattern(" S ")
             .pattern(" S ")
             .define('S', Items.STICK)
             .unlockedBy("has_stick", has(Items.STICK))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.GOLDEN_A_FIVE_WAGYU.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.GOLDEN_A_FIVE_WAGYU.get(), 1)
             .pattern(" GT")
             .pattern("GSG")
             .pattern(" G ")
@@ -506,18 +515,18 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.COOKED_BEEF)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_cooked_beef", has(Items.COOKED_BEEF))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DoggyItems.SUSSY_SICKLE.get(), 1)
+        shaped(RecipeCategory.COMBAT, DoggyItems.SUSSY_SICKLE.get(), 1)
             .pattern("III")
             .pattern(" SI")
             .pattern("S  ")
             .define('I', Items.IRON_INGOT)
             .define('S', Items.STICK)
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SNORKEL.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.SNORKEL.get(), 1)
             .pattern("  B")
             .pattern("GIG")
             .pattern(" T ")
@@ -526,62 +535,62 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BAMBOO)  
             .define('T', DoggyItems.TRAINING_TREAT.get())          
             .unlockedBy("has_bamboo", has(Items.BAMBOO))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.HEAD_BAND_BLANK.get(), 1)
             .pattern("LT")
             .pattern("P ")
             .define('L', Items.LEAD)
             .define('P', Items.PAPER)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_paper", has(Items.PAPER))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FRISBEE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.FRISBEE.get(), 1)
             .pattern("SBS")
             .define('S', ItemTags.SLABS)
             .define('B', DoggyItems.THROW_BONE.get())
             .unlockedBy("has_slime_ball", has(Items.SLIME_BALL))
-            .save(consumer); 
+            .save(this.output); 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
+        shaped(RecipeCategory.FOOD, DoggyItems.SAUSAGE.get(), 3)
             .pattern("SSS")
             .define('S', Items.COOKED_PORKCHOP)
             .unlockedBy("has_cooked_porkchop", has(Items.COOKED_PORKCHOP))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_MASK.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.KITSUNE_MASK.get(), 1)
             .requires(DoggyItems.HEAD_BAND_BLANK.get())
             .requires(Items.RED_DYE)
             .requires(Items.WHITE_DYE, 2)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.TENGU_MASK.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.TENGU_MASK.get(), 1)
             .requires(DoggyItems.HEAD_BAND_BLANK.get())
             .requires(Items.RED_DYE, 2)
             .requires(Items.BLACK_DYE)
             .unlockedBy("has_string", has(Items.STRING))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BAKER_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BAKER_HAT.get(), 1)
             .pattern("WWW")
             .pattern("WCW")
             .define('C', Items.LEATHER_HELMET)
             .define('W', ItemTags.WOOL)
             .unlockedBy("has_bread", has(Items.BREAD))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CHEF_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CHEF_HAT.get(), 1)
             .pattern("WWW")
             .pattern("WWW")
             .pattern("WCW")
             .define('C', Items.LEATHER_HELMET)
             .define('W', ItemTags.WOOL)
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEMON_HORNS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DEMON_HORNS.get(), 1)
             .pattern("SRS")
             .pattern("BCB")
             .define('C', Items.LEATHER_HELMET)
@@ -589,31 +598,31 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', Items.NETHER_WART)
             .define('B', Items.BLACK_DYE)
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DEER_ANTLERS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DEER_ANTLERS.get(), 1)
             .pattern("SLS")
             .pattern(" T ")
             .define('S', Items.STICK)
             .define('L', Items.LEATHER_HELMET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.STRIPED_SCARF.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.STRIPED_SCARF.get(), 1)
             .pattern("CW")
             .define('C', Items.WHITE_CARPET)
             .define('W', DoggyItems.WOOL_COLLAR.get())
             .unlockedBy("has_dtn_wool_collar", has(DoggyItems.WOOL_COLLAR.get()))
-            .save(consumer);
+            .save(this.output);
         
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
+        shapeless(RecipeCategory.FOOD, DoggyItems.UNCOOKED_RICE_BOWL.get(), 1)
             .requires(Items.BOWL)
             .requires(DoggyItems.UNCOOKED_RICE.get(), 5)
             .unlockedBy("has_dtn_rice_grains", has(DoggyItems.RICE_GRAINS.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PLAGUE_DOC_MASK.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.PLAGUE_DOC_MASK.get(), 1)
             .pattern("CWC")
             .pattern(" S ")
             .pattern("LFL")
@@ -623,17 +632,17 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('F', ItemTags.FLOWERS)
             .define('S', DoggyItems.SNORKEL.get())
             .unlockedBy("has_leather", has(Items.LEATHER))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SALMON_SUSHI.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.SALMON_SUSHI.get(), 1)
             .pattern("S")
             .pattern("R")
             .define('S', Items.SALMON)
             .define('R', DoggyItems.RICE_BOWL.get())
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
             .pattern("FBF")
             .pattern("BEB")
             .pattern("FBF")
@@ -641,9 +650,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BLACK_DYE)
             .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CROW_WINGS.get(), 1)
             .pattern("FBF")
             .pattern("BEB")
             .pattern("FBF")
@@ -651,27 +660,27 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('F', Items.BLACK_DYE)
             .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
-            .save(consumer, Util.getResource("crow_wings_alt"));
+            .save(this.output, Util.getResourcePath("crow_wings_alt"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLYING_CAPE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.FLYING_CAPE.get(), 1)
             .pattern(" W ")
             .pattern("WEW")
             .pattern(" W ")
             .define('W', ItemTags.WOOL)
             .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.SUPERDOG_SUIT.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.SUPERDOG_SUIT.get(), 1)
             .requires(Items.YELLOW_DYE)
             .requires(Items.RED_DYE)
             .requires(Items.BLUE_DYE)
             .requires(Items.IRON_INGOT)
             .requires(DoggyItems.LEATHER_JACKET.get())
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BAT_WINGS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BAT_WINGS.get(), 1)
             .pattern("BLB")
             .pattern("LEL")
             .pattern("BLB")
@@ -679,9 +688,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('L', Items.LEATHER)
             .define('E', Items.PHANTOM_MEMBRANE)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.WITCH_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.WITCH_HAT.get(), 1)
             .pattern(" W ")
             .pattern("WPW")
             .pattern("CCC")
@@ -689,35 +698,35 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.BLACK_CARPET)
             .define('P', Items.POTION)
             .unlockedBy("has_potion", has(Items.POTION))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_HEAD.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_HEAD.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.DRAGON_HEAD)
             .unlockedBy("has_dragon_head", has(Items.DRAGON_HEAD))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_SUIT.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_SUIT.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.DRAGON_EGG)
             .unlockedBy("has_dragon_egg", has(Items.DRAGON_EGG))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_WINGS.get(), 1)
+        shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_WINGS.get(), 1)
             .requires(DoggyItems.TRAINING_TREAT.get())
             .requires(Items.ELYTRA)
             .unlockedBy("has_elytra", has(Items.ELYTRA))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.ONIGIRI.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.ONIGIRI.get(), 1)
             .pattern("R")
             .pattern("K")
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('K', Items.DRIED_KELP)
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DIVINE_RETRIBUTON.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DIVINE_RETRIBUTON.get(), 1)
             .pattern("MPM")
             .pattern("CXC")
             .pattern("BPB")
@@ -727,145 +736,145 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('B', Items.BLAZE_POWDER)
             .define('X', DoggyItems.SAKE.get())
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SOUL_REFLECTOR.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.SOUL_REFLECTOR.get(), 1)
             .pattern(" S ")
             .pattern("SXS")
             .pattern(" S ")
             .define('S', Items.SOUL_SAND)
             .define('X', DoggyItems.DIVINE_RETRIBUTON.get())
             .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.LAB_COAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.LAB_COAT.get(), 1)
             .pattern(" C ")
             .pattern(" W ")
             .pattern("WWW")
             .define('C', DoggyItems.CAPE_COLOURED.get())
             .define('W', ItemTags.WOOL)
             .unlockedBy("has_wool", has(ItemTags.WOOL))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BIRTHDAY_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BIRTHDAY_HAT.get(), 1)
             .pattern(" P ")
             .pattern("PTP")
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
-            .save(consumer, Util.getResource("birthday_hat_alt"));
+            .save(this.output, Util.getResourcePath("birthday_hat_alt"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BED.get(), 1)
+        shaped(RecipeCategory.BUILDING_BLOCKS, DoggyBlocks.DOG_BED.get(), 1)
             .pattern("WDW")
             .pattern("WDW")
             .pattern("WWW")
             .define('W', Blocks.SPRUCE_PLANKS)
             .define('D', Blocks.WHITE_WOOL)
             .unlockedBy("has_wool", has(ItemTags.WOOL))
-            .save(consumer, Util.getResource("dog_bed_def"));
+            .save(this.output, Util.getResourcePath("dog_bed_def"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SOY_MILK.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.SOY_MILK.get(), 1)
             .pattern("SSS")
             .pattern("SBS")
             .define('S', DoggyItems.SOY_BEANS_DRIED.get())
             .define('B', Items.BOWL)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.TOFU.get(), 8)
+        shaped(RecipeCategory.FOOD, DoggyItems.TOFU.get(), 8)
             .pattern("SSS")
             .pattern("SSS")
             .define('S', DoggyItems.SOY_MILK.get())
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_PASTE.get(), 1)
+        shapeless(RecipeCategory.FOOD, DoggyItems.MISO_PASTE.get(), 1)
             .requires(DoggyItems.SOY_BEANS.get())
             .requires(DoggyItems.KOJI.get())
             .requires(Items.RED_MUSHROOM)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.NATTO.get(), 1)
+        shapeless(RecipeCategory.FOOD, DoggyItems.NATTO.get(), 1)
             .requires(DoggyItems.SOY_BEANS.get())
             .requires(DoggyItems.KOJI.get())
             .requires(Items.BROWN_MUSHROOM)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.KOJI.get(), 3)
+        shapeless(RecipeCategory.FOOD, DoggyItems.KOJI.get(), 3)
             .requires(DoggyItems.KOJI.get())
             .requires(DoggyItems.UNCOOKED_RICE.get())
             .requires(Items.SUGAR)
             .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.MISO_SOUP.get(), 1)
+        shapeless(RecipeCategory.FOOD, DoggyItems.MISO_SOUP.get(), 1)
             .requires(DoggyItems.MISO_PASTE.get())
             .requires(DoggyItems.TOFU.get())
             .requires(Items.BOWL)
             .requires(Items.DRIED_KELP)
             .unlockedBy("has_dtn_soy_beans", has(DoggyItems.SOY_BEANS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.EDAMAME.get(), 3)
+        shapeless(RecipeCategory.FOOD, DoggyItems.EDAMAME.get(), 3)
             .requires(DoggyItems.SOY_PODS.get(), 3)
             .requires(Items.SUGAR)
             .unlockedBy("has_dtn_soy_pods", has(DoggyItems.SOY_PODS.get()))
-            .save(consumer);
+            .save(this.output);
 
-        registerTripleCooking(consumer, 
+        registerTripleCooking(
             Ingredient.of(DoggyItems.SOY_PODS.get()), 
             DoggyItems.SOY_PODS_DRIED.get(), 0.35F, 200, "has_dtn_soy_pods", 
             has(DoggyItems.SOY_PODS.get()));
 
-        registerTripleCooking(consumer, 
+        registerTripleCooking(
             Ingredient.of(DoggyItems.SOY_BEANS.get()), 
             DoggyItems.SOY_BEANS_DRIED.get(), 0.1F, 100, "has_dtn_soy_beans", 
             has(DoggyItems.SOY_BEANS.get()));
 
-        registerTripleCooking(consumer, 
+        registerTripleCooking(
             Ingredient.of(DoggyItems.UNCOOKED_RICE_BOWL.get()), 
             DoggyItems.RICE_BOWL.get(), 0.1F, 100, "has_dtn_uncooked_rice_bowl", 
             has(DoggyItems.UNCOOKED_RICE_BOWL.get()));
 
-        registerTripleCooking(consumer, 
+        registerTripleCooking(
             Ingredient.of(DoggyItems.TOFU.get()), 
             DoggyItems.ABURAAGE.get(), 0.1F, 100, "has_dtn_tofu", 
             has(DoggyItems.TOFU.get()));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
+        shapeless(RecipeCategory.FOOD, DoggyItems.RICE_GRAINS.get(), 3)
             .requires(DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_dtn_rice_wheat", has(DoggyItems.RICE_WHEAT.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.GYUDON.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.GYUDON.get(), 1)
             .pattern("BOB")
             .pattern(" R ")
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('B', Items.COOKED_BEEF)
             .define('O', DoggyItems.ONSEN_TAMAGO.get())
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.OYAKODON.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.OYAKODON.get(), 1)
             .pattern("COC")
             .pattern(" R ")
             .define('R', DoggyItems.RICE_BOWL.get())
             .define('C', Items.EGG)
             .define('O', Items.COOKED_CHICKEN)
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
+        shaped(RecipeCategory.FOOD, DoggyItems.NATTO_RICE.get(), 1)
             .pattern("N")
             .pattern("B")
             .define('N', DoggyItems.NATTO.get())
             .define('B', DoggyItems.RICE_BOWL.get())
             .unlockedBy("has_rice_bowl", has(DoggyItems.RICE_BOWL.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CERE_GARB.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CERE_GARB.get(), 1)
             .pattern(" L ")
             .pattern("CWC")
             .pattern(" C ")
@@ -873,25 +882,25 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('W', DoggyItems.WOOL_COLLAR.get())
             .define('C', ItemTags.WOOL_CARPETS)
             .unlockedBy("has_lead", has(Items.LEAD))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOGGY_CONTACTS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DOGGY_CONTACTS.get(), 1)
             .pattern("GKG")
             .define('G', Items.GLASS_PANE)
             .define('K', DoggyItems.SAKE.get())
             .unlockedBy("has_dtn_koji", has(DoggyItems.KOJI.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DoggyItems.SCENT_TREAT.get(), 1)
+        shaped(RecipeCategory.TOOLS, DoggyItems.SCENT_TREAT.get(), 1)
             .pattern(" W ")
             .pattern("WTW")
             .pattern(" W ")
             .define('W', ItemTags.WOOL)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_dtn_training_treat", has(DoggyItems.TRAINING_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FEDORA.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.FEDORA.get(), 1)
             .pattern(" BW")
             .pattern("WCW")
             .pattern(" T ")
@@ -900,17 +909,17 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.LEATHER_HELMET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.FLATCAP.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.FLATCAP.get(), 1)
             .pattern("  C")
             .pattern("CTC")
             .define('C', Items.WHITE_CARPET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_white_carpet", has(Items.WHITE_CARPET))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PROPELLER_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.PROPELLER_HAT.get(), 1)
             .pattern("BBB")
             .pattern("RIL")
             .pattern("GTY")
@@ -922,9 +931,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('I', Items.IRON_INGOT)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
+            .save(this.output);
         
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_PLUSHIE_TOY.get(), 1)
             .pattern("WW ")
             .pattern("SCG")
             .pattern("WTW")
@@ -934,9 +943,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', DoggyItems.WOOL_COLLAR.get())
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_white_wool", has(Items.WHITE_WOOL))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, DoggyBlocks.RICE_MILL.get(), 1)
+        shaped(RecipeCategory.MISC, DoggyBlocks.RICE_MILL.get(), 1)
             .pattern("FLF")
             .pattern("LCL")
             .pattern("FDF")
@@ -945,9 +954,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.COBBLESTONE_SLAB)
             .define('D', DoggyItems.RICE_WHEAT.get())
             .unlockedBy("has_paddy_rice_dtn", has(DoggyItems.RICE_WHEAT.get()))
-            .save(consumer);
+            .save(this.output);
             
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.CHRISTMAS_HAT.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.CHRISTMAS_HAT.get(), 1)
             .pattern(" W ")
             .pattern("RTR")
             .pattern("WWW")
@@ -955,9 +964,9 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('R', Items.RED_CARPET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_TREE.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_TREE.get(), 1)
             .pattern(" G ")
             .pattern("GSG")
             .pattern(" T ")
@@ -965,27 +974,27 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('S', Items.SPRUCE_SAPLING)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_STAR.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_CHRISTMAS_STAR.get(), 1)
             .pattern(" G ")
             .pattern("GTG")
             .pattern(" G ")
             .define('G', Items.GOLD_NUGGET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_training_treat_dtn", has(DoggyItems.TRAINING_TREAT.get()))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_GIFT_COSTUME.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.DOG_GIFT_COSTUME.get(), 1)
             .pattern(" B ")
             .pattern("PP ")
             .pattern("PP ")
             .define('B', DoggyItems.BOWTIE.get())
             .define('P', Items.PAPER)
             .unlockedBy("has_paper", has(Items.PAPER))
-            .save(consumer);
+            .save(this.output);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.BUNNY_EARS.get(), 1)
+        shaped(RecipeCategory.DECORATIONS, DoggyItems.BUNNY_EARS.get(), 1)
             .pattern("W W")    
             .pattern("WLW")
             .pattern(" T ")
@@ -993,37 +1002,33 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('L', Items.LEATHER_HELMET)
             .define('T', DoggyItems.TRAINING_TREAT.get())
             .unlockedBy("has_leather_helmet", has(Items.LEATHER_HELMET))
-            .save(consumer);
+            .save(this.output);
     }
 
-    private void registerTripleCooking(RecipeOutput consumer, Ingredient input, Item output,
+    private void registerTripleCooking( Ingredient input, Item output,
         float xp, int lengthTicks,
         String unlockedByStr, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
         var baseNameId = BuiltInRegistries.ITEM.getKey(output).getPath();
-        SimpleCookingRecipeBuilder.smelting(input, 
-            RecipeCategory.FOOD, 
-            output, 
+        SimpleCookingRecipeBuilder.smelting(input,
+            RecipeCategory.FOOD,
+            net.minecraft.world.item.crafting.CookingBookCategory.FOOD,
+            output,
             xp, lengthTicks)
             .unlockedBy(unlockedByStr, trigger)
-            .save(consumer, Util.getResource(baseNameId + "_smelting"));
+            .save(this.output, Util.getResourcePath(baseNameId + "_smelting"));
 
         SimpleCookingRecipeBuilder.campfireCooking(input, 
         RecipeCategory.FOOD, 
         output, 
         xp, lengthTicks)
         .unlockedBy(unlockedByStr, trigger)
-            .save(consumer, Util.getResource(baseNameId + "_camping"));
+            .save(this.output, Util.getResourcePath(baseNameId + "_camping"));
             
         SimpleCookingRecipeBuilder.smoking(input, 
         RecipeCategory.FOOD, 
         output, 
         xp, lengthTicks/2)
         .unlockedBy(unlockedByStr, trigger)
-            .save(consumer, Util.getResource(baseNameId) + "_smoking");
+            .save(this.output, Util.getResourcePath(baseNameId) + "_smoking");
     }
-    
-    // @Override
-    // protected void saveAdvancement(HashCache cache, JsonObject advancementJson, Path pathIn) {
-    //     //NOOP - We dont replace any of the advancement things yet...
-    // }
 }

@@ -45,13 +45,13 @@ public class DogPettingManager {
     }
 
     public void stopPetting() {
-        if (!dog.level().isClientSide)
-            this.lastPetTimestamp = dog.level().getDayTime();
+        if (!dog.level().isClientSide())
+            this.lastPetTimestamp = dog.level().getDefaultClockTime();
         dog.setPettingState(DogPettingState.NULL);
     }
 
     public long getTimeSinceLastPet() {
-        long ret = dog.level().getDayTime() - this.lastPetTimestamp;
+        long ret = dog.level().getDefaultClockTime() - this.lastPetTimestamp;
         if (ret < 0) ret = 0;
         return ret;
     }
@@ -75,12 +75,12 @@ public class DogPettingManager {
     }
 
     public void tick() {
-        if (!this.dog.level().isClientSide && this.isPetting() && !canPet(getPetterFromDog()))
+        if (!this.dog.level().isClientSide() && this.isPetting() && !canPet(getPetterFromDog()))
             this.stopPetting();
-        if (this.dog.level().isClientSide && this.isPetting()) {
+        if (this.dog.level().isClientSide() && this.isPetting()) {
             playParticleEffect();    
         }
-        if (!this.dog.level().isClientSide && this.isPetting() && dog.dogVariant().burnsPetter())
+        if (!this.dog.level().isClientSide() && this.isPetting() && dog.dogVariant().burnsPetter())
             mayDoLoveBurns();
         if (this.isPetting()) {
             var petter = this.getPetterFromDog();
@@ -100,7 +100,7 @@ public class DogPettingManager {
         var petter = this.getPetterFromDog();
         if (petter == null)
             return;
-        var hurt_result = petter.hurt(petter.damageSources().lava(), 0.1f);
+        var hurt_result = petter.hurtOrSimulate(petter.damageSources().lava(), 0.1f);
         if (hurt_result) {
             petter.playSound(SoundEvents.GENERIC_BURN, 0.4F, 2.0F + random.nextFloat() * 0.4F);
             if (dog.level() instanceof ServerLevel) {
@@ -259,14 +259,14 @@ public class DogPettingManager {
 
     public void load(CompoundTag tag) {
         this.lastPetTimestamp = 0;
-        if (tag.contains("dogPettingManager", Tag.TAG_COMPOUND)) {
-            var tag0 = tag.getCompound("dogPettingManager");
-            this.lastPetTimestamp = tag0.getLong("dog_last_pet_time");
+        if (tag.contains("dogPettingManager")) {
+            var tag0 = tag.getCompoundOrEmpty("dogPettingManager");
+            this.lastPetTimestamp = tag0.getLongOr("dog_last_pet_time", 0L);
         }
     }
 
     public static record DogPettingState(UUID petting_id, boolean is_petting, DogPettingType type) {
-        public static DogPettingState NULL = new DogPettingState(net.minecraft.Util.NIL_UUID, false, DogPettingType.FACERUB);
+        public static DogPettingState NULL = new DogPettingState(net.minecraft.util.Util.NIL_UUID, false, DogPettingType.FACERUB);
     }
 
     public static enum DogPettingType {

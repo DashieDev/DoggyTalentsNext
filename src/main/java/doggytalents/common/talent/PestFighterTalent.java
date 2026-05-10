@@ -17,7 +17,7 @@ public class PestFighterTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide || dogIn.tickCount % 2 == 0) {
+        if (dogIn.level().isClientSide() || dogIn.tickCount % 2 == 0) {
             return;
         }
 

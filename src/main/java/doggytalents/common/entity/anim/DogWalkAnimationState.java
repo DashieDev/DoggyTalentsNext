@@ -31,7 +31,7 @@ public class DogWalkAnimationState {
     }
 
     public void update(float rawDeltaMove) {
-        if (!this.dog.level().isClientSide)
+        if (!this.dog.level().isClientSide())
             return;
         this.speed0 = this.speed;
 

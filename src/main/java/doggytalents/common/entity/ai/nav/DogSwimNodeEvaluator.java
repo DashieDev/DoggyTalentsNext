@@ -73,7 +73,7 @@ public class DogSwimNodeEvaluator extends SwimNodeEvaluator {
     @Override
     public PathType getPathTypeOfMob(PathfindingContext context, int x, int y, int z, Mob dog) {
         /*
-         * TODO Absoluteness of dog bbW.
+         * Absoluteness of dog bbW.
          * Currently this implementation relies on the fact that currently a dog's bbWidth never
          * surpass one block. The same also applies to DogPathNavigation maxDistance to advance.
          */

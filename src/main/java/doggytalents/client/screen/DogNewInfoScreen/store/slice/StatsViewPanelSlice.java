@@ -7,7 +7,6 @@ public class StatsViewPanelSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        // TODO Auto-generated method stub
         return StatsViewPanelTab.GENERAL;
     }
 

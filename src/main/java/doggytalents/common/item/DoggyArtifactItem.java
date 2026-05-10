@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import doggytalents.common.artifacts.DoggyArtifact;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public class DoggyArtifactItem extends Item {
@@ -30,9 +30,10 @@ public class DoggyArtifactItem extends Item {
     }
 
     public static DoggyArtifactItem readCompound(CompoundTag tag) {
-        var id_str = tag.getString("type");
-        var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id_str));
-        if (item == null) return null;
+        var id_str = tag.getStringOr("type", "");
+        var itemHolder = BuiltInRegistries.ITEM.get(Identifier.parse(id_str));
+        if (itemHolder.isEmpty()) return null;
+        var item = itemHolder.get().value();
         if (!(item instanceof DoggyArtifactItem artifactItem))
             return null;
         return artifactItem;

@@ -3,9 +3,8 @@ package doggytalents.client.screen.DogNewInfoScreen.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.client.screen.ScreenUtil;
+import net.minecraft.client.input.MouseButtonEvent;
 import doggytalents.client.screen.framework.ToolTipOverlayManager;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.Dog.LowHealthStrategy;
@@ -14,7 +13,7 @@ import doggytalents.common.network.packet.data.DogLowHealthStrategyData;
 import doggytalents.common.network.packet.data.DogModeData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -52,7 +51,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY) {
+    public void onClick(MouseButtonEvent event, boolean flag) {
 
         this.timeHoveredWithoutClick = 0;
 
@@ -69,7 +68,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.visible) return;
 
         int cl = this.isHovered ? DEFAULT_HLCOLOR : DEFAULT_COLOR;
@@ -99,7 +98,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         );
         int back_tX = this.getX() + PADDING_HORIZONTAL;
         int back_tY = mY - font.lineHeight/2;
-        graphics.drawString(font, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
+        graphics.text(font, back_c1, back_tX, back_tY, hoveredLeft ? 0xffffffff : 0xa5ffffff);
 
         var next_c1 = Component.literal(">");
         next_c1.withStyle(
@@ -107,7 +106,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         );
         int next_tX = this.getX() + this.width - PADDING_HORIZONTAL - font.width(next_c1);
         int next_tY = mY - font.lineHeight/2;
-        graphics.drawString(font, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
+        graphics.text(font, next_c1, next_tX, next_tY, hoveredRight ? 0xffffffff : 0xa5ffffff);
 
         var mode_c1 = this.getMessage();
         int acceptedWidth = this.getWidth() - 20;
@@ -123,7 +122,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         int mode_tY = mY - this.font.lineHeight/2;
 
         
-        graphics.drawString(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
+        graphics.text(font, mode_c1, mode_tX, mode_tY, 0xffffffff);
 
         if (this.stillHovered) {
             if (this.dog.tickCount - this.tickCount0 >= 1) {
@@ -133,7 +132,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         }
 
         if (this.timeHoveredWithoutClick >= 25) {
-            this.setOverlayToolTip(graphics.pose(), mouseX, mouseY, needToShowModeName);
+            this.setOverlayToolTip(mouseX, mouseY, needToShowModeName);
         }
 
     }
@@ -160,7 +159,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
         this.timeHoveredWithoutClick = 0;
     }
 
-    public void setOverlayToolTip(PoseStack stack, int mouseX, int mouseY, boolean showModeName) {
+    public void setOverlayToolTip(int mouseX, int mouseY, boolean showModeName) {
         List<Component> list = new ArrayList<>();
         if (showModeName) {
             var msg = this.getMessage();
@@ -178,7 +177,7 @@ public class LowHealthStrategySwitch extends AbstractWidget {
 	}
 
     // @Override
-    // public void renderWidget(GuiGraphics graphics, int p_268034_, int p_268009_, float p_268085_) {
+    // public void renderWidget(GuiGraphicsExtractor graphics, int p_268034_, int p_268009_, float p_268085_) {
     // }
     
 }

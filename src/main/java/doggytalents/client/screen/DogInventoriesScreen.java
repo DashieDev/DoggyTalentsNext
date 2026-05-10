@@ -1,8 +1,5 @@
 package doggytalents.client.screen;
 
-import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import doggytalents.DoggyAccessories;
 import doggytalents.DoggyAccessoryTypes;
 import doggytalents.api.registry.AccessoryInstance;
@@ -16,12 +13,13 @@ import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogInventoryPageData;
 import doggytalents.common.util.Util;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -76,51 +74,28 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
     }
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int par1, int par2) {
-        graphics.drawString(font, this.title.getString(), 8, 6, 4210752, false);
-        graphics.drawString(font, this.playerInventoryTitle, 8, this.imageHeight - 96 + 2, 4210752, false);
+    protected void extractLabels(GuiGraphicsExtractor graphics, int par1, int par2) {
+        graphics.text(font, this.title.getString(), 8, 6, 4210752, false);
+        graphics.text(font, this.playerInventoryTitle, 8, this.imageHeight - 96 + 2, 4210752, false);
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTicks, int xMouse, int yMouse) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    public void extractBackground(GuiGraphicsExtractor graphics, int xMouse, int yMouse, float partialTicks) {
         int l = (this.width - this.imageWidth) / 2;
         int i1 = (this.height - this.imageHeight) / 2;
-        graphics.blit(Resources.DOG_INVENTORY, l, i1, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Resources.DOG_INVENTORY, l, i1, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
 
         for (DogInventorySlot slot : this.getMenu().getSlots()) {
             if (!slot.isActive()) {
                 continue;
             }
-
-            var slot_color = getSlotShaderColor(slot.getDog());
-            RenderSystem.setShaderColor(slot_color[0], slot_color[1], slot_color[2], 1);
-
-            graphics.blit(Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197, 2, 18, 18);
+            graphics.blit(RenderPipelines.GUI_TEXTURED, Resources.DOG_INVENTORY, l + slot.x - 1, i1 + slot.y - 1, 197.0F, 2.0F, 18, 18, 256, 256);
         }
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    }
-
-    public float[] getSlotShaderColor(Dog dog) {
-        if (dog == null) {
-            return new float[]{1, 1, 1};
-        }
-        var inst = dog.getAccessory(DoggyAccessoryTypes.SCARF.get());
-        if (inst.isPresent() && inst.get().getAccessory() instanceof LocatorOrbAccessory orb) {
-            return Util.rgbIntToFloatArray(orb.getOrbColor());
-        }
-        inst = dog.getAccessory(DoggyAccessoryTypes.COLLAR.get());
-        if (inst.isPresent() && inst.get() instanceof DyeableAccessoryInstance dyable_inst) {
-            return dyable_inst.getColor();
-        }
-        return new float[]{1, 1, 1};
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-       InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
-       if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+    public boolean keyPressed(KeyEvent event) {
+       if (this.minecraft.options.keyInventory.matches(event)) {
            if (this.player.getAbilities().instabuild) {
                 this.minecraft.setScreen(new CreativeModeInventoryScreen(this.minecraft.player, this.minecraft.player.connection.enabledFeatures(), this.minecraft.options.operatorItemsTab().get()));
            } else {
@@ -129,18 +104,6 @@ public class DogInventoriesScreen extends AbstractContainerScreen<DogInventories
            return true;
        }
 
-       return super.keyPressed(keyCode, scanCode, modifiers);
-    }
-
-    @Override
-    protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
-        if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-//            if (this.hoveredSlot instanceof DogInventorySlot) {
-//                this.renderTooltip(Arrays.asList(new TranslationTextComponent("test").applyTextStyle(TextFormatting.RED).getFormattedText()), mouseX, mouseY);
-//            } else {
-                graphics.renderItem(this.hoveredSlot.getItem(), mouseX, mouseY);
-//            }
-        }
-
+       return super.keyPressed(event);
     }
 }

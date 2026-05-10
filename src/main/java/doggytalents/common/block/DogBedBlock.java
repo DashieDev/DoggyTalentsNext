@@ -17,7 +17,7 @@ import doggytalents.common.util.ItemUtil;
 import doggytalents.common.util.NBTUtil;
 import doggytalents.common.util.WorldUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -29,15 +29,14 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -47,18 +46,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import doggytalents.common.lib.Constants;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -77,18 +73,14 @@ import java.util.stream.Collectors;
 public class DogBedBlock extends BaseEntityBlock {
 
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     protected static final VoxelShape SHAPE_COLLISION = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
 
-    public DogBedBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
-    }
-
     public DogBedBlock(BlockBehaviour.Properties props) {
-        this();
+        super(props.mapColor(MapColor.WOOD).strength(1.0F, 5.0F).sound(SoundType.WOOD));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -150,11 +142,11 @@ public class DogBedBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState stateIn, LevelReader reader, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(reader));
         }
-        return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return facing == Direction.DOWN && !stateIn.canSurvive(reader, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, reader, tickAccess, currentPos, facing, facingPos, facingState, random);
     }
 
     @Override
@@ -175,7 +167,7 @@ public class DogBedBlock extends BaseEntityBlock {
     @Override
     @Deprecated
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
 
@@ -186,23 +178,23 @@ public class DogBedBlock extends BaseEntityBlock {
         var stack = player.getMainHandItem();
 
         if (handleNameTagBed(player, level, state, pos, tile, stack)
-            .shouldSwing())
+            .consumesAction())
             return InteractionResult.SUCCESS;
         
         if (handleDogRandomRespawn(player, level, state, pos, tile, stack)
-            .shouldSwing())
+            .consumesAction())
             return InteractionResult.SUCCESS;
         
         if (handleDogClaimBed(player, level, state, pos, tile, stack)
-            .shouldSwing())
+            .consumesAction())
             return InteractionResult.SUCCESS;
 
         if (handleDogRespawn(player, level, state, pos, tile, stack)
-            .shouldSwing())
+            .consumesAction())
             return InteractionResult.SUCCESS;
 
         if (handleDogReclaim(player, level, state, pos, tile, stack)
-            .shouldSwing())
+            .consumesAction())
             return InteractionResult.SUCCESS;
         
         if (tile.getOwnerUUID() != null) {
@@ -220,7 +212,7 @@ public class DogBedBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
         if (!stack.is(Items.TOTEM_OF_UNDYING))
             return InteractionResult.PASS;
-        if (player.getCooldowns().isOnCooldown(Items.TOTEM_OF_UNDYING))
+        if (player.getCooldowns().isOnCooldown(new ItemStack(Items.TOTEM_OF_UNDYING)))
             return InteractionResult.PASS;
         
         var storage = DogRespawnStorage.get(level);
@@ -256,7 +248,7 @@ public class DogBedBlock extends BaseEntityBlock {
         if (!player.getAbilities().instabuild)
             stack.shrink(1);
 
-        player.getCooldowns().addCooldown(Items.TOTEM_OF_UNDYING, 60);
+        player.getCooldowns().addCooldown(new ItemStack(Items.TOTEM_OF_UNDYING), 60);
         
         return InteractionResult.SUCCESS;
     }
@@ -363,24 +355,20 @@ public class DogBedBlock extends BaseEntityBlock {
         return true;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        
+    public static void addBedTooltip(ItemStack stack, java.util.function.Consumer<Component> tooltip, TooltipFlag flagIn) {
         Pair<ICasingMaterial, IBeddingMaterial> materials = DogBedUtil.getMaterials(stack);
 
-        tooltip.add(Component.translatable("dogbed.casing.title"));
-        tooltip.add(materials.getLeft() != null
+        tooltip.accept(Component.translatable("dogbed.casing.title"));
+        tooltip.accept(materials.getLeft() != null
                 ? materials.getLeft().getTooltip()
                 : Component.translatable("dogbed.casing.null").withStyle(ChatFormatting.RED));
-        tooltip.add(Component.translatable("dogbed.bedding.title"));
-        tooltip.add(materials.getRight() != null
+        tooltip.accept(Component.translatable("dogbed.bedding.title"));
+        tooltip.accept(materials.getRight() != null
             ? materials.getRight().getTooltip()
             : Component.translatable("dogbed.bedding.null").withStyle(ChatFormatting.RED));
 
         if (materials.getLeft() == null && materials.getRight() == null) {
-            tooltip.add(Component.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
+            tooltip.accept(Component.translatable("dogbed.explain.missing").withStyle(ChatFormatting.ITALIC));
         }
 
         CompoundTag tag = ItemUtil.getTagElement(stack, "doggytalents");
@@ -390,22 +378,21 @@ public class DogBedBlock extends BaseEntityBlock {
             Component ownerName = NBTUtil.getTextComponent(tag, "ownerName");
 
             if (name != null) {
-                tooltip.add(Component.literal("Bed Name: ").withStyle(ChatFormatting.WHITE).append(name));
+                tooltip.accept(Component.literal("Bed Name: ").withStyle(ChatFormatting.WHITE).append(name));
             }
 
             if (ownerName != null) {
-                tooltip.add(Component.literal("Name: ").withStyle(ChatFormatting.DARK_AQUA).append(ownerName));
-
+                tooltip.accept(Component.literal("Name: ").withStyle(ChatFormatting.DARK_AQUA).append(ownerName));
             }
 
             if (ownerId != null && flagIn.isAdvanced()) {
-                tooltip.add(Component.literal("UUID: ").withStyle(ChatFormatting.AQUA).append(Component.literal(ownerId.toString())));
+                tooltip.accept(Component.literal("UUID: ").withStyle(ChatFormatting.AQUA).append(Component.literal(ownerId.toString())));
             }
         }
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
+    protected ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
         DogBedTileEntity dogBedTileEntity = WorldUtil.getTileEntity(world, pos, DogBedTileEntity.class);
 
         if (dogBedTileEntity != null) {

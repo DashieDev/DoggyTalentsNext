@@ -20,7 +20,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -70,16 +70,16 @@ public class GeneralView extends AbstractElement {
             //.setBackgroundColor(0xffe39c02)
         );
         this.addChildren(
-            new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, 28, 
+            new MultiLineFlatButton(mX + 20, mY - 40, 80, 30, 28,
                 Component.translatable("amnesia_bone_gui.general.owner_change"), b -> {
                 this.openChangeOwnerScreen();
             }) {
                 @Override
-                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-                    super.renderWidget(graphics, mouseX, mouseY, partialTicks);
+                protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.extractContents(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
-                    graphics.drawString(font, ">", tX, tY, 0xffffffff);
+                    graphics.text(font, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)
         );
@@ -89,11 +89,11 @@ public class GeneralView extends AbstractElement {
                 DogUntameConfirmScreen.open(dog);
             }) {
                 @Override
-                public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-                    super.renderWidget(graphics, mouseX, mouseY, partialTicks);
+                protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+                    super.extractContents(graphics, mouseX, mouseY, partialTicks);
                     int tX = this.getX() + this.width - 10;
                     int tY = this.getY() + this.height/2 - font.lineHeight/2;
-                    graphics.drawString(font, ">", tX, tY, 0xffffffff);
+                    graphics.text(font, ">", tX, tY, 0xffffffff);
                 }
             }.setTextAlign(Align.LEFT)
         );
@@ -148,7 +148,7 @@ public class GeneralView extends AbstractElement {
     // }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
     }
 
@@ -160,11 +160,14 @@ public class GeneralView extends AbstractElement {
         var tag = ItemUtil.getTag(stack);
         UUID migrate_uuid = null;
         String migrate_str = "";
-        if (tag != null && tag.hasUUID("request_uuid")) {
-            migrate_uuid = tag.getUUID("request_uuid");
+        if (tag != null) {
+            var uuidStr = tag.getStringOr("request_uuid", "");
+            if (!uuidStr.isEmpty()) {
+                try { migrate_uuid = java.util.UUID.fromString(uuidStr); } catch (Exception e) {}
+            }
         }
         if (tag != null) {
-            migrate_str = tag.getString("request_str");
+            migrate_str = tag.getStringOr("request_str", "");
         }
         DogMigrateOwnerScreen.open(dog, migrate_uuid, migrate_str);
     }

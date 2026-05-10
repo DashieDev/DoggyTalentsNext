@@ -14,7 +14,7 @@ import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -58,7 +58,7 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         return this.skinToHash.getOrDefault(loc, "");
     }
 
-    public ResourceLocation getTexture(Dog dog) {
+    public Identifier getTexture(Dog dog) {
         var skin = dog.getClientSkin();
         if (skin != null && skin.isCustom()) {
             return skin.getPath();
@@ -195,9 +195,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
             var id = skinObject.get("skin_id").getAsString();
             var use_model = skinObject.get("use_model").getAsString();
             
-            ResourceLocation text_rl;
+            Identifier text_rl;
             if (id.indexOf(':') >= 0) {
-                text_rl = ResourceLocation.parse(id + ".png");
+                text_rl = Identifier.parse(id + ".png");
             } else {
                 text_rl = Util.getResource("textures/entity/dog/custom/" + id + ".png");
             }
@@ -260,9 +260,9 @@ public class DogTextureManager extends SimplePreparableReloadListener<DogTexture
         var glow_path = skinJsonObject.get("glowing_overlay");
         if (glow_path != null) {
             var raw_path = skinJsonObject.get("glowing_overlay").getAsString();
-            ResourceLocation glow_rl;
+            Identifier glow_rl;
             if (raw_path.indexOf(':') >= 0) {
-                glow_rl = ResourceLocation.parse(raw_path + ".png");
+                glow_rl = Identifier.parse(raw_path + ".png");
             } else {
                 glow_rl = Util.getResource("textures/entity/dog/custom/" + raw_path + ".png");
             }

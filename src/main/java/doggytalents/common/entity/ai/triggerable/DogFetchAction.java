@@ -145,7 +145,7 @@ public class DogFetchAction extends TriggerableAction {
             var throwableItem = this.dog.getThrowableItem();
             var fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-            this.dog.spawnAtLocation(fetchItem, 0.0F);
+            this.dog.spawnAtLocation((net.minecraft.server.level.ServerLevel) this.dog.level(), fetchItem, 0.0F);
             this.dog.setBoneVariant(ItemStack.EMPTY);
         }
     }

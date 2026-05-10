@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import javax.annotation.Nonnull;
 
 import doggytalents.api.feature.DogMode;
 import doggytalents.api.inferface.AbstractDog;
@@ -24,7 +24,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +94,7 @@ public class WaterHolderTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level().isClientSide) {
+        if (abstractDog.level().isClientSide()) {
             return;
         }
 
@@ -134,7 +134,7 @@ public class WaterHolderTalent extends TalentInstance {
         
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof BucketItem) {
-            if (!dog.level().isClientSide) {
+            if (!dog.level().isClientSide()) {
                 if (player.isShiftKeyDown()) {
                     var c1 = Component.translatable("talent.doggytalents.water_holder.amount", dog.getName().getString());
                     c1.append(Component.literal(": "));
@@ -161,7 +161,7 @@ public class WaterHolderTalent extends TalentInstance {
 
         if (stack.getItem() == Items.WATER_BUCKET) {
 
-            if (!dog.level().isClientSide) {
+            if (!dog.level().isClientSide()) {
                 
                 if (this.getWaterUnitleft() >= this.getMaxWaterHold()) return InteractionResult.PASS;
 
@@ -175,7 +175,7 @@ public class WaterHolderTalent extends TalentInstance {
                         dog.getX(), dog.getY(), dog.getZ(), 
                         this.level*8, 
                         dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
-                        0.5 //TODO Tune
+                        0.5 // tune this value
                     );
                 }
             }
@@ -197,7 +197,7 @@ public class WaterHolderTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dog, CompoundTag compound) {
         super.readFromNBT(dog, compound);
-        this.setWaterUnitLeft(compound.getInt("DTwaterUnitLeft")); 
+        this.setWaterUnitLeft(compound.getIntOr("DTwaterUnitLeft", 0)); 
     }
 
     private void extinguishNearby(AbstractDog dog) {
@@ -222,7 +222,7 @@ public class WaterHolderTalent extends TalentInstance {
             e.getX(), e.getY(), e.getZ(), 
             15, 
             e.getBbWidth(), 0.8f, e.getBbWidth(), 
-            0.1 //TODO Tune
+            0.1 // tune this value
         );
         var e_b0 = e.blockPosition();
         var e_b0m = e_b0.mutable();
@@ -384,12 +384,12 @@ public class WaterHolderTalent extends TalentInstance {
     public static class ExtinguishAction extends TriggerableAction {
 
         private WaterHolderTalent talentInst;
-        private @NonNull LivingEntity target;
+        private @Nonnull LivingEntity target;
 
         private int ticksUntilPathRecalc = 0;
         private final int stopDist = 2;
 
-        public ExtinguishAction(Dog dog, WaterHolderTalent talentInst, @NonNull LivingEntity target) {
+        public ExtinguishAction(Dog dog, WaterHolderTalent talentInst, @Nonnull LivingEntity target) {
             super(dog, false, true);
             this.talentInst = talentInst;
             this.target = target;
@@ -456,7 +456,7 @@ public class WaterHolderTalent extends TalentInstance {
         
     }
 
-    // //TODO There is seems like a pattern emerging from this
+    // // there seems to be a pattern emerging from this
     // //And the RescueDogTalent, maybe consider coupling it
     // //together... Or composition is enough already.
     // public static class MoveToExtinguishGoal extends Goal {
@@ -516,7 +516,6 @@ public class WaterHolderTalent extends TalentInstance {
     //             if (--this.ticksUntilPathRecalc <= 0) {
     //                 this.ticksUntilPathRecalc = 10;
     //                 if (!this.dog.isLeashed() && !this.dog.isPassenger()) {
-    //                     //TODO ?
     //                     // if (this.dog.distanceToSqr(this.target) >= 144.0D) {
     //                     //     DogUtil.guessAndTryToTeleportToOwner(dog, 4);
     //                     // } else {

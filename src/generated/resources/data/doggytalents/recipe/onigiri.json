@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "K": {
-      "item": "minecraft:dried_kelp"
-    },
-    "R": {
-      "item": "doggytalents:rice_bowl"
-    }
+    "K": "minecraft:dried_kelp",
+    "R": "doggytalents:rice_bowl"
   },
   "pattern": [
     "R",

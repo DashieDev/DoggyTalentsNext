@@ -15,7 +15,7 @@ import doggytalents.common.network.PacketHandler;
 import doggytalents.common.network.packet.data.DogAnimDebugData.UpdateItemSettingsData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -130,8 +130,8 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(graphics, mouseX, mouseY, partialTicks);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         renderHelp(graphics, selectMode);
     }
 
@@ -139,7 +139,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         return this.height > 353;
     }
 
-    private void renderHelp(GuiGraphics graphics, ItemMode mode) {
+    private void renderHelp(GuiGraphicsExtractor graphics, ItemMode mode) {
         if (!shouldRenderHelpBelow())
             return;
         int mX = this.width / 2;
@@ -150,7 +150,7 @@ public class DogAnimDebugScreen extends StringEntrySelectScreen {
         int tY = this.height/2 + this.getSelectAreaSize()/2 + 20;
         for (var line : desc_lines) {
             tX = mX - font.width(line)/2;
-            graphics.drawString(font, line, tX, tY, 0xffffffff);
+            graphics.text(font, line, tX, tY, 0xffffffff);
             tY += font.lineHeight + 2;
         }
     }

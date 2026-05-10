@@ -26,13 +26,14 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class DoggySpinModel {
@@ -200,7 +201,7 @@ public class DoggySpinModel {
         
     }
 
-    public void renderGui(GuiGraphics graphics, float mid_x, float mid_y) {
+    public void renderGui(GuiGraphicsExtractor graphics, float mid_x, float mid_y) {
         int scale = 70;
         var offset = new Vector3f(0, 0.5f - 0.0625F, 0);
         Quaternionf rotation;
@@ -217,7 +218,7 @@ public class DoggySpinModel {
     }
 
     public void renderGui(
-        GuiGraphics graphics,
+        GuiGraphicsExtractor graphics,
         float mid_x,
         float mid_y,
         float scale,
@@ -225,17 +226,21 @@ public class DoggySpinModel {
         Quaternionf rot
     ) {
         
-        graphics.pose().pushPose();
-        graphics.pose().translate((double)mid_x, (double)mid_y, 50.0);
-        graphics.pose().scale(scale, scale, -scale);
-        graphics.pose().translate(offset.x, offset.y, offset.z);
-        graphics.pose().mulPose(rot);
-        graphics.pose().translate(0.0F, -1.501F, 0.0F);
-        Lighting.setupForEntityInInventory();
-        RenderSystem.runAsFancy(() -> this.doRenderModel(graphics.pose(), graphics.bufferSource()));
-        graphics.flush();
-        graphics.pose().popPose();
-        Lighting.setupFor3DItems();
+        var mc = net.minecraft.client.Minecraft.getInstance();
+        var bufferSource = mc.renderBuffers().bufferSource();
+        var poseStack = new PoseStack();
+        poseStack.pushPose();
+        poseStack.translate((double)mid_x, (double)mid_y, 50.0);
+        poseStack.scale(scale, scale, -scale);
+        poseStack.translate(offset.x, offset.y, offset.z);
+        poseStack.mulPose(rot);
+        poseStack.translate(0.0F, -1.501F, 0.0F);
+        try (var lighting = new Lighting()) {
+            lighting.setupFor(Lighting.Entry.ENTITY_IN_UI);
+            this.doRenderModel(poseStack, bufferSource);
+            bufferSource.endBatch();
+        }
+        poseStack.popPose();
     }
     
     private void doRenderModel(PoseStack stack, MultiBufferSource source) {
@@ -251,10 +256,10 @@ public class DoggySpinModel {
         doRenderModelWithTexture(stack, source, false, Resources.COLLAR_THICC, this.collarColor);
     }
 
-    private void doRenderModelWithTexture(PoseStack stack, MultiBufferSource source, boolean translucent, ResourceLocation loc, int color) {
+    private void doRenderModelWithTexture(PoseStack stack, MultiBufferSource source, boolean translucent, Identifier loc, int color) {
         var renderType = translucent ? 
-            RenderType.entityTranslucent(loc) 
-            : RenderType.entityCutoutNoCull(loc);
+            RenderTypes.entityTranslucent(loc) 
+            : RenderTypes.entityCutout(loc);
         var buffer = source.getBuffer(renderType);
         this.renderToBuffer(stack, buffer, 15728880, OverlayTexture.pack(OverlayTexture.u(0), OverlayTexture.v(false)), color);
     }

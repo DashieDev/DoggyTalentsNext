@@ -54,7 +54,7 @@ public class EntityUtil {
         } else if (!isTeleportFriendlyBlock(entityIn, new BlockPos(x, y, z), false)) {
             return false;
         } else {
-            entityIn.moveTo(x + 0.5F, y, z + 0.5F, entityIn.getYRot(), entityIn.getXRot());
+            entityIn.setPos(x + 0.5F, y, z + 0.5F);
             navigator.stop();
             return true;
         }
@@ -92,13 +92,8 @@ public class EntityUtil {
             return false;
         }
 
-        Iterator<ItemStack> heldItems = entity.getHandSlots().iterator();
-        while (heldItems.hasNext()) {
-            ItemStack stack = heldItems.next();
-            if (matcher.test(stack)) {
-                return true;
-            }
-        }
+        if (matcher.test(entity.getMainHandItem())) return true;
+        if (matcher.test(entity.getOffhandItem())) return true;
 
         return false;
     }

@@ -1,10 +1,8 @@
 package doggytalents.client.screen.widget;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.common.config.ConfigHandler;
+import net.minecraft.client.input.InputWithModifiers;
+import net.minecraft.client.renderer.RenderPipelines;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.network.PacketHandler;
@@ -14,7 +12,7 @@ import doggytalents.common.talent.PackPuppyTalent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -24,8 +22,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -67,7 +63,7 @@ public class DogInventoryButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 
         if (this.parent instanceof CreativeModeInventoryScreen) {
             var cscreen = ((CreativeModeInventoryScreen) this.parent);
@@ -76,12 +72,7 @@ public class DogInventoryButton extends AbstractButton {
         }
 
         if (this.parent instanceof InventoryScreen) {
-            RecipeBookComponent recipeBook = ((InventoryScreen) this.parent).getRecipeBookComponent();
-            if (recipeBook.isVisible()) {
-                this.setX(this.baseX + 77);
-            } else {
-                this.setX(this.baseX);
-            }
+            this.setX(this.baseX);
         }
 
         if (this.visible) {
@@ -101,21 +92,14 @@ public class DogInventoryButton extends AbstractButton {
     }
 
     //@Override
-    public void renderWidget2(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-       Minecraft mc = Minecraft.getInstance();
+    public void renderWidget2(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
        int i = this.getTextureY();
-       RenderSystem.enableBlend();
-       RenderSystem.defaultBlendFunc();
-       RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-       graphics.blit(Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0, 36 + i * 10, this.width, this.height);
-       //TODO : 1.19.4 ???
+       graphics.blit(RenderPipelines.GUI_TEXTURED, Resources.SMALL_WIDGETS, this.getX(), this.getY(), 0.0F, (float)(36 + i * 10), this.width, this.height, 256, 256);
        //this.renderBg(stack, mc, mouseX, mouseY);
        if (this.openSingle) {
             int tX = this.getX() + 11;
             int tY = this.getY() + 5;
-            graphics.drawString(font, "x1", tX, tY, 0xffffffff);
+            graphics.text(font, "x1", tX, tY, 0xffffffff);
        }
 
     }
@@ -132,7 +116,7 @@ public class DogInventoryButton extends AbstractButton {
     }
 
     @Override
-    public void onPress() {
+    public void onPress(InputWithModifiers input) {
         var mc = Minecraft.getInstance();
         if (openSingle && openSingleDog.isPresent()) {
             var dog = openSingleDog.get();

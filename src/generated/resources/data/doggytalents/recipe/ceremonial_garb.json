@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "tag": "minecraft:wool_carpets"
-    },
-    "L": {
-      "item": "minecraft:lead"
-    },
-    "W": {
-      "item": "doggytalents:wool_collar"
-    }
+    "C": "#minecraft:wool_carpets",
+    "L": "minecraft:lead",
+    "W": "doggytalents:wool_collar"
   },
   "pattern": [
     " L ",

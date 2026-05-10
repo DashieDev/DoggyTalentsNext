@@ -42,7 +42,7 @@ public class DogResizeItem extends Item implements IDogItem {
         
         if (dog.getAge() < 0) {
 
-            if (!playerIn.level().isClientSide){
+            if (!playerIn.level().isClientSide()){
                 playerIn.sendSystemMessage(Component.translatable("treat."+this.type.getName()+".too_young"));
             }
 
@@ -51,12 +51,12 @@ public class DogResizeItem extends Item implements IDogItem {
         else {
             var itemInHand = playerIn.getItemInHand(handIn);
 
-            if (!playerIn.level().isClientSide) {
+            if (!playerIn.level().isClientSide()) {
                 DogSize size0 = dog.getDogSize();
                 DogSize size1 = (this.type == Type.BIG ? size0.grow() : size0.shrink());
                 dog.setDogSize(size1);
                 if (!playerIn.getAbilities().instabuild && size0 != size1)
-                itemInHand.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
+                itemInHand.hurtAndBreak(1, playerIn, handIn);
             }
             return InteractionResult.SUCCESS;
         }

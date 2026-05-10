@@ -107,7 +107,7 @@ public class CreeperSweeperTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.onlyAttackCreeper = compound.getBoolean("targetOnlyCreeper");
+        this.onlyAttackCreeper = compound.getBooleanOr("targetOnlyCreeper", false);
     }
 
     @Override

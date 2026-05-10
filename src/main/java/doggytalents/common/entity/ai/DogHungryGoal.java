@@ -90,7 +90,7 @@ public class DogHungryGoal extends Goal {
                 IThrowableItem throwableItem = this.dog.getThrowableItem();
                 ItemStack fetchItem = throwableItem != null ? throwableItem.getReturnStack(this.dog.getBoneVariant()) : this.dog.getBoneVariant();
 
-                this.dog.spawnAtLocation(fetchItem, 0.0F);
+                this.dog.spawnAtLocation((net.minecraft.server.level.ServerLevel) this.dog.level(), fetchItem, 0.0F);
                 this.dog.setBoneVariant(ItemStack.EMPTY);
             }
         }
@@ -120,7 +120,7 @@ public class DogHungryGoal extends Goal {
         }  else {
             this.dog.setBegging(true);
             if (this.looktime == 0) {
-                this.owner.sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(5), this.dog.getName()));
+                if (this.owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(Component.translatable("dog.msg.low_hunger." + this.dog.getRandom().nextInt(5), this.dog.getName()));
                 var sound = dog.dogMood.getWhineAttentionSound();
                 this.dog.dogSoundManager.playInterruptible(sound, this.dog.getSoundVolume(), this.dog.getVoicePitch());
             }

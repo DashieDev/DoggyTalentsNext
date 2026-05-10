@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "doggytalents:bowtie"
-    },
-    "C": {
-      "item": "minecraft:white_carpet"
-    },
-    "L": {
-      "item": "doggytalents:cape_coloured"
-    },
-    "W": {
-      "item": "minecraft:white_wool"
-    }
+    "B": "doggytalents:bowtie",
+    "C": "minecraft:white_carpet",
+    "L": "doggytalents:cape_coloured",
+    "W": "minecraft:white_wool"
   },
   "pattern": [
     "WBW",

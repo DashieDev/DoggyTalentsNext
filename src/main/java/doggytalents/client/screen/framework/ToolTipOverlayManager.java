@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -30,9 +30,9 @@ public class ToolTipOverlayManager {
         return hasToolTip;
     }
 
-    public void render(Screen screen, GuiGraphics graphics, int mouseX, int mouseY) {
+    public void render(Screen screen, GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         if (toolTipComponents == null) return;
-        graphics.renderComponentTooltip(screen.getMinecraft().font, toolTipComponents, mouseX, mouseY);
+        graphics.setComponentTooltipForNextFrame(screen.getMinecraft().font, toolTipComponents, mouseX, mouseY);
     }
 
     public static ToolTipOverlayManager get() {

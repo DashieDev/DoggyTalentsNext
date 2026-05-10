@@ -20,11 +20,11 @@ public class DogGroupsManager {
     }
 
     public void load(CompoundTag compound) {
-        var groupsListTag = compound.getList("doggy_groups", Tag.TAG_COMPOUND);
+        var groupsListTag = compound.getListOrEmpty("doggy_groups");
         for (var tag : groupsListTag) {
             if (!(tag instanceof CompoundTag groupTag)) continue;
-            var group_name = groupTag.getString("group_name");
-            var group_color = groupTag.getInt("group_color");
+            var group_name = groupTag.getStringOr("group_name", "");
+            var group_color = groupTag.getIntOr("group_color", 0);
             add(new DogGroup(group_name, group_color));
         }
     }

@@ -2,11 +2,9 @@ package doggytalents.client.screen.framework.widget;
 
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.client.screen.framework.types.TextType;
 import doggytalents.client.screen.framework.types.TextType.Align;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -29,7 +27,7 @@ public class MultiLineFlatButton extends FlatButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
         if (!this.active) return;
 
         int cl = this.maskColor(this.buttonColor, this.isHovered);
@@ -43,7 +41,7 @@ public class MultiLineFlatButton extends FlatButton {
         }
     }
 
-    private void drawCentered(GuiGraphics graphics) {
+    private void drawCentered(GuiGraphicsExtractor graphics) {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
@@ -52,12 +50,12 @@ public class MultiLineFlatButton extends FlatButton {
         int pTY = mY - text_height/2;
         for (var line : lines) {
             pTX = mX - font.width(line)/2;
-            graphics.drawString(font, line, pTX, pTY, 0xffffffff);
+            graphics.text(font, line, pTX, pTY, 0xffffffff);
             pTY += font.lineHeight + LINE_SPACING; 
         }
     }
 
-    private void drawLeft(GuiGraphics graphics) {
+    private void drawLeft(GuiGraphicsExtractor graphics) {
         int mX = this.getX() + this.width/2;
         int mY = this.getY() + this.height/2;
         int lines_cnt = this.lines.size();
@@ -65,14 +63,13 @@ public class MultiLineFlatButton extends FlatButton {
         int pTX = this.getX() + PADDING_LEFT;
         int pTY = mY - text_height/2;
         for (var line : lines) {
-            graphics.drawString(font, line, pTX, pTY, 0xffffffff);
+            graphics.text(font, line, pTX, pTY, 0xffffffff);
             pTY += font.lineHeight + LINE_SPACING; 
         }
     }
 
-    private void drawRight(PoseStack stack) {
-        //TODO
-        
+    private void drawRight() {
+        // not implemented
     }
 
 }

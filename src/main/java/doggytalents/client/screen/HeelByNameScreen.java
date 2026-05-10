@@ -8,7 +8,7 @@ import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.input.KeyEvent;
 
 import doggytalents.client.screen.framework.widget.FlatButton;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
@@ -22,7 +22,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.Rect2i;
@@ -74,7 +74,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
         if (!(stack.getItem() instanceof WhistleItem)) return;
         boolean softHeel = false;
         if (ItemUtil.hasTag(stack)) {
-            softHeel = ItemUtil.getTag(stack).getBoolean("soft_heel");
+            softHeel = ItemUtil.getTag(stack).getBooleanOr("soft_heel", false);
         }
         var screen = new HeelByNameScreen(mc.player, softHeel);
         screen.setBlockCharInputTime(blockCharInputMillis);
@@ -111,8 +111,8 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 }
         }) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.soft_heel")
@@ -120,15 +120,15 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 String str = I18n.get("doggytalents.screen.whistler.heel_by_name.soft_heel.help");
                 list.addAll(ScreenUtil.splitInto(str, 150, HeelByNameScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, list, mouseX, mouseY);
             }
         };
         softHeel.setX(mX - 100 - softHeel.getWidth() - 2);
         pY += softHeel.getHeight() + 2;
         var help = new FlatButton(0, pY, 20, 20, Component.literal("?"), b -> {} ) {
             @Override
-            public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
-                super.renderWidget(graphics, mouseX, mouseY, pTicks);
+            protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
+                super.extractContents(graphics, mouseX, mouseY, pTicks);
                 if (!this.isHovered) return;
                 List<Component> list = new ArrayList<>();
                 list.add(Component.translatable("doggytalents.screen.whistler.heel_by_name.help_title")
@@ -138,7 +138,7 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
                 String additional_help = I18n.get("doggytalents.screen.whistler.heel_by_name.help");
                 list.addAll(ScreenUtil.splitInto(additional_help, 150, HeelByNameScreen.this.font));
 
-                graphics.renderComponentTooltip(font, list, mouseX, mouseY);
+                graphics.setComponentTooltipForNextFrame(font, list, mouseX, mouseY);
             }
         };
         help.setX(mX - 100 - help.getWidth() - 2);
@@ -149,8 +149,8 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    protected void drawNoEntryMsg(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(font, 
+    protected void drawNoEntryMsg(GuiGraphicsExtractor graphics, int x, int y) {
+        graphics.text(font, 
             I18n.get("doggytalents.screen.whistler.heel_by_name.no_dog_found"), 
             x, y, 0xf50a0a);
     }
@@ -165,12 +165,12 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(graphics, mouseX, mouseY, partialTicks);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
         mayRenderShowUUID(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void mayRenderShowUUID(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    private void mayRenderShowUUID(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         if (!this.showUuid)
             return;
         var hover_entry_optional = this.getHoveredEntry(mouseX, mouseY);
@@ -193,9 +193,9 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
             int uuid_width = font.width(uuid_c1);
             int tX = mX - uuid_width/2;
             int tY = mY + getSelectAreaSize()/2 + 23;
-            graphics.drawString(font, uuid_c1, tX, tY, 0xffffffff);
+            graphics.text(font, uuid_c1, tX, tY, 0xffffffff);
         } else {
-            graphics.renderComponentTooltip(font, 
+            graphics.setComponentTooltipForNextFrame(font,
                 List.of(uuid_c1), mouseX, mouseY);
         }
     }
@@ -207,19 +207,19 @@ public class HeelByNameScreen extends StringEntrySelectScreen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == InputConstants.KEY_LSHIFT) {
+    public boolean keyPressed(KeyEvent event) {
+        if (event.key() == InputConstants.KEY_LSHIFT) {
             this.heelAndSit = true;
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean keyReleased(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == InputConstants.KEY_LSHIFT) {
+    public boolean keyReleased(KeyEvent event) {
+        if (event.key() == InputConstants.KEY_LSHIFT) {
             this.heelAndSit = false;
         }
-        return super.keyReleased(keyCode, scanCode, modifiers);
+        return super.keyReleased(event);
     }
 
     private void requestHeel(int id) {

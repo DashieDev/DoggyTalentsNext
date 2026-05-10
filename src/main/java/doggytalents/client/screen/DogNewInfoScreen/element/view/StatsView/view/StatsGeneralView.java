@@ -6,7 +6,7 @@ import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.common.entity.stats.StatsTracker;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.stats.StatFormatter;
@@ -28,36 +28,35 @@ public class StatsGeneralView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        // TODO Add refresh button with interval lock ah no need.
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int startX = this.getRealX() + PADDING_LEFT;
         int pY = this.getRealY() + PADDING_TOP;
         String i18nPrefix = "doggui.stats.general.";
         String draw;
         draw = I18n.get(i18nPrefix + "damageDealt") + ": " + formatHealth(stats.getDamageDealt()) + " ";
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
-            + font.width(draw), pY - 1, 16, 0 ,9, 9);
-        graphics.blit(DogScreenOverlays.GUI_ICONS_LOCATION, startX
-            + font.width(draw), pY - 1, 16 + 45, 0 ,9, 9);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, startX
+            + font.width(draw), pY - 1, 16f, 0f, 9, 9, 256, 256);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, DogScreenOverlays.GUI_ICONS_LOCATION, startX
+            + font.width(draw), pY - 1, 61f, 0f, 9, 9, 256, 256);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceInWater") + ": " + formatDistance(stats.getDistanceInWater());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceOnWater") + ": "+ formatDistance(stats.getDistanceOnWater());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceRidden") + ": "+ formatDistance(stats.getDistanceRidden());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceSneaking") + ": " + formatDistance(stats.getDistanceSneaking());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceSprinting") + ": " + formatDistance(stats.getDistanceSprint());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
         draw = I18n.get(i18nPrefix + "distanceWalking") + ": " + formatDistance(stats.getDistanceWalk());
-        graphics.drawString(font, draw, startX, pY, 0xffffffff);
+        graphics.text(font, draw, startX, pY, 0xffffffff);
         pY += font.lineHeight + LINE_SPACING;
 
     }

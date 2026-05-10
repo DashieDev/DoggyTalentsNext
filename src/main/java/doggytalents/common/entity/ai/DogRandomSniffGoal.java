@@ -144,7 +144,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
                 var pushBackVec = current_center.subtract(this.dog.position())
                     .normalize();
                 this.dog.push(pushBackVec.x() * 0.3, 0, pushBackVec.z() * 0.3);
-                this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
+                this.dog.playSound(this.dog.dogMood.getHurtSound(null), 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
                 this.continueEvenWhenChanged = true;
@@ -165,7 +165,7 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
         case TOUCHY_TOUCH:
         {
             if (this.tickAnim == 35) {
-                this.dog.playSound(SoundEvents.WOLF_HURT, 0.6f, this.dog.getVoicePitch());
+                this.dog.playSound(this.dog.dogMood.getHurtSound(null), 0.6f, this.dog.getVoicePitch());
                 this.dog.playSound(SoundEvents.GENERIC_BURN, 0.3F, 2.0F + this.dog.getRandom().nextFloat() * 0.4F);
                 rememberBeingBurned();
                 this.continueEvenWhenChanged = true;
@@ -267,12 +267,12 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private boolean almostOutOfRestrict() {
-        if (!this.dog.hasRestriction())
+        if (!this.dog.hasHome())
             return false;
-        var restrict_b0 = this.dog.getRestrictCenter();
+        var restrict_b0 = this.dog.getHomePosition();
         if (restrict_b0 == null)
             return false;
-        var restrict_r = this.dog.getRestrictRadius();
+        var restrict_r = this.dog.getHomeRadius();
         var restrict_d0_sqr = this.dog.distanceToSqr(Vec3.atBottomCenterOf(restrict_b0));
         var d_inside_sqr = restrict_r * restrict_r - restrict_d0_sqr;
         return d_inside_sqr <= 1;
@@ -288,9 +288,9 @@ public class DogRandomSniffGoal extends Goal implements IHasTickNonRunning {
     }
 
     private BlockPos findMoveToPos() {
-        if (dog.hasRestriction() && dog.getRestrictCenter() != null) {
-            var restrict_b0 = dog.getRestrictCenter();
-            var restrict_r = dog.getRestrictRadius();
+        if (dog.hasHome() && dog.getHomePosition() != null) {
+            var restrict_b0 = dog.getHomePosition();
+            var restrict_r = dog.getHomeRadius();
             int explore_r = Mth.floor(restrict_r) - 1;
             if (explore_r <= 0)
                 return this.dog.blockPosition();

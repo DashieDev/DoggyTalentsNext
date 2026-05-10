@@ -13,6 +13,7 @@ import doggytalents.common.util.NetworkUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -94,7 +95,7 @@ public class ParticlePackets {
                             double d8 = mc.level.getRandom().nextGaussian() * (double)0.1;
                 
                             mc.level.addParticle(
-                                new ItemParticleOption(ParticleTypes.ITEM, data.food), 
+                                new ItemParticleOption(ParticleTypes.ITEM, ItemStackTemplate.fromNonEmptyStack(data.food)),
                                 dog.getX() + dx1 + d1, 
                                 dog.getY() + dog.getEyeHeight() + d3, 
                                 dog.getZ() + dz1 + d5,

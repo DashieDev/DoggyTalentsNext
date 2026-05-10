@@ -44,18 +44,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.ArrowItem;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -88,14 +86,14 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void remove(AbstractDog dog) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         dog.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
     }
 
     @Override
     public void set(AbstractDog dog, int levelBefore) {
-        if (dog.level().isClientSide) return;
+        if (dog.level().isClientSide()) return;
         if (levelBefore > 0 && this.level() <= 0) {
             this.dropAllToolbar(dog);
         }
@@ -111,7 +109,7 @@ public class DoggyToolsTalent extends TalentInstance  {
 
     @Override
     public void tick(AbstractDog d) {
-        if (d.level().isClientSide) return;
+        if (d.level().isClientSide()) return;
 
         validateAndSync(d);
         
@@ -168,7 +166,7 @@ public class DoggyToolsTalent extends TalentInstance  {
             if (isItemBlacklisted(stack))
                 continue;
             var item = stack.getItem();
-            if (item instanceof SwordItem) {
+            if (stack.has(DataComponents.WEAPON)) {
                 dog.setItemSlot(EquipmentSlot.MAINHAND, stack);
                 break;
             }
@@ -228,11 +226,11 @@ public class DoggyToolsTalent extends TalentInstance  {
     public InteractionResult processInteract(AbstractDog d, Level levek, Player player,
             InteractionHand hand) {
         var stack = player.getItemInHand(hand);
-        if (!(stack.getItem() instanceof PickaxeItem)) 
+        if (!stack.has(DataComponents.TOOL)) 
             return InteractionResult.PASS;
         if (!(d instanceof Dog dog)) 
             return InteractionResult.PASS;
-        if (!dog.level().isClientSide && player instanceof ServerPlayer sP) {
+        if (!dog.level().isClientSide() && player instanceof ServerPlayer sP) {
             Screens.openDoggyToolsScreen(sP, dog);
         }
         return InteractionResult.SUCCESS;
@@ -242,7 +240,7 @@ public class DoggyToolsTalent extends TalentInstance  {
     public void onDogSetTarget(AbstractDog dogIn, @Nullable LivingEntity newTarget, @Nullable LivingEntity oldTarget) {
         if (!(dogIn instanceof Dog dog))
             return;
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         if (this.alwaysPickSlot0)
             return;
@@ -278,10 +276,10 @@ public class DoggyToolsTalent extends TalentInstance  {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        var tag = compound.getCompound("doggy_tools");
+        var tag = compound.getCompoundOrEmpty("doggy_tools");
         if (tag == null) return;
-        alwaysPickSlot0 = tag.getBoolean("pickFirstTool");
-        var inv_tag = tag.getCompound("tool_inv");
+        alwaysPickSlot0 = tag.getBooleanOr("pickFirstTool", false);
+        var inv_tag = tag.getCompoundOrEmpty("tool_inv");
         if (inv_tag != null) {
             this.tools.deserializeNBT(dogIn.registryAccess(), inv_tag);
         }

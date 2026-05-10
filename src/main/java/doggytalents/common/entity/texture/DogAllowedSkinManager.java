@@ -29,31 +29,31 @@ import doggytalents.common.network.PacketDistributor;
 import doggytalents.common.network.PacketHandler;
 import doggytalents.common.util.Util;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
-public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
+public class DogAllowedSkinManager extends SimplePreparableReloadListener<Map<Identifier, JsonElement>> {
 
     // In charge of loading the allowed skin config at
     // data/doggytalents/doggytalents/allowed_skin/allowed_skin.json
     // Overriable via datapacks.
 
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_ID + "/dogAllowedSkin");
-    private static final ResourceLocation ALLOWED_SKIN_PATH = Util.getResource("allowed_skin");
+    private static final Identifier ALLOWED_SKIN_PATH = Util.getResource("allowed_skin");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     private AllowedSkinEntry entries = AllowedSkinEntry.EMPTY;
     private Set<String> entrySet = Set.of();
 
-    private DogAllowedSkinManager() {
-        super(GSON, createRegistryPath());
-    }
+    private DogAllowedSkinManager() {}
 
     private static String createRegistryPath() {
         var registry = Util.getResource("allowed_skin");
@@ -61,7 +61,22 @@ public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> contents, ResourceManager resourceManager,
+    protected Map<Identifier, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+        var converter = FileToIdConverter.json(createRegistryPath());
+        var map = new java.util.HashMap<Identifier, JsonElement>();
+        for (var entry : converter.listMatchingResources(resourceManager).entrySet()) {
+            var id = converter.fileToId(entry.getKey());
+            try (var reader = new java.io.InputStreamReader(entry.getValue().open(), java.nio.charset.StandardCharsets.UTF_8)) {
+                map.put(id, GSON.fromJson(reader, JsonElement.class));
+            } catch (Exception e) {
+                LOGGER.error("Error loading {}", entry.getKey(), e);
+            }
+        }
+        return map;
+    }
+
+    @Override
+    protected void apply(Map<Identifier, JsonElement> contents, ResourceManager resourceManager,
             ProfilerFiller profiler) {
         
         this.entries = AllowedSkinEntry.EMPTY;
@@ -123,8 +138,8 @@ public class DogAllowedSkinManager extends SimpleJsonResourceReloadListener {
         });
     }
 
-    public static void onRegisterReloadListener(AddReloadListenerEvent event) {
-        event.addListener(getServer());
+    public static void onRegisterReloadListener(AddServerReloadListenersEvent event) {
+        event.addListener(Util.getResource("allowed_skin_manager"), getServer());
     }
 
     public static void onDataPackSyncServer(OnDatapackSyncEvent event) {

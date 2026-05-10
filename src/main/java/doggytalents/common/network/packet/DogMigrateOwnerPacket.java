@@ -7,6 +7,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AmnesiaBoneItem;
 import doggytalents.common.network.packet.data.DogMigrateOwnerData;
 import doggytalents.common.util.ItemUtil;
+import doggytalents.common.util.NBTUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -37,7 +38,7 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         if (stack.getItem() != DoggyItems.AMNESIA_BONE.get()) return;
 
         //And not in cooldown
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get())) return;
+        if (sender.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.AMNESIA_BONE.get()))) return;
 
         //And is dog's owner.
         var ownerUUID = dog.getOwnerUUID();
@@ -48,12 +49,12 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
 
         //Nothing to do if required tag doesn't exist
         if (tag == null) return;
-        if (!tag.hasUUID("request_uuid")) {
+        if (!NBTUtil.hasUniqueId(tag, "request_uuid")) {
             ItemUtil.modifyTag(stack, to_modify -> to_modify.remove("request_str"));
             return;
         };
 
-        var uuid = tag.getUUID("request_uuid");
+        var uuid = NBTUtil.getUniqueId(tag, "request_uuid");
         
         //Consume these tags
         ItemUtil.modifyTag(stack, to_modify -> {
@@ -91,8 +92,8 @@ public class DogMigrateOwnerPacket extends DogPacket<DogMigrateOwnerData> {
         
         //Proccess sender
         sender.giveExperienceLevels(-AmnesiaBoneItem.getMigrateOwnerXPCost());
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 60);
-        int usedTime = tag.getInt("amnesia_bone_used_time");
+        sender.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.AMNESIA_BONE.get()), 60);
+        int usedTime = tag.getIntOr("amnesia_bone_used_time", 0);
         ++usedTime;
         if (usedTime >= AmnesiaBoneItem.getUseCap()) {
             stack.shrink(1);

@@ -6,29 +6,33 @@ import doggytalents.DoggyTalents;
 import doggytalents.client.ClientSetup;
 import doggytalents.client.entity.model.TorchDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
-import doggytalents.common.entity.Dog;
+import doggytalents.client.entity.render.DogRenderState;
 import doggytalents.common.lib.Resources;
 import doggytalents.common.talent.DoggyTorchTalent;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.Identifier;
 
-public class TorchDogRenderer extends RenderLayer<Dog, DogModel>  {
-    
+public class TorchDogRenderer extends RenderLayer<DogRenderState, DogModel>  {
+
     private TorchDogModel model;
 
-    public TorchDogRenderer(RenderLayerParent parentRenderer, EntityRendererProvider.Context ctx) {
+    public TorchDogRenderer(RenderLayerParent<DogRenderState, DogModel> parentRenderer, EntityRendererProvider.Context ctx) {
         super(parentRenderer);
         this.model = new TorchDogModel(ctx.bakeLayer(ClientSetup.DOG_TORCHIE));
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Dog dog, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float relativeHeadYRot, float headPitch) {
-        if (dog.isInvisible()) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, DogRenderState renderState, float yRot, float xRot) {
+        if (renderState.isInvisible) {
             return;
         }
+
+        var dog = renderState.dog;
+        if (dog == null) return;
 
         var inst = dog.getTalent(DoggyTalents.DOGGY_TORCH)
             .map(x -> x.cast(DoggyTorchTalent.class));
@@ -39,16 +43,15 @@ public class TorchDogRenderer extends RenderLayer<Dog, DogModel>  {
         if (!inst.get().renderTorch())
             return;
         this.getParentModel().copyPropertiesTo(this.model);
-        this.model.prepareMobModel(dog, limbSwing, limbSwingAmount, partialTicks);
-        this.model.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
+        this.model.setupAnim(renderState);
 
-        ResourceLocation res = Resources.TORCH_DOG;
+        Identifier res = Resources.TORCH_DOG;
         int renderLight = 15728880;
         if (dog.isDefeated()) {
             res = Resources.TORCH_DOG_UNLIT;
             renderLight = packedLight;
         }
-        RenderLayer.renderColoredCutoutModel(this.model, res, poseStack, buffer, renderLight, dog, 0xffffffff);
+        RenderLayer.renderColoredCutoutModel(this.model, res, poseStack, submitNodeCollector, renderLight, renderState, OverlayTexture.NO_OVERLAY, 0xffffffff);
 
     }
 

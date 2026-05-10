@@ -57,11 +57,11 @@ public class DogNodeEvaluator extends WalkNodeEvaluator {
                 retType = PathType.WALKABLE;
             }  
         }
-        if (retType == PathType.DANGER_FIRE && !dog.isInLava()) {
+        if (retType == PathType.FIRE_IN_NEIGHBOR && !dog.isInLava()) {
             var check_pos = new BlockPos(x, y - 1, z);
             var state = dog.level().getBlockState(check_pos);
             if (!state.isCollisionShapeFullBlock(dog.level(), check_pos)) {
-                retType = PathType.DAMAGE_FIRE;
+                retType = PathType.FIRE;
             }
         }
         return retType;

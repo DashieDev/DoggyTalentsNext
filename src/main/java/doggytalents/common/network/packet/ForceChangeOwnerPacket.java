@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import doggytalents.DoggyItems;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.lib.Constants;
+import doggytalents.common.util.DogUtil;
 import doggytalents.common.network.packet.data.ForceChangeOwnerData;
 import net.minecraft.network.FriendlyByteBuf;
 import doggytalents.common.network.DTNNetworkHandler.NetworkEvent.Context;
@@ -29,7 +30,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         //Only change owner if sender have access to Admin actions and
         //is in creative.
         var sender = ctx.get().getSender();
-        if (!sender.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (!DogUtil.hasPermissions(sender, Constants.OPERATOR_PERMISSION))
             return;
         if (!sender.getAbilities().instabuild)
             return;
@@ -37,7 +38,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         var stack = sender.getMainHandItem();
         if (!stack.is(DoggyItems.AMNESIA_BONE.get()))
             return;
-        if (sender.getCooldowns().isOnCooldown(DoggyItems.AMNESIA_BONE.get()))
+        if (sender.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.AMNESIA_BONE.get())))
             return;
 
         var currentOwnerUUID = dog.getOwnerUUID();
@@ -49,7 +50,7 @@ public class ForceChangeOwnerPacket extends DogPacket<ForceChangeOwnerData> {
         
         dog.migrateOwner(newOwnerUUID);
         
-        sender.getCooldowns().addCooldown(DoggyItems.AMNESIA_BONE.get(), 40);
+        sender.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.AMNESIA_BONE.get()), 40);
     }
 
 }

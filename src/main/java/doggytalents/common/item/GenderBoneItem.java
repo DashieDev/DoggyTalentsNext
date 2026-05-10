@@ -32,22 +32,22 @@ public class GenderBoneItem extends Item implements IDogItem{
             return InteractionResult.CONSUME;
         if (!dog.canInteract(playerIn))
             return InteractionResult.CONSUME;
-        if (playerIn.getCooldowns().isOnCooldown(DoggyItems.GENDER_BONE.get()))
+        if (playerIn.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.GENDER_BONE.get())))
             return InteractionResult.CONSUME;
             
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return InteractionResult.SUCCESS;
         
         dog.setGender(dog.getGender() == DogGender.MALE ?
             DogGender.FEMALE
             : DogGender.MALE);
-        playerIn.getCooldowns().addCooldown(DoggyItems.GENDER_BONE.get(), 40);
+        playerIn.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.GENDER_BONE.get()), 40);
         dog.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
         if (dog.level() instanceof ServerLevel sL) {
             var item = dog.getGender() == DogGender.MALE ? 
                 Items.LIGHT_BLUE_WOOL : Items.PINK_WOOL;
             sL.sendParticles(
-                new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), 
+                new ItemParticleOption(ParticleTypes.ITEM, item),
                 dog.getX(), dog.getY(), dog.getZ(), 
                 24, 
                 dog.getBbWidth(), 0.8f, dog.getBbWidth(), 
@@ -55,7 +55,7 @@ public class GenderBoneItem extends Item implements IDogItem{
             );
         }
         var stack = playerIn.getItemInHand(handIn);
-        stack.hurtAndBreak(1, playerIn, LivingEntity.getSlotForHand(handIn));
+        stack.hurtAndBreak(1, playerIn, handIn);
         return InteractionResult.SUCCESS;
     }
     

@@ -63,7 +63,7 @@ public class ShepherdDogTalent extends TalentInstance {
 
     @Override
     public void livingTick(AbstractDog abstractDog) {
-        if (abstractDog.level().isClientSide) {
+        if (abstractDog.level().isClientSide()) {
             return;
         }
 
@@ -85,7 +85,7 @@ public class ShepherdDogTalent extends TalentInstance {
             if (!this.targets.isEmpty() 
                 && EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), 
                     (nbt) -> nbt.contains("mode") 
-                            && nbt.getInt("mode") == 4)
+                            && nbt.getIntOr("mode", 0) == 4)
             ) {
                 if (!this.triggerShepherdAction(dog, owner)) {
                     this.targets = List.of();
@@ -181,7 +181,7 @@ public class ShepherdDogTalent extends TalentInstance {
             if (
                 !EntityUtil.isHolding(owner, 
                 DoggyItems.WHISTLE.get(), 
-                (nbt) -> nbt.contains("mode") && nbt.getInt("mode") == 4)
+                (nbt) -> nbt.contains("mode") && nbt.getIntOr("mode", 0) == 4)
             ) {
                 this.setState(ActionState.FINISHED);
                 return;
@@ -239,7 +239,7 @@ public class ShepherdDogTalent extends TalentInstance {
             }
 
             if (this.dog.getRandom().nextFloat() < 0.15F) {
-                this.dog.playSound(SoundEvents.WOLF_AMBIENT, this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
+                this.dog.playSound(this.dog.dogMood.getAmbientSound(), this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
             }
         }
 
@@ -321,7 +321,7 @@ public class ShepherdDogTalent extends TalentInstance {
     //             }
     //         };
     //         this.holdingPred = (stack) -> {
-    //             return stack.getItem() == DoggyItems.WHISTLE.get(); // TODO
+    //             return stack.getItem() == DoggyItems.WHISTLE.get();
     //         };
 
     //         this.sorter = new EntityUtil.Sorter(dogIn);
@@ -340,7 +340,7 @@ public class ShepherdDogTalent extends TalentInstance {
     //                return false;
     //             } else if (owner instanceof Player && ((Player) owner).isSpectator()) {
     //                 return false;
-    //             } else if (!EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), (nbt) -> nbt.contains("mode") && nbt.getInt("mode") == 4)) {
+    //             } else if (!EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), (nbt) -> nbt.contains("mode") && nbt.getIntOr("mode", 0) == 4)) {
     //                 return false;
     //             } else {
     //                 List<Animal> list = this.world.getEntitiesOfClass(Animal.class, this.dog.getBoundingBox().inflate(12D, 4.0D, 12D), this.predicate);
@@ -367,7 +367,7 @@ public class ShepherdDogTalent extends TalentInstance {
     //             return false;
     //         } else if (this.dog.getDogLevel(DoggyTalents.SHEPHERD_DOG) <= 0) {
     //             return false;
-    //         } else if (!EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), (nbt) -> nbt.contains("mode") && nbt.getInt("mode") == 4)) {
+    //         } else if (!EntityUtil.isHolding(owner, DoggyItems.WHISTLE.get(), (nbt) -> nbt.contains("mode") && nbt.getIntOr("mode", 0) == 4)) {
     //             return false;
     //         } else if (this.targets.isEmpty()) {
     //             return false;
@@ -458,7 +458,7 @@ public class ShepherdDogTalent extends TalentInstance {
     //                 }
     //                 // Play woof sound
     //                 if (this.dog.getRandom().nextFloat() < 0.15F) {
-    //                     this.dog.playSound(SoundEvents.WOLF_AMBIENT, this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
+    //                     this.dog.playSound(this.dog.dogMood.getAmbientSound(), this.dog.getSoundVolume() + 1.0F, (this.dog.getRandom().nextFloat() - this.dog.getRandom().nextFloat()) * 0.1F + 0.9F);
     //                 }
 
     //                 // Remove dead or faraway entities

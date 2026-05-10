@@ -34,7 +34,8 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     }
 
     public DoggyBeamEntity(Level worldIn, LivingEntity livingEntityIn) {
-        super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn, worldIn);
+        super(DoggyEntityTypes.DOG_BEAM.get(), livingEntityIn.getX(), livingEntityIn.getEyeY() - 0.1, livingEntityIn.getZ(), worldIn);
+        this.setOwner(livingEntityIn);
     }
 
     // public DoggyBeamEntity(PlayMessages.SpawnEntity packet, Level worldIn) {
@@ -44,7 +45,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
     @Override
     protected void onHit(HitResult result) {
         if (result.getType() == HitResult.Type.ENTITY) {
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide()) {
                 mayTriggerNearbyDogs((EntityHitResult)result);
             } else {
                 for (int j = 0; j < 8; ++j) {
@@ -53,7 +54,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
             }
         }
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             this.discard();
         }
     }
@@ -83,7 +84,7 @@ public class DoggyBeamEntity extends ThrowableProjectile {
         }
 
         if (do_cooldown)
-            thrower.getCooldowns().addCooldown(DoggyItems.WHISTLE.get(), 40);
+            thrower.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(DoggyItems.WHISTLE.get()), 40);
     }
 
     private boolean isEligibleDog(Dog dog, LivingEntity target, LivingEntity thrower) {
@@ -111,7 +112,6 @@ public class DoggyBeamEntity extends ThrowableProjectile {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder b) {
-        // TODO Auto-generated method stub
 
     }
 }

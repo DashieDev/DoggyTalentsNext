@@ -6,43 +6,45 @@ import doggytalents.DoggyItems;
 import doggytalents.common.util.InventoryUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 
 public class DoggyKeybinds {
-    
-    public static String CATEGORIES_DT = "key.categories.doggy_talents";
-    public static KeyMapping hotkeyWhistle_1 
+
+    public static KeyMapping.Category CATEGORIES_DT =
+        KeyMapping.Category.register(Identifier.parse("doggytalents:doggy_talents"));
+    public static KeyMapping hotkeyWhistle_1
         = new KeyMapping(
-            "key.doggytalents.whistle.1", 
-            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
-            KeyModifier.SHIFT, 
-            InputConstants.Type.KEYSYM, 
+            "key.doggytalents.whistle.1",
+            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE,
+            KeyModifier.SHIFT,
+            InputConstants.Type.KEYSYM,
             InputConstants.KEY_1, CATEGORIES_DT
         );
     public static KeyMapping hotkeyWhistle_2
         = new KeyMapping(
-            "key.doggytalents.whistle.2", 
-            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
-            KeyModifier.SHIFT, 
-            InputConstants.Type.KEYSYM, 
+            "key.doggytalents.whistle.2",
+            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE,
+            KeyModifier.SHIFT,
+            InputConstants.Type.KEYSYM,
             InputConstants.KEY_2, CATEGORIES_DT
         );
     public static KeyMapping hotkeyWhistle_3
         = new KeyMapping(
-            "key.doggytalents.whistle.3", 
-            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
-            KeyModifier.SHIFT, 
-            InputConstants.Type.KEYSYM, 
+            "key.doggytalents.whistle.3",
+            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE,
+            KeyModifier.SHIFT,
+            InputConstants.Type.KEYSYM,
             InputConstants.KEY_3, CATEGORIES_DT
         );
     public static KeyMapping hotkeyWhistle_4
         = new KeyMapping(
-            "key.doggytalents.whistle.4", 
-            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE, 
-            KeyModifier.SHIFT, 
-            InputConstants.Type.KEYSYM, 
+            "key.doggytalents.whistle.4",
+            DTKeyConflictContext.IN_GAME_AND_HAS_WHISTLE,
+            KeyModifier.SHIFT,
+            InputConstants.Type.KEYSYM,
             InputConstants.KEY_4, CATEGORIES_DT
         );
 

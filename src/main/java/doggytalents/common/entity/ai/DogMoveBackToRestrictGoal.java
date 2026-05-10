@@ -45,9 +45,9 @@ public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {
     }
 
     private boolean teleportBackIfNeeded() {
-        if (!dog.hasRestriction())
+        if (!dog.hasHome())
             return false;
-        var center = dog.getRestrictCenter();
+        var center = dog.getHomePosition();
         if (center == null)
             return false;
         if (dog.distanceToSqr(Vec3.atBottomCenterOf(center)) < 20*20)
@@ -57,6 +57,6 @@ public class DogMoveBackToRestrictGoal extends MoveTowardsRestrictionGoal {
         tickTillAttemptTp = 10;
         if (!dog.level().hasChunkAt(center))
             return false;
-        return DogUtil.guessAndTryToTeleportToBlockPos(dog, center, Mth.floor(dog.getRestrictRadius()));
+        return DogUtil.guessAndTryToTeleportToBlockPos(dog, center, Mth.floor(dog.getHomeRadius()));
     }
 }

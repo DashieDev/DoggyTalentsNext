@@ -76,7 +76,7 @@ public class DogFollowOwnerGoalDefeated extends Goal {
     @Override
     public void stop() {
         if (this.dog.distanceToSqr(owner) > 256) {
-            //TODO whine : wait up !
+            // future: play whine sound here
             this.tickTillWhine = 20;
         }
         this.owner = null;

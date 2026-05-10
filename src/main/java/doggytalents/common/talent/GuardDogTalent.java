@@ -5,7 +5,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 
@@ -39,13 +39,13 @@ public class GuardDogTalent extends TalentInstance {
     @Override
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
-        this.cooldown = dogIn.tickCount + compound.getInt("guardtime");
+        this.cooldown = dogIn.tickCount + compound.getIntOr("guardtime", 0);
     }
 
     @Override
-    public InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dogIn, DamageSource damageSource, float damage) {
-        if (dogIn.level().isClientSide) {
-            return InteractionResultHolder.pass(damage);
+    public DTNInteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dogIn, DamageSource damageSource, float damage) {
+        if (dogIn.level().isClientSide()) {
+            return DTNInteractionResultHolder.pass(damage);
         }
 
         Entity entity = damageSource.getEntity();
@@ -57,13 +57,13 @@ public class GuardDogTalent extends TalentInstance {
 
                 if (dogIn.getRandom().nextInt(12) < blockChance) {
                     this.cooldown = dogIn.tickCount + 10;
-                    dogIn.playSound(SoundEvents.ITEM_BREAK, dogIn.getSoundVolume() / 2, (dogIn.getRandom().nextFloat() - dogIn.getRandom().nextFloat()) * 0.2F + 1.0F);
-                    return InteractionResultHolder.fail(0F);
+                    dogIn.playSound(SoundEvents.ITEM_BREAK.value(), dogIn.getSoundVolume() / 2, (dogIn.getRandom().nextFloat() - dogIn.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    return DTNInteractionResultHolder.fail(0F);
                 }
             }
         }
 
-        return InteractionResultHolder.pass(damage);
+        return DTNInteractionResultHolder.pass(damage);
     }
 
 }

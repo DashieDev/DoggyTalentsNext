@@ -5,7 +5,7 @@ import doggytalents.common.entity.ai.nav.DogSwimMoveControl;
 import doggytalents.common.entity.ai.nav.DogWaterBoundNavigation;
 import doggytalents.common.util.EntityUtil;
 import doggytalents.common.util.Util;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,7 +16,7 @@ public class DogSwimmingManager {
     
     private final Dog dog;
 
-    private static final ResourceLocation SWIM_BOOST_ID = Util.getResource("swim_boost");
+    private static final Identifier SWIM_BOOST_ID = Util.getResource("swim_boost");
     private DogSwimMoveControl moveControl_water;
     private DogWaterBoundNavigation navigator_water;
     private boolean swimming = false;

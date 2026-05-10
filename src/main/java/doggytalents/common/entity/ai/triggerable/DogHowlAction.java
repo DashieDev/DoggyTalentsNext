@@ -33,9 +33,9 @@ public class DogHowlAction extends TriggerableAction {
         }
         --tickTillHowl;
         if (tickTillHowl == 0) {
-            dog.dogSoundManager.playInterruptible(SoundEvents.WOLF_HOWL, 1, dog.getVoicePitch());
+            dog.dogSoundManager.playInterruptible(dog.dogMood.getAmbientSound(), 1, dog.getVoicePitch());
         } else if (tickTillHowl == 30) {
-            this.dog.playSound(SoundEvents.WOLF_GROWL, 0.3F, dog.getVoicePitch());
+            this.dog.playSound(dog.dogMood.getSeriousGrowl(), 0.3F, dog.getVoicePitch());
         }
     }
 

@@ -27,11 +27,11 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
 
     @Override
     public InteractionResult consume(AbstractDog dog, ItemStack stack, @Nullable Entity entityIn) {
-        if (!dog.level().isClientSide) {
+        if (!dog.level().isClientSide()) {
             
             var item = stack.getItem();
 
-            var props = stack.getFoodProperties(dog);
+            var props = stack.get(net.minecraft.core.component.DataComponents.FOOD);
             
             if (props == null) return InteractionResult.FAIL;
 
@@ -40,18 +40,19 @@ public class BoostingFoodHandler implements IDogFoodHandler  {
             dog.addHunger(heal);
             dog.consumeItemFromStack(entityIn, stack);
 
-            for(var pair : props.effects()) {
-                if (dog.getRandom().nextFloat() < pair.probability()) {
-                   dog.addEffect(pair.effect());
+            var consumable = stack.get(net.minecraft.core.component.DataComponents.CONSUMABLE);
+            if (consumable != null) {
+                for (var effect : consumable.onConsumeEffects()) {
+                    effect.apply(dog.level(), stack, (net.minecraft.world.entity.LivingEntity) dog);
                 }
-             }
+            }
 
             if (dog.level() instanceof ServerLevel) {
                 ParticlePackets.DogEatingParticlePacket.sendDogEatingParticlePacketToNearby(
                     dog, new ItemStack(item));
             }
             dog.playSound(
-                SoundEvents.GENERIC_EAT, 
+                SoundEvents.GENERIC_EAT.value(), 
                 dog.getSoundVolume(), 
                 (dog.getRandom().nextFloat() - dog.getRandom().nextFloat()) * 0.2F + 1.0F
             );

@@ -85,11 +85,11 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     public void onFulfilled() {
         if (this.teleportedDog == null || !this.teleportedDog.isAlive())
             return;
-        if (this.owner != null)
-            this.owner.sendSystemMessage(
+        if (this.owner instanceof net.minecraft.world.entity.player.Player ownerPlayer)
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
-                    "item.doggytalents.conducting_bone.fulfilled.tp_self", 
-                    this.teleportedDog.getName().getString()  
+                    "item.doggytalents.conducting_bone.fulfilled.tp_self",
+                    this.teleportedDog.getName().getString()
                 )
             );
         this.level.sendParticles(
@@ -104,8 +104,8 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
     //Ressurect
     @Override
     public void onRejected() {
-        if (this.owner != null)
-            this.owner.sendSystemMessage(
+        if (this.owner instanceof net.minecraft.world.entity.player.Player ownerPlayer)
+            ownerPlayer.sendSystemMessage(
                 Component.translatable(
                     "item.doggytalents.conducting_bone.rejected",
                     Component.literal(this.rejectedMsg).withStyle(
@@ -148,8 +148,8 @@ public class DogDistantTeleportToOwnerPromise extends AbstractPromise {
         }
 
         this.timeOutTick = TIMEOUT;
-        ChunkPos chunkpos = new ChunkPos(dogPos);
-        if (this.level.hasChunk(chunkpos.x, chunkpos.z)) {
+        ChunkPos chunkpos = ChunkPos.containing(dogPos);
+        if (this.level.hasChunk(chunkpos.x(), chunkpos.z())) {
             this.rejectedMsg = "ALREADYREQUESTORLOADED";
             this.setState(State.REJECTED);
             return;

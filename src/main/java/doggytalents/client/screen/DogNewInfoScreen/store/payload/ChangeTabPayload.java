@@ -14,7 +14,6 @@ public class ChangeTabPayload implements TabChange {
 
     @Override
     public Tab getTab() {
-        // TODO Auto-generated method stub
         return tab;
     }
     

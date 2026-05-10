@@ -13,7 +13,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.item.AccessoryItem;
 import doggytalents.common.item.DoggyArtifactItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
@@ -39,7 +39,6 @@ public class ArtifactEditElement extends AbstractElement {
 
     public ArtifactEditElement(AbstractElement parent, Screen screen, Player player, Dog dog) {
         super(parent, screen);
-        //TODO Auto-generated constructor stub
         mc = Minecraft.getInstance();
         this.player = player;
         this.dog = dog;
@@ -54,7 +53,7 @@ public class ArtifactEditElement extends AbstractElement {
         for (int i = 0; i < 5; ++i) {
             var artifactHolder = new ArtifactHolder(
                 0, 0,
-                this.mc.getItemRenderer(), this.dog);
+                this.dog);
             this.artifactHolders.add(artifactHolder);
         }
 
@@ -90,9 +89,9 @@ public class ArtifactEditElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         int holderIndx = 0;
-        var items = this.inventory.items;
+        var items = this.inventory.getNonEquipmentItems();
         this.lastPage.active = startIndex > 0;
         this.nextPage.active = false;
         this.startIndex = Math.max(0, startIndex);
@@ -120,12 +119,12 @@ public class ArtifactEditElement extends AbstractElement {
                 var txt = Component.translatable("doggui.home.artifacts.no_artifacts_in_inv");
                 int tX = this.getRealX() + mX - mc.font.width(txt)/2;
                 int tY = this.getRealY() + mY - mc.font.lineHeight/2;
-                graphics.drawString(mc.font, txt, tX, tY, 0xffffffff);
+                graphics.text(mc.font, txt, tX, tY, 0xffffffff);
             }
         } else {
             int tX = this.getRealX() + 6;
             int tY = this.getRealY() + 6;
-            graphics.drawString(mc.font, I18n.get("doggui.home.artifacts.your_artifacts"), tX, tY, 0xffffffff);
+            graphics.text(mc.font, I18n.get("doggui.home.artifacts.your_artifacts"), tX, tY, 0xffffffff);
         }
         while (holderIndx < this.artifactHolders.size()) {
             this.artifactHolders.get(holderIndx).setStack(ItemStack.EMPTY);

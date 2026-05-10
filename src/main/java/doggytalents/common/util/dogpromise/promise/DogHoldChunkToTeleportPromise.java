@@ -53,7 +53,7 @@ public class DogHoldChunkToTeleportPromise extends AbstractPromise {
         for (var dog : dogs) {
             if (!dog.isDoingFine())
                 continue;
-            var chunkpos = new ChunkPos(dog.blockPosition());
+            var chunkpos = ChunkPos.containing(dog.blockPosition());
             this.accquireChunk(this.level, chunkpos);
         }
     }

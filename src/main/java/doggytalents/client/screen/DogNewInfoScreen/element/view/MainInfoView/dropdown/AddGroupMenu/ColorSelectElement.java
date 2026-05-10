@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import doggytalents.client.screen.framework.element.AbstractElement;
 import doggytalents.client.screen.framework.widget.FlatButton;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -59,7 +59,7 @@ public class ColorSelectElement extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         for (var colorButton : this.colorButtons) {
             colorButton.selected =
                 this.selectedColor == colorButton.getColor();
@@ -87,12 +87,12 @@ public class ColorSelectElement extends AbstractElement {
         }
 
         @Override
-        public void onPress() {
+        public void onPress(net.minecraft.client.input.InputWithModifiers input) {
             this.onPress.onPress(this);
         }
 
         @Override
-        public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
+        protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float pTicks) {
             if (!this.active) return;
 
             if (selected) {

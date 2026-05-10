@@ -3,6 +3,7 @@ package doggytalents.api.inferface;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
@@ -14,7 +15,7 @@ import doggytalents.api.feature.IDog;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,10 +28,10 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -40,7 +41,23 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         super(type, worldIn);
     }
 
-    public void setAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc, BiFunction<AbstractDog, ResourceLocation, AttributeModifier> modifierGenerator) {
+    /** Compatibility helper — TamableAnimal no longer exposes getOwnerUUID() in 26.1. */
+    @Nullable
+    public UUID getOwnerUUID() {
+        var ref = getOwnerReference();
+        return ref != null ? ref.getUUID() : null;
+    }
+
+    /** Compatibility helper — TamableAnimal no longer exposes setOwnerUUID() in 26.1. */
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        if (uuid == null) {
+            setOwnerReference(null);
+        } else {
+            setOwnerReference(EntityReference.of(uuid));
+        }
+    }
+
+    public void setAttributeModifier(Holder<Attribute> attribute, Identifier modifierLoc, BiFunction<AbstractDog, Identifier, AttributeModifier> modifierGenerator) {
         AttributeInstance attributeInst = this.getAttribute(attribute);
 
         AttributeModifier currentModifier = attributeInst.getModifier(modifierLoc);
@@ -60,7 +77,7 @@ public abstract class AbstractDog extends TamableAnimal implements IDog {
         }
     }
 
-    public void removeAttributeModifier(Holder<Attribute> attribute, ResourceLocation modifierLoc) {
+    public void removeAttributeModifier(Holder<Attribute> attribute, Identifier modifierLoc) {
         var attrib = this.getAttribute(attribute);
         if (attrib == null) return;
         attrib.removeModifier(modifierLoc);

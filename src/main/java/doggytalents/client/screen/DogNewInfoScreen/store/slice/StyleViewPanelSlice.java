@@ -7,7 +7,6 @@ public class StyleViewPanelSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        // TODO Auto-generated method stub
         return StyleViewPanelTab.ACCESSORIES;
     }
 

@@ -89,8 +89,10 @@ public class CustomDogModel extends DogModel {
             float headPitch) {
         super.setupAnim(dog, limbSwing, limbSwingAmount, ageInTicks, relativeHeadYRot, headPitch);
         if (this.props.glowingEyes) {
-            this.glowingEyes.copyFrom(this.head);
-            this.realGlowingEyes.copyFrom(this.realHead);
+            this.glowingEyes.loadPose(this.head.storePose());
+            this.realGlowingEyes.loadPose(this.realHead.storePose());
+            this.glowingEyes.visible = false;
+            this.realGlowingEyes.visible = false;
         }
     }
 
@@ -103,15 +105,6 @@ public class CustomDogModel extends DogModel {
         if (animDef == null)
             return super.getAnimationSequence(anim);
         return animDef;
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack stack, VertexConsumer vertex_consumer, int light, int overlay, int color_overlay) {    
-        if (props.glowingEyes) {
-            this.glowingEyes.visible = false;
-            this.realGlowingEyes.visible = false;
-        }
-        super.renderToBuffer(stack, vertex_consumer, light, overlay, color_overlay);
     }
 
     @Override

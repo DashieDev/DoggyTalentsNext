@@ -35,7 +35,7 @@ public class PoisonFangTalent extends TalentInstance {
                     return InteractionResult.FAIL;
                 }
 
-                if (!worldIn.isClientSide) {
+                if (!worldIn.isClientSide()) {
                     playerIn.removeAllEffects();
                     dogIn.setDogHunger(dogIn.getDogHunger() - 30);
                     dogIn.consumeItemFromStack(playerIn, stack);

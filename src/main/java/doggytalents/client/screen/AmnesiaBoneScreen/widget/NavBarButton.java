@@ -1,7 +1,5 @@
 package doggytalents.client.screen.AmnesiaBoneScreen.widget;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTabSlice;
 import doggytalents.client.screen.AmnesiaBoneScreen.store.slice.ActiveTabSlice.Tab;
 import doggytalents.client.screen.framework.Store;
@@ -11,6 +9,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.Component;
 
 public class NavBarButton extends TextOnlyButton {
@@ -27,7 +26,7 @@ public class NavBarButton extends TextOnlyButton {
     }
 
     @Override
-    public void onPress() {
+    public void onPress(InputWithModifiers input) {
         Store.get(screen)
         //dispatch all to notify all slice of changetab so they can do setup before
         //appearing in the tab.

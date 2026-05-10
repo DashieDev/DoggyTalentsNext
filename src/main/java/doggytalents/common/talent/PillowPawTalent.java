@@ -7,7 +7,7 @@ import doggytalents.api.registry.Talent;
 import doggytalents.api.registry.TalentInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import doggytalents.api.inferface.DTNInteractionResultHolder;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -30,12 +30,12 @@ public class PillowPawTalent extends TalentInstance {
     }
 
     @Override
-    public InteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
+    public DTNInteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
         if (this.level() > 0) {
-            return InteractionResultHolder.success(distance - this.level() * 3);
+            return DTNInteractionResultHolder.success(distance - this.level() * 3);
         }
 
-        return InteractionResultHolder.pass(0F);
+        return DTNInteractionResultHolder.pass(0F);
     }
 
     @Override

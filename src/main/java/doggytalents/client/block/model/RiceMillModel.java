@@ -26,7 +26,8 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 public class RiceMillModel extends SimpleAnimatedModel {
 
@@ -35,7 +36,7 @@ public class RiceMillModel extends SimpleAnimatedModel {
 	private ModelPart hammer;
 
     public RiceMillModel(ModelPart box) {
-		super(RenderType::entityCutoutNoCull);
+		super(box, RenderTypes::entityCutout);
 		this.root = box;
 		this.spin = box.getChild("spin");
 		this.hammer = box.getChild("hammer2");
@@ -62,6 +63,10 @@ public class RiceMillModel extends SimpleAnimatedModel {
 	}
 
 	private Vector3f tempVec = new Vector3f();
+
+	public void setupAnimFromTime(long animTimeMillis) {
+		DogKeyframeAnimations.animateSimple(this, GRIND_ANIM, animTimeMillis, 1, tempVec);
+	}
 
 	public void setUpMillAnim(RiceMillBlockEntity mill, float pTicks) {
 		if (!mill.isSpinning())
@@ -172,11 +177,6 @@ public class RiceMillModel extends SimpleAnimatedModel {
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
-
-    @Override
-    public void renderToBuffer(PoseStack p_103111_, VertexConsumer p_103112_, int p_103113_, int p_103114_, int color_overlay) {
-        this.root.render(p_103111_, p_103112_, p_103113_, p_103114_, color_overlay);
-    }
 
 	private static final AnimationDefinition GRIND_ANIM = AnimationDefinition.Builder.withLength(10f).looping()
 		.addAnimation("spin",

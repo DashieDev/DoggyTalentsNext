@@ -1,12 +1,8 @@
 package doggytalents.client.entity.model.misc;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import doggytalents.common.entity.misc.DogPlushie;
-import doggytalents.common.entity.misc.SamoyedPlushie;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -14,11 +10,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class SamoyedPlushieModel extends EntityModel<SamoyedPlushie>{
+public class SamoyedPlushieModel extends EntityModel<EntityRenderState> {
 
     public ModelPart root;
 
 	public SamoyedPlushieModel(ModelPart box) {
+		super(box);
 		this.root = box.getChild("root");
 	}
     public static LayerDefinition createBodyLayer() {
@@ -153,15 +150,8 @@ public class SamoyedPlushieModel extends EntityModel<SamoyedPlushie>{
 	}
 
 
-    @Override
-    public void setupAnim(SamoyedPlushie p_102618_, float p_102619_, float p_102620_, float p_102621_, float p_102622_,
-            float p_102623_) {
-        
-    }
+    public void setupAnim(EntityRenderState state) {
 
-    @Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color_overlay) {
-		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color_overlay);
-	}
+    }
     
 }

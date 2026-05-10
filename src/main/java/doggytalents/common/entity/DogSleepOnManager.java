@@ -37,7 +37,7 @@ public class DogSleepOnManager {
     private DogSleepOnManager() {}
     
     public static DogSleepOnManager getServer(Level level) {
-        if (level.isClientSide)
+        if (level.isClientSide())
             throw new IllegalStateException("Only access this class's instance from the Logical Server.");
         return SERVER_INSTANCE;
     }
@@ -74,7 +74,7 @@ public class DogSleepOnManager {
         final float sleep_yrot = sleep_pair.getLeft();
 
         player.startSleeping(dog.blockPosition());
-        player.moveTo(sleep_pair.getRight());
+        player.snapTo(sleep_pair.getRight());
         rotateDogPerpenToSleepYRot(dog, sleep_yrot);
         rotatePlayerYRotToDog(dog, player, sleep_yrot);
         
@@ -98,11 +98,11 @@ public class DogSleepOnManager {
         if (!dog.isDoingFine())
             return DogSleepOnFailMessage.OTHER.asResult();
         var level = (ServerLevel) dog.level();
-        if (level.isDay())
+        if (level.isBrightOutside())
             return DogSleepOnFailMessage.NOT_SLEEP_TIME.asResult();
         if (!level.canSleepThroughNights())
             return DogSleepOnFailMessage.CANT_SLEEP_THROUGH_NIGHT.asResult();
-        if (!level.dimensionType().bedWorks())
+        if (!level.dimensionType().hasSkyLight())
             return DogSleepOnFailMessage.NO_SLEEP_DIM.asResult();
         if (!dog.getDogSize().largerOrEquals(DogSize.MODERATO))
             return DogSleepOnFailMessage.TOO_SMOL.asResult();
@@ -309,10 +309,10 @@ public class DogSleepOnManager {
 
 
     public static void canPlayerContinueSleeping(CanContinueSleepingEvent event) {
-        if (event.getProblem() != BedSleepingProblem.NOT_POSSIBLE_HERE)
+        if (event.getProblem() == null)
             return;
         var player = event.getEntity();
-        var dog_optional = DogSleepOnManager.getServer(player.getServer()).getSleepingOnDog(player);
+        var dog_optional = DogSleepOnManager.getServer(player.level().getServer()).getSleepingOnDog(player);
         if (!dog_optional.isPresent())
             return;
         event.setContinueSleeping(true);
@@ -329,7 +329,7 @@ public class DogSleepOnManager {
     }
 
     public static void onDogSleepOnDataUpdated(Dog dog, DogSleepOnState state) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             DTNClientDogSleepOnManager.get().onDogSleepOnDataUpdated(dog, state);
     }
 
@@ -339,7 +339,7 @@ public class DogSleepOnManager {
     }
 
     public static void onHurt(Dog dog) {
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return;
         if (!dog.getSleepOnState().is_sleeping())
             return;
@@ -374,7 +374,7 @@ public class DogSleepOnManager {
     private static record SleepOnPair(Dog dog, Player player) {} 
 
     public static record DogSleepOnState(UUID sleeper, boolean is_sleeping, float sleep_yrot) {
-        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.Util.NIL_UUID, false, 0);
+        public static DogSleepOnState NULL = new DogSleepOnState(net.minecraft.util.Util.NIL_UUID, false, 0);
     }
 
     public static class StartSleepOnDogResult {
@@ -456,7 +456,7 @@ public class DogSleepOnManager {
         }
 
         public void tick() {
-            if (!this.dog.level().isClientSide)
+            if (!this.dog.level().isClientSide())
                 invalidateRequest();
         }
 

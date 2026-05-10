@@ -17,7 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.InteractionResultHolder;
+
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.Direction;
@@ -77,12 +77,12 @@ public interface IDogAlteration {
 
     }
 
-    default InteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick_add) {
-        return InteractionResultHolder.pass(hungerTick_add);
+    default DTNInteractionResultHolder<Float> hungerTick(AbstractDog dogIn, float hungerTick_add) {
+        return DTNInteractionResultHolder.pass(hungerTick_add);
     }
 
-    default InteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick_add) {
-        return InteractionResultHolder.pass(healingTick_add);
+    default DTNInteractionResultHolder<Integer> healingTick(AbstractDog dogIn, int healingTick_add) {
+        return DTNInteractionResultHolder.pass(healingTick_add);
     }
 
     default InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn, InteractionHand handIn) {
@@ -97,8 +97,8 @@ public interface IDogAlteration {
         return InteractionResult.PASS;
     }
 
-    default InteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
-        return InteractionResultHolder.pass(0F);
+    default DTNInteractionResultHolder<Float> calculateFallDistance(AbstractDog dogIn, float distance) {
+        return DTNInteractionResultHolder.pass(0F);
     }
 
     default InteractionResult canAttack(AbstractDog dogIn, LivingEntity target) {
@@ -125,8 +125,8 @@ public interface IDogAlteration {
     }
 
 
-    default InteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
-        return InteractionResultHolder.pass(damage);
+    default DTNInteractionResultHolder<Float> gettingAttackedFrom(AbstractDog dog, DamageSource source, float damage) {
+        return DTNInteractionResultHolder.pass(damage);
     }
 
     default InteractionResult canBlockDamageSource(AbstractDog dog, DamageSource source) {
@@ -149,20 +149,20 @@ public interface IDogAlteration {
 
     }
 
-    default InteractionResultHolder<Float> attackEntityFrom(AbstractDog dogIn, float distance, float damageMultiplier) {
-        return InteractionResultHolder.pass(distance);
+    default DTNInteractionResultHolder<Float> attackEntityFrom(AbstractDog dogIn, float distance, float damageMultiplier) {
+        return DTNInteractionResultHolder.pass(distance);
     }
 
-    default InteractionResultHolder<Integer> decreaseAirSupply(AbstractDog dogIn, int air) {
-        return InteractionResultHolder.pass(air);
+    default DTNInteractionResultHolder<Integer> decreaseAirSupply(AbstractDog dogIn, int air) {
+        return DTNInteractionResultHolder.pass(air);
     }
 
-    default InteractionResultHolder<Integer> determineNextAir(AbstractDog dogIn, int currentAir) {
-        return InteractionResultHolder.pass(currentAir);
+    default DTNInteractionResultHolder<Integer> determineNextAir(AbstractDog dogIn, int currentAir) {
+        return DTNInteractionResultHolder.pass(currentAir);
     }
 
-    default InteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
-        return InteractionResultHolder.pass(ticks);
+    default DTNInteractionResultHolder<Integer> setFire(AbstractDog dogIn, int ticks) {
+        return DTNInteractionResultHolder.pass(ticks);
     }
 
     default InteractionResult isInvulnerableTo(AbstractDog dogIn, DamageSource source) {
@@ -193,12 +193,12 @@ public interface IDogAlteration {
 
     }
 
-    default InteractionResultHolder<Float> getMaxHunger(AbstractDog dogIn, float currentMax) {
-        return InteractionResultHolder.pass(currentMax);
+    default DTNInteractionResultHolder<Float> getMaxHunger(AbstractDog dogIn, float currentMax) {
+        return DTNInteractionResultHolder.pass(currentMax);
     }
 
-    default InteractionResultHolder<Float> setDogHunger(AbstractDog dogIn, float hunger, float diff) {
-        return InteractionResultHolder.pass(hunger);
+    default DTNInteractionResultHolder<Float> setDogHunger(AbstractDog dogIn, float hunger, float diff) {
+        return DTNInteractionResultHolder.pass(hunger);
     }
 
     default InteractionResult isPotionApplicable(AbstractDog dogIn, MobEffectInstance effectIn) {
@@ -219,8 +219,8 @@ public interface IDogAlteration {
      * @param pos
      * @return
      */
-    default InteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type, InferTypeContext context) {
-        return InteractionResultHolder.pass(type);
+    default DTNInteractionResultHolder<PathType> inferType(AbstractDog dog, PathType type, InferTypeContext context) {
+        return DTNInteractionResultHolder.pass(type);
     }
 
     default InteractionResult negateExplosion(AbstractDog dog) {

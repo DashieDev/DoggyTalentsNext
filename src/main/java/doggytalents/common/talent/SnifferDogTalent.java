@@ -24,7 +24,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -54,7 +54,7 @@ public class SnifferDogTalent extends TalentInstance {
     
     @Override
     public void tick(AbstractDog dogIn) {
-        if (dogIn.level().isClientSide)
+        if (dogIn.level().isClientSide())
             return;
         if (!dogIn.isDoingFine())
             return;
@@ -173,7 +173,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (!stack.is(DoggyItems.SCENT_TREAT.get()))
             return InteractionResult.PASS;
 
-        if (dog.level().isClientSide)
+        if (dog.level().isClientSide())
             return InteractionResult.SUCCESS;
 
         if (playerIn.isShiftKeyDown()) {
@@ -210,7 +210,7 @@ public class SnifferDogTalent extends TalentInstance {
         if (ItemUtil.hasTag(stack)) {
             ItemUtil.copyTag(stack, retItem);
         }
-        dog.spawnAtLocation(retItem);
+        dog.spawnAtLocation((net.minecraft.server.level.ServerLevel) dog.level(), retItem);
 
         stack.shrink(1);
 
@@ -405,7 +405,7 @@ public class SnifferDogTalent extends TalentInstance {
         private void notifyOwner(Dog dog, LivingEntity owner, double distanceAwaySqr) {
             var c1 = Component.translatable(getStringStatus(dog, distanceAwaySqr),
                 dog.getName().getString());
-            owner.sendSystemMessage(c1);
+            if (owner instanceof net.minecraft.world.entity.player.Player _p_sys) _p_sys.sendSystemMessage(c1);
             if (distanceAwaySqr <= 8 * 8) {
                 var sound = dog.dogMood.getSnifferDogForteSound();
                 dog.playSound(sound, 1f, 1f);

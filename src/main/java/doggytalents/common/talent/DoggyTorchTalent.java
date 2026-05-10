@@ -68,8 +68,8 @@ public class DoggyTorchTalent extends TalentInstance {
     public void readFromNBT(AbstractDog dogIn, CompoundTag compound) {
         super.readFromNBT(dogIn, compound);
 
-        this.placingTorch = compound.getBoolean("placingTorch");
-        this.renderTorch = compound.getBoolean("renderTorch");
+        this.placingTorch = compound.getBooleanOr("placingTorch", false);
+        this.renderTorch = compound.getBooleanOr("renderTorch", false);
     }
 
     @Override

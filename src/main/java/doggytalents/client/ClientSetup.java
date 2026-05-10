@@ -66,13 +66,16 @@ import doggytalents.common.lib.Constants;
 import doggytalents.common.util.Util;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import doggytalents.common.effects.NattoBiteEffect;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 public class ClientSetup {
 
@@ -96,7 +99,7 @@ public class ClientSetup {
     public static final ModelLayerLocation RICE_MILL = new ModelLayerLocation(Util.getResource("rice_mill"), "main");
     public static final ModelLayerLocation SAMOYED_PLUSHIE = new ModelLayerLocation(Util.getResource("samoyed_plushie_toy"), "main");
 
-    public static final List<ResourceLocation> OTHER_MOD_SKIN_JSONS = new ArrayList<ResourceLocation>();
+    public static final List<Identifier> OTHER_MOD_SKIN_JSONS = new ArrayList<Identifier>();
 
     public static void setupScreenManagers(final RegisterMenuScreensEvent event) {
         event.register(DoggyContainerTypes.FOOD_BOWL.get(), FoodBowlScreen::new);
@@ -139,7 +142,7 @@ public class ClientSetup {
 
     private static void gatherSkinJsonFromOtherMods() {
         OTHER_MOD_SKIN_JSONS.clear();
-        var paths = new ArrayList<ResourceLocation>();
+        var paths = new ArrayList<Identifier>();
         ModLoader.postEvent(new RegisterDogSkinJsonPathEvent(paths));
         if (paths.isEmpty())
             return;
@@ -190,10 +193,23 @@ public class ClientSetup {
     public static void registerOverlay(RegisterGuiLayersEvent e) {
     }
 
-    public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(DTNModelLoader.INSTANCE);
-        event.registerReloadListener(DogTextureManager.INSTANCE);
-        event.registerReloadListener(DogRandomNameRegistry.getInstance());
-        event.registerReloadListener(DTNAnimationLoader.INSTANCE);
+    public static void addClientReloadListeners(final AddClientReloadListenersEvent event) {
+        event.addListener(doggytalents.common.util.Util.getResource("dtn_model_loader"), DTNModelLoader.INSTANCE);
+        event.addListener(doggytalents.common.util.Util.getResource("dog_texture_manager"), DogTextureManager.INSTANCE);
+        event.addListener(doggytalents.common.util.Util.getResource("dog_random_name_registry"), DogRandomNameRegistry.getInstance());
+        event.addListener(doggytalents.common.util.Util.getResource("dtn_animation_loader"), DTNAnimationLoader.INSTANCE);
+    }
+
+    public static void registerClientExtensions(final RegisterClientExtensionsEvent event) {
+        event.registerMobEffect(new IClientMobEffectExtensions() {
+            @Override
+            public boolean isVisibleInGui(net.minecraft.world.effect.MobEffectInstance instance) {
+                return false;
+            }
+            @Override
+            public boolean isVisibleInInventory(net.minecraft.world.effect.MobEffectInstance instance) {
+                return false;
+            }
+        }, doggytalents.DoggyEffects.NATTO_BITE.get());
     }
 }

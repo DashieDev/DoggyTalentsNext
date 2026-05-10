@@ -12,7 +12,7 @@ import doggytalents.client.screen.framework.element.DivElement;
 import doggytalents.client.screen.framework.element.ElementPosition.PosType;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 
 public class StyleView extends AbstractElement {
@@ -25,8 +25,6 @@ public class StyleView extends AbstractElement {
         
     }
 
-    //TODO print no accessories when no accessories
-    //TODO shrink the div box.
     @Override
     public AbstractElement init() {
 
@@ -93,7 +91,7 @@ public class StyleView extends AbstractElement {
     }
 
     @Override
-    public void renderElement(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderElement(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         // var font = getScreen().getMinecraft().font;
         // font.draw(stack, "style", this.getRealX()+3, this.getRealY() + 40, 0xffffffff);
         

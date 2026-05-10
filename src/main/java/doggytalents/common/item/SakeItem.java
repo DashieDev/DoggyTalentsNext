@@ -14,7 +14,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 
 public class SakeItem extends DogEddibleItem {
@@ -43,7 +42,7 @@ public class SakeItem extends DogEddibleItem {
             return false;
         if (!(entityIn instanceof Player player))
             return false;
-        if (player.getCooldowns().isOnCooldown(this))
+        if (player.getCooldowns().isOnCooldown(new net.minecraft.world.item.ItemStack(this)))
             return false;
         if (dog.getOwner() != player)
             return false;
@@ -55,7 +54,7 @@ public class SakeItem extends DogEddibleItem {
         var ret = super.consume(dog, stack, entityIn);
         mayBoostOrDrunkEntity(dog, entityIn);
         if (entityIn instanceof Player player) {
-            player.getCooldowns().addCooldown(this, 40);
+            player.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(this), 40);
         }
         return ret;
     }
@@ -66,9 +65,9 @@ public class SakeItem extends DogEddibleItem {
         if (!(entity instanceof Player player))
             return ret;
 
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             mayBoostOrDrunkEntity(player, null);
-            player.getCooldowns().addCooldown(this, 40);
+            player.getCooldowns().addCooldown(new net.minecraft.world.item.ItemStack(this), 40);
         }
 
         if (!player.getAbilities().instabuild)
@@ -83,29 +82,23 @@ public class SakeItem extends DogEddibleItem {
         if (freeSlot >= 0)
             inv.add(bonusReturnStack);
         else
-            player.spawnAtLocation(bonusReturnStack);
+            player.spawnAtLocation((net.minecraft.server.level.ServerLevel) player.level(), bonusReturnStack);
         return ret;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level p_42993_, Player p_42994_, InteractionHand p_42995_) {
+    public InteractionResult use(Level p_42993_, Player p_42994_, InteractionHand p_42995_) {
         return ItemUtils.startUsingInstantly(p_42993_, p_42994_, p_42995_);
     }
 
     @Override
-    @Nullable
-    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
-        return null;
-    }
-
-    @Override
     public SoundEvent getDogEatingSound(AbstractDog dog) {
-        return SoundEvents.GENERIC_DRINK;
+        return SoundEvents.GENERIC_DRINK.value();
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack p_41452_) {
-        return UseAnim.DRINK;
+    public ItemUseAnimation getUseAnimation(ItemStack p_41452_) {
+        return ItemUseAnimation.DRINK;
     }
 
     @Override
@@ -129,10 +122,10 @@ public class SakeItem extends DogEddibleItem {
         if (!drunk) {
             if (!(entity instanceof Dog || entity instanceof Player))
                 return;
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 60 * 20, 1));
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 20, 2));
-            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 20, 0));
-            entity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 20, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 60 * 20, 1));
+            entity.addEffect(new MobEffectInstance(MobEffects.STRENGTH, 60 * 20, 2));
+            entity.addEffect(new MobEffectInstance(MobEffects.SPEED, 60 * 20, 0));
+            entity.addEffect(new MobEffectInstance(MobEffects.HASTE, 60 * 20, 0));
             return;
         }
 
@@ -145,19 +138,19 @@ public class SakeItem extends DogEddibleItem {
             r_drunkTicks = 60 * 20;
             if (player.getRandom().nextBoolean())
                 r_drunkTicks *=2;
-            player.removeEffect(MobEffects.MOVEMENT_SPEED);
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, r_drunkTicks, 2));
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, r_drunkTicks, 3));
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, r_drunkTicks, 1));
+            player.removeEffect(MobEffects.SPEED);
+            player.addEffect(new MobEffectInstance(MobEffects.NAUSEA, r_drunkTicks, 2));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, r_drunkTicks, 3));
+            player.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, r_drunkTicks, 1));
             player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, r_drunkTicks, 3));
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> components,
             TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
+        var desc_id = this.getDescriptionId() + ".description";
+        components.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true)
         ));
     }

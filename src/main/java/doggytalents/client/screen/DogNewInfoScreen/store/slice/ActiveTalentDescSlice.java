@@ -16,7 +16,6 @@ public class ActiveTalentDescSlice implements AbstractSlice {
 
     @Override
     public Object getInitalState() {
-        // TODO Auto-generated method stub
         return new ActiveTalentDescSlice(null);
     }
 

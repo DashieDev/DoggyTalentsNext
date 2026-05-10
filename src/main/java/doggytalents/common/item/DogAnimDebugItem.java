@@ -16,14 +16,16 @@ import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.permissions.Permission;
+import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 public class DogAnimDebugItem extends Item implements IDogItem {
@@ -36,17 +38,17 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
-        if (level.isClientSide)
+        if (level.isClientSide())
             DogAnimDebugScreen.open(player);
-        return InteractionResultHolder.success(stack);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
     public InteractionResult processInteract(AbstractDog dogIn, Level worldIn, Player playerIn,
             InteractionHand handIn) {
-        if (!dogIn.level().isClientSide)
+        if (!dogIn.level().isClientSide())
             useActionOnDog(dogIn, playerIn);
 
         return InteractionResult.SUCCESS;
@@ -55,7 +57,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     private void useActionOnDog(AbstractDog dogIn, Player player) {
         if (!(dogIn instanceof Dog dog))
             return;
-        if (!player.hasPermissions(Constants.OPERATOR_PERMISSION))
+        if (!player.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.OWNERS)))
             return;
         if (!player.isCreative())
             return;
@@ -121,18 +123,18 @@ public class DogAnimDebugItem extends Item implements IDogItem {
 
     public static DogAnimation getSelectedAnimation(ItemStack stack) {
         var tag = ItemUtil.getTag(stack);
-        if (!tag.contains(SELECT_ANIM_ID, Tag.TAG_INT))
+        if (!tag.contains(SELECT_ANIM_ID))
             return DogAnimation.NONE;
-        int anim_id = tag.getInt(SELECT_ANIM_ID);
+        int anim_id = tag.getIntOr(SELECT_ANIM_ID, 0);
         var anim = DogAnimation.byId(anim_id);
         return anim;
     }
 
     public static ItemMode getItemMode(ItemStack stack) {
         var tag = ItemUtil.getTag(stack);
-        if (!tag.contains(ITEM_MODE_ID, Tag.TAG_INT))
+        if (!tag.contains(ITEM_MODE_ID))
             return ItemMode.ANIM;
-        int mode_id = tag.getInt(ITEM_MODE_ID);
+        int mode_id = tag.getIntOr(ITEM_MODE_ID, 0);
         var mode = ItemMode.fromId(mode_id);
         return mode;
     }
@@ -153,10 +155,9 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components,
-            TooltipFlag flags) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, java.util.function.Consumer<Component> componentConsumer, TooltipFlag flags) {
         var desc_id = "item.doggytalents.dog_anim_debug_stick.help";
-        components.add(Component.translatable(desc_id).withStyle(
+        componentConsumer.accept(Component.translatable(desc_id).withStyle(
             Style.EMPTY.withItalic(true))
         );
     }

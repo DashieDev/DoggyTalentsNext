@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "doggytalents:block/rice_mill"
-    }
+    "facing=north": { "model": "doggytalents:block/rice_mill" },
+    "facing=south": { "model": "doggytalents:block/rice_mill" },
+    "facing=east":  { "model": "doggytalents:block/rice_mill" },
+    "facing=west":  { "model": "doggytalents:block/rice_mill" }
   }
 }

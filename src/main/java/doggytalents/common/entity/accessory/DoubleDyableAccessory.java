@@ -53,16 +53,16 @@ public class DoubleDyableAccessory extends Accessory {
     public AccessoryInstance read(CompoundTag compound) {
         int bg_color = 0;
         if (compound.contains("dtn_bg_color")) {
-            bg_color = compound.getInt("dtn_bg_color");
+            bg_color = compound.getIntOr("dtn_bg_color", 0);
         } else if (compound.contains("color")) {
-            bg_color = compound.getInt("color");
+            bg_color = compound.getIntOr("color", 0);
         }
 
         int fg_color = 0;
         if (compound.contains("dtn_fg_color")) {
-            fg_color = compound.getInt("dtn_fg_color");
+            fg_color = compound.getIntOr("dtn_fg_color", 0);
         } else if (compound.contains("bdhat_fg_color")) {
-            fg_color = compound.getInt("bdhat_fg_color");
+            fg_color = compound.getIntOr("bdhat_fg_color", 0);
         }
 
         return new DoubleDyableAccessoryInstance(this, bg_color, fg_color);

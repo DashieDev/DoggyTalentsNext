@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "D": {
-      "item": "minecraft:white_wool"
-    },
-    "W": {
-      "item": "minecraft:spruce_planks"
-    }
+    "D": "minecraft:white_wool",
+    "W": "minecraft:spruce_planks"
   },
   "pattern": [
     "WDW",

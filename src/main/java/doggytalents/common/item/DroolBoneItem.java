@@ -3,7 +3,6 @@ package doggytalents.common.item;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +22,7 @@ public class DroolBoneItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemStackIn = playerIn.getItemInHand(handIn);
 
         if (itemStackIn.getItem() == this) {
@@ -35,9 +34,9 @@ public class DroolBoneItem extends Item {
 
             playerIn.swing(handIn);
             playerIn.playSound(SoundEvents.INK_SAC_USE, 1f , 1f);
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, returnStack);
+            return InteractionResult.SUCCESS; // consumed stack: returnStack);
         }
 
-        return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, itemStackIn);
+        return InteractionResult.FAIL; // stack: itemStackIn);
     }
 }

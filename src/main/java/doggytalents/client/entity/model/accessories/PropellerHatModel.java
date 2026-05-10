@@ -20,7 +20,6 @@ public class PropellerHatModel extends SyncedAccessoryModel {
 
     public PropellerHatModel(ModelPart root) {
         super(root);
-        //TODO Auto-generated constructor stub
     }
 
     @Override

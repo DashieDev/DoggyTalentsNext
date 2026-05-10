@@ -15,7 +15,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.food.FoodProperties.PossibleEffect;
 import net.minecraft.world.item.ItemStack;
 
 public interface IDogEddible extends IDogFoodHandler {
@@ -26,7 +25,7 @@ public interface IDogEddible extends IDogFoodHandler {
 
     public float getAddedHungerWhenDogConsume(ItemStack useStack, AbstractDog dog);
 
-    default List<PossibleEffect> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
+    default List<DogMobEffectEntry> getAdditionalEffectsWhenDogConsume(ItemStack useStack, AbstractDog dog) {
         return List.of();
     }
 
@@ -35,6 +34,6 @@ public interface IDogEddible extends IDogFoodHandler {
     };
 
     default SoundEvent getDogEatingSound(AbstractDog dog) {
-        return SoundEvents.GENERIC_EAT;
+        return SoundEvents.GENERIC_EAT.value();
     }
 }

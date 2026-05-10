@@ -32,7 +32,7 @@ public class DogOwnerDistanceManager {
 
     public DogOwnerDistanceManager(Dog dog) {
         this.dog = dog;
-        this.lastWithOwnerTime = dog.level().getDayTime();
+        this.lastWithOwnerTime = dog.level().getDefaultClockTime();
     }
 
     public void tick() {
@@ -45,7 +45,7 @@ public class DogOwnerDistanceManager {
 
     private void updateGreetingCondition(Dog dog, @Nonnull LivingEntity owner) {
         if (this.isOwnerReturned(dog, owner)) {
-            long gtime = dog.level().getDayTime();
+            long gtime = dog.level().getDefaultClockTime();
             long dtime = gtime - lastWithOwnerTime;
             if (dtime >= START_MISSING_OWNER_TIME) {
                 this.willGreet = true;
@@ -79,12 +79,12 @@ public class DogOwnerDistanceManager {
     }
 
     public void load(CompoundTag tag) {
-        if (tag.contains("ownerDistanceManager", Tag.TAG_COMPOUND)) {
-            var tg0 = tag.getCompound("ownerDistanceManager");
-            this.lastWithOwnerTime = tg0.getLong("lastWithOwnerTime");
-            this.willGreet = tg0.getBoolean("willGreet");
+        if (tag.contains("ownerDistanceManager")) {
+            var tg0 = tag.getCompoundOrEmpty("ownerDistanceManager");
+            this.lastWithOwnerTime = tg0.getLongOr("lastWithOwnerTime", 0L);
+            this.willGreet = tg0.getBooleanOr("willGreet", false);
         } else {
-            this.lastWithOwnerTime = this.dog.level().getDayTime();
+            this.lastWithOwnerTime = this.dog.level().getDefaultClockTime();
             this.willGreet = false;
         }
     }
@@ -110,12 +110,12 @@ public class DogOwnerDistanceManager {
     }
 
     public static int getGreetCountForOwner(LivingEntity owner) {
-        var storage = DogLocationStorage.get(owner.getServer());
+        var storage = DogLocationStorage.get(((net.minecraft.server.level.ServerLevel) owner.level()).getServer());
         return storage.grettingDogLimitMap.getOrDefault(owner.getUUID(), 0);
     }
 
     public static void incGreetCountForOwner(LivingEntity owner) {
-        var storage = DogLocationStorage.get(owner.getServer());
+        var storage = DogLocationStorage.get(((net.minecraft.server.level.ServerLevel) owner.level()).getServer());
         storage.grettingDogLimitMap.compute(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return 1;
@@ -125,7 +125,7 @@ public class DogOwnerDistanceManager {
     }
 
     public static void decGreetCountForOwner(LivingEntity owner) {
-        var storage = DogLocationStorage.get(owner.getServer());
+        var storage = DogLocationStorage.get(((net.minecraft.server.level.ServerLevel) owner.level()).getServer());
         storage.grettingDogLimitMap.computeIfPresent(owner.getUUID(), (uuid, old_val)  -> {
             if (old_val == null) {
                 return null;

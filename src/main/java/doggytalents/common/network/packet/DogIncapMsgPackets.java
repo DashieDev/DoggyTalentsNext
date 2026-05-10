@@ -25,7 +25,7 @@ public class DogIncapMsgPackets {
         @Override
         public void handleDog(Dog dog, DogIncapMsgData.Request data,
                 Supplier<Context> ctx) {
-            if (dog.level().isClientSide)
+            if (dog.level().isClientSide())
                 return;
             var sender = ctx.get().getSender();
             if (dog.getOwner() != sender)

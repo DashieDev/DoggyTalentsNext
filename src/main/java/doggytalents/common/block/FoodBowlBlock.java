@@ -15,6 +15,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +23,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -49,12 +52,8 @@ public class FoodBowlBlock extends BaseEntityBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
 
-    public FoodBowlBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1.0F, 5.0F).sound(SoundType.METAL));
-    }
-
     public FoodBowlBlock(BlockBehaviour.Properties props) {
-        this();
+        super(props.mapColor(MapColor.METAL).strength(1.0F, 5.0F).sound(SoundType.METAL));
     }
 
     @Override
@@ -95,7 +94,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+    protected void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier effectApplier, boolean firstOccupied) {
         if (entityIn instanceof ItemEntity) {
             FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
@@ -108,26 +107,23 @@ public class FoodBowlBlock extends BaseEntityBlock {
                     entityItem.setItem(remaining);
                 } else {
                     entityItem.discard();
-                    worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.25F, ((worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                    worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.25F, ((worldIn.getRandom().nextFloat() - worldIn.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 }
             }
         }
     }
 
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
-            if (foodBowl != null) {
-                var bowlInventory = foodBowl.getInventory();
-                for (int i = 0; i < bowlInventory.getSlots(); ++i) {
-                    Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), bowlInventory.getStackInSlot(i));
-                }
-                worldIn.updateNeighbourForOutputSignal(pos, this);
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel worldIn, BlockPos pos, boolean isMoving) {
+        FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
+        if (foodBowl != null) {
+            var bowlInventory = foodBowl.getInventory();
+            for (int i = 0; i < bowlInventory.getSlots(); ++i) {
+                Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), bowlInventory.getStackInSlot(i));
             }
-
-            super.onRemove(state, worldIn, pos, newState, isMoving);
+            worldIn.updateNeighbourForOutputSignal(pos, this);
         }
+        super.affectNeighborsAfterRemoval(state, worldIn, pos, isMoving);
     }
 
     @Override
@@ -136,7 +132,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos, Direction facing) {
         // FoodBowlTileEntity foodBowl = WorldUtil.getTileEntity(worldIn, pos, FoodBowlTileEntity.class);
 
         // if (foodBowl != null) {
@@ -149,7 +145,7 @@ public class FoodBowlBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult useWithoutItem(BlockState blockStateIn, Level worldIn, BlockPos posIn, Player playerIn, BlockHitResult result) {
-        if (worldIn.isClientSide) {
+        if (worldIn.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         else {
@@ -175,12 +171,12 @@ public class FoodBowlBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState stateIn, LevelReader reader, ScheduledTickAccess tickAccess, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
         if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+            tickAccess.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(reader));
         }
 
-        return facing == Direction.DOWN && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return facing == Direction.DOWN && !stateIn.canSurvive(reader, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, reader, tickAccess, currentPos, facing, facingPos, facingState, random);
     }
 
     @Override
