@@ -78,7 +78,7 @@ repositories {
 
 dependencies {
 
-    implementation "net.neoforged:neoforge:21.11.12-beta"
+    implementation "net.neoforged:neoforge:21.11.42"
     
 }
 
