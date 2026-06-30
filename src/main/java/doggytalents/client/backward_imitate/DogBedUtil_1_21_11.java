@@ -5,6 +5,7 @@ import org.joml.Vector3fc;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
 
+import doggytalents.DoggyBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.resources.model.BlockModelRotation;
@@ -43,7 +44,7 @@ public class DogBedUtil_1_21_11 {
     public static RenderType getItemBlockRenderType(ItemStack stack) {
         var item = stack.getItem();
         if (!(item instanceof BlockItem block_item))
-            throw new IllegalArgumentException("Not a block item");
+            return ItemBlockRenderTypes.getRenderType(DoggyBlocks.DOG_BED.get().defaultBlockState());
         var block = block_item.getBlock();
         return ItemBlockRenderTypes.getRenderType(block.defaultBlockState());
     }
