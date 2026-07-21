@@ -36,6 +36,12 @@ public class DogModelRegistry {
         register(new ResourceLocation("doggytalents", name), getter);
     }
 
+    public static void invalidateAllParsed() {
+        MODEL_MAP.entrySet().removeIf(entry -> {
+            return entry.getValue() instanceof ResolvedDogModelHolder; 
+        });
+    }
+
     public static boolean registerParsed(ResourceLocation id, ParsedModelResult result,
         DTNModelCodec.DogModelProps props) {
 
