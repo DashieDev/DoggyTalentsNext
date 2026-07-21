@@ -39,7 +39,9 @@ public class DTNModelLoader extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> contents, ResourceManager resourceManager,
             ProfilerFiller profiler) {
-        
+
+        DogModelRegistry.invalidateAllParsed();
+
         int load_count = 0;
         for (var entry : contents.entrySet()) {
             final var id = entry.getKey();
