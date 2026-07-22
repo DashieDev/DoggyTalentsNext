@@ -26,7 +26,6 @@ Not only that, we also offer you tons of ways to make your dog truly one-of-a-ki
 
 
 A Big Thanks to everyone that has contributed. This includes but is not limited to...
- * 💚**zNexwr** for Translation in "FR"
  * 💚**Arkathus** for Translation in "ES"
  * 💚**克洛伊** for Translation in "ZH_TW"
  * 💚**shenyx110**, **cmd-png** for Translation in "ZH_CN"
