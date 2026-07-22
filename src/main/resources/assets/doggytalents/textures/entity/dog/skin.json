@@ -235,6 +235,24 @@
             "tags" : "shiba, meme ,classical"
         },
         {
+            "skin_name" : "Wang Wang I",
+            "skin_id" : "wangwang",
+            "use_model" : "wangwang",
+            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
+            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "memorial, mother, wangwang"
+        },
+        {
+            "skin_name" : "Wang Wang II",
+            "skin_id" : "wangwang_mouthclosed",
+            "use_model" : "wangwang_mouthclosed",
+            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
+            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "memorial, mother, wangwang"
+        },
+        {
             "skin_name" : "Grey Wolf",
             "skin_id" : "grey_wolf",
             "use_model" : "default"
