@@ -92,7 +92,7 @@ public class DTNModelCodec {
     );
 
     public static final Codec<Pair<ParsedModelResult, DogModelProps>> DOG_MODEL_CODEC = 
-        pairCodec(CODEC, DogModelProps.CODEC.fieldOf("props").codec());
+        pairCodec(CODEC, DogModelProps.CODEC.optionalFieldOf("props", DogModelProps.DEFAULT).codec());
 
     private static Codec<ParsedPart> parsedPartCodec() {
         return Codec.recursive("DTNParsedPart", self -> {
