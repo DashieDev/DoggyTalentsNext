@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
 	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
-    id "me.modmuss50.mod-publish-plugin" version "1.0.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 version = '1.19.0'
