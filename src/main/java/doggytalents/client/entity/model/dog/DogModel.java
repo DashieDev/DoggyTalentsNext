@@ -165,27 +165,49 @@ public class DogModel extends EntityModel<Dog> {
     @Override
     public void prepareMobModel(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
-        this.resetAllPose();
+        //Do nothing
 
-        var pose = dog.getDogPose();
+    }
 
-        var anim = dog.getAnim();
-        if (anim != DogAnimation.NONE) {
-            if (anim.freeHead() && pose.canBeg)
-                this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-            return;
-        };
+    private void setupProceduralPose(
+        Dog dog, 
+        float limbSwing, float limbSwingAmount, 
+        float relativeHeadYRot, float headPitch,
+        float pticks, float ageInTicks
+    ) {
+        
+        final var pose = dog.getDogPose();
+        final var anim = dog.getAnim();
 
-        boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, partialTickTime);
-        if (stand_pose)
-            this.setUpStandPose(dog, limbSwing, limbSwingAmount, partialTickTime);
+        final boolean playing_full_anim = this.playingFullAnim(dog);
+        final boolean should_beg =
+            pose.canBeg
+            && (!playing_full_anim || anim.freeHead());
 
-        if (pose.canShake)
-        this.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+        if (!playing_full_anim) {
+            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, pticks);
+            if (stand_pose)
+                this.setUpStandPose(dog, limbSwing, limbSwingAmount, pticks);
 
-        if (pose.canBeg)
-        this.translateBeggingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
+            if (pose.canShake)
+                this.translateShakingDog(dog, limbSwing, limbSwingAmount, pticks);
+        }
 
+        if (should_beg)
+            this.translateBeggingDog(dog, limbSwing, limbSwingAmount, pticks);
+
+        if (pose.freeHead) {
+            this.head.xRot += headPitch * ((float)Math.PI / 180F); 
+            this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
+        }
+        if (pose.freeTail) {
+            this.tail.xRot = dog.getTailRotation();
+            this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, ageInTicks);
+        }
+    }
+
+    private boolean playingFullAnim(Dog dog) {
+        return !dog.getAnim().isNone();
     }
 
     public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
@@ -222,48 +244,6 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
-    @Deprecated
-    public void animateStandWalking(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        float w = Mth.cos(limbSwing * 0.6662F);
-        float w1 = Mth.cos(limbSwing * 0.6662F + (float) Math.PI);
-        float swing = Mth.clamp(limbSwingAmount, 0, 1);
-        float modifier = 2.5f;
-        this.body.xRot += getAnimateWalkingValue(w, swing, modifier * -5f*Mth.DEG_TO_RAD);
-        this.body.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
-        this.body.z +=  getAnimateWalkingValue(w, swing, -0.25f*modifier);
-
-        this.mane.xRot += getAnimateWalkingValue(w, swing, modifier * 2.5f*Mth.DEG_TO_RAD );
-        this.mane.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
-
-        this.head.y += getAnimateWalkingValue(w, swing, -0.25f*modifier);
-
-        this.tail.y += getAnimateWalkingValue(w, swing, 0.5f*modifier);
-        this.tail.z += getAnimateWalkingValue(w, swing, -0.5f*modifier);
-
-        if (this.earRight.isPresent()) {
-            this.earRight.get().xRot += getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
-            this.earRight.get().zRot += getAnimateWalkingValue(w, swing, -27.5f*Mth.DEG_TO_RAD );
-            this.earRight.get().y += getAnimateWalkingValue(w, swing, 0.5f );
-        }
-        if (this.earLeft.isPresent()) {
-            this.earLeft.get().xRot += getAnimateWalkingValue(w, swing, -40f*Mth.DEG_TO_RAD );
-            this.earLeft.get().zRot += getAnimateWalkingValue(w, swing, 27.5f*Mth.DEG_TO_RAD );
-            this.earLeft.get().y += getAnimateWalkingValue(w, swing, 0.5f );
-        }
-
-        this.legBackRight.xRot += w * 1.4F * limbSwingAmount;
-        this.legBackLeft.xRot += w1 * 1.4F * limbSwingAmount;
-        this.legFrontRight.xRot += w1 * 1.4F * limbSwingAmount;
-        this.legFrontLeft.xRot += w * 1.4F * limbSwingAmount;
-    }
-
-    @Deprecated
-    private float getAnimateWalkingValue(float w, float swingAmount, float amplitude) {
-        int sign = Mth.sign(amplitude);
-        amplitude = Math.abs(amplitude);
-        return sign*Math.abs(amplitude * swingAmount * w);
-    }
-
     public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
         this.mane.zRot = dog.getShakeAngle(partialTickTime, -0.08F);
         this.body.zRot = dog.getShakeAngle(partialTickTime, -0.16F);
@@ -275,48 +255,79 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     Vector3f vecObj = new Vector3f();
-    private float headXRot0 = 0, headYRot0 = 0, realHeadZRot0 = 0;
 
     @Override
     public void setupAnim(Dog dog, float limbSwing, float limbSwingAmount, float ageInTicks, float relativeHeadYRot, float headPitch) {
-        var pose = dog.getDogPose();
-        var animationManager = dog.animationManager;
+
+        this.resetAllPose();
 
         if (dog.isDogInAnimDebug() && dog.getAnim().isNone()) {
             setDogUpDebugAnim(dog);
             return;
         }
 
-        if (pose.freeHead) {
-            this.head.xRot += headPitch * ((float)Math.PI / 180F); 
-            this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
-        }
-        if (pose.freeTail) {
-            this.tail.xRot = dog.getTailRotation();
-            this.tail.yRot = dog.getWagAngle(limbSwing, limbSwingAmount, ageInTicks);
-        }
-
-        var animState = animationManager.animationState;
-        var anim = dog.getAnim();
-        if (anim == DogAnimation.NONE) return;
-        var sequence = this.getAnimationSequence(anim);
-        if (sequence == null) return;
-        if (pose.freeHead && anim.freeHead()) {
-            headXRot0 = this.head.xRot;
-            headYRot0 = this.head.yRot;
-            realHeadZRot0 = this.realHead.zRot;
-        } else if (pose.freeHead && anim.freeHeadXRotOnly()) {
-            headXRot0 = this.head.xRot;
-        }
-
-        anim.rootRotation().ifPresent(x -> {
-            this.root.yRot += x * Mth.DEG_TO_RAD;
-        });
+        final float pticks = ageInTicks - dog.tickCount;
         
+        this.setupProceduralPose(
+            dog, 
+            limbSwing, limbSwingAmount, 
+            relativeHeadYRot, headPitch, 
+            pticks, ageInTicks
+        );
+
+        final var cached_procedural_val =
+            new CachedProceduralValues(this.head.xRot, this.head.yRot, this.realHead.zRot);
+
+        setupKeyframeAnimationPose(dog, dog.getAnim(), ageInTicks, cached_procedural_val);
+    }
+
+    private boolean setupKeyframeAnimationPose(Dog dog, 
+        DogAnimation anim,
+        float ageInTicks, CachedProceduralValues proceduralValues) {
+        var animationManager = dog.animationManager;
+        var animState = animationManager.animationState;
+
+        if (anim.isNone()) 
+            return false;
+
+        var sequence = this.getAnimationSequence(anim);
+        if (sequence == null) 
+            return false;
+
+        resetAllPoseForAnim(dog, anim, proceduralValues);
+
         if (animState.isStarted()) {
             animState.updateTime(ageInTicks, anim.getSpeedModifier());
             DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
         }
+
+        return true;
+    }
+
+    private static record CachedProceduralValues(
+        float headXRot, float headYRot, float realHeadZRot 
+    ) {}
+
+    private void resetAllPoseForAnim(Dog dog, DogAnimation anim, CachedProceduralValues proceduralValues) {
+        this.resetAllPose();
+        
+        if (anim.freeTail()) {
+            this.tail.xRot = dog.getTailRotation();
+        }
+
+        if (anim.freeHead() && dog.getDogPose().freeHead) {
+            this.head.xRot = proceduralValues.headXRot;
+            this.head.yRot = proceduralValues.headYRot;
+            this.realHead.zRot = proceduralValues.realHeadZRot;
+        }
+
+        if (anim.freeHeadXRotOnly()) {
+            this.head.xRot = proceduralValues.headXRot;
+        }
+
+        anim.rootRotation().ifPresent(x -> {
+            this.root.yRot = x * Mth.DEG_TO_RAD;
+        });
     }
 
     private void setDogUpDebugAnim(Dog dog) {
@@ -357,25 +368,7 @@ public class DogModel extends EntityModel<Dog> {
     }
 
     public void resetPart(ModelPart part, Dog dog) {
-        if (part == this.tail && dog.getAnim().freeTail()) {
-            this.tail.resetPose();
-            this.tail.xRot = dog.getTailRotation();
-            return;
-        }
-        if (part == this.head && dog.getAnim().freeHead() && dog.getDogPose().freeHead) {
-            this.head.resetPose();
-            this.head.xRot = headXRot0;
-            this.head.yRot = headYRot0;
-            this.realHead.resetPose();
-            this.realHead.zRot = realHeadZRot0;
-            return;
-        }
-        if (part == this.head && dog.getAnim().convertHeadZRot()) {
-            this.head.resetPose();
-            this.head.xRot = headXRot0;
-            return;
-        }
-        part.resetPose();
+        //Do nothing
     }
 
     public void adjustAnimatedPart(ModelPart part, Dog dog) {
