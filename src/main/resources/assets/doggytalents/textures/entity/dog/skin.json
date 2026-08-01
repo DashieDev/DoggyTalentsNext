@@ -856,12 +856,6 @@
             "tags" : "classical"
         },
         {
-            "skin_name" : "Otter",
-            "skin_id" : "otter",
-            "use_model" : "otter",
-            "author" : "MashXP"
-        },
-        {
             "skin_name" : "Bolt",
             "skin_id" : "bolt",
             "use_model" : "bolt",
