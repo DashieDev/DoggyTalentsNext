@@ -46,11 +46,6 @@ import net.minecraft.util.StringRepresentable;
 public class DogModel extends EntityModel<Dog> {
 
     public final DogModelRenderType dogModelRendserType;
-    
-    public static final float[] MANE_LYING_OFF = {0f, 6f, 1f};
-    public static final float[] MANE_SITTING_OFF = {0f, 2f, 0f};
-    public static final float[] TAIL_LYING_OFF = {0, 6f, 0};
-    public static final float[] TAIL_SITTING_OFF = {0, 9f, -2f};
 
     public static final Vector3f DEFAULT_ROOT_PIVOT = new Vector3f(0, 15, 0);
 
