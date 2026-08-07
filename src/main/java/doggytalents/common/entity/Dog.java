@@ -461,23 +461,12 @@ public class Dog extends AbstractDog {
         return Math.min(0.5F + Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) / 2.0F * 0.5F, 1.0F);
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public float getShakeAngle(float partialTicks, float offset) {
-        float f = (Mth.lerp(partialTicks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking) + offset) / 1.8F;
-        if (f < 0.0F) {
-            f = 0.0F;
-        } else if (f > 1.0F) {
-            f = 1.0F;
-        }
-
-        return Mth.sin(f * (float)Math.PI) * Mth.sin(f * (float)Math.PI * 11.0F) * 0.15F * (float)Math.PI;
+    public float getDogClassicalShakeAnim(float pticks) {
+        return Mth.lerp(pticks, this.prevTimeWolfIsShaking, this.timeWolfIsShaking);
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public float getInterestedAngle(float partialTicks) {
-        return Mth.lerp(partialTicks, this.headRotationCourseOld, this.headRotationCourse) * 0.15F * (float)Math.PI;
+    public float getDogClassicalBegAnim(float pticks) {
+        return Mth.lerp(pticks, this.headRotationCourseOld, this.headRotationCourse);
     }
 
     @Override
@@ -523,11 +512,6 @@ public class Dog extends AbstractDog {
         lost_rad = Mth.clamp(lost_rad, 0, Mth.HALF_PI);
         
         return full_health_angle - lost_rad;
-    }
-
-    @Override
-    public float getWagAngle(float limbSwing, float limbSwingAmount, float partialTickTime) {
-        return Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
     @Override
@@ -652,7 +636,7 @@ public class Dog extends AbstractDog {
                 }
             }
         }
-        
+
         this.animationManager.tick();
 
         if (this.isAlive()) {
