@@ -657,8 +657,10 @@ public class Dog extends AbstractDog {
             }
         }
         
+        this.animationManager.tick();
+
         if (this.isAlive()) {
-            this.animationManager.tick();
+            
             if (!this.level().isClientSide)
                 this.tickAnimAction();
         }
