@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 @Deprecated
 public class VariantDogModel extends DogModel {
 
+    public ModelPart realTail1;
     public ModelPart realTail2;
     public ModelPart realTail3;
     public ModelPart earNormal;
@@ -22,8 +23,9 @@ public class VariantDogModel extends DogModel {
 
     public VariantDogModel(ModelPart box) {
         super(box);
-        this.realTail2 = this.tail.getChild("real_tail_2");
-        this.realTail3 = this.tail.getChild("real_tail_bushy");
+        this.realTail1 = this.realTail.getChild("real_tail_1");
+        this.realTail2 = this.realTail.getChild("real_tail_2");
+        this.realTail3 = this.realTail.getChild("real_tail_bushy");
         this.earNormal = this.realHead.getChild("ear_normal");
         this.earBoni = this.realHead.getChild("ear_boni");
         this.earSmall = this.realHead.getChild("ear_small");
@@ -66,15 +68,16 @@ public class VariantDogModel extends DogModel {
         var1.addOrReplaceChild("right_front_leg", var4, PartPose.offset(-1.5F, 16.0F, -4.0F));
         var1.addOrReplaceChild("left_front_leg", var4, PartPose.offset(1.5F, 16.0F, -4.0F));
         PartDefinition var5 = var1.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0F, 12.0F, 8.0F, 0.62831855F, 0.0F, 0.0F));
-        var5.addOrReplaceChild("real_tail", CubeListBuilder.create()
-                .texOffs(9, 18).addBox(-1F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale)
+        var real_tail = var5.addOrReplaceChild("real_tail", CubeListBuilder.create(), PartPose.ZERO);
+        real_tail.addOrReplaceChild("real_tail_1", CubeListBuilder.create()
+            .texOffs(9, 18).addBox(-1F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, scale)
         , PartPose.ZERO);
-        var5.addOrReplaceChild("real_tail_2", CubeListBuilder.create()
-                .texOffs(45, 0).addBox(-1F, 0.0F, 0.0F, 2, 3, 1, scale)
+        real_tail.addOrReplaceChild("real_tail_2", CubeListBuilder.create()
+            .texOffs(45, 0).addBox(-1F, 0.0F, 0.0F, 2, 3, 1, scale)
         , PartPose.offset(0.0F, -2.0F, 0.0F));
-        var5.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create()
-                .texOffs(43, 19).addBox(-2F, 0F, -2F, 3, 10, 3, scale)
-                , PartPose.ZERO);
+        real_tail.addOrReplaceChild("real_tail_bushy", CubeListBuilder.create()
+            .texOffs(43, 19).addBox(-2F, 0F, -2F, 3, 10, 3, scale)
+        , PartPose.ZERO);
         return LayerDefinition.create(var0, 64, 32);
     }
 
@@ -89,17 +92,17 @@ public class VariantDogModel extends DogModel {
     protected void pickTail(int tail_id) {
         switch (tail_id) {
         default:
-            this.realTail.visible = true;
+            this.realTail1.visible = true;
             this.realTail2.visible = false;
             this.realTail3.visible = false;
             break;
         case 1 :
-            this.realTail.visible = false;
+            this.realTail1.visible = false;
             this.realTail2.visible = true;
             this.realTail3.visible = false;
             break;
         case 2 :
-            this.realTail.visible = false;
+            this.realTail1.visible = false;
             this.realTail2.visible = false;
             this.realTail3.visible = true;
             break;
@@ -124,27 +127,6 @@ public class VariantDogModel extends DogModel {
             this.earSmall.visible = true;
             break;
         }
-    }
-
-    @Override
-    public void resetAllPose() {
-        super.resetAllPose();
-        this.realTail2.resetPose();
-        this.realTail3.resetPose();
-    }
-
-    @Override
-    public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        super.translateShakingDog(dog, limbSwing, limbSwingAmount, partialTickTime);
-        this.realTail2.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-        this.realTail3.zRot = dog.getShakeAngle(partialTickTime, -0.2F);
-    }
-
-    @Override
-    public void copyFrom(DogModel dogModel) {
-        super.copyFrom(dogModel);
-        this.realTail2.copyFrom(this.realTail);
-        this.realTail3.copyFrom(this.realTail);
     }
 
     @Override
