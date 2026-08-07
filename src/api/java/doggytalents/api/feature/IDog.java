@@ -65,10 +65,6 @@ public interface IDog {
     public List<AccessoryInstance> getAccessories();
     public List<AccessoryInstance> removeAccessories();
 
-    public float getWagAngle(float limbSwing, float limbSwingAmount, float partialTickTime);
-    public float getShakeAngle(float partialTicks, float offset);
-    public float getInterestedAngle(float partialTicks);
-
     public boolean isLying();
 
     public List<IDogFoodHandler> getFoodHandlers();
