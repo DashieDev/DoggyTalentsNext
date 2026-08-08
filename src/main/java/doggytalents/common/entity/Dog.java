@@ -5237,7 +5237,11 @@ public class Dog extends AbstractDog {
     }
 
     public void setAnim(DogAnimation animation) {
+        var anim0 = DogAnimation.byId(this.entityData.get(ANIMATION));
         this.entityData.set(ANIMATION, animation.getId());
+        if (anim0 != animation) {
+            this.entityData.set(ANIM_SYNC_TIME, -1);
+        }
     }
 
     @Override

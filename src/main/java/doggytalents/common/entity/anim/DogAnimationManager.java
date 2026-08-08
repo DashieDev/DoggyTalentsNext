@@ -103,11 +103,16 @@ public class DogAnimationManager {
     }
 
     public void onSyncTimeUpdated() {
-        if (this.dog.level().isClientSide)
-            resolveLatencyIfNeeded();
+        if (this.dog.level().isClientSide) {
+            int sync_time = this.dog.getAnimSyncTime();
+            resolveLatencyIfNeeded(sync_time);
+        } 
+            
     }
 
-    private void resolveLatencyIfNeeded() {
+    private void resolveLatencyIfNeeded(int syncTime) {
+        if (syncTime < 0)
+            return;
         if (!started || looping)
             return;
         
@@ -118,7 +123,7 @@ public class DogAnimationManager {
         if (configMaxLatency > MIN_VAL_MAX_LATENCY)
             maxLatencyAllowed = configMaxLatency;
 
-        int correctTime = dog.getAnimSyncTime();
+        int correctTime = syncTime;
         int currentTime = this.animationTime;
         int latencyAbs = Mth.abs(correctTime - currentTime);
         if (latencyAbs <= maxLatencyAllowed)
