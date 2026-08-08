@@ -134,6 +134,7 @@ public class DogAnimationManager {
         int correctPassedTime = 
             anim.getLengthTicks() - this.animationTime;
         
+        this.blendDuration = 0; this.blendTick = 0;
         animationState.resolveLatency(dog.tickCount, 
             correctPassedTime, 
             anim.getSpeedModifier());
