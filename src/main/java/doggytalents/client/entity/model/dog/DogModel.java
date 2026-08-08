@@ -29,6 +29,7 @@ import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedStateForAnim;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -173,7 +174,14 @@ public class DogModel extends EntityModel<Dog> {
         float pticks, float ageInTicks
     ) {
         
-        final var captured_state = dog.animationManager.capturedStateForAnim;
+        
+        final var anim = dog.getAnim();
+        final boolean playing_full_anim = this.playingFullAnim(dog, pticks);
+        final boolean is_anim_blending = !(anim.isNone() || this.playingFullAnim(dog, pticks));
+
+        final var captured_state = is_anim_blending ? 
+            dog.animationManager.capturedStateForAnim
+            : DogCapturedStateForAnim.NONE;
         
         var pose = dog.getDogPose();
         if (!captured_state.isNone()) {
@@ -183,9 +191,6 @@ public class DogModel extends EntityModel<Dog> {
                 pose = captured_pose;
         }
 
-        final var anim = dog.getAnim();
-
-        final boolean playing_full_anim = this.playingFullAnim(dog, pticks);
         final boolean should_beg =
             pose.canBeg
             && (!playing_full_anim || anim.freeHead());
