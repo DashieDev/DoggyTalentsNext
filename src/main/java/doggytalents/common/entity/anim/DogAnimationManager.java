@@ -214,13 +214,19 @@ public class DogAnimationManager {
     }
 
     public static record DogCapturedStateForAnim(
-        float headXRot, float headYRot, DogPose pose
+        float headXRot, float headYRot, DogPose pose,
+        float shakeAnim, float begAnim
     ) {
         public static final DogCapturedStateForAnim NONE = 
-            new DogCapturedStateForAnim(0, 0, DogPose.STAND);
+            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0);
 
         public static DogCapturedStateForAnim capture(Dog dog) {
-            return new DogCapturedStateForAnim(dog.getXRot(), dog.yHeadRot, dog.getDogPose());
+            final float xrot = Mth.wrapDegrees(dog.getXRot());
+            final float yheadrot = Mth.wrapDegrees(dog.yHeadRot);
+            return new DogCapturedStateForAnim(
+                xrot, yheadrot, dog.getDogPose(),
+                dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1)
+            );
         }
 
         public boolean isNone() {

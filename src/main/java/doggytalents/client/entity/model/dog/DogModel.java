@@ -195,17 +195,22 @@ public class DogModel extends EntityModel<Dog> {
             pose.canBeg
             && (!playing_full_anim || anim.freeHead());
 
+        final float shake_value = !captured_state.isNone() ? 
+            captured_state.shakeAnim() : dog.getDogClassicalShakeAnim(pticks);
+        final float beg_value = !captured_state.isNone() ? 
+            captured_state.begAnim() : dog.getDogClassicalBegAnim(pticks);
+
         if (!playing_full_anim) {
             boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, pticks);
             if (stand_pose)
                 this.setUpStandPose(dog, limbSwing, limbSwingAmount, pticks);
 
             if (pose.canShake)
-                this.translateShakingDog(dog, limbSwing, limbSwingAmount, pticks);
+                this.translateShakingDog(dog, shake_value, limbSwing, limbSwingAmount, pticks);
         }
 
         if (should_beg)
-            this.translateBeggingDog(dog, limbSwing, limbSwingAmount, pticks);
+            this.translateBeggingDog(dog, shake_value, beg_value, limbSwing, limbSwingAmount, pticks);
 
         if (pose.freeHead) {
             this.head.xRot += headPitch * ((float)Math.PI / 180F); 
@@ -255,18 +260,16 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
-    public void translateShakingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        float shake_value = dog.getDogClassicalShakeAnim(partialTickTime);
-        this.mane.zRot = DogClassicalAnimationState.shakeAngle(shake_value, -0.08F);
-        this.body.zRot = DogClassicalAnimationState.shakeAngle(shake_value, -0.16F);
-        this.realTail.zRot = DogClassicalAnimationState.shakeAngle(shake_value, -0.2F);
+    public void translateShakingDog(Dog dog, float shakeValue, float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.mane.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.08F);
+        this.body.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.16F);
+        this.realTail.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.2F);
     }
 
-    public void translateBeggingDog(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        float beg_value = dog.getDogClassicalBegAnim(partialTickTime);
-        float shake_value = dog.getDogClassicalShakeAnim(partialTickTime);
-        this.realHead.zRot = DogClassicalAnimationState.begAngle(beg_value)
-            + DogClassicalAnimationState.shakeAngle(shake_value, 0);
+    public void translateBeggingDog(Dog dog, float shakeValue, float begValue, 
+        float limbSwing, float limbSwingAmount, float partialTickTime) {
+        this.realHead.zRot = DogClassicalAnimationState.begAngle(begValue)
+            + DogClassicalAnimationState.shakeAngle(shakeValue, 0);
     }
 
     Vector3f vecObj = new Vector3f();
