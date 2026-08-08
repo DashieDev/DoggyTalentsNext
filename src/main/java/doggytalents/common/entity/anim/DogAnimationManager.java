@@ -141,7 +141,7 @@ public class DogAnimationManager {
     }
 
     public float getBlendProgress(float partialTicks) {
-        if (!started || this.blendTick >= this.blendDuration) return 1.0f;
+        if (!started || this.blendDuration <= 0 || this.blendTick >= this.blendDuration) return 1.0f;
         float ret = Mth.clamp((this.blendTick + partialTicks) / (float) this.blendDuration, 0.0f, 1.0f);
         return Mth.equal(ret, 1) ? 1 : ret;
     }
