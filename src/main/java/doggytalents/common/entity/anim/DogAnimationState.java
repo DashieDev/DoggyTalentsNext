@@ -17,6 +17,11 @@ public class DogAnimationState {
         started = false;
     }
 
+    public long updateTimeAndGet(float timestampTickWithPartial, float speedModifier) {
+        this.updateTime(timestampTickWithPartial, speedModifier);
+        return this.getAccumulatedTimeMillis();
+    }
+
     public void updateTime(float timestampTickWithPartial, float speedModifier) {
         if (this.isStarted()) {
             long i = Util.tickMayWithPartialToMillis(timestampTickWithPartial);
