@@ -48,7 +48,9 @@ public class DogAnimationManager {
             this.animationTime = anim.getLengthTicks();
             animationState.start(dog.tickCount);
             tickTillSync = SYNC_INTERVAL_TICK;
-            if (!anim.isNone()) {
+            final boolean setup_blend =
+                !anim.isNone() && !anim.blend().isNone();
+            if (setup_blend) {
                 this.blendTick = 0;
                 this.blendDuration = anim.blend().blendTick();
                 this.capturedStateForAnim = DogCapturedStateForAnim.capture(dog);
