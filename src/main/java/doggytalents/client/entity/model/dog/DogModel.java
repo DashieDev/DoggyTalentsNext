@@ -306,6 +306,9 @@ public class DogModel extends EntityModel<Dog> {
         final boolean is_anim_blending =
             !anim.blend().isNone() && !this.playingFullAnim(dog, pticks);
 
+        final long anim_time_millis = dog.animationManager.animationState
+            .updateTimeAndGet(ageInTicks, anim.getSpeedModifier());
+
         if (is_anim_blending) {
             final var pose_A = this.animSnapshot1;
             final var pose_B = this.animSnapshot2;
@@ -316,7 +319,7 @@ public class DogModel extends EntityModel<Dog> {
 
             pose_A.store(this);
 
-            setupKeyframeAnimationPose(dog, dog.getAnim(), ageInTicks, cached_procedural_val);
+            setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
             
             pose_B.store(this);
 
@@ -326,15 +329,13 @@ public class DogModel extends EntityModel<Dog> {
                 AnimSnapshot.blendAndApply(dog.animationManager.getBlendProgress(pticks), pose_A, pose_B, this);
             }
         } else {
-            setupKeyframeAnimationPose(dog, dog.getAnim(), ageInTicks, cached_procedural_val);
+            setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
         }
     }
 
     private boolean setupKeyframeAnimationPose(Dog dog, 
-        DogAnimation anim,
-        float ageInTicks, CachedProceduralValues proceduralValues) {
-        var animationManager = dog.animationManager;
-        var animState = animationManager.animationState;
+        DogAnimation anim, long animTimeMillis, 
+        CachedProceduralValues proceduralValues) {
 
         if (anim.isNone()) 
             return false;
@@ -344,11 +345,8 @@ public class DogModel extends EntityModel<Dog> {
             return false;
 
         resetAllPoseForAnim(dog, anim, proceduralValues);
-
-        if (animState.isStarted()) {
-            animState.updateTime(ageInTicks, anim.getSpeedModifier());
-            DogKeyframeAnimations.animate(this, dog, sequence, animState.getAccumulatedTimeMillis(), 1.0F, vecObj);
-        }
+            
+        DogKeyframeAnimations.animate(this, dog, sequence, animTimeMillis, 1.0F, vecObj);
 
         return true;
     }
