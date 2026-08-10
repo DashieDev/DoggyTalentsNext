@@ -315,6 +315,17 @@ public class DogModel extends EntityModel<Dog> {
                 this.head.xRot = dog.animationManager.capturedStateForAnim.headXRot() * Mth.DEG_TO_RAD; 
             }
 
+            final var captured_state = dog.animationManager.capturedStateForAnim;
+
+            var captured_anim_state_optional = 
+                captured_state.animPose();
+            boolean blend_prev_anim = true;
+            if (blend_prev_anim && captured_anim_state_optional.isPresent()) {
+                var captured_anim_state = captured_anim_state_optional.get();
+                setupKeyframeAnimationPose(dog, captured_anim_state.anim(), 
+                    captured_anim_state.timestampMillis(), cached_procedural_val);
+            }
+
             pose_A.store(this);
 
             setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
@@ -371,7 +382,7 @@ public class DogModel extends EntityModel<Dog> {
         }
 
         anim.rootRotation().ifPresent(x -> {
-            this.root.yRot = x * Mth.DEG_TO_RAD;
+            this.root.yRot += x * Mth.DEG_TO_RAD;
         });
     }
 

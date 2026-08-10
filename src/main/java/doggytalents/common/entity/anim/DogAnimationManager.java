@@ -1,6 +1,7 @@
 package doggytalents.common.entity.anim;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import doggytalents.api.anim.DogAnimation;
 import doggytalents.common.config.ConfigHandler;
@@ -28,7 +29,14 @@ public class DogAnimationManager {
     private int tickTillSync = 0;
     private int blendTick = 0;
     private int blendDuration = 0;
+    private BlendState blendState = BlendState.NONE;
+    //Procedural Captured State
     public DogCapturedStateForAnim capturedStateForAnim = DogCapturedStateForAnim.NONE;
+    //Keyframe Captured State
+    public DogCapturedAnimPose capturedStateForAnimPose = DogCapturedAnimPose.NONE; 
+
+    private DogAnimation lastAnim = DogAnimation.NONE;
+    private DogAnimation currentAnim = DogAnimation.NONE;
 
     //Common - Debug
     private boolean isDebug = false;
@@ -36,30 +44,50 @@ public class DogAnimationManager {
     public DogAnimationManager(Dog dog) { this.dog = dog; }
 
     public void onAnimationChange(DogAnimation anim) {
+        this.lastAnim = this.currentAnim; 
+        this.currentAnim = anim;
+
         animationTime = 0;
         this.isHolding = false;
         this.blendTick = 0;
         this.blendDuration = 0;
         this.capturedStateForAnim = DogCapturedStateForAnim.NONE;
+
+        this.blendState = computeBlendState(this.lastAnim, this.currentAnim);
+        if (!this.blendState.isNone()) {
+            this.blendTick = 0;
+            this.blendDuration = pickBlendDuration(
+                this.lastAnim, this.currentAnim, this.blendState);
+            this.capturedStateForAnim = DogCapturedStateForAnim.capture(dog);
+        }
+        
         if (anim != DogAnimation.NONE) {
             started = true;
             looping = anim.looping();
             holdOnLastTick = anim.holdOnLastTick();
             this.animationTime = anim.getLengthTicks();
-            animationState.start(dog.tickCount);
             tickTillSync = SYNC_INTERVAL_TICK;
-            final boolean setup_blend =
-                !anim.isNone() && !anim.blend().isNone();
-            if (setup_blend) {
-                this.blendTick = 0;
-                this.blendDuration = anim.blend().blendTick();
-                this.capturedStateForAnim = DogCapturedStateForAnim.capture(dog);
-            }
+            animationState.start(dog.tickCount);
         } else {
             started = false;
             looping = false;
             animationState.stop();
         }
+    }
+
+    private BlendState computeBlendState(DogAnimation fromAnim, DogAnimation toAnim) {
+        if (fromAnim.isNone() && toAnim.hasBlendIn())
+            return BlendState.BLEND_IN;
+        if (fromAnim.hasBlendOut() && toAnim.isNone())
+            return BlendState.BLEND_OUT;
+        return fromAnim.hasBlendOut() && toAnim.hasBlendIn() ?
+            BlendState.ANIM_TO_ANIM : BlendState.NONE;
+    }
+
+    private int pickBlendDuration(DogAnimation fromAnim, DogAnimation toAnim, BlendState blendState) {
+        return blendState == BlendState.BLEND_OUT ?
+            fromAnim.blendOut().blendTick()
+            : toAnim.blend().blendTick();
     }
 
     public void tick() {
@@ -96,7 +124,7 @@ public class DogAnimationManager {
             }
         }
 
-        if (started && this.blendTick < this.blendDuration) {
+        if (this.blendTick < this.blendDuration) {
             this.blendTick++;
         }
 
@@ -143,9 +171,15 @@ public class DogAnimationManager {
     }
 
     public float getBlendProgress(float partialTicks) {
-        if (!started || this.blendDuration <= 0 || this.blendTick >= this.blendDuration) return 1.0f;
+        if (this.blendDuration <= 0 || this.blendTick >= this.blendDuration) return 1.0f;
         float ret = Mth.clamp((this.blendTick + partialTicks) / (float) this.blendDuration, 0.0f, 1.0f);
         return Mth.equal(ret, 1) ? 1 : ret;
+    }
+
+    public float getBlendOutProgress(float pticks) {
+        float ret = 1 - getBlendProgress(pticks);
+        ret = Mth.clamp(ret, 0, 1);
+        return Mth.equal(ret, 0) ? 0 : ret; 
     }
 
     public boolean playingFullAnim(float pticks) {
@@ -154,6 +188,16 @@ public class DogAnimationManager {
             anim.blend().isNone()
             || getBlendProgress(pticks) >= 1
         );
+    }
+
+    public BlendState getBlendState(float pticks) {
+        if (this.blendState.isNone())
+            return this.blendState;
+        if (this.blendState == BlendState.BLEND_OUT)
+            return getBlendOutProgress(pticks) > 0 ?
+                this.blendState : BlendState.NONE;
+        return getBlendProgress(pticks) < 1 ?
+            this.blendState : BlendState.NONE; 
     }
 
     public boolean started() {
@@ -223,19 +267,46 @@ public class DogAnimationManager {
 
     public static record DogCapturedStateForAnim(
         float headXRot, float headYRot, DogPose pose,
-        float shakeAnim, float begAnim
+        float shakeAnim, float begAnim, Optional<DogCapturedAnimPose> animPose
     ) {
         public static final DogCapturedStateForAnim NONE = 
-            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0);
+            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0, Optional.empty());
 
         public static DogCapturedStateForAnim capture(Dog dog) {
             final float xrot = Mth.wrapDegrees(dog.getXRot());
-            final float yheadrot = Mth.wrapDegrees(dog.yHeadRot);
+            final float yheadrot = Mth.wrapDegrees(dog.yHeadRot - dog.yBodyRot); 
+            
+            var captured_anim_pose = Optional.<DogCapturedAnimPose>empty();
+            final var anim = dog.animationManager.lastAnim;
+            final var anim_state = dog.animationManager.animationState;
+            if (!anim.isNone() && anim_state.isStarted()) {
+                captured_anim_pose = Optional.of(
+                    new DogCapturedAnimPose(anim, anim_state.getAccumulatedTimeMillis())
+                );
+            }
+            
             return new DogCapturedStateForAnim(
                 xrot, yheadrot, dog.getDogPose(),
-                dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1)
+                dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1),
+                captured_anim_pose
             );
         }
+
+        public boolean isNone() {
+            return this == NONE;
+        }
+    }
+
+    public static record DogCapturedAnimPose(DogAnimation anim, long timestampMillis) {
+        public static final DogCapturedAnimPose NONE = 
+            new DogCapturedAnimPose(DogAnimation.NONE, 0);
+        public boolean isNone() {
+            return this == NONE;
+        }
+    }
+
+    public static enum BlendState { 
+        NONE, ANIM_TO_ANIM, BLEND_IN, BLEND_OUT;
 
         public boolean isNone() {
             return this == NONE;
