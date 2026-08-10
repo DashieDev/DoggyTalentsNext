@@ -30,9 +30,9 @@ public class DogAnimationManager {
     private int blendTick = 0;
     private int blendDuration = 0;
     private BlendState blendState = BlendState.NONE;
-    //Procedural Captured State
+    //TODO: Rename to Procedural Captured State 
     public DogCapturedStateForAnim capturedStateForAnim = DogCapturedStateForAnim.NONE;
-    //Keyframe Captured State
+    //TODO: Rename Keyframe Captured State
     public DogCapturedAnimPose capturedStateForAnimPose = DogCapturedAnimPose.NONE; 
 
     private DogAnimation lastAnim = DogAnimation.NONE;
@@ -58,7 +58,13 @@ public class DogAnimationManager {
             this.blendTick = 0;
             this.blendDuration = pickBlendDuration(
                 this.lastAnim, this.currentAnim, this.blendState);
+        }
+        if (this.blendState.hasProceduralCapture()) {
             this.capturedStateForAnim = DogCapturedStateForAnim.capture(dog);
+        }
+        if (this.blendState.hasAnimPoseCapture()) {
+            this.capturedStateForAnimPose = 
+                new DogCapturedAnimPose(this.lastAnim, this.animationState.getAccumulatedTimeMillis());
         }
         
         if (anim != DogAnimation.NONE) {
@@ -267,28 +273,18 @@ public class DogAnimationManager {
 
     public static record DogCapturedStateForAnim(
         float headXRot, float headYRot, DogPose pose,
-        float shakeAnim, float begAnim, Optional<DogCapturedAnimPose> animPose
+        float shakeAnim, float begAnim
     ) {
         public static final DogCapturedStateForAnim NONE = 
-            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0, Optional.empty());
+            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0);
 
         public static DogCapturedStateForAnim capture(Dog dog) {
             final float xrot = Mth.wrapDegrees(dog.getXRot());
             final float yheadrot = Mth.wrapDegrees(dog.yHeadRot - dog.yBodyRot); 
             
-            var captured_anim_pose = Optional.<DogCapturedAnimPose>empty();
-            final var anim = dog.animationManager.lastAnim;
-            final var anim_state = dog.animationManager.animationState;
-            if (!anim.isNone() && anim_state.isStarted()) {
-                captured_anim_pose = Optional.of(
-                    new DogCapturedAnimPose(anim, anim_state.getAccumulatedTimeMillis())
-                );
-            }
-            
             return new DogCapturedStateForAnim(
                 xrot, yheadrot, dog.getDogPose(),
-                dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1),
-                captured_anim_pose
+                dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1)
             );
         }
 
@@ -310,6 +306,14 @@ public class DogAnimationManager {
 
         public boolean isNone() {
             return this == NONE;
+        }
+
+        public boolean hasProceduralCapture() {
+            return this == BLEND_IN;
+        }
+
+        public boolean hasAnimPoseCapture() {
+            return this == ANIM_TO_ANIM || this == BLEND_OUT;
         }
     }
 
