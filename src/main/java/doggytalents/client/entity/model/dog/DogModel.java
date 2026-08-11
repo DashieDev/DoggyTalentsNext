@@ -187,10 +187,7 @@ public class DogModel extends EntityModel<Dog> {
         
         var pose = dog.getDogPose();
         if (!captured_procedural.isNone()) {
-            //TODO only use captured pose if it is either SIT or STAND
-            final var captured_pose = captured_procedural.pose();
-            if (captured_pose == DogPose.STAND || captured_pose == DogPose.SIT)
-                pose = captured_pose;
+            pose = captured_procedural.pose();
         }
 
         final boolean should_beg =
