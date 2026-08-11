@@ -131,7 +131,7 @@ public class AnimSnapshot {
     }
 
     private static float interpRot(float progress, float a, float b) {
-        return Mth.rotLerp(progress ,a, b);
+        return Mth.rotLerp(progress ,a * Mth.RAD_TO_DEG, b * Mth.RAD_TO_DEG) * Mth.DEG_TO_RAD;
     }
     
     public static class Part {
