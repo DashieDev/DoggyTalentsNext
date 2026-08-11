@@ -29,6 +29,7 @@ import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedStateForAnim;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -177,16 +178,17 @@ public class DogModel extends EntityModel<Dog> {
         
         final var anim = dog.getAnim();
         final boolean playing_full_anim = this.playingFullAnim(dog, pticks);
-        final boolean is_anim_blending = !(anim.isNone() || this.playingFullAnim(dog, pticks));
+        final var anim_manager = dog.animationManager;
 
-        final var captured_state = is_anim_blending ? 
-            dog.animationManager.capturedStateForAnim
-            : DogCapturedStateForAnim.NONE;
+        final var captured_procedural = 
+            anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
+                dog.animationManager.capturedStateForAnim
+                : DogCapturedStateForAnim.NONE;
         
         var pose = dog.getDogPose();
-        if (!captured_state.isNone()) {
+        if (!captured_procedural.isNone()) {
             //TODO only use captured pose if it is either SIT or STAND
-            final var captured_pose = captured_state.pose();
+            final var captured_pose = captured_procedural.pose();
             if (captured_pose == DogPose.STAND || captured_pose == DogPose.SIT)
                 pose = captured_pose;
         }
@@ -195,10 +197,10 @@ public class DogModel extends EntityModel<Dog> {
             pose.canBeg
             && (!playing_full_anim || anim.freeHead());
 
-        final float shake_value = !captured_state.isNone() ? 
-            captured_state.shakeAnim() : dog.getDogClassicalShakeAnim(pticks);
-        final float beg_value = !captured_state.isNone() ? 
-            captured_state.begAnim() : dog.getDogClassicalBegAnim(pticks);
+        final float shake_value = !captured_procedural.isNone() ? 
+            captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks);
+        final float beg_value = !captured_procedural.isNone() ? 
+            captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks);
 
         if (!playing_full_anim) {
             boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, pticks);
@@ -293,41 +295,68 @@ public class DogModel extends EntityModel<Dog> {
             pticks, ageInTicks
         );
 
+        final var anim_manager = dog.animationManager;
         final var anim = dog.getAnim();
 
-        if (anim.isNone())
+        final boolean is_procedural_only = 
+            anim.isNone() && anim_manager.getBlendState(pticks).isNone();
+
+        if (is_procedural_only)
             return;
 
         final var cached_procedural_val =
             new CachedProceduralValues(this.head.xRot, this.head.yRot, this.realHead.zRot);
 
-        final boolean is_anim_blending =
-            !anim.blend().isNone() && !this.playingFullAnim(dog, pticks);
-
         final long anim_time_millis = dog.animationManager.animationState
             .updateTimeAndGet(ageInTicks, anim.getSpeedModifier());
 
-        if (is_anim_blending) {
-            final var pose_A = this.animSnapshot1;
-            final var pose_B = this.animSnapshot2;
-
-            if (!anim.isNone() && !anim.freeHeadXRot()) {
-                this.head.xRot = dog.animationManager.capturedStateForAnim.headXRot() * Mth.DEG_TO_RAD; 
-            }
-
-            pose_A.store(this);
-
+        if (this.playingFullAnim(dog, pticks)) {
             setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
-            
-            pose_B.store(this);
+            return;
+        }
+        
+        final var blend_state = anim_manager.getBlendState(pticks);
 
-            if (anim.blend().blendHeadRotAndChildrenOnly()) {
-                AnimSnapshot.blendAndApplyHeadRotAndChildrenOnly(dog.animationManager.getBlendProgress(pticks), pose_A, pose_B, this);   
-            } else {
-                AnimSnapshot.blendAndApply(dog.animationManager.getBlendProgress(pticks), pose_A, pose_B, this);
+        final var pose_A = this.animSnapshot1;
+        final var pose_B = this.animSnapshot2;
+        
+        //TODO Move this into setupProceduralPose.
+        if (blend_state.hasProceduralCapture() && !anim.freeHeadXRot()) {
+            this.head.xRot = dog.animationManager.capturedStateForAnim.headXRot() * Mth.DEG_TO_RAD; 
+        }
+
+        if (blend_state == BlendState.ANIM_TO_ANIM) {
+            final var captured_keyframe = dog.animationManager.capturedStateForAnimPose;
+
+            if (!captured_keyframe.isNone()) {
+                setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
+                    captured_keyframe.timestampMillis(), cached_procedural_val);
+            }
+        }
+
+        pose_A.store(this);
+
+        if (blend_state == BlendState.BLEND_OUT) {
+            final var captured_keyframe = dog.animationManager.capturedStateForAnimPose;
+
+            if (!captured_keyframe.isNone()) {
+                setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
+                    captured_keyframe.timestampMillis(), cached_procedural_val);
             }
         } else {
             setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
+        }
+        
+        pose_B.store(this);
+
+        final float blend_progress = blend_state == BlendState.BLEND_OUT ?
+            anim_manager.getBlendOutProgress(pticks)
+            : anim_manager.getBlendProgress(pticks);
+
+        if (anim.blend().blendHeadRotAndChildrenOnly()) {
+            AnimSnapshot.blendAndApplyHeadRotAndChildrenOnly(blend_progress, pose_A, pose_B, this);   
+        } else {
+            AnimSnapshot.blendAndApply(blend_progress, pose_A, pose_B, this);
         }
     }
 
