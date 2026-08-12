@@ -214,7 +214,11 @@ public class DogModel extends EntityModel<Dog> {
             this.translateBeggingDog(dog, shake_value, beg_value, limbSwing, limbSwingAmount, pticks);
 
         if (pose.freeHead) {
-            this.head.xRot += headPitch * ((float)Math.PI / 180F); 
+            if (!captured_procedural.isNone() && !anim.freeHeadXRot()) {
+                this.head.xRot = captured_procedural.headXRot() * Mth.DEG_TO_RAD; 
+            } else {
+                this.head.xRot += headPitch * ((float)Math.PI / 180F); 
+            }
             this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
@@ -318,11 +322,6 @@ public class DogModel extends EntityModel<Dog> {
 
         final var pose_A = this.animSnapshot1;
         final var pose_B = this.animSnapshot2;
-        
-        //TODO Move this into setupProceduralPose.
-        if (blend_state.hasProceduralCapture() && !anim.freeHeadXRot()) {
-            this.head.xRot = dog.animationManager.capturedProcedural.headXRot() * Mth.DEG_TO_RAD; 
-        }
 
         if (blend_state == BlendState.ANIM_TO_ANIM) {
             final var captured_keyframe = dog.animationManager.capturedKeyframeAnim;
