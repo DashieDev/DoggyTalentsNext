@@ -199,7 +199,6 @@ public enum DogAnimation {
 
         public Props looping() {
             this.timelineMode = TimelineMode.LOOP;
-            this.blendIn = BlendInConfig.NONE; // TODO: If Anim is loop then don't blend for now.
             return this;
         }
 
@@ -215,7 +214,6 @@ public enum DogAnimation {
 
         public Props rootRotation(float val) {
             this.rootRotation = Optional.of(val);
-            this.blendIn = BlendInConfig.NONE; // TODO: If Anim has rootRotation then don't blend for now.
             return this;
         }
 
