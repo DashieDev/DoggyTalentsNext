@@ -11,10 +11,10 @@ public enum DogAnimation {
     STRETCH(1, 70),
     FAINT(2, 80),
     SIT_DOWN(3, 25, p -> p.speedMod(1.75f).interupting()),
-    STAND_UP(4, 40, p -> p.speedMod(1.25f).interupting().blendInHeadRotAndChildrenOnly(3)),
+    STAND_UP(4, 40, p -> p.speedMod(1.25f).interupting().blendInHeadRotAndChildrenOnly(BlendInConfig.DEFAULT.blendTick())),
     FAINT_2(5, 80),
     LYING_DOWN(6, 80),
-    STAND_QUICK(7, 15, p -> p.speedMod(1.25f).interupting().blendInHeadRotAndChildrenOnly(3)),
+    STAND_QUICK(7, 15, p -> p.speedMod(1.25f).interupting().blendInHeadRotAndChildrenOnly(BlendInConfig.DEFAULT.blendTick())),
     DROWN(8, 145),
     HURT_1(9, 15, p -> p.speedMod(1.25f).interupting()),
     HURT_2(10, 10, p -> p.speedMod(1.25f).interupting()),
@@ -247,7 +247,7 @@ public enum DogAnimation {
 
     public static record BlendInConfig(DogAnimBlendInMode mode, int blendTick) {
         public static final BlendInConfig NONE = new BlendInConfig(DogAnimBlendInMode.NONE, 0);
-        public static final BlendInConfig DEFAULT = new BlendInConfig(DogAnimBlendInMode.BLEND, 3);
+        public static final BlendInConfig DEFAULT = new BlendInConfig(DogAnimBlendInMode.BLEND, 5);
 
         public boolean blendHead() {
             return this.mode() == DogAnimBlendInMode.BLEND || this.mode() == DogAnimBlendInMode.HEAD_ROT_AND_CHILDREN_ONLY; 
