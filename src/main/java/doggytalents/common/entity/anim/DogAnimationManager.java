@@ -29,8 +29,8 @@ public class DogAnimationManager {
     private int blendTick = 0;
     private int blendDuration = 0;
     private BlendState blendState = BlendState.NONE;
-    public DogCapturedProceduralState capturedStateForAnim = DogCapturedProceduralState.NONE;
-    public DogInterruptedAnimState capturedStateForAnimPose = DogInterruptedAnimState.NONE; 
+    public DogCapturedProceduralState capturedProcedural = DogCapturedProceduralState.NONE;
+    public DogInterruptedAnimState capturedKeyframeAnim = DogInterruptedAnimState.NONE; 
 
     private DogAnimation lastAnim = DogAnimation.NONE;
     private DogAnimation currentAnim = DogAnimation.NONE;
@@ -48,7 +48,7 @@ public class DogAnimationManager {
         this.isHolding = false;
         this.blendTick = 0;
         this.blendDuration = 0;
-        this.capturedStateForAnim = DogCapturedProceduralState.NONE;
+        this.capturedProcedural = DogCapturedProceduralState.NONE;
 
         this.blendState = computeBlendState(this.lastAnim, this.currentAnim);
         if (!this.blendState.isNone()) {
@@ -57,10 +57,10 @@ public class DogAnimationManager {
                 this.lastAnim, this.currentAnim, this.blendState);
         }
         if (this.blendState.hasProceduralCapture()) {
-            this.capturedStateForAnim = DogCapturedProceduralState.capture(dog);
+            this.capturedProcedural = DogCapturedProceduralState.capture(dog);
         }
         if (this.blendState.hasAnimPoseCapture()) {
-            this.capturedStateForAnimPose = 
+            this.capturedKeyframeAnim = 
                 new DogInterruptedAnimState(this.lastAnim, this.animationState.getAccumulatedTimeMillis());
         }
         
