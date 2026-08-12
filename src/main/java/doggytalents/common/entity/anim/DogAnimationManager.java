@@ -269,17 +269,16 @@ public class DogAnimationManager {
     }
 
     public static record DogCapturedProceduralState(
-        float headXRot, float headYRot, DogPose pose,
+        float headXRot, DogPose pose,
         float shakeAnim, float begAnim
     ) {
         public static final DogCapturedProceduralState NONE = 
-            new DogCapturedProceduralState(0, 0, DogPose.STAND, 0, 0);
+            new DogCapturedProceduralState(0, DogPose.STAND, 0, 0);
 
         public static DogCapturedProceduralState capture(Dog dog) {
             final float xrot = Mth.wrapDegrees(dog.getXRot());
-            final float yheadrot = Mth.wrapDegrees(dog.yHeadRot);
             return new DogCapturedProceduralState(
-                xrot, yheadrot, dog.getDogPose(),
+                xrot, dog.getDogPose(),
                 dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1)
             );
         }
