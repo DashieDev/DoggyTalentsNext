@@ -173,14 +173,14 @@ public class DogAnimationManager {
             anim.getSpeedModifier());
     }
 
-    public float getBlendProgress(float partialTicks) {
+    public float getBlendInProgress(float partialTicks) {
         if (this.blendDuration <= 0 || this.blendTick >= this.blendDuration) return 1.0f;
         float ret = Mth.clamp((this.blendTick + partialTicks) / (float) this.blendDuration, 0.0f, 1.0f);
         return Mth.equal(ret, 1) ? 1 : ret;
     }
 
     public float getBlendOutProgress(float pticks) {
-        float ret = 1 - getBlendProgress(pticks);
+        float ret = 1 - getBlendInProgress(pticks);
         ret = Mth.clamp(ret, 0, 1);
         return Mth.equal(ret, 0) ? 0 : ret; 
     }
@@ -189,7 +189,7 @@ public class DogAnimationManager {
         final var anim = this.dog.getAnim();
         return !anim.isNone() && (
             anim.blendIn().isNone()
-            || getBlendProgress(pticks) >= 1
+            || getBlendInProgress(pticks) >= 1
         );
     }
 
@@ -199,7 +199,7 @@ public class DogAnimationManager {
         if (this.blendState == BlendState.BLEND_OUT)
             return getBlendOutProgress(pticks) > 0 ?
                 this.blendState : BlendState.NONE;
-        return getBlendProgress(pticks) < 1 ?
+        return getBlendInProgress(pticks) < 1 ?
             this.blendState : BlendState.NONE; 
     }
 
