@@ -350,7 +350,7 @@ public class DogModel extends EntityModel<Dog> {
             anim_manager.getBlendOutProgress(pticks)
             : anim_manager.getBlendProgress(pticks);
 
-        if (anim.blend().blendHeadRotAndChildrenOnly()) {
+        if (anim.blendIn().blendHeadRotAndChildrenOnly()) {
             AnimSnapshot.blendAndApplyHeadRotAndChildrenOnly(blend_progress, pose_A, pose_B, this);   
         } else {
             AnimSnapshot.blendAndApply(blend_progress, pose_A, pose_B, this);

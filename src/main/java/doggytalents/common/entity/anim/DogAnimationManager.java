@@ -92,7 +92,7 @@ public class DogAnimationManager {
     private int pickBlendDuration(DogAnimation fromAnim, DogAnimation toAnim, BlendState blendState) {
         return blendState == BlendState.BLEND_OUT ?
             fromAnim.blendOut().blendTick()
-            : toAnim.blend().blendTick();
+            : toAnim.blendIn().blendTick();
     }
 
     public void tick() {
@@ -190,7 +190,7 @@ public class DogAnimationManager {
     public boolean playingFullAnim(float pticks) {
         final var anim = this.dog.getAnim();
         return !anim.isNone() && (
-            anim.blend().isNone()
+            anim.blendIn().isNone()
             || getBlendProgress(pticks) >= 1
         );
     }
