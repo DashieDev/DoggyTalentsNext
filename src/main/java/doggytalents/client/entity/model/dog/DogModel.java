@@ -30,7 +30,7 @@ import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
-import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedStateForAnim;
+import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedProceduralState;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -183,7 +183,7 @@ public class DogModel extends EntityModel<Dog> {
         final var captured_procedural = 
             anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
                 dog.animationManager.capturedStateForAnim
-                : DogCapturedStateForAnim.NONE;
+                : DogCapturedProceduralState.NONE;
         
         var pose = dog.getDogPose();
         if (!captured_procedural.isNone()) {

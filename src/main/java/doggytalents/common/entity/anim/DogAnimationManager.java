@@ -29,10 +29,8 @@ public class DogAnimationManager {
     private int blendTick = 0;
     private int blendDuration = 0;
     private BlendState blendState = BlendState.NONE;
-    //TODO: Rename to Procedural Captured State 
-    public DogCapturedStateForAnim capturedStateForAnim = DogCapturedStateForAnim.NONE;
-    //TODO: Rename Keyframe Captured State
-    public DogCapturedAnimPose capturedStateForAnimPose = DogCapturedAnimPose.NONE; 
+    public DogCapturedProceduralState capturedStateForAnim = DogCapturedProceduralState.NONE;
+    public DogInterruptedAnimState capturedStateForAnimPose = DogInterruptedAnimState.NONE; 
 
     private DogAnimation lastAnim = DogAnimation.NONE;
     private DogAnimation currentAnim = DogAnimation.NONE;
@@ -50,7 +48,7 @@ public class DogAnimationManager {
         this.isHolding = false;
         this.blendTick = 0;
         this.blendDuration = 0;
-        this.capturedStateForAnim = DogCapturedStateForAnim.NONE;
+        this.capturedStateForAnim = DogCapturedProceduralState.NONE;
 
         this.blendState = computeBlendState(this.lastAnim, this.currentAnim);
         if (!this.blendState.isNone()) {
@@ -59,11 +57,11 @@ public class DogAnimationManager {
                 this.lastAnim, this.currentAnim, this.blendState);
         }
         if (this.blendState.hasProceduralCapture()) {
-            this.capturedStateForAnim = DogCapturedStateForAnim.capture(dog);
+            this.capturedStateForAnim = DogCapturedProceduralState.capture(dog);
         }
         if (this.blendState.hasAnimPoseCapture()) {
             this.capturedStateForAnimPose = 
-                new DogCapturedAnimPose(this.lastAnim, this.animationState.getAccumulatedTimeMillis());
+                new DogInterruptedAnimState(this.lastAnim, this.animationState.getAccumulatedTimeMillis());
         }
         
         if (anim != DogAnimation.NONE) {
@@ -270,17 +268,17 @@ public class DogAnimationManager {
         return DogAnimDebugState.of(anim, timestamp, current_state.yRot());
     }
 
-    public static record DogCapturedStateForAnim(
+    public static record DogCapturedProceduralState(
         float headXRot, float headYRot, DogPose pose,
         float shakeAnim, float begAnim
     ) {
-        public static final DogCapturedStateForAnim NONE = 
-            new DogCapturedStateForAnim(0, 0, DogPose.STAND, 0, 0);
+        public static final DogCapturedProceduralState NONE = 
+            new DogCapturedProceduralState(0, 0, DogPose.STAND, 0, 0);
 
-        public static DogCapturedStateForAnim capture(Dog dog) {
+        public static DogCapturedProceduralState capture(Dog dog) {
             final float xrot = Mth.wrapDegrees(dog.getXRot());
             final float yheadrot = Mth.wrapDegrees(dog.yHeadRot);
-            return new DogCapturedStateForAnim(
+            return new DogCapturedProceduralState(
                 xrot, yheadrot, dog.getDogPose(),
                 dog.getDogClassicalShakeAnim(1), dog.getDogClassicalBegAnim(1)
             );
@@ -291,9 +289,9 @@ public class DogAnimationManager {
         }
     }
 
-    public static record DogCapturedAnimPose(DogAnimation anim, long timestampMillis) {
-        public static final DogCapturedAnimPose NONE = 
-            new DogCapturedAnimPose(DogAnimation.NONE, 0);
+    public static record DogInterruptedAnimState(DogAnimation anim, long timestampMillis) {
+        public static final DogInterruptedAnimState NONE = 
+            new DogInterruptedAnimState(DogAnimation.NONE, 0);
         public boolean isNone() {
             return this == NONE;
         }
