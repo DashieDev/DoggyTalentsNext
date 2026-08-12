@@ -304,7 +304,7 @@ public class DogAnimationManager {
         }
 
         public boolean hasProceduralCapture() {
-            return this == BLEND_IN;
+            return this == BLEND_IN || this == ANIM_TO_ANIM;
         }
 
         public boolean hasAnimPoseCapture() {
