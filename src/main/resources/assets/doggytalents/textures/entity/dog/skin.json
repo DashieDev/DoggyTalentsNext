@@ -195,14 +195,6 @@
             "tags" : "zelda, link"
         },    
         {
-            "skin_name" : "Windie (Arcanine)",
-            "skin_id" : "arcanine_shiro",
-            "use_model" : "arcanine",
-            "based_on" : "Arcanine from Pokemon Gen 1",
-            "author" : "MashXP, DashieDev, SilverstarShiro",
-            "tags" : "pokemon, anime, classical"
-        },
-        {
             "skin_name" : "Ranga",
             "skin_id" : "ranga",
             "use_model" : "ranga",
@@ -966,13 +958,6 @@
             "use_model" : "bull_terrier",
             "author" : "MashXP *stares",
             "tags" : "meme"
-        },
-        {
-            "skin_name" : "LONG BORZOI",
-            "skin_id" : "borzoi_long",
-            "use_model" : "borzoi_long",
-            "author" : "MashXP (lemme do it for you~)",
-            "mystery" : true
         }
     ]
 }
