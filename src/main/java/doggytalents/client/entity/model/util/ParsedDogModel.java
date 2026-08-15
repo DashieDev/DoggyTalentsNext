@@ -16,11 +16,13 @@ import doggytalents.api.registry.Accessory.AccessoryRenderType;
 import doggytalents.client.entity.model.dog.CustomDogModel;
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.dog.GlowingEyeDogModel;
+import doggytalents.client.entity.model.dog.TranslucentOverrideModel;
 import doggytalents.client.entity.model.util.DTNModelCodec.DogModelAccessoryProps;
 import doggytalents.client.entity.model.util.DTNModelCodec.DogModelProps;
 import doggytalents.client.entity.model.util.DTNModelCodec.ParsedModelResult;
 import doggytalents.common.entity.Dog;
 import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.util.Mth;
 
 public class ParsedDogModel {
@@ -32,7 +34,15 @@ public class ParsedDogModel {
     }
     
     public static DogModel normal(ParsedModelResult result, DogModelProps props) {
-        var layer = DTNModelCodec.layerDefinitionFromParsed(result);
+        
+        final var translucent_model_tracker = MutableParsedModel.create();
+        var layer = DTNModelCodec.layerDefinitionFromParsed(result, Optional.of(translucent_model_tracker));
+        final var translucent_model = translucent_model_tracker.buildHeadlessCopyFrom(result)
+            .map(x -> DTNModelCodec.layerDefinitionFromParsed(x, Optional.empty()))
+            .map(LayerDefinition::bakeRoot)
+            .map(TranslucentOverrideModel::new)
+            .orElse(null);
+
         var baked = layer.bakeRoot();
         
         final var render_type = props.renderType();
@@ -119,6 +129,10 @@ public class ParsedDogModel {
                 return super.warnAccessory(dog, inst);
             }
             @Override
+            public @Nullable TranslucentOverrideModel getTranslucentOverride() {
+                return translucent_model;
+            }
+            @Override
             protected AnimationDefinition getAnimationSequence(DogAnimation anim) {
                 if (use_alt_howl && anim == DogAnimation.HOWL)
                     return AltDogAnimationSequences.VICTORY_HOWL_ALT;
@@ -128,7 +142,7 @@ public class ParsedDogModel {
     }
 
     public static DogModel glowingEyesLegacy(ParsedModelResult result, DogModelProps props) {
-        var layer = DTNModelCodec.layerDefinitionFromParsed(result);
+        var layer = DTNModelCodec.layerDefinitionFromParsed(result, Optional.empty());
         var baked = layer.bakeRoot();
 
         final var render_type = props.renderType();
