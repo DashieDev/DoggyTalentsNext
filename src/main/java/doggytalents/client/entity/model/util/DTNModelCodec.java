@@ -17,6 +17,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import doggytalents.client.entity.model.dog.DogModel;
 import doggytalents.client.entity.model.util.ModelAccessUtil.PartAccess;
+import doggytalents.client.entity.model.util.ParsedModelPath.MutableParsedModelPath;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -53,6 +54,10 @@ public class DTNModelCodec {
         "parts": [
             {
                 "id": "head",
+                //Optional. Default is shown below
+                "props": {
+                    "translucent": false, //Optional. Default == false
+                },
                 "pivot": [0, 0, 0], //Optional. Default == Position
                 "rotation": [0, 0, 0], //Optional. Default == [0, 0, 0]
                 "cubes": [ // Optional. Default == []
@@ -107,7 +112,9 @@ public class DTNModelCodec {
                     parsedCubeCodec().listOf().optionalFieldOf("cubes")
                         .forGetter(wrapOptionalList(ParsedPart::cubeList)),
                     self.listOf().optionalFieldOf("children")
-                        .forGetter(wrapOptionalList(ParsedPart::children))
+                        .forGetter(wrapOptionalList(ParsedPart::children)),
+                    ParsedPartProps.CODEC.optionalFieldOf("props", ParsedPartProps.DEFAULT)
+                        .forGetter(ParsedPart::props)
                 )
                 .apply(builder, ParsedPart::of)
             );
@@ -195,40 +202,85 @@ public class DTNModelCodec {
             children.add(encoded_child);
         }
         return new ParsedPart(id, encoded_pivot, 
-            encoded_rotation, cubes, children);
+            encoded_rotation, cubes, children, ParsedPartProps.DEFAULT);
     }
 
-    public static LayerDefinition layerDefinitionFromParsed(ParsedModelResult result) {
+    public static LayerDefinition layerDefinitionFromParsed(ParsedModelResult result, 
+        Optional<MutableParsedModel> translucentPartTracker) {
+        
         final int tex_x = result.textureX();
         final int tex_y = result.textureY();
         
         var mesh = new MeshDefinition();
         var root = mesh.getRoot();
         
+        final var current_path_tracker = ParsedModelPath.mutable();
         for (var part : result.parts()) {
-            addParsedPartToDefinition(root, part, null);
+            current_path_tracker.push(part);
+            addParsedPartToDefinition(root, part, null, 
+                new AddParsedPartToDefinition_RecurState(translucentPartTracker, 
+                    current_path_tracker, false));
+            current_path_tracker.pop();
         }
         return LayerDefinition.create(mesh, tex_x, tex_y);
     }
 
+    private static record AddParsedPartToDefinition_RecurState(
+        Optional<MutableParsedModel> translucentPartTracker, 
+        MutableParsedModelPath currentPathTracker,
+        boolean headlessBranch
+    ) {
+        public AddParsedPartToDefinition_RecurState withHeadlessBranch(boolean val) {
+            if (this.headlessBranch() != val)
+                return new AddParsedPartToDefinition_RecurState(
+                    this.translucentPartTracker(),
+                    this.currentPathTracker(),
+                    val
+                );
+            return this;
+        }
+    }
+
     private static void addParsedPartToDefinition(PartDefinition targetParent, 
-        ParsedPart part, @Nullable ParsedPart parent) {
+        ParsedPart part, @Nullable ParsedPart parent, 
+        AddParsedPartToDefinition_RecurState rstate) {
     
+        final boolean is_translucent_part = 
+            part.props().translucent() && rstate.translucentPartTracker.isPresent();
+
+        final boolean start_translucent_branch = 
+            is_translucent_part && !rstate.headlessBranch();
+
+        if (start_translucent_branch) {
+            rstate.translucentPartTracker.get()
+                .addPath(rstate.currentPathTracker.immutable());
+        }
+
+        final boolean headless_self_and_child =
+            is_translucent_part || rstate.headlessBranch();
+
         final var id = part.id();
 
         final var part_pose = parsePartPose(
             Optional.ofNullable(parent).map(x -> x.pivot()), 
             part.pivot(), part.rotation());
 
+        
         var cube_list_builder = CubeListBuilder.create();
-        for (var parsed_cube: part.cubeList()) {
-            parseCubeDefintionAndAddTo(cube_list_builder, parsed_cube, part.pivot());
+
+        if (!headless_self_and_child) {
+            for (var parsed_cube: part.cubeList()) {
+                parseCubeDefintionAndAddTo(cube_list_builder, parsed_cube, part.pivot());
+            }
         }
 
         final var added_part_def = targetParent.addOrReplaceChild(id, cube_list_builder, part_pose);
         
         for (var child : part.children) {
-            addParsedPartToDefinition(added_part_def, child, part);
+            rstate.currentPathTracker.push(child);
+            addParsedPartToDefinition(added_part_def, child, part, 
+                rstate.withHeadlessBranch(headless_self_and_child));
+            rstate.currentPathTracker.pop();
         }
     }
 
@@ -367,6 +419,9 @@ public class DTNModelCodec {
         public Vector2i texSize() {
             return new Vector2i(this.textureX(), this.textureY());
         }
+        public ParsedModelResult copyWithParts(List<ParsedPart> parts) {
+            return new ParsedModelResult(this.textureX(), this.textureY(), parts);
+        }
     }
 
     public static record DogModelProps(
@@ -464,18 +519,36 @@ public class DTNModelCodec {
 
     public static record ParsedPart(String id, 
         Vector3f pivot, Vector3f rotation,
-        List<ParsedCube> cubeList, List<ParsedPart> children
+        List<ParsedCube> cubeList, List<ParsedPart> children,
+        ParsedPartProps props
     ) {
+
+        public ParsedPart headlessCopyWithChildren(List<ParsedPart> children) {
+            return new ParsedPart(this.id(), this.pivot(), this.rotation(), List.of(), children, this.props());
+        }
 
         public static ParsedPart of(String id, Vector3f pivot, Vector3f rotation, 
             Optional<List<ParsedCube>> cubeList, 
-            Optional<List<ParsedPart>> children
+            Optional<List<ParsedPart>> children,
+            ParsedPartProps props
         ) {
 
             return new ParsedPart(id, pivot, 
                 rotation,
-                cubeList.orElse(List.of()), children.orElse(List.of()));
+                cubeList.orElse(List.of()), children.orElse(List.of()),
+                props);
         }
+    }
+
+    public static record ParsedPartProps(boolean translucent) {
+        public static final ParsedPartProps DEFAULT = new ParsedPartProps(false);
+        public static final Codec<ParsedPartProps> CODEC = RecordCodecBuilder.create(
+            builder -> builder.group(
+                Codec.BOOL.optionalFieldOf("translucent", DEFAULT.translucent())
+                    .forGetter(ParsedPartProps::translucent)
+            )
+            .apply(builder, ParsedPartProps::new)
+        );
     }
 
     public static record ParsedCube(
