@@ -17,6 +17,24 @@
             "tags" : "okami, amaterasu, ammy"
         },
         {
+            "skin_name" : "Wang Wang I",
+            "skin_id" : "wangwang",
+            "use_model" : "wangwang",
+            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
+            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "memorial, mother, wangwang"
+        },
+        {
+            "skin_name" : "Wang Wang II",
+            "skin_id" : "wangwang_mouthclosed",
+            "use_model" : "wangwang_mouthclosed",
+            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
+            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "memorial, mother, wangwang"
+        },
+        {
             "skin_name" : "Hayabusa (Kai Ken) - Chu",
             "skin_id" : "kusa_hayabusa",
             "use_model" : "kusa_hayabusa",
@@ -89,6 +107,48 @@
             "tags" : "okami, oina"
         },
         {
+            "skin_name" : "Okikurumi - Oki",
+            "skin_id" : "oina_okikurumi",
+            "use_model" : "oina_okikurumi",
+            "based_on" : "Okikurumi from the Oina Tribe from Okami(2006) by Clover Studio",
+            "author" : "MashXP, DashieDev",
+            "tags" : "okami, oina"
+        },
+        {
+            "skin_name" : "Hope",
+            "skin_id" : "sol_hope",
+            "glowing_overlay": "sol_hope_overlay",
+            "use_model" : "sol_hope",
+            "description" : "Dedicated to Akela Morse.",
+            "based_on" : "Hope from Seed of Life by Ki3 Games",
+            "author" : "MashXP, DashieDev",
+            "tags" : "hope, sol, seedoflife"
+        },
+        {
+            "skin_name" : "Wolf Link",
+            "skin_id" : "wolf_link",
+            "use_model" : "wolf_link",
+            "based_on" : "Wolf Link from The Legend of Zelda: Twilight Princess.",
+            "author" : "MashXP, DashieDev",
+            "tags" : "zelda, link"
+        },    
+        {
+            "skin_name" : "Ranga",
+            "skin_id" : "ranga",
+            "use_model" : "ranga",
+            "based_on" : "Ranga from Tensei Shitara Slime Datta Ken",
+            "author" : "MashXP",
+            "tags" : "anime, classical"
+        },
+        {
+            "skin_name" : "Cheems",
+            "skin_id" : "cheems",
+            "use_model" : "kusa_ume",
+            "based_on" : "In honor of Baltze, the popular Shiba Inu. *bonk*",
+            "author" : "MashXP, DashieDev",
+            "tags" : "shiba, meme ,classical"
+        },
+        {
             "skin_name" : "Kawauso - Otter Mask",
             "skin_id" : "oina_kawauso",
             "use_model" : "oina_kawauso",
@@ -117,14 +177,6 @@
             "skin_id" : "oina_merchant2",
             "use_model" : "oina_merchant2",
             "based_on" : "Merchant from the Oina Tribe from Okami(2006) by Clover Studio",
-            "author" : "MashXP, DashieDev",
-            "tags" : "okami, oina"
-        },
-        {
-            "skin_name" : "Okikurumi - Oki",
-            "skin_id" : "oina_okikurumi",
-            "use_model" : "oina_okikurumi",
-            "based_on" : "Okikurumi from the Oina Tribe from Okami(2006) by Clover Studio",
             "author" : "MashXP, DashieDev",
             "tags" : "okami, oina"
         },
@@ -177,107 +229,10 @@
             "tags" : "okami, oina"
         },
         {
-            "skin_name" : "Hope",
-            "skin_id" : "sol_hope",
-            "glowing_overlay": "sol_hope_overlay",
-            "use_model" : "sol_hope",
-            "description" : "Dedicated to Akela Morse.",
-            "based_on" : "Hope from Seed of Life by Ki3 Games",
-            "author" : "MashXP, DashieDev",
-            "tags" : "hope, sol, seedoflife"
-        },
-        {
-            "skin_name" : "Wolf Link",
-            "skin_id" : "wolf_link",
-            "use_model" : "wolf_link",
-            "based_on" : "Wolf Link from The Legend of Zelda: Twilight Princess.",
-            "author" : "MashXP, DashieDev",
-            "tags" : "zelda, link"
-        },    
-        {
-            "skin_name" : "Ranga",
-            "skin_id" : "ranga",
-            "use_model" : "ranga",
-            "based_on" : "Ranga from Tensei Shitara Slime Datta Ken",
-            "author" : "MashXP",
-            "tags" : "anime, classical"
-        },
-        {
-            "skin_name" : "Iwanko (RockRuff)",
-            "skin_id" : "iwanko",
-            "use_model" : "iwanko",
-            "based_on" : "Rockruff from Pokemon Gen 7",
-            "author" : "MashXP, DashieDev",
-            "tags" : "pokemon ,classical"
-        },
-        {
-            "skin_name" : "Houndstone (Hakadoggu)",
-            "skin_id" : "houndstone",
-            "use_model" : "houndstone",
-            "based_on" : "Houndstone from Pokemon Gen 9",
-            "author" : "MashXP",
-            "tags" : "pokemon anime"
-        },
-        {
-            "skin_name" : "Cheems",
-            "skin_id" : "cheems",
-            "use_model" : "kusa_ume",
-            "based_on" : "In honor of Baltze, the popular Shiba Inu. *bonk*",
-            "author" : "MashXP, DashieDev",
-            "tags" : "shiba, meme ,classical"
-        },
-        {
-            "skin_name" : "Wang Wang I",
-            "skin_id" : "wangwang",
-            "use_model" : "wangwang",
-            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
-            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
-            "author" : "MashXP, DashieDev",
-            "tags" : "memorial, mother, wangwang"
-        },
-        {
-            "skin_name" : "Wang Wang II",
-            "skin_id" : "wangwang_mouthclosed",
-            "use_model" : "wangwang_mouthclosed",
-            "description" : "A fierce guardian who gave everything for her pups. O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where the sun never sets on you or your children.",
-            "based_on" : "In loving memory of Wang Wang, a fiercely protective mother.",
-            "author" : "MashXP, DashieDev",
-            "tags" : "memorial, mother, wangwang"
-        },
-        {
-            "skin_name" : "Grey Wolf",
-            "skin_id" : "grey_wolf",
-            "use_model" : "default"
-        },
-        {
             "skin_name" : "Classical II",
             "skin_id" : "wolf_var_1",
             "use_model" : "default",
             "tags" : "classical"
-        },
-        {
-            "skin_name" : "Legoshi",
-            "skin_id" : "legoshi",
-            "use_model" : "legoshi",
-            "based_on" : "Legoshi from Beastars",
-            "author" : "MashXP, DashieDev",
-            "tags" : "beastars anime classical"
-        },
-        {
-            "skin_name" : "Jack",
-            "skin_id" : "jack",
-            "use_model" : "jack",
-            "based_on" : "Jack from Beastars",
-            "author" : "MashXP, DashieDev",
-            "tags" : "beastars anime classical"
-        },
-        {
-            "skin_name" : "Juno",
-            "skin_id" : "juno",
-            "use_model" : "juno",
-            "based_on" : "Juno from Beastars",
-            "author" : "MashXP, DashieDev",
-            "tags" : "beastars anime classical"
         },
         {
             "skin_name" : "St Bernard",
@@ -623,6 +578,11 @@
             "use_model" : "default"
         },
         {
+            "skin_name" : "Grey Wolf",
+            "skin_id" : "grey_wolf",
+            "use_model" : "default"
+        },
+        {
             "skin_name" : "Fox",
             "skin_id" : "fox",
             "use_model" : "variant",
@@ -635,12 +595,52 @@
             "tail_id" : 2
         },
         {
+            "skin_name" : "Iwanko (RockRuff)",
+            "skin_id" : "iwanko",
+            "use_model" : "iwanko",
+            "based_on" : "Rockruff from Pokemon Gen 7",
+            "author" : "MashXP, DashieDev",
+            "tags" : "pokemon ,classical"
+        },
+        {
+            "skin_name" : "Houndstone (Hakadoggu)",
+            "skin_id" : "houndstone",
+            "use_model" : "houndstone",
+            "based_on" : "Houndstone from Pokemon Gen 9",
+            "author" : "MashXP",
+            "tags" : "pokemon anime"
+        },
+        {
             "skin_name" : "Lucario",
             "skin_id" : "lucario",
             "use_model" : "lucario",
             "based_on" : "Lucario from Pokemon",
             "author" : "MashXP, DashieDev",
             "tags" :"pokemon anime"
+        },
+        {
+            "skin_name" : "Legoshi",
+            "skin_id" : "legoshi",
+            "use_model" : "legoshi",
+            "based_on" : "Legoshi from Beastars",
+            "author" : "MashXP, DashieDev",
+            "tags" : "beastars anime classical"
+        },
+        {
+            "skin_name" : "Jack",
+            "skin_id" : "jack",
+            "use_model" : "jack",
+            "based_on" : "Jack from Beastars",
+            "author" : "MashXP, DashieDev",
+            "tags" : "beastars anime classical"
+        },
+        {
+            "skin_name" : "Juno",
+            "skin_id" : "juno",
+            "use_model" : "juno",
+            "based_on" : "Juno from Beastars",
+            "author" : "MashXP, DashieDev",
+            "tags" : "beastars anime classical"
         },
         {
             "skin_name" : "Akita Inu (Legacy)",
