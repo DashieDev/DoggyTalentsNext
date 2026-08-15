@@ -35,6 +35,7 @@ import doggytalents.client.entity.render.DogScreenOverlays;
 import doggytalents.client.entity.render.DogRenderer;
 import doggytalents.client.entity.render.DoggyBeamRenderer;
 import doggytalents.client.entity.render.layer.DogCustomGlowingOverlayRenderer;
+import doggytalents.client.entity.render.layer.DogModelTranslucentOverrideRenderer;
 import doggytalents.client.entity.render.layer.DogMouthItemRenderer;
 import doggytalents.client.entity.render.layer.DogVariantRenderer;
 import doggytalents.client.entity.render.layer.DogWolfArmorRenderer;
@@ -172,6 +173,7 @@ public class ClientSetup {
 
     public static void setupCollarRenderers() {
         
+        CollarRenderManager.registerLayer(DogModelTranslucentOverrideRenderer::new);
         CollarRenderManager.registerLayer(DogVariantRenderer::new);
         CollarRenderManager.registerLayer(DogCustomGlowingOverlayRenderer::new);
         CollarRenderManager.registerLayer(DefaultAccessoryRenderer::new);

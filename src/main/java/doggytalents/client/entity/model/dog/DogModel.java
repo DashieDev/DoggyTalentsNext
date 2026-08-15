@@ -487,6 +487,10 @@ public class DogModel extends EntityModel<Dog> {
         return false;
     }
 
+    public @Nullable TranslucentOverrideModel getTranslucentOverride() {
+        return null;
+    }
+
     /**
      * Custom pivot point <b>in Minecraft format</b>
      * to convert from Blockbench, simply negate x, y
