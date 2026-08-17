@@ -122,7 +122,7 @@ public class DTNAnimationCodec {
         KEYFRAME_PROCESSORS = ImmutableMap.of(
             
             AnimationChannel.Targets.POSITION, 
-            KeyframeProcessor.of(KeyframeAnimations::posVec, KeyframeAnimations::posVec),
+            KeyframeProcessor.of(DTNAnimationCodec::posVec, DTNAnimationCodec::posVec),
             
             AnimationChannel.Targets.ROTATION,
             KeyframeProcessor.of(KeyframeAnimations::degreeVec, DTNAnimationCodec::invertedRotationVec),
@@ -225,6 +225,9 @@ public class DTNAnimationCodec {
         );
     }
 
+    public static Vector3f posVec(float x, float y, float z) {
+        return new Vector3f(-x, -y, z);
+    }
     public static Vector3f invertedRotationVec(float x, float y, float z) {
         return new Vector3f(x, y, z).mul(Mth.RAD_TO_DEG);
     }
