@@ -508,15 +508,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .unlockedBy("has_cooked_beef", has(Items.COOKED_BEEF))
             .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, DoggyItems.SUSSY_SICKLE.get(), 1)
-            .pattern("III")
-            .pattern(" SI")
-            .pattern("S  ")
-            .define('I', Items.IRON_INGOT)
-            .define('S', Items.STICK)
-            .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-            .save(consumer);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.SNORKEL.get(), 1)
             .pattern("  B")
             .pattern("GIG")
@@ -612,18 +603,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .requires(DoggyItems.UNCOOKED_RICE.get(), 5)
             .unlockedBy("has_dtn_rice_grains", has(DoggyItems.RICE_GRAINS.get()))
             .save(consumer);
-            
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.PLAGUE_DOC_MASK.get(), 1)
-            .pattern("CWC")
-            .pattern(" S ")
-            .pattern("LFL")
-            .define('C', Items.BLACK_CARPET)
-            .define('W', Items.BLACK_WOOL)
-            .define('L', Items.LEATHER)
-            .define('F', ItemTags.FLOWERS)
-            .define('S', DoggyItems.SNORKEL.get())
-            .unlockedBy("has_leather", has(Items.LEATHER))
-            .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, DoggyItems.SALMON_SUSHI.get(), 1)
             .pattern("S")
@@ -689,24 +668,6 @@ public class DTRecipeProvider extends RecipeProvider {
             .define('C', Items.BLACK_CARPET)
             .define('P', Items.POTION)
             .unlockedBy("has_potion", has(Items.POTION))
-            .save(consumer);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_HEAD.get(), 1)
-            .requires(DoggyItems.TRAINING_TREAT.get())
-            .requires(Items.DRAGON_HEAD)
-            .unlockedBy("has_dragon_head", has(Items.DRAGON_HEAD))
-            .save(consumer);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_SUIT.get(), 1)
-            .requires(DoggyItems.TRAINING_TREAT.get())
-            .requires(Items.DRAGON_EGG)
-            .unlockedBy("has_dragon_egg", has(Items.DRAGON_EGG))
-            .save(consumer);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, DoggyItems.DRAGON_COSTUME_WINGS.get(), 1)
-            .requires(DoggyItems.TRAINING_TREAT.get())
-            .requires(Items.ELYTRA)
-            .unlockedBy("has_elytra", has(Items.ELYTRA))
             .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, DoggyItems.ONIGIRI.get(), 1)
