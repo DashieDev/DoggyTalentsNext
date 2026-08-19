@@ -89,13 +89,11 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.BUNNY_EARS);
         generated(DoggyItems.GIANT_STICK);
         generated(DoggyItems.GOLDEN_A_FIVE_WAGYU);
-        generated(DoggyItems.SUSSY_SICKLE);
         generated(DoggyItems.SNORKEL);
         generated(DoggyItems.TENGU_MASK);
         generated(DoggyItems.KITSUNE_MASK);
         generated(DoggyItems.DEMON_HORNS);
         generated(DoggyItems.WITCH_HAT);
-        generated(DoggyItems.PLAGUE_DOC_MASK);
         generated(DoggyItems.BAKER_HAT);
         generated(DoggyItems.CHEF_HAT);
         generated(DoggyItems.SAUSAGE);
@@ -176,9 +174,6 @@ public class DTItemModelProvider extends ItemModelProvider {
         generated(DoggyItems.GYUDON);
         generated(DoggyItems.OYAKODON);
         generated(DoggyItems.SAKE);
-        generated(DoggyItems.DRAGON_COSTUME_HEAD);
-        generated(DoggyItems.DRAGON_COSTUME_SUIT);
-        generated(DoggyItems.DRAGON_COSTUME_WINGS);
         generated(DoggyItems.CHRISTMAS_HAT);
         generated(DoggyItems.DOG_CHRISTMAS_TREE);
         generated(DoggyItems.DOG_CHRISTMAS_STAR);

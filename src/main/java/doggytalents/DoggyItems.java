@@ -171,16 +171,12 @@ public class DoggyItems {
 
     public static final Supplier<AccessoryItem> KITSUNE_MASK = register("kitsune_mask", (props) -> new KitsuneMaskItem(DoggyAccessories.KITSUNE_MASK, props));
     public static final Supplier<AccessoryItem> TENGU_MASK = register("tengu_mask", (props) -> new TenguMaskItem(DoggyAccessories.TENGU_MASK, props));
-    public static final Supplier<AccessoryItem> PLAGUE_DOC_MASK = register("plague_doctor_mask", (props) -> new PlagueDoctorMaskItem(DoggyAccessories.PLAGUE_DOC_MASK, props));
     public static final Supplier<AccessoryItem> CROW_WINGS = registerAccessory("crow_wings", DoggyAccessories.CROW_WINGS);
     public static final Supplier<AccessoryItem> BAT_WINGS = registerAccessory("bat_wings", DoggyAccessories.BAT_WINGS);
     public static final Supplier<DyeableAccessoryItem> FLYING_CAPE = registerAccessoryDyed("flying_cape", DoggyAccessories.FLYING_CAPE);
     public static final Supplier<DyeableAccessoryItem> LAB_COAT = register("lab_coat", (props) -> new LabCoat.LabCoatItem(DoggyAccessories.LAB_COAT, props));
     public static final Supplier<AccessoryItem> HOT_DOG = register("hot_dog",(props) -> new HotDogAccessoryItem(DoggyAccessories.HOT_DOG, props));
     public static final Supplier<AccessoryItem> SUPERDOG_SUIT = registerAccessory("superdog_suit", DoggyAccessories.SUPERDOG_SUIT);
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_HEAD = register("dragon_costume_head", (props) -> new DragonCostumeHeadItem(DoggyAccessories.DRAGON_COSTUME_HEAD, props));
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_SUIT = register("dragon_costume_suit", (props) -> new DragonCostumeSuitItem(DoggyAccessories.DRAGON_COSTUME_SUIT, props));
-    public static final Supplier<AccessoryItem> DRAGON_COSTUME_WINGS = register("dragon_costume_wings", (props) -> new DragonCostumeWingsItem(DoggyAccessories.DRAGON_COSTUME_WINGS, props));
 
     public static final Supplier<DyeableAccessoryItem> CAPE_COLOURED = registerAccessoryDyed("cape_coloured", DoggyAccessories.DYEABLE_CAPE);
     public static final Supplier<AccessoryItem> TANTAN_CAPE = registerAccessory("tantan_cape", DoggyAccessories.TANTAN_CAPE);
@@ -221,7 +217,6 @@ public class DoggyItems {
             () -> new FeatheredMantleArtifact(), props), 1);
     public static final Supplier<Item> CREATIVE_CANINE_TRACKER = registerWith("creative_canine_tracker", props -> new CanineTrackerItem(props) 
         { @Override public boolean isFoil(ItemStack stack) { return true; } }, 1);
-    public static final Supplier<SwordItem> SUSSY_SICKLE = register("sussy_sickle", SussySickleItem::new);
     public static final Supplier<DogPlushieItem> DOG_PLUSHIE_TOY = register("dog_plushie_toy_item", 
         (props) -> new DogPlushieItem(props));
     public static final Supplier<SamoyedPlushieItem> SAMOYED_PLUSHIE_TOY = register("samoyed_plushie_toy_item", 
