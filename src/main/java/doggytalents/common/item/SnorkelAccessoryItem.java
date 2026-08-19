@@ -17,12 +17,4 @@ public class SnorkelAccessoryItem extends AccessoryItem{
     public SnorkelAccessoryItem(Supplier<? extends Accessory> type, Properties properties) {
         super(type, properties);
     }
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components,
-            TooltipFlag flags) {
-        var desc_id = this.getDescriptionId(stack) + ".description";
-        components.add(Component.translatable(desc_id).withStyle(
-            Style.EMPTY.withItalic(true)
-        ));
-    }
 }
