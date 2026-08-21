@@ -283,7 +283,7 @@ public class DogModel extends EntityModel<Dog> {
         this.resetAllPose();
 
         if (dog.isDogInAnimDebug() && dog.getAnim().isNone()) {
-            setDogUpDebugAnim(dog);
+            setDogUpDebugAnim(dog, relativeHeadYRot, headPitch);
             return;
         }
 
@@ -379,10 +379,15 @@ public class DogModel extends EntityModel<Dog> {
     ) {}
 
     private void resetAllPoseForAnim(Dog dog, DogAnimation anim, CachedProceduralValues proceduralValues) {
+        resetAllPoseForAnim(dog, anim, proceduralValues, Optional.empty());
+    }
+
+    private void resetAllPoseForAnim(Dog dog, DogAnimation anim, CachedProceduralValues proceduralValues, 
+        Optional<Float> tailXRrotOverride) {
         this.resetAllPose();
         
         if (anim.freeTail()) {
-            this.tail.xRot = dog.getTailRotation();
+            this.tail.xRot = tailXRrotOverride.orElse(dog.getTailRotation());
         }
 
         if (anim.freeHead() && dog.getDogPose().freeHead) {
@@ -400,13 +405,25 @@ public class DogModel extends EntityModel<Dog> {
         });
     }
 
-    private void setDogUpDebugAnim(Dog dog) {
+    private void setDogUpDebugAnim(Dog dog, float relativeHeadYRot, float headPitch) {
         this.resetAllPose();
+
+        final var rot_state = dog.getDogAnimDebugState().rotState();
+        this.tail.xRot = rot_state.tailXRot() * Mth.DEG_TO_RAD;
+        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
+        this.head.yRot = relativeHeadYRot *  Mth.DEG_TO_RAD;
+
         var debug_state = dog.getDogAnimDebugState();
         var dog_anim = debug_state.anim();
         var sequence = DogAnimationRegistry.getSequence(dog_anim);
         if (sequence == null)
             return;
+
+        final var cached_procedural_val =
+            new CachedProceduralValues(this.head.xRot, this.head.yRot, this.realHead.zRot);
+
+        resetAllPoseForAnim(dog, dog_anim, cached_procedural_val, Optional.of(this.tail.xRot));
+
         var timestamp_millis = Util.tickMayWithPartialToMillis(debug_state.timestamp());
         DogKeyframeAnimations.animate(this, dog, sequence, timestamp_millis, 1.0F, vecObj);
     }

@@ -492,6 +492,14 @@ public class DogRenderer extends MobRenderer<Dog, DogModel> {
             var bank_value = -dog.dogWalkAnimation.bankValue(p_115321_);
             var max_bank = dog.dogWalkAnimation.maxBankZRot();
             p_115318_.mulPose(Axis.ZP.rotationDegrees(bank_value * max_bank));
+        } else if (p_115317_.isDogInAnimDebug()) {
+            var dog = p_115317_;
+            final var rot_state = dog.getDogAnimDebugState().rotState();
+            final boolean has_bank = !Mth.equal(0, rot_state.banking());
+            if (has_bank) {
+                float max_bank = dog.dogWalkAnimation.maxBankZRot();
+                p_115318_.mulPose(Axis.ZP.rotationDegrees(rot_state.banking() * max_bank));
+            } 
         }
     }
 

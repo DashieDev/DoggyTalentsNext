@@ -11,6 +11,7 @@ import doggytalents.api.inferface.IDogItem;
 import doggytalents.client.screen.DogAnimDebugScreen;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState;
+import doggytalents.common.entity.anim.DogAnimationManager.DogAnimDebugState.DogAnimDebugFreezeRot;
 import doggytalents.common.lib.Constants;
 import doggytalents.common.util.ItemUtil;
 import net.minecraft.nbt.Tag;
@@ -78,7 +79,7 @@ public class DogAnimDebugItem extends Item implements IDogItem {
             }
             var debug_state = dog.getDogAnimDebugState();
             if (debug_state.anim() != anim) {
-                anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim, 0, 0f));
+                anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim, 0, DogAnimDebugFreezeRot.DEFAULT));
                 dog.setAnim(anim);
                 return;
             }
@@ -102,11 +103,44 @@ public class DogAnimDebugItem extends Item implements IDogItem {
                 + ( player.isShiftKeyDown() ? -1 : 1 );
             new_timestamp = Mth.clamp(new_timestamp, 0, anim.getLengthTicks());
             anim_manager.setDogAnimDebugState(DogAnimDebugState.of(anim, 
-                new_timestamp, debug_state.yRot()));
+                new_timestamp, debug_state.rotState()));
             return;
         }
         case YROT: {
-            anim_manager.setDebugFreezeYRot(player.yHeadRot);
+            var rot_state = dog.getDogAnimDebugState().rotState();
+            anim_manager.setDebugFreezeRot(rot_state.withYRot(player.yHeadRot));
+            return;
+        }
+        case HEAD_YROT: {
+            var rot_state = dog.getDogAnimDebugState().rotState();
+            anim_manager.setDebugFreezeRot(rot_state.withYHeadRot(player.yHeadRot));
+            return;
+        }
+        case HEAD_XROT: {
+            var rot_state = dog.getDogAnimDebugState().rotState();
+            float x_head_rot = rot_state.headXRot() 
+                + (player.isShiftKeyDown() ? 2 : -2);
+            
+            x_head_rot = Mth.clamp(x_head_rot, -dog.getMaxHeadXRot(), dog.getMaxHeadXRot());
+            anim_manager.setDebugFreezeRot(rot_state.withXHeadRot(x_head_rot));
+            return;
+        }
+        case BANKING: {
+            var rot_state = dog.getDogAnimDebugState().rotState();
+            float bank_value = rot_state.banking() 
+                + (player.isShiftKeyDown() ? 0.1f : -0.1f);
+            
+            bank_value = Mth.clamp(bank_value, -1, 1);
+            anim_manager.setDebugFreezeRot(rot_state.withBanking(bank_value));
+            return;
+        }
+        case TAIL_XROT: {
+            var rot_state = dog.getDogAnimDebugState().rotState();
+            float x_tail_rot = rot_state.tailXRot() 
+                + (player.isShiftKeyDown() ? 4 : -4);
+            
+            x_tail_rot = Mth.clamp(x_tail_rot, 0, 140);
+            anim_manager.setDebugFreezeRot(rot_state.withTailXRot(x_tail_rot));
             return;
         }
         default:
@@ -162,7 +196,8 @@ public class DogAnimDebugItem extends Item implements IDogItem {
     }
 
     public static enum ItemMode {
-        ANIM(0), TIME_SET(1), YROT(2);
+        ANIM(0), TIME_SET(1), YROT(2), HEAD_YROT(3),
+        HEAD_XROT(4), BANKING(5), TAIL_XROT(6);
         
         private final int id;
 
