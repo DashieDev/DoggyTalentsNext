@@ -12,7 +12,7 @@ public class AnimDebugStateSerializer extends DogSerializer<DogAnimDebugState> {
         } else {
             buf.writeInt(value.anim().getId());
             buf.writeInt(value.timestamp());
-            buf.writeFloat(value.yRot());
+            value.rotState().encodeNetwork(buf);
         }
     }
 
@@ -22,15 +22,15 @@ public class AnimDebugStateSerializer extends DogSerializer<DogAnimDebugState> {
         if (anim_id < 0)
             return DogAnimDebugState.NONE;
         int timestamp = buf.readInt();
-        float yRot = buf.readFloat();
-        return DogAnimDebugState.of(anim_id, timestamp, yRot);
+        var rot_state = DogAnimDebugState.DogAnimDebugFreezeRot.decodeNetwork(buf);
+        return DogAnimDebugState.of(anim_id, timestamp, rot_state);
     }
 
     @Override
     public DogAnimDebugState copy(DogAnimDebugState value) {
         if (value.isNone())
             return DogAnimDebugState.NONE;
-        return DogAnimDebugState.of(value.anim(), value.timestamp(), value.yRot());
+        return DogAnimDebugState.of(value.anim(), value.timestamp(), value.rotState());
     }
 
 }
