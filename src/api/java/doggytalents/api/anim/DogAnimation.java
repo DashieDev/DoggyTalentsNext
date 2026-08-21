@@ -101,8 +101,8 @@ public enum DogAnimation {
     LIE_SIDEWAY_START(91, 40, p -> p.holdOnLastTick()),
     LIE_SIDEWAY_LOOP(92, 40, p -> p.looping()),
     LIE_SIDEWAY_END(93, 80),
-    SLOW_TROT(94, 20), // placeholder
-    GALLOP(95, 10); // placeholder
+    SLOW_TROT(94, 20, p -> p.freeHead()), // placeholder
+    GALLOP(95, 10, p -> p.freeHead()); // placeholder
     
 
     private final int id;
