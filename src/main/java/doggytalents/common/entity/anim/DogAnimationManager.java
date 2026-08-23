@@ -446,8 +446,7 @@ public class DogAnimationManager {
 
             public static DogAnimDebugFreezeRot decode(Tag tag) {
                 var decode_data = new Dynamic<>(NbtOps.INSTANCE, tag);
-                return CODEC.decode(decode_data).result()
-                    .map(com.mojang.datafixers.util.Pair::getFirst)
+                return CODEC.parse(decode_data).result()
                     .orElse(DogAnimDebugFreezeRot.DEFAULT);
             }
 
