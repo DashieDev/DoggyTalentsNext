@@ -1,6 +1,7 @@
 package doggytalents.client.screen.widget.DoggySpin;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -11,6 +12,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Dynamic;
+import com.mojang.serialization.JsonOps;
 
 import doggytalents.DogVariants;
 import doggytalents.api.anim.DogAnimation;
@@ -19,8 +23,10 @@ import doggytalents.client.entity.model.animation.DogAnimationRegistry;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations;
 import doggytalents.client.entity.model.animation.DogKeyframeAnimations.AnimationContext;
 import doggytalents.client.entity.model.dog.DogModel;
+import doggytalents.client.entity.model.util.DTNModelCodec;
 import doggytalents.common.config.ConfigHandler;
 import doggytalents.common.lib.Resources;
+import doggytalents.common.util.ResourceUtil;
 import doggytalents.common.variant.DogVariant;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -28,6 +34,7 @@ import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -81,11 +88,16 @@ public class DoggySpinModel {
 
     private ModelPart rootHope;
     private ModelPart tailHope;
+
+    private static final String AMMY_MODEL_PATH = "doggytalents/dog_models/okami_amaterasu.json";
+    private static final String HOPE_MODEL_PATH = "doggytalents/dog_models/sol_hope.json";
     
     private DoggySpinModel() {
         this.root = DogModel.createBodyLayer().bakeRoot();
-        this.rootAmmy = AmaterasuModel.createBodyLayer().bakeRoot();
-        this.rootHope = HopeModel.createBodyLayer().bakeRoot();
+        this.rootAmmy = DoggySpinModel.getLayerDefintiionFromJson(AMMY_MODEL_PATH)
+            .orElseThrow().bakeRoot();
+        this.rootHope = DoggySpinModel.getLayerDefintiionFromJson(HOPE_MODEL_PATH)
+            .orElseThrow().bakeRoot();
         this.tail = root.getChild("tail");
         this.tailAmmy = rootAmmy.getChild("tail");
         this.tailHope = rootHope.getChild("tail");
@@ -292,6 +304,13 @@ public class DoggySpinModel {
     }
 
     
+    private static Optional<LayerDefinition> getLayerDefintiionFromJson(String path) {
+        return ResourceUtil.getBundledJson(path)
+            .map(x -> new Dynamic<>(JsonOps.INSTANCE, x))
+            .map(DTNModelCodec.CODEC::parse)
+            .flatMap(DataResult::result)
+            .map(x -> DTNModelCodec.layerDefinitionFromParsed(x, Optional.empty()));
+    }
     
     public static final AnimationDefinition TAIL_CHASE_LOOP = AnimationDefinition.Builder.withLength(1.75f).looping()
         .addAnimation("head",
