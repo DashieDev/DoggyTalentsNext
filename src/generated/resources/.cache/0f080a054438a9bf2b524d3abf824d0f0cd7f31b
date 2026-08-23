@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-23T02:52:38.3956999	DoggyTalents Item Models
+// 1.21.1	2026-08-24T04:41:43.2811698	DoggyTalents Item Models
 3e180cbbb49f37fb307e710e9c20bb259237d7db assets/doggytalents/models/item/aburaage.json
 4c72c6dd9c1ea802470a31d428edf70bfadf3dc1 assets/doggytalents/models/item/amnesia_bone.json
 576747e29ded49df195a33e020635920692b8bce assets/doggytalents/models/item/angel_halo.json
@@ -37,9 +37,6 @@ aa0e5ccc2a5183ecdf5ba2c3fedc832eca34f39f assets/doggytalents/models/item/dog_bed
 65bea454c523228562a168ef99d9608af0088243 assets/doggytalents/models/item/dog_christmas_tree.json
 61950cc916377c1fbfbc898d186f9e6c36bc595c assets/doggytalents/models/item/dog_gift_costume.json
 3e834b3edef3a73ce8751e4c2c1363d7983d72b1 assets/doggytalents/models/item/dog_plushie_toy_item.json
-d4e16dd49b3b9367913eed29f9d7e4c9cb56ff85 assets/doggytalents/models/item/dragon_costume_head.json
-89723e9319ed5a15907d0f1ef04d39c1b6bafd81 assets/doggytalents/models/item/dragon_costume_suit.json
-d38e5e92b7b0677d84b44b0d1e02a8a6867aafb3 assets/doggytalents/models/item/dragon_costume_wings.json
 e573b037300087bb973ec849784125738b482122 assets/doggytalents/models/item/drool_scent_treat.json
 ce97526235ee17595babec6e5b0d4b5e3ec2c34b assets/doggytalents/models/item/easter_egg_candy.json
 54845463612496361d248445a4e723fdfc0a0529 assets/doggytalents/models/item/edamame.json
@@ -101,7 +98,6 @@ abb54092dc011dc674d04af0994dc6ddb07c43ec assets/doggytalents/models/item/natto.j
 311b153cdb0b8ba2761e8a11811c3a3c243e0351 assets/doggytalents/models/item/onsen_tamago.json
 efda45d5e77f973f93d63a8fc58e7d18c9e1fc18 assets/doggytalents/models/item/oyakodon.json
 bc4344cde9b92b3d303523e9d15fe95482b486c4 assets/doggytalents/models/item/pianist_suit.json
-9a6b2e26e6696561a2c685026102d3d2f0eed92e assets/doggytalents/models/item/plague_doctor_mask.json
 b718d1d570b69d450b7dfaf7941f31eaeeb4dd87 assets/doggytalents/models/item/propeller_hat.json
 6154f41cf2303fc6636ee83009cc983c95970804 assets/doggytalents/models/item/radio_collar.json
 51f80f4460906792ce9bbeae011a91b7b7cdc24b assets/doggytalents/models/item/rice_bowl.json
@@ -128,7 +124,6 @@ c940178a658a57efa71c4e2f657f4383832f15e7 assets/doggytalents/models/item/starter
 312d0f2de8dba6bad821639ad26b9c5c8a7347fb assets/doggytalents/models/item/sunglasses.json
 a8bdbfc433a4eb2f4c3788599f58d2c64cd53ca6 assets/doggytalents/models/item/superdog_suit.json
 d49794ca31255fe0e821fd5b5bff9a7312654eda assets/doggytalents/models/item/super_treat.json
-d73bbebe9c0d42ae66f902e144f2f955e25bc0f1 assets/doggytalents/models/item/sussy_sickle.json
 668a43f7a3a3dd17312e1633782882089f581ab5 assets/doggytalents/models/item/tantan_cape.json
 abd78068b9984b1a0d616b080af72193539ac52c assets/doggytalents/models/item/tengu_mask.json
 49cc0a873514808e51b6c1fcda36e7cb0b35c3ae assets/doggytalents/models/item/throw_bone.json
