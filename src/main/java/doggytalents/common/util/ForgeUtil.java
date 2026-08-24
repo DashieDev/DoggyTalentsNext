@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import doggytalents.common.lib.Constants;
-import net.neoforged.fml.ModList;
+import net.minecraftforge.fml.ModList;
 
 public class ForgeUtil {
 

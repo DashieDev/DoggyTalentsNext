@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import doggytalents.client.entity.model.util.DTNModelCodec.ParsedPart;
+import doggytalents.client.forward_imitate.LangUtil_1_20_under;
 
 public class ParsedModelPath {
     
@@ -19,7 +20,7 @@ public class ParsedModelPath {
     } 
 
     public ParsedPart target() {
-        return chain.getLast();
+        return LangUtil_1_20_under.getLast(chain);
     }
 
     public List<ParsedPart> chain() {
