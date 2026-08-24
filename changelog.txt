@@ -2175,3 +2175,51 @@ DogModels is now Data-Driven!
 They will be automatically compatible with every Minecraft version as long as DTN (1.19.0+)
 supports it.
 =======
+
+**1.19.1 - 22th August 2026**
+The Dynamic Update II (ft. 旺旺 🕯️🦴🎹)
+=======
+Developer's Note: 
+This update means a great deal to us. Not only does it significantly breathe more life into the dogs, but 
+we are also dedicating this release to WangWang — a mother dog whose story inspired the world. 
+Because DTN is fundamentally about celebrating the bond between humans and canines, we wanted to build 
+a permanent sanctuary for a mother who fought valiantly for her own. Here, players can finally give her 
+the love and care she was denied in the waking world. 🌸
+=======
+A Tribute to WangWang (旺旺)
+
+"O benevolent mother, you fought bravely to protect your own. Now lay down your burdens and let the origin of all
+that's good and mother to us all (Ya big furball!) embrace you in her maternal warmth and guide you to a place where
+the sun never sets on you or your children."
+
++ Added 1 model and 2 skins of WangWang. These skins are fully compatible with model accessories. 
+
++ Added WangWang to Doggy Spin World Load Icon.
+
++ Added "Wang Wang" and "旺旺" to Random Name pool.
+=======
+Major Dog Animation Overhaul!
+
+Your dogs now move and interact with the world in a drastically smoother, more fluid, and lively way. 
+They now ask for belly rubs, sniff around, stretch, and get petted... with more style!
+
++ New Animation State Machine & Blending Mechanic: Transitions between procedural movement states and keyframe 
+animations are now significantly smoother, greatly reducing visual snapping.
+
++ Dog Anim Debug Item: Now allows freezing of headYRot, headXRot, banking, and tailXRot for better posing scene setups.
+=======
+# UI Fix (Dog GUI > Style > Skins > Show Info View): 
+Shifted the info scroll view downward slightly to prevent overlapping with the search field.
+# Added new names and cleaned up the Random Name Registry (names.json).
+# Localization: Temporarily removed the French (fr_fr.json) localization. The previous translation 
+contained heavy slang and terminology that did not match the mod's intended tone; a fresh translation will
+be required in the future.
+=======
+Clean up:
+- Skins: Reorganized skin.json, removed some skins, and removed the otter model.
+- Accessories & Items: Disabled several trivial pop culture references, accessories and items for now.
+=======
+* Fixed a visual animation desync/skipping issue caused by batched latency updates.
+* Fixed old data parsed models persisting after a resource reload instead of invalidating correctly.
+* Fixed potential animation blending bug caused by radians vs. degrees mismatch.
+* Fixed back leg unnecessarily lifting up in neutral sniff animation.
