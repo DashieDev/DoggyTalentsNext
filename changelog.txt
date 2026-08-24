@@ -2173,7 +2173,7 @@ They will be automatically compatible with every Minecraft version as long as DT
 supports it.
 =======
 
-**1.19.1 - 22th August 2026**
+**1.19.1 - 25th August 2026**
 The Dynamic Update II (ft. 旺旺 🕯️🦴🎹)
 =======
 Developer's Note: 
