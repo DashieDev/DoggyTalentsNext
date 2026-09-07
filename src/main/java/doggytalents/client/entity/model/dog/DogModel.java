@@ -165,24 +165,39 @@ public class DogModel extends EntityModel<Dog> {
 
     }
 
+    public static record DogVanillaPoseContext (
+        float walkTime, float walkBlend,
+        float headYRotRelative, float headXRot,
+        float pticks, float fullTicks
+    ) {}
+
+    public static record DogClassicalAnimContext(
+        float beg, float shake, float tailXRot
+    ) {}
+
+    public static record DogPoseContext(
+        @Deprecated Dog dog, 
+        DogVanillaPoseContext vanillaPose,
+        DogClassicalAnimContext classicalAnim,
+        DogPose pose, DogAnimation anim,
+        boolean playingFullAnim
+    ) {};
+
     private void setupProceduralPose(
-        Dog dog, 
-        float limbSwing, float limbSwingAmount, 
-        float relativeHeadYRot, float headPitch,
-        float pticks, float ageInTicks
+        DogPoseContext ctx,
+        DogCapturedProceduralState captured_procedural
     ) {
         
-        
-        final var anim = dog.getAnim();
-        final boolean playing_full_anim = this.playingFullAnim(dog, pticks);
-        final var anim_manager = dog.animationManager;
+        final var vanilla_ctx = ctx.vanillaPose();
+        final var anim = ctx.anim();
+        final boolean playing_full_anim = ctx.playingFullAnim();
 
-        final var captured_procedural = 
-            anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
-                dog.animationManager.capturedProcedural
-                : DogCapturedProceduralState.NONE;
+        // final var captured_procedural = 
+        //     anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
+        //         dog.animationManager.capturedProcedural
+        //         : DogCapturedProceduralState.NONE;
         
-        var pose = dog.getDogPose();
+        var pose = ctx.pose();
         if (!captured_procedural.isNone()) {
             pose = captured_procedural.pose();
         }
@@ -192,33 +207,33 @@ public class DogModel extends EntityModel<Dog> {
             && (!playing_full_anim || anim.freeHead());
 
         final float shake_value = !captured_procedural.isNone() ? 
-            captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks);
+            captured_procedural.shakeAnim() : ctx.classicalAnim().shake();
         final float beg_value = !captured_procedural.isNone() ? 
-            captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks);
+            captured_procedural.begAnim() : ctx.classicalAnim().beg();
 
         if (!playing_full_anim) {
-            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, pticks);
+            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
             if (stand_pose)
-                this.setUpStandPose(dog, limbSwing, limbSwingAmount, pticks);
+                this.setUpStandPose(ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
 
             if (pose.canShake)
-                this.translateShakingDog(dog, shake_value, limbSwing, limbSwingAmount, pticks);
+                this.translateShakingDog(ctx.dog(), shake_value, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
         }
 
         if (should_beg)
-            this.translateBeggingDog(dog, shake_value, beg_value, limbSwing, limbSwingAmount, pticks);
+            this.translateBeggingDog(ctx.dog(), shake_value, beg_value, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
 
         if (pose.freeHead) {
             if (!captured_procedural.isNone() && !anim.freeHeadXRot()) {
                 this.head.xRot = captured_procedural.headXRot() * Mth.DEG_TO_RAD; 
             } else {
-                this.head.xRot += headPitch * ((float)Math.PI / 180F); 
+                this.head.xRot += vanilla_ctx.headXRot() * ((float)Math.PI / 180F); 
             }
-            this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
+            this.head.yRot += vanilla_ctx.headYRotRelative() *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
-            this.tail.xRot = dog.getTailRotation();
-            this.tail.yRot = DogClassicalAnimationState.wagAngle(limbSwing, limbSwingAmount, ageInTicks);
+            this.tail.xRot = ctx.classicalAnim().tailXRot();
+            this.tail.yRot = DogClassicalAnimationState.wagAngle(vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.fullTicks());
         }
     }
 
@@ -287,17 +302,37 @@ public class DogModel extends EntityModel<Dog> {
             return;
         }
 
+        final var anim_manager = dog.animationManager; 
+
         final float pticks = ageInTicks - dog.tickCount;
-        
-        this.setupProceduralPose(
-            dog, 
+        final var pose = dog.getDogPose();
+        final var anim = dog.getAnim();
+        final boolean playing_full_anim =
+            this.playingFullAnim(dog, pticks);
+
+
+        final var vanilla_ctx = new DogVanillaPoseContext(
             limbSwing, limbSwingAmount, 
             relativeHeadYRot, headPitch, 
             pticks, ageInTicks
         );
 
-        final var anim_manager = dog.animationManager;
-        final var anim = dog.getAnim();
+        final var classical_anim_ctx = new DogClassicalAnimContext(
+            dog.getDogClassicalBegAnim(pticks), 
+            dog.getDogClassicalShakeAnim(pticks),
+            dog.getTailRotation()
+        );
+
+        final var dog_pose_ctx = new DogPoseContext(
+            dog, 
+            vanilla_ctx, classical_anim_ctx, 
+            pose, anim, 
+            playing_full_anim
+        );
+        
+        this.setupProceduralPose(
+            dog_pose_ctx, anim_manager.capturedProcedural
+        );
 
         final boolean is_procedural_only = 
             anim.isNone() && anim_manager.getBlendState(pticks).isNone();
