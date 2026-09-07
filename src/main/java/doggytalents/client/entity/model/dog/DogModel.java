@@ -31,6 +31,7 @@ import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedProceduralState;
+import doggytalents.common.entity.anim.DogAnimationManager.DogInterruptedAnimState;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -179,39 +180,27 @@ public class DogModel extends EntityModel<Dog> {
         @Deprecated Dog dog, 
         DogVanillaPoseContext vanillaPose,
         DogClassicalAnimContext classicalAnim,
-        DogPose pose, DogAnimation anim,
-        boolean playingFullAnim
+        DogPose pose,
+        boolean allowfullPoseSetup, 
+        boolean allowBegging
     ) {};
 
     private void setupProceduralPose(
-        DogPoseContext ctx,
-        DogCapturedProceduralState captured_procedural
+        DogPoseContext ctx
     ) {
         
         final var vanilla_ctx = ctx.vanillaPose();
-        final var anim = ctx.anim();
-        final boolean playing_full_anim = ctx.playingFullAnim();
-
-        // final var captured_procedural = 
-        //     anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
-        //         dog.animationManager.capturedProcedural
-        //         : DogCapturedProceduralState.NONE;
         
         var pose = ctx.pose();
-        if (!captured_procedural.isNone()) {
-            pose = captured_procedural.pose();
-        }
 
         final boolean should_beg =
             pose.canBeg
-            && (!playing_full_anim || anim.freeHead());
+            && ctx.allowBegging();
 
-        final float shake_value = !captured_procedural.isNone() ? 
-            captured_procedural.shakeAnim() : ctx.classicalAnim().shake();
-        final float beg_value = !captured_procedural.isNone() ? 
-            captured_procedural.begAnim() : ctx.classicalAnim().beg();
+        final float shake_value = ctx.classicalAnim().shake();
+        final float beg_value = ctx.classicalAnim().beg();
 
-        if (!playing_full_anim) {
+        if (ctx.allowfullPoseSetup()) {
             boolean stand_pose = !DogPoseSetups.setupPose(pose, this, ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
             if (stand_pose)
                 this.setUpStandPose(ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
@@ -224,11 +213,7 @@ public class DogModel extends EntityModel<Dog> {
             this.translateBeggingDog(ctx.dog(), shake_value, beg_value, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
 
         if (pose.freeHead) {
-            if (!captured_procedural.isNone() && !anim.freeHeadXRot()) {
-                this.head.xRot = captured_procedural.headXRot() * Mth.DEG_TO_RAD; 
-            } else {
-                this.head.xRot += vanilla_ctx.headXRot() * ((float)Math.PI / 180F); 
-            }
+            this.head.xRot = vanilla_ctx.headXRot() * Mth.DEG_TO_RAD; 
             this.head.yRot += vanilla_ctx.headYRotRelative() *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
@@ -305,37 +290,47 @@ public class DogModel extends EntityModel<Dog> {
         final var anim_manager = dog.animationManager; 
 
         final float pticks = ageInTicks - dog.tickCount;
-        final var pose = dog.getDogPose();
         final var anim = dog.getAnim();
+
         final boolean playing_full_anim =
             this.playingFullAnim(dog, pticks);
-
+        final boolean is_procedural_only = 
+            anim.isNone() && anim_manager.getBlendState(pticks).isNone();
+        
+        final var captured_procedural = !is_procedural_only ? 
+            anim_manager.capturedProcedural : DogCapturedProceduralState.NONE;
+        final var captured_keyframe = !is_procedural_only ? 
+            anim_manager.capturedKeyframeAnim : DogInterruptedAnimState.NONE;
 
         final var vanilla_ctx = new DogVanillaPoseContext(
             limbSwing, limbSwingAmount, 
-            relativeHeadYRot, headPitch, 
+            
+            relativeHeadYRot,
+            !captured_procedural.isNone() && !anim.freeHeadXRot() ? 
+                captured_procedural.headXRot() : headPitch,
+
             pticks, ageInTicks
         );
 
         final var classical_anim_ctx = new DogClassicalAnimContext(
-            dog.getDogClassicalBegAnim(pticks), 
-            dog.getDogClassicalShakeAnim(pticks),
+            !captured_procedural.isNone() ? 
+                captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks), 
+            !captured_procedural.isNone() ? 
+                captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks),
             dog.getTailRotation()
         );
 
         final var dog_pose_ctx = new DogPoseContext(
             dog, 
             vanilla_ctx, classical_anim_ctx, 
-            pose, anim, 
-            playing_full_anim
+            
+            captured_procedural.isNone() ? dog.getDogPose() : captured_procedural.pose(), 
+            
+            !playing_full_anim,
+            !playing_full_anim || anim.freeHead()
         );
         
-        this.setupProceduralPose(
-            dog_pose_ctx, anim_manager.capturedProcedural
-        );
-
-        final boolean is_procedural_only = 
-            anim.isNone() && anim_manager.getBlendState(pticks).isNone();
+        this.setupProceduralPose(dog_pose_ctx);
 
         if (is_procedural_only)
             return;
@@ -357,7 +352,6 @@ public class DogModel extends EntityModel<Dog> {
         final var pose_B = this.animSnapshot2;
 
         if (blend_state == BlendState.ANIM_TO_ANIM) {
-            final var captured_keyframe = dog.animationManager.capturedKeyframeAnim;
 
             if (!captured_keyframe.isNone()) {
                 setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
@@ -368,7 +362,6 @@ public class DogModel extends EntityModel<Dog> {
         pose_A.store(this);
 
         if (blend_state == BlendState.BLEND_OUT) {
-            final var captured_keyframe = dog.animationManager.capturedKeyframeAnim;
 
             if (!captured_keyframe.isNone()) {
                 setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
