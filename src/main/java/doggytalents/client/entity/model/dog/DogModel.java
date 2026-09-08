@@ -176,7 +176,7 @@ public class DogModel extends EntityModel<Dog> {
         float beg, float shake, float tailXRot
     ) {}
 
-    public static record DogPoseContext(
+    private static record DogProceduralPoseContext(
         @Deprecated Dog dog, 
         DogVanillaPoseContext vanillaPose,
         DogClassicalAnimContext classicalAnim,
@@ -186,7 +186,7 @@ public class DogModel extends EntityModel<Dog> {
     ) {};
 
     private void setupProceduralPose(
-        DogPoseContext ctx
+        DogProceduralPoseContext ctx
     ) {
         
         final var vanilla_ctx = ctx.vanillaPose();
@@ -320,14 +320,17 @@ public class DogModel extends EntityModel<Dog> {
             dog.getTailRotation()
         );
 
-        final var dog_pose_ctx = new DogPoseContext(
+        final boolean allow_full_pose = !playing_full_anim;
+        final boolean allow_begging = !playing_full_anim || anim.freeHead();
+
+        final var dog_pose_ctx = new DogProceduralPoseContext(
             dog, 
             vanilla_ctx, classical_anim_ctx, 
             
             captured_procedural.isNone() ? dog.getDogPose() : captured_procedural.pose(), 
-            
-            !playing_full_anim,
-            !playing_full_anim || anim.freeHead()
+
+            allow_full_pose,
+            allow_begging
         );
         
         this.setupProceduralPose(dog_pose_ctx);
