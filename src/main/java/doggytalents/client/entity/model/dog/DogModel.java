@@ -204,11 +204,11 @@ public class DogModel extends EntityModel<Dog> {
                 this.setUpStandPose(ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
 
             if (pose.canShake)
-                this.translateShakingDog(ctx.dog(), shake_value, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
+                this.translateShakingDog(shake_value);
         }
 
         if (should_beg)
-            this.translateBeggingDog(ctx.dog(), shake_value, beg_value, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
+            this.translateBeggingDog(shake_value, beg_value);
 
         if (pose.freeHead) {
             this.head.xRot = vanilla_ctx.headXRot() * Mth.DEG_TO_RAD; 
@@ -261,14 +261,13 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
-    public void translateShakingDog(Dog dog, float shakeValue, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateShakingDog(float shakeValue) {
         this.mane.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.08F);
         this.body.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.16F);
         this.realTail.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.2F);
     }
 
-    public void translateBeggingDog(Dog dog, float shakeValue, float begValue, 
-        float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateBeggingDog(float shakeValue, float begValue) {
         this.realHead.zRot = DogClassicalAnimationState.begAngle(begValue)
             + DogClassicalAnimationState.shakeAngle(shakeValue, 0);
     }
