@@ -31,6 +31,7 @@ import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
 import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedProceduralState;
+import doggytalents.common.entity.anim.DogAnimationManager.DogInterruptedAnimState;
 import doggytalents.common.util.Util;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -165,60 +166,61 @@ public class DogModel extends EntityModel<Dog> {
 
     }
 
-    private void setupProceduralPose(
-        Dog dog, 
-        float limbSwing, float limbSwingAmount, 
-        float relativeHeadYRot, float headPitch,
-        float pticks, float ageInTicks
-    ) {
-        
-        
-        final var anim = dog.getAnim();
-        final boolean playing_full_anim = this.playingFullAnim(dog, pticks);
-        final var anim_manager = dog.animationManager;
+    public static record DogVanillaPoseContext (
+        float walkTime, float walkBlend,
+        float headYRotRelative, float headXRot,
+        float pticks, float fullTicks
+    ) {}
 
-        final var captured_procedural = 
-            anim_manager.getBlendState(pticks).hasProceduralCapture() ? 
-                dog.animationManager.capturedProcedural
-                : DogCapturedProceduralState.NONE;
+    public static record DogClassicalAnimContext(
+        float beg, float shake, float tailXRot
+    ) {}
+
+    private static record DogWalkAnimationStateContext(
+        float time, float blend, float runBlend
+    ) {}
+
+    private static record DogProceduralPoseContext(
+        DogVanillaPoseContext vanillaPose,
+        DogClassicalAnimContext classicalAnim,
+        DogPose pose,
+        DogWalkAnimationStateContext walkAnim,
+        boolean allowfullPoseSetup, 
+        boolean allowBegging
+    ) {};
+
+    private void setupProceduralPose(DogProceduralPoseContext ctx) {
         
-        var pose = dog.getDogPose();
-        if (!captured_procedural.isNone()) {
-            pose = captured_procedural.pose();
-        }
+        final var vanilla_ctx = ctx.vanillaPose();
+        
+        var pose = ctx.pose();
 
         final boolean should_beg =
             pose.canBeg
-            && (!playing_full_anim || anim.freeHead());
+            && ctx.allowBegging();
 
-        final float shake_value = !captured_procedural.isNone() ? 
-            captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks);
-        final float beg_value = !captured_procedural.isNone() ? 
-            captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks);
+        final float shake_value = ctx.classicalAnim().shake();
+        final float beg_value = ctx.classicalAnim().beg();
 
-        if (!playing_full_anim) {
-            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, dog, limbSwing, limbSwingAmount, pticks);
+        if (ctx.allowfullPoseSetup()) {
+            boolean stand_pose = !DogPoseSetups.setupPose(pose, this);
             if (stand_pose)
-                this.setUpStandPose(dog, limbSwing, limbSwingAmount, pticks);
+                this.setUpStandPose(ctx.walkAnim());
 
             if (pose.canShake)
-                this.translateShakingDog(dog, shake_value, limbSwing, limbSwingAmount, pticks);
+                this.translateShakingDog(shake_value);
         }
 
         if (should_beg)
-            this.translateBeggingDog(dog, shake_value, beg_value, limbSwing, limbSwingAmount, pticks);
+            this.translateBeggingDog(shake_value, beg_value);
 
         if (pose.freeHead) {
-            if (!captured_procedural.isNone() && !anim.freeHeadXRot()) {
-                this.head.xRot = captured_procedural.headXRot() * Mth.DEG_TO_RAD; 
-            } else {
-                this.head.xRot += headPitch * ((float)Math.PI / 180F); 
-            }
-            this.head.yRot += relativeHeadYRot *  Mth.DEG_TO_RAD;
+            this.head.xRot = vanilla_ctx.headXRot() * Mth.DEG_TO_RAD; 
+            this.head.yRot += vanilla_ctx.headYRotRelative() *  Mth.DEG_TO_RAD;
         }
         if (pose.freeTail) {
-            this.tail.xRot = dog.getTailRotation();
-            this.tail.yRot = DogClassicalAnimationState.wagAngle(limbSwing, limbSwingAmount, ageInTicks);
+            this.tail.xRot = ctx.classicalAnim().tailXRot();
+            this.tail.yRot = DogClassicalAnimationState.wagAngle(vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.fullTicks());
         }
     }
 
@@ -226,19 +228,19 @@ public class DogModel extends EntityModel<Dog> {
         return dog.animationManager.playingFullAnim(pticks);
     }
 
-    public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        animateWalkAndRun(dog, limbSwing, limbSwingAmount, partialTickTime);
+    public void setUpStandPose(DogWalkAnimationStateContext dogWalkAnim) {
+        animateWalkAndRun(dogWalkAnim);
     }
 
-    public void animateWalkAndRun(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {        
+    public void animateWalkAndRun(DogWalkAnimationStateContext dogWalkAnim) {        
         final var slow_trot_anim = DogAnimationRegistry.getSlowTrot();
         final var gallop_anim = DogAnimationRegistry.getGallop();
         
         final var pose_1 = this.animSnapshot1;
         final var pose_2 = this.animSnapshot2;
 
-        var walk_pos = dog.dogWalkAnimation.position(partialTickTime);
-        var walk_speed = dog.dogWalkAnimation.speed(partialTickTime);
+        var walk_pos = dogWalkAnim.time();
+        var walk_speed = dogWalkAnim.blend();
         var anim_context = AnimationContext.of(
             this::searchForPartWithName, 
             x -> x.resetPose());
@@ -253,7 +255,7 @@ public class DogModel extends EntityModel<Dog> {
             DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
         }
         
-        var anim_blend = dog.dogWalkAnimation.runningBlend(partialTickTime);
+        var anim_blend = dogWalkAnim.runBlend();
         if (anim_blend > Mth.EPSILON) {
             pose_1.store(this);
             this.resetAllPose();
@@ -263,14 +265,13 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
-    public void translateShakingDog(Dog dog, float shakeValue, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateShakingDog(float shakeValue) {
         this.mane.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.08F);
         this.body.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.16F);
         this.realTail.zRot = DogClassicalAnimationState.shakeAngle(shakeValue, -0.2F);
     }
 
-    public void translateBeggingDog(Dog dog, float shakeValue, float begValue, 
-        float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public void translateBeggingDog(float shakeValue, float begValue) {
         this.realHead.zRot = DogClassicalAnimationState.begAngle(begValue)
             + DogClassicalAnimationState.shakeAngle(shakeValue, 0);
     }
@@ -287,20 +288,59 @@ public class DogModel extends EntityModel<Dog> {
             return;
         }
 
+        final var anim_manager = dog.animationManager; 
+
         final float pticks = ageInTicks - dog.tickCount;
+        final var anim = dog.getAnim();
+        final var walk_anim = dog.dogWalkAnimation;
+
+        final boolean playing_full_anim =
+            this.playingFullAnim(dog, pticks);
+        final boolean is_procedural_only = 
+            anim.isNone() && anim_manager.getBlendState(pticks).isNone();
         
-        this.setupProceduralPose(
-            dog, 
+        final var captured_procedural = !is_procedural_only ? 
+            anim_manager.capturedProcedural : DogCapturedProceduralState.NONE;
+        final var captured_keyframe = !is_procedural_only ? 
+            anim_manager.capturedKeyframeAnim : DogInterruptedAnimState.NONE;
+
+        final var vanilla_ctx = new DogVanillaPoseContext(
             limbSwing, limbSwingAmount, 
-            relativeHeadYRot, headPitch, 
+            
+            relativeHeadYRot,
+            !captured_procedural.isNone() && !anim.freeHeadXRot() ? 
+                captured_procedural.headXRot() : headPitch,
+
             pticks, ageInTicks
         );
 
-        final var anim_manager = dog.animationManager;
-        final var anim = dog.getAnim();
+        final var classical_anim_ctx = new DogClassicalAnimContext(
+            !captured_procedural.isNone() ? 
+                captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks), 
+            !captured_procedural.isNone() ? 
+                captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks),
+            dog.getTailRotation()
+        );
 
-        final boolean is_procedural_only = 
-            anim.isNone() && anim_manager.getBlendState(pticks).isNone();
+        final boolean allow_full_pose = !playing_full_anim;
+        final boolean allow_begging = !playing_full_anim || anim.freeHead();
+
+        final var dog_pose_ctx = new DogProceduralPoseContext(
+            vanilla_ctx, classical_anim_ctx, 
+            
+            captured_procedural.isNone() ? dog.getDogPose() : captured_procedural.pose(), 
+
+            new DogWalkAnimationStateContext(
+                walk_anim.position(pticks), 
+                walk_anim.speed(pticks),
+                walk_anim.runningBlend(pticks)
+            ),
+
+            allow_full_pose,
+            allow_begging
+        );
+        
+        this.setupProceduralPose(dog_pose_ctx);
 
         if (is_procedural_only)
             return;
@@ -311,7 +351,7 @@ public class DogModel extends EntityModel<Dog> {
         final long anim_time_millis = dog.animationManager.animationState
             .updateTimeAndGet(ageInTicks, anim.getSpeedModifier());
 
-        if (this.playingFullAnim(dog, pticks)) {
+        if (playing_full_anim) {
             setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
             return;
         }
@@ -322,7 +362,6 @@ public class DogModel extends EntityModel<Dog> {
         final var pose_B = this.animSnapshot2;
 
         if (blend_state == BlendState.ANIM_TO_ANIM) {
-            final var captured_keyframe = dog.animationManager.capturedKeyframeAnim;
 
             if (!captured_keyframe.isNone()) {
                 setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
@@ -333,7 +372,6 @@ public class DogModel extends EntityModel<Dog> {
         pose_A.store(this);
 
         if (blend_state == BlendState.BLEND_OUT) {
-            final var captured_keyframe = dog.animationManager.capturedKeyframeAnim;
 
             if (!captured_keyframe.isNone()) {
                 setupKeyframeAnimationPose(dog, captured_keyframe.anim(), 
