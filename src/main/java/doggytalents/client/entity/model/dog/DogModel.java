@@ -176,11 +176,16 @@ public class DogModel extends EntityModel<Dog> {
         float beg, float shake, float tailXRot
     ) {}
 
+    private static record DogWalkAnimationStateContext(
+        float time, float blend, float runBlend
+    ) {}
+
     private static record DogProceduralPoseContext(
         @Deprecated Dog dog, 
         DogVanillaPoseContext vanillaPose,
         DogClassicalAnimContext classicalAnim,
         DogPose pose,
+        DogWalkAnimationStateContext walkAnim,
         boolean allowfullPoseSetup, 
         boolean allowBegging
     ) {};
@@ -201,7 +206,7 @@ public class DogModel extends EntityModel<Dog> {
         if (ctx.allowfullPoseSetup()) {
             boolean stand_pose = !DogPoseSetups.setupPose(pose, this, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
             if (stand_pose)
-                this.setUpStandPose(ctx.dog(), vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
+                this.setUpStandPose(ctx.walkAnim());
 
             if (pose.canShake)
                 this.translateShakingDog(shake_value);
@@ -224,19 +229,19 @@ public class DogModel extends EntityModel<Dog> {
         return dog.animationManager.playingFullAnim(pticks);
     }
 
-    public void setUpStandPose(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {
-        animateWalkAndRun(dog, limbSwing, limbSwingAmount, partialTickTime);
+    public void setUpStandPose(DogWalkAnimationStateContext dogWalkAnim) {
+        animateWalkAndRun(dogWalkAnim);
     }
 
-    public void animateWalkAndRun(Dog dog, float limbSwing, float limbSwingAmount, float partialTickTime) {        
+    public void animateWalkAndRun(DogWalkAnimationStateContext dogWalkAnim) {        
         final var slow_trot_anim = DogAnimationRegistry.getSlowTrot();
         final var gallop_anim = DogAnimationRegistry.getGallop();
         
         final var pose_1 = this.animSnapshot1;
         final var pose_2 = this.animSnapshot2;
 
-        var walk_pos = dog.dogWalkAnimation.position(partialTickTime);
-        var walk_speed = dog.dogWalkAnimation.speed(partialTickTime);
+        var walk_pos = dogWalkAnim.time();
+        var walk_speed = dogWalkAnim.blend();
         var anim_context = AnimationContext.of(
             this::searchForPartWithName, 
             x -> x.resetPose());
@@ -251,7 +256,7 @@ public class DogModel extends EntityModel<Dog> {
             DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
         }
         
-        var anim_blend = dog.dogWalkAnimation.runningBlend(partialTickTime);
+        var anim_blend = dogWalkAnim.runBlend();
         if (anim_blend > Mth.EPSILON) {
             pose_1.store(this);
             this.resetAllPose();
@@ -288,6 +293,7 @@ public class DogModel extends EntityModel<Dog> {
 
         final float pticks = ageInTicks - dog.tickCount;
         final var anim = dog.getAnim();
+        final var walk_anim = dog.dogWalkAnimation;
 
         final boolean playing_full_anim =
             this.playingFullAnim(dog, pticks);
@@ -325,6 +331,12 @@ public class DogModel extends EntityModel<Dog> {
             vanilla_ctx, classical_anim_ctx, 
             
             captured_procedural.isNone() ? dog.getDogPose() : captured_procedural.pose(), 
+
+            new DogWalkAnimationStateContext(
+                walk_anim.position(pticks), 
+                walk_anim.speed(pticks),
+                walk_anim.runningBlend(pticks)
+            ),
 
             allow_full_pose,
             allow_begging
