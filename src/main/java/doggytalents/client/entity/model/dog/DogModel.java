@@ -185,9 +185,7 @@ public class DogModel extends EntityModel<Dog> {
         boolean allowBegging
     ) {};
 
-    private void setupProceduralPose(
-        DogProceduralPoseContext ctx
-    ) {
+    private void setupProceduralPose(DogProceduralPoseContext ctx) {
         
         final var vanilla_ctx = ctx.vanillaPose();
         
@@ -344,7 +342,7 @@ public class DogModel extends EntityModel<Dog> {
         final long anim_time_millis = dog.animationManager.animationState
             .updateTimeAndGet(ageInTicks, anim.getSpeedModifier());
 
-        if (this.playingFullAnim(dog, pticks)) {
+        if (playing_full_anim) {
             setupKeyframeAnimationPose(dog, dog.getAnim(), anim_time_millis, cached_procedural_val);
             return;
         }
