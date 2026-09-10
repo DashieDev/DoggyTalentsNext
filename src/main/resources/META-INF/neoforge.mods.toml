@@ -9,7 +9,7 @@ logoFile="dtn_icon.png"
     version="${file.jarVersion}"
     updateJSONURL="https://raw.githubusercontent.com/DashieDev/DoggyTalentsNext/refs/heads/1.21-master/check_for_update/update.json"
     displayName="Doggy Talents Next"
-    credits="stefanbech and the DTN Discord Server."
+    credits="The DTN Discord Server."
     authors="dashiedev, mashxp"
     description="   The Art of Minecraft Wolf."
 
