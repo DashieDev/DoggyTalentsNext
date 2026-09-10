@@ -203,7 +203,7 @@ public class DogModel extends EntityModel<Dog> {
         final float beg_value = ctx.classicalAnim().beg();
 
         if (ctx.allowfullPoseSetup()) {
-            boolean stand_pose = !DogPoseSetups.setupPose(pose, this, vanilla_ctx.walkTime(), vanilla_ctx.walkBlend(), vanilla_ctx.pticks());
+            boolean stand_pose = !DogPoseSetups.setupPose(pose, this);
             if (stand_pose)
                 this.setUpStandPose(ctx.walkAnim());
 

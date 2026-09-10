@@ -6,38 +6,38 @@ import net.minecraft.client.animation.KeyframeAnimations;
 
 public class DogPoseSetups {
 
-    public static boolean setupPose(DogPose pose, DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static boolean setupPose(DogPose pose, DogModel model) {
         switch (pose) {
         case FAINTED:
-            setupFaintPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupFaintPose(model);
             return true;
         case FAINTED_2:
-            setupFaintPose2(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupFaintPose2(model);
             return true;
         case SIT:
-            setUpSitPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setUpSitPose(model);
             return true;
         case REST:
-            setupRestPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupRestPose(model);
             return true;
         case LYING_2:
-            setupLyingPose2(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupLyingPose2(model);
             return true;
         case DROWN:
-            setupDrownPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupDrownPose(model);
             return true;
         case FLYING:
-            setupFlyPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupFlyPose(model);
             return true;
         case REST_BELLY:
-            setupRestBellyPose(model, limbSwing, limbSwingAmount, partialTickTime);
+            setupRestBellyPose(model);
             return true;
         default:
             return false;
         }
     }
  
-    public static void setUpSitPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setUpSitPose(DogModel model) {
         model.tail.offsetPos(KeyframeAnimations.posVec(0f, -9f, -2f));
         model.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-27f, 0f, 0f));
         model.legFrontLeft.offsetPos(KeyframeAnimations.posVec(0.01f, -1f, 0f));
@@ -55,7 +55,7 @@ public class DogPoseSetups {
         model.head.offsetPos(KeyframeAnimations.posVec(0f, 0f, 0f));
     }
 
-    public static void setupFaintPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupFaintPose(DogModel model) {
         model.head.offsetRotation(KeyframeAnimations.degreeVec(6.2f, 4.97f, -2.04f));
         model.head.offsetPos(KeyframeAnimations.posVec(0f, -1f, -0.5f));
         model.body.offsetRotation(KeyframeAnimations.degreeVec(2.5f, 0f, 0f));
@@ -84,7 +84,7 @@ public class DogPoseSetups {
         }
     }
 
-    public static void setupFaintPose2(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupFaintPose2(DogModel model) {
         model.head.offsetRotation(KeyframeAnimations.degreeVec(4.34f, -4.46f, 16.94f));
         model.head.offsetPos(KeyframeAnimations.posVec(0, -7f, 0.25f));
 
@@ -121,7 +121,7 @@ public class DogPoseSetups {
         }
     }
 
-    public static void setupRestPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupRestPose(DogModel model) {
         model.head.offsetRotation(KeyframeAnimations.degreeVec(-7.54f, 0.76f, 2.5f));
         model.head.offsetPos(KeyframeAnimations.posVec(0f, -5f, 2f));
         model.body.offsetRotation(KeyframeAnimations.degreeVec(0.5f, 0f, 0f));
@@ -148,7 +148,7 @@ public class DogPoseSetups {
         }
     }
 
-    public static void setupLyingPose2(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupLyingPose2(DogModel model) {
         
         model.head.offsetRotation(KeyframeAnimations.degreeVec(0f, 0f, 27.5f));
         model.head.offsetPos(KeyframeAnimations.posVec(0f, -6.75f, 2f));
@@ -176,7 +176,7 @@ public class DogPoseSetups {
         }
     }
 
-    public static void setupFlyPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupFlyPose(DogModel model) {
         model.tail.offsetRotation(KeyframeAnimations.degreeVec(84.84f, -5.13f, -5.65f));
         model.tail.offsetPos(KeyframeAnimations.posVec(0f, -1.18f, -1.63f));
         model.legFrontLeft.offsetRotation(KeyframeAnimations.degreeVec(-84.33f, 0f, 0f));
@@ -207,7 +207,7 @@ public class DogPoseSetups {
         
     }
 
-    public static void setupDrownPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupDrownPose(DogModel model) {
         model.head.offsetRotation(KeyframeAnimations.degreeVec(35, 0, 0));
         model.head.offsetPos(KeyframeAnimations.posVec(0, -0.5f, 0.25f));
 
@@ -233,7 +233,7 @@ public class DogPoseSetups {
         model.tail.offsetPos(KeyframeAnimations.posVec(0, -0.5f, -2f));
     }
 
-    public static void setupRestBellyPose(DogModel model, float limbSwing, float limbSwingAmount, float partialTickTime) {
+    public static void setupRestBellyPose(DogModel model) {
         model.head.offsetRotation(KeyframeAnimations.degreeVec(-38.87f, -25.09f, -23.41f));
         model.head.offsetPos(KeyframeAnimations.posVec(-0.01f, -1.9f, 0.36f));
         model.body.offsetRotation(KeyframeAnimations.degreeVec(-18.36f, 14.74f, 22.42f));
