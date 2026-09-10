@@ -181,7 +181,6 @@ public class DogModel extends EntityModel<Dog> {
     ) {}
 
     private static record DogProceduralPoseContext(
-        @Deprecated Dog dog, 
         DogVanillaPoseContext vanillaPose,
         DogClassicalAnimContext classicalAnim,
         DogPose pose,
@@ -327,7 +326,6 @@ public class DogModel extends EntityModel<Dog> {
         final boolean allow_begging = !playing_full_anim || anim.freeHead();
 
         final var dog_pose_ctx = new DogProceduralPoseContext(
-            dog, 
             vanilla_ctx, classical_anim_ctx, 
             
             captured_procedural.isNone() ? dog.getDogPose() : captured_procedural.pose(), 
