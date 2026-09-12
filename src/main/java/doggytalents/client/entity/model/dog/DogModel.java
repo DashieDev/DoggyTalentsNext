@@ -3,6 +3,7 @@ package doggytalents.client.entity.model.dog;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -29,6 +30,7 @@ import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogWalkAnimationState;
 import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedProceduralState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogInterruptedAnimState;
@@ -177,7 +179,7 @@ public class DogModel extends EntityModel<Dog> {
     ) {}
 
     private static record DogWalkAnimationStateContext(
-        float time, float blend, float runBlend
+        float time, float blend, DogWalkAnimationState.WalkState walkState, float runBlend, float lastRunTime
     ) {}
 
     private static record DogProceduralPoseContext(
@@ -239,30 +241,102 @@ public class DogModel extends EntityModel<Dog> {
         final var pose_1 = this.animSnapshot1;
         final var pose_2 = this.animSnapshot2;
 
-        var walk_pos = dogWalkAnim.time();
-        var walk_speed = dogWalkAnim.blend();
-        var anim_context = AnimationContext.of(
+        final var anim_context = AnimationContext.of(
             this::searchForPartWithName, 
             x -> x.resetPose());
-        
-        final long walk_animation_start = 830;
-        long time = walk_animation_start + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-        float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
-        anim_swing = Mth.clamp(anim_swing, 0, 1);
-        
-        this.resetAllPose();
-        if (anim_swing > Mth.EPSILON) {
-            DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
+
+        final long walk_anim_offset = 830;
+        final int run_anim_offset = 0;
+
+        final var self = this;
+
+        final Consumer<DogWalkAnimationStateContext> walk_animate = walk_anim -> {
+            self.resetAllPose();
+            
+            var walk_pos = walk_anim.time();
+            var walk_speed = walk_anim.blend();
+            
+            
+            long time = walk_anim_offset + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+            float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+            anim_swing = Mth.clamp(anim_swing, 0, 1);
+
+            if (anim_swing > Mth.EPSILON) {
+                DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
+            }
+        };
+
+        final Consumer<DogWalkAnimationStateContext> run_animate = walk_anim -> {
+            self.resetAllPose();
+
+            var walk_pos = dogWalkAnim.time();
+            long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset + time / 2, 1, vecObj);
+        };
+
+        switch (dogWalkAnim.walkState()) {
+    
+        case WALK:
+        {
+            walk_animate.accept(dogWalkAnim);
+            break;
         }
-        
-        var anim_blend = dogWalkAnim.runBlend();
-        if (anim_blend > Mth.EPSILON) {
+        case ACCEL:
+        {
+            final float blend = dogWalkAnim.runBlend(); 
+
+            walk_animate.accept(dogWalkAnim);
             pose_1.store(this);
             this.resetAllPose();
-            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, time / 2, 1, vecObj);
+            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset, 1, vecObj);
             pose_2.store(this);
-            AnimSnapshot.blendAndApply(anim_blend, pose_1, pose_2, this);
+            AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            break;
         }
+        case RUN:
+        {
+            run_animate.accept(dogWalkAnim);
+            break;
+        }
+        case RIT:
+        {
+            final float blend = dogWalkAnim.runBlend(); 
+
+            var walk_pos = dogWalkAnim.lastRunTime;
+            long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset + time / 2, 1, vecObj);
+
+            pose_1.store(this);
+            
+            walk_animate.accept(dogWalkAnim);
+
+            pose_2.store(this);
+            AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            break;
+        }
+        }
+
+        // var walk_pos = dogWalkAnim.time();
+        // var walk_speed = dogWalkAnim.blend();
+        
+        // final long walk_animation_start = 830;
+        // long time = walk_animation_start + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        // float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+        // anim_swing = Mth.clamp(anim_swing, 0, 1);
+        
+        // this.resetAllPose();
+        // if (anim_swing > Mth.EPSILON) {
+        //     DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
+        // }
+        
+        // var anim_blend = dogWalkAnim.runBlend();
+        // if (anim_blend > Mth.EPSILON) {
+        //     pose_1.store(this);
+        //     this.resetAllPose();
+        //     DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, time / 2, 1, vecObj);
+        //     pose_2.store(this);
+        //     AnimSnapshot.blendAndApply(anim_blend, pose_1, pose_2, this);
+        // }
     }
 
     public void translateShakingDog(float shakeValue) {
@@ -333,7 +407,9 @@ public class DogModel extends EntityModel<Dog> {
             new DogWalkAnimationStateContext(
                 walk_anim.position(pticks), 
                 walk_anim.speed(pticks),
-                walk_anim.runningBlend(pticks)
+                walk_anim.walkState(),
+                walk_anim.runBlend(pticks),
+                walk_anim.runAnimStopAt
             ),
 
             allow_full_pose,

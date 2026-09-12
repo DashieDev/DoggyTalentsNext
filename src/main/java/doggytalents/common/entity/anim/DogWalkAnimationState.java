@@ -22,6 +22,15 @@ public class DogWalkAnimationState {
     private SecondOrderDynamics<Float> bankingDynamic = SecondOrderDynamics.single(0.6f, 0.5f, 0, 0);
     private float banking0 = 0, banking = 0;
 
+
+    //New sys sketch
+    public static enum WalkState { WALK, ACCEL, RUN, RIT }
+    private WalkState walkState = WalkState.WALK;
+    private static final int ACCEL_TIME = 4; 
+    private static final int RIT_TIME = 5; 
+    public float runAnimStopAt = 0;
+    private int runBlendTick;
+
     public DogWalkAnimationState(Dog dog) {
         this.dog = dog;
     }
@@ -38,15 +47,60 @@ public class DogWalkAnimationState {
         float new_speed = this.speedDynamic.update(1/20f, rawDeltaMove * 4);
         setSpeed(new_speed);
         
-        updateRunningValue(rawDeltaMove);
-        updateBankingValue();
-        
         this.position = shouldResetPosition(speed0, runningValue0) ? 
             this.speed : this.position + this.speed;
+        
+        updateRunningValue(rawDeltaMove);
+        updateRunningState(this.runningValue);
+        updateBankingValue();
     }
 
     private boolean shouldResetPosition(float speed0, float running0) {
         return speed0 < Mth.EPSILON && running0 <= this.runningThreshold();
+    }
+
+    private void updateRunningState(float runningValue) {
+        switch (this.walkState) {
+        case WALK:
+        {
+            if (runningValue >= this.runningThreshold()) {
+                this.walkState = WalkState.ACCEL;
+                this.runBlendTick = 0;
+                break;
+            }
+            break;
+        }
+        case ACCEL:
+        {
+            ++this.runBlendTick;
+            if (this.runBlendTick >= ACCEL_TIME) {
+                this.walkState = WalkState.RUN;
+                this.position = 0;
+                break;
+            }
+            break;
+        }
+        case RUN:
+        {
+            if (runningValue < this.runningThreshold()) {
+                this.walkState = WalkState.RIT;
+                this.runBlendTick = 0;
+                this.runAnimStopAt = this.position;
+                break;
+            }
+            break;
+        }
+        case RIT:
+        {
+            ++this.runBlendTick;
+            if (this.runBlendTick >= RIT_TIME) {
+                this.walkState = WalkState.WALK;
+                this.position = 0;
+                break;
+            }
+            break;
+        }
+        }
     }
 
     private void updateRunningValue(float rawDeltaMove) {
@@ -107,13 +161,33 @@ public class DogWalkAnimationState {
         return this.position - this.speed * (1.0F - pticks);
     }
 
-    public float runningBlend(float pticks) {
-        float run_val = Mth.lerp(pticks, this.runningValue0, this.runningValue);
-        final float threshold = runningThreshold();
-        if (run_val <= threshold)
+    //public float runningBlend(float pticks) {
+        // float run_val = Mth.lerp(pticks, this.runningValue0, this.runningValue);
+        // final float threshold = runningThreshold();
+        // if (run_val <= threshold)
+        //     return 0;
+        // float ret = (run_val - threshold)/(1 - threshold);
+        // return Mth.clamp(ret, 0, 1);
+        
+    //}
+
+    public WalkState walkState() {
+        return this.walkState;
+    }
+
+    public float runBlend(float pticks) {
+        final boolean do_blend = 
+            this.walkState == WalkState.ACCEL || this.walkState == WalkState.RIT;
+        if (!do_blend)
             return 0;
-        float ret = (run_val - threshold)/(1 - threshold);
-        return Mth.clamp(ret, 0, 1);
+        final int duration = this.walkState == WalkState.ACCEL ? ACCEL_TIME : RIT_TIME;
+        if (duration <= 0 || this.runBlendTick >= duration) return 1.0f;
+        float ret = Mth.clamp((this.runBlendTick + pticks) / (float) duration, 0.0f, 1.0f);
+        return Mth.equal(ret, 1) ? 1 : ret;
+    }
+
+    public boolean isCurrentlyRunning() {
+        return this.walkState == WalkState.RUN;
     }
 
     private float runningThreshold() {
