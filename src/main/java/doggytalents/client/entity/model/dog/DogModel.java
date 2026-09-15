@@ -255,19 +255,23 @@ public class DogModel extends EntityModel<Dog> {
         }
     }
 
+    private void animateRun(
+        float walkAnimTime, int animOffsetMillis,
+        AnimationContext animContext, 
+        AnimationDefinition sequence
+    ) {
+        final long run_anim_time = animOffsetMillis + 
+            DogWalkAnimationState.runAnimTimeMillisFrom(walkAnimTime);
+        animateRun(run_anim_time, animContext, sequence);
+    }
 
     private void animateRun(
-        DogWalkAnimationStateContext dogWalkAnim, 
+        long animTime, 
         AnimationContext animContext, 
-        AnimationDefinition sequence,
-        int offset
+        AnimationDefinition sequence
     ) {
         this.resetAllPose();
-
-
-        var walk_pos = dogWalkAnim.time();
-        long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-        DogKeyframeAnimations.keyframeAnimate(animContext, sequence, offset + time / 2, 1, vecObj);
+        DogKeyframeAnimations.keyframeAnimate(animContext, sequence, animTime, 1, vecObj);
     }
 
     public void animateWalkAndRun(DogWalkAnimationStateContext dogWalkAnim) {        
@@ -305,7 +309,7 @@ public class DogModel extends EntityModel<Dog> {
         }
         case RUN:
         {
-            this.animateRun(dogWalkAnim, anim_context, gallop_anim, run_anim_offset);
+            this.animateRun(dogWalkAnim.time(), run_anim_offset, anim_context, gallop_anim);
             break;
         }
         case RIT:
@@ -314,9 +318,7 @@ public class DogModel extends EntityModel<Dog> {
 
             this.resetAllPose();
 
-            var walk_pos = dogWalkAnim.lastRunTime;
-            long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset + time / 2, 1, vecObj);
+            this.animateRun(dogWalkAnim.lastRunTime(), run_anim_offset, anim_context, gallop_anim);
 
             pose_1.store(this);
             

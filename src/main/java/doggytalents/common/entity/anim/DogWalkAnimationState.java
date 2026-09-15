@@ -1,6 +1,7 @@
 package doggytalents.common.entity.anim;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.util.Mth;
 
 public class DogWalkAnimationState {
@@ -112,6 +113,10 @@ public class DogWalkAnimationState {
         }
 
         this.runningValue = Mth.clamp(this.runningValue, 0, 1);
+    }
+    
+    public static long runAnimTimeMillisFrom(float rawWalkTime) {
+        return Util.tickMayWithPartialToMillis(rawWalkTime * 2.5 / 2);
     }
 
     private void updateBankingValue() {
