@@ -234,6 +234,42 @@ public class DogModel extends EntityModel<Dog> {
         animateWalkAndRun(dogWalkAnim);
     }
 
+    private void amimateWalk(
+        DogWalkAnimationStateContext dogWalkAnim, 
+        AnimationContext animContext, 
+        AnimationDefinition sequence,
+        int offset
+    ) {
+        this.resetAllPose();
+
+
+        var walk_pos = dogWalkAnim.time();
+        var walk_speed = dogWalkAnim.blend();
+        
+        long time = offset + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+        anim_swing = Mth.clamp(anim_swing, 0, 1);
+
+        if (anim_swing > Mth.EPSILON) {
+            DogKeyframeAnimations.keyframeAnimate(animContext, sequence, time, anim_swing, vecObj);
+        }
+    }
+
+
+    private void animateRun(
+        DogWalkAnimationStateContext dogWalkAnim, 
+        AnimationContext animContext, 
+        AnimationDefinition sequence,
+        int offset
+    ) {
+        this.resetAllPose();
+
+
+        var walk_pos = dogWalkAnim.time();
+        long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        DogKeyframeAnimations.keyframeAnimate(animContext, sequence, offset + time / 2, 1, vecObj);
+    }
+
     public void animateWalkAndRun(DogWalkAnimationStateContext dogWalkAnim) {        
         final var slow_trot_anim = DogAnimationRegistry.getSlowTrot();
         final var gallop_anim = DogAnimationRegistry.getGallop();
@@ -245,47 +281,21 @@ public class DogModel extends EntityModel<Dog> {
             this::searchForPartWithName, 
             x -> x.resetPose());
 
-        final long walk_anim_offset = 830;
+        final int walk_anim_offset = 830;
         final int run_anim_offset = 0;
-
-        final var self = this;
-
-        final Consumer<DogWalkAnimationStateContext> walk_animate = walk_anim -> {
-            self.resetAllPose();
-            
-            var walk_pos = walk_anim.time();
-            var walk_speed = walk_anim.blend();
-            
-            
-            long time = walk_anim_offset + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-            float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
-            anim_swing = Mth.clamp(anim_swing, 0, 1);
-
-            if (anim_swing > Mth.EPSILON) {
-                DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
-            }
-        };
-
-        final Consumer<DogWalkAnimationStateContext> run_animate = walk_anim -> {
-            self.resetAllPose();
-
-            var walk_pos = dogWalkAnim.time();
-            long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset + time / 2, 1, vecObj);
-        };
 
         switch (dogWalkAnim.walkState()) {
     
         case WALK:
         {
-            walk_animate.accept(dogWalkAnim);
+            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
             break;
         }
         case ACCEL:
         {
             final float blend = dogWalkAnim.runBlend(); 
 
-            walk_animate.accept(dogWalkAnim);
+            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
             pose_1.store(this);
             this.resetAllPose();
             DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset, 1, vecObj);
@@ -295,12 +305,14 @@ public class DogModel extends EntityModel<Dog> {
         }
         case RUN:
         {
-            run_animate.accept(dogWalkAnim);
+            this.animateRun(dogWalkAnim, anim_context, gallop_anim, run_anim_offset);
             break;
         }
         case RIT:
         {
             final float blend = dogWalkAnim.runBlend(); 
+
+            this.resetAllPose();
 
             var walk_pos = dogWalkAnim.lastRunTime;
             long time = Util.tickMayWithPartialToMillis(walk_pos * 2.5);
@@ -308,7 +320,7 @@ public class DogModel extends EntityModel<Dog> {
 
             pose_1.store(this);
             
-            walk_animate.accept(dogWalkAnim);
+            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
 
             pose_2.store(this);
             AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);

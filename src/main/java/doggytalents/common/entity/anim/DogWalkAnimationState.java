@@ -26,7 +26,7 @@ public class DogWalkAnimationState {
     //New sys sketch
     public static enum WalkState { WALK, ACCEL, RUN, RIT }
     private WalkState walkState = WalkState.WALK;
-    private static final int ACCEL_TIME = 4; 
+    private static final int ACCEL_TIME = 5; 
     private static final int RIT_TIME = 5; 
     public float runAnimStopAt = 0;
     private int runBlendTick;
