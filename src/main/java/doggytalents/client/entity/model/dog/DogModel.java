@@ -315,7 +315,7 @@ public class DogModel extends EntityModel<Dog> {
         );
 
         final var classical_anim_ctx = new DogClassicalAnimContext(
-            !captured_procedural.isNone() ? 
+            !captured_procedural.isNone() && !anim.freeHead() ? 
                 captured_procedural.begAnim() : dog.getDogClassicalBegAnim(pticks), 
             !captured_procedural.isNone() ? 
                 captured_procedural.shakeAnim() : dog.getDogClassicalShakeAnim(pticks),
