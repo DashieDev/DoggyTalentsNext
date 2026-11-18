@@ -1,5 +1,6 @@
 package doggytalents.common.util;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import net.minecraft.core.HolderLookup.Provider;
@@ -21,6 +22,19 @@ public class ServerWorldUtil {
             (tag, prov) -> new TransientObjectWrapper(creator.get())
         );
         return level.getDataStorage().computeIfAbsent(factory, id).unwrap();
+    }
+
+    public static <T> Optional<T> getTransientLevelOwnedObject(
+        ServerLevel level, 
+        Supplier<T> creator,
+        String id
+    ) {
+        final var factory = new SavedData.Factory<TransientObjectWrapper<T>>(
+            () -> new TransientObjectWrapper(creator.get()), 
+            (tag, prov) -> new TransientObjectWrapper(creator.get())
+        );
+        return Optional.ofNullable(level.getDataStorage().get(factory, id))
+            .map(TransientObjectWrapper::unwrap);
     }
 
     private static class TransientObjectWrapper<T> extends SavedData {
