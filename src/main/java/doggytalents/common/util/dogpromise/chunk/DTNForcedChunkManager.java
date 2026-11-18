@@ -1,6 +1,7 @@
 package doggytalents.common.util.dogpromise.chunk;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import doggytalents.common.lib.Constants;
@@ -49,7 +50,7 @@ public class DTNForcedChunkManager {
     public static final void onServerStop(MinecraftServer server) {
         //Clear the map since our tickets won't persist anyways.
         server.getAllLevels().forEach(level -> {
-            accquiredChunkFor(level).clear();
+            findAccquiredChunkFor(level).ifPresent(Long2ObjectMap::clear);
         });
     }
 
@@ -59,6 +60,16 @@ public class DTNForcedChunkManager {
             AccquiredChunkPerLevel::new, 
             TRANSIENT_ID
         ).accquiredChunkMap;
+    }
+
+    private static Optional<Long2ObjectMap<Set<AbstractPromise>>> 
+        findAccquiredChunkFor(ServerLevel level) {
+        
+        return ServerWorldUtil.getTransientLevelOwnedObject(
+            level, 
+            AccquiredChunkPerLevel::new, 
+            TRANSIENT_ID
+        ).map(x -> x.accquiredChunkMap);
     }
 
 }
