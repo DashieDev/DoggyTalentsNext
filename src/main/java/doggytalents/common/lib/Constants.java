@@ -20,6 +20,9 @@ public class Constants {
     public static final String STORAGE_DOG_LOCATION = MOD_ID + "DogLocations";
     public static final String STORAGE_DOG_LOCATION_OLD = "dog_locations";
 
+    // Transient Level-owned object
+    public static final String DTN_FORCED_CHUNK_TRACKER = MOD_ID + "forced_chunk_tracker"; 
+
     public static final int OPERATOR_PERMISSION = 4;
 
     public static class EntityState {
