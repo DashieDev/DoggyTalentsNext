@@ -61,47 +61,44 @@ public class DogWalkAnimationState {
     }
 
     private void updateRunningState(float runningValue) {
-        switch (this.walkState) {
-        case WALK:
-        {
-            if (runningValue >= this.runningThreshold()) {
-                this.walkState = WalkState.ACCEL;
-                this.runBlendTick = 0;
-                break;
+        this.walkState = switch (this.walkState) {
+            case WALK -> {
+                if (runningValue >= this.runningThreshold()) {
+                    this.runBlendTick = 0;
+                    yield WalkState.ACCEL;
+                }
+
+                yield this.walkState;
             }
-            break;
-        }
-        case ACCEL:
-        {
-            ++this.runBlendTick;
-            if (this.runBlendTick >= ACCEL_TIME) {
-                this.walkState = WalkState.RUN;
-                this.position = 0;
-                break;
+            case ACCEL -> {
+                ++this.runBlendTick;
+
+                if (this.runBlendTick >= ACCEL_TIME) {
+                    this.position = 0;
+                    yield WalkState.RUN;
+                }
+                
+                yield this.walkState;
             }
-            break;
-        }
-        case RUN:
-        {
-            if (runningValue < this.runningThreshold()) {
-                this.walkState = WalkState.RIT;
-                this.runBlendTick = 0;
-                this.runAnimStopAt = this.position;
-                break;
+            case RUN -> {
+                if (runningValue < this.runningThreshold()) {
+                    this.runBlendTick = 0;
+                    this.runAnimStopAt = this.position;
+                    yield WalkState.RIT;
+                }
+
+                yield this.walkState;
             }
-            break;
-        }
-        case RIT:
-        {
-            ++this.runBlendTick;
-            if (this.runBlendTick >= RIT_TIME) {
-                this.walkState = WalkState.WALK;
-                this.position = 0;
-                break;
+            case RIT -> {
+                ++this.runBlendTick;
+                if (this.runBlendTick >= RIT_TIME) {
+                    this.position = 0;
+                    yield WalkState.WALK;
+                }
+
+                yield this.walkState;
             }
-            break;
-        }
-        }
+        };
     }
 
     private void updateRunningValue(float rawDeltaMove) {

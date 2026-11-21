@@ -289,45 +289,32 @@ public class DogModel extends EntityModel<Dog> {
         final int run_anim_offset = 0;
 
         switch (dogWalkAnim.walkState()) {
-    
-        case WALK:
-        {
-            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
-            break;
-        }
-        case ACCEL:
-        {
-            final float blend = dogWalkAnim.runBlend(); 
+            case WALK -> {
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+            }
+            case ACCEL -> {
+                final float blend = dogWalkAnim.runBlend(); 
 
-            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
-            pose_1.store(this);
-            this.resetAllPose();
-            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset, 1, vecObj);
-            pose_2.store(this);
-            AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
-            break;
-        }
-        case RUN:
-        {
-            this.animateRun(dogWalkAnim.time(), run_anim_offset, anim_context, gallop_anim);
-            break;
-        }
-        case RIT:
-        {
-            final float blend = dogWalkAnim.runBlend(); 
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+                pose_1.store(this);
+                this.resetAllPose();
+                DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset, 1, vecObj);
+                pose_2.store(this);
+                AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            }
+            case RUN -> {
+                this.animateRun(dogWalkAnim.time(), run_anim_offset, anim_context, gallop_anim);
+            }
+            case RIT -> {
+                final float blend = dogWalkAnim.runBlend(); 
 
-            this.resetAllPose();
-
-            this.animateRun(dogWalkAnim.lastRunTime(), run_anim_offset, anim_context, gallop_anim);
-
-            pose_1.store(this);
-            
-            this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
-
-            pose_2.store(this);
-            AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
-            break;
-        }
+                this.resetAllPose();
+                this.animateRun(dogWalkAnim.lastRunTime(), run_anim_offset, anim_context, gallop_anim);
+                pose_1.store(this);
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+                pose_2.store(this);
+                AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            }
         }
 
         // var walk_pos = dogWalkAnim.time();
