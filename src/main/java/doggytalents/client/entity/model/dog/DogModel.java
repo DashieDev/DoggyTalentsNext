@@ -31,6 +31,7 @@ import doggytalents.client.entity.model.util.DogModelRenderType;
 import doggytalents.common.entity.Dog;
 import doggytalents.common.entity.anim.DogClassicalAnimationState;
 import doggytalents.common.entity.anim.DogPose;
+import doggytalents.common.entity.anim.DogWalkAnimationState;
 import doggytalents.common.entity.anim.DogAnimationManager.BlendState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogCapturedProceduralState;
 import doggytalents.common.entity.anim.DogAnimationManager.DogInterruptedAnimState;
@@ -179,7 +180,7 @@ public class DogModel extends EntityModel<Dog> {
     ) {}
 
     private static record DogWalkAnimationStateContext(
-        float time, float blend, float runBlend
+        float time, float blend, DogWalkAnimationState.WalkState walkState, float runBlend, float lastRunTime
     ) {}
 
     private static record DogProceduralPoseContext(
@@ -234,6 +235,46 @@ public class DogModel extends EntityModel<Dog> {
         animateWalkAndRun(dogWalkAnim);
     }
 
+    private void amimateWalk(
+        DogWalkAnimationStateContext dogWalkAnim, 
+        AnimationContext animContext, 
+        AnimationDefinition sequence,
+        int offset
+    ) {
+        this.resetAllPose();
+
+
+        var walk_pos = dogWalkAnim.time();
+        var walk_speed = dogWalkAnim.blend();
+        
+        long time = offset + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+        anim_swing = Mth.clamp(anim_swing, 0, 1);
+
+        if (anim_swing > Mth.EPSILON) {
+            DogKeyframeAnimations.keyframeAnimate(animContext, sequence, time, anim_swing, vecObj);
+        }
+    }
+
+    private void animateRun(
+        float walkAnimTime, int animOffsetMillis,
+        AnimationContext animContext, 
+        AnimationDefinition sequence
+    ) {
+        final long run_anim_time = animOffsetMillis + 
+            DogWalkAnimationState.runAnimTimeMillisFrom(walkAnimTime);
+        animateRun(run_anim_time, animContext, sequence);
+    }
+
+    private void animateRun(
+        long animTime, 
+        AnimationContext animContext, 
+        AnimationDefinition sequence
+    ) {
+        this.resetAllPose();
+        DogKeyframeAnimations.keyframeAnimate(animContext, sequence, animTime, 1, vecObj);
+    }
+
     public void animateWalkAndRun(DogWalkAnimationStateContext dogWalkAnim) {        
         final var slow_trot_anim = DogAnimationRegistry.getSlowTrot();
         final var gallop_anim = DogAnimationRegistry.getGallop();
@@ -241,30 +282,63 @@ public class DogModel extends EntityModel<Dog> {
         final var pose_1 = this.animSnapshot1;
         final var pose_2 = this.animSnapshot2;
 
-        var walk_pos = dogWalkAnim.time();
-        var walk_speed = dogWalkAnim.blend();
-        var anim_context = AnimationContext.of(
+        final var anim_context = AnimationContext.of(
             this::searchForPartWithName, 
             x -> x.resetPose());
-        
-        final long walk_animation_start = 830;
-        long time = walk_animation_start + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
-        float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
-        anim_swing = Mth.clamp(anim_swing, 0, 1);
-        
-        this.resetAllPose();
-        if (anim_swing > Mth.EPSILON) {
-            DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
+
+        final int walk_anim_offset = 830;
+        final int run_anim_offset = 0;
+
+        switch (dogWalkAnim.walkState()) {
+            case WALK -> {
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+            }
+            case ACCEL -> {
+                final float blend = dogWalkAnim.runBlend(); 
+
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+                pose_1.store(this);
+                this.resetAllPose();
+                DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, run_anim_offset, 1, vecObj);
+                pose_2.store(this);
+                AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            }
+            case RUN -> {
+                this.animateRun(dogWalkAnim.time(), run_anim_offset, anim_context, gallop_anim);
+            }
+            case RIT -> {
+                final float blend = dogWalkAnim.runBlend(); 
+
+                this.resetAllPose();
+                this.animateRun(dogWalkAnim.lastRunTime(), run_anim_offset, anim_context, gallop_anim);
+                pose_1.store(this);
+                this.amimateWalk(dogWalkAnim, anim_context, slow_trot_anim, walk_anim_offset);
+                pose_2.store(this);
+                AnimSnapshot.blendAndApply(blend, pose_1, pose_2, this);
+            }
         }
+
+        // var walk_pos = dogWalkAnim.time();
+        // var walk_speed = dogWalkAnim.blend();
         
-        var anim_blend = dogWalkAnim.runBlend();
-        if (anim_blend > Mth.EPSILON) {
-            pose_1.store(this);
-            this.resetAllPose();
-            DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, time / 2, 1, vecObj);
-            pose_2.store(this);
-            AnimSnapshot.blendAndApply(anim_blend, pose_1, pose_2, this);
-        }
+        // final long walk_animation_start = 830;
+        // long time = walk_animation_start + Util.tickMayWithPartialToMillis(walk_pos * 2.5);
+        // float anim_swing = walk_speed <= 0.2f ? walk_speed/0.2f : 1;
+        // anim_swing = Mth.clamp(anim_swing, 0, 1);
+        
+        // this.resetAllPose();
+        // if (anim_swing > Mth.EPSILON) {
+        //     DogKeyframeAnimations.keyframeAnimate(anim_context, slow_trot_anim, time, anim_swing, vecObj);
+        // }
+        
+        // var anim_blend = dogWalkAnim.runBlend();
+        // if (anim_blend > Mth.EPSILON) {
+        //     pose_1.store(this);
+        //     this.resetAllPose();
+        //     DogKeyframeAnimations.keyframeAnimate(anim_context, gallop_anim, time / 2, 1, vecObj);
+        //     pose_2.store(this);
+        //     AnimSnapshot.blendAndApply(anim_blend, pose_1, pose_2, this);
+        // }
     }
 
     public void translateShakingDog(float shakeValue) {
@@ -335,7 +409,9 @@ public class DogModel extends EntityModel<Dog> {
             new DogWalkAnimationStateContext(
                 walk_anim.position(pticks), 
                 walk_anim.speed(pticks),
-                walk_anim.runningBlend(pticks)
+                walk_anim.walkState(),
+                walk_anim.runBlend(pticks),
+                walk_anim.runAnimStopAt
             ),
 
             allow_full_pose,
