@@ -1,6 +1,7 @@
 package doggytalents.common.entity.anim;
 
 import doggytalents.common.entity.Dog;
+import doggytalents.common.util.Util;
 import net.minecraft.util.Mth;
 
 public class DogWalkAnimationState {
@@ -14,7 +15,13 @@ public class DogWalkAnimationState {
 
     //Running State
     private float runningValue = 0;
-    private float runningValue0 = 0;
+    private float runningValue0 = 0;    
+    public static enum WalkState { WALK, ACCEL, RUN, RIT }
+    private WalkState walkState = WalkState.WALK;
+    private static final int ACCEL_TIME = 5; 
+    private static final int RIT_TIME = 5; 
+    public float runAnimStopAt = 0;
+    private int runBlendTick;
 
     //Banking State
     private float prevYRot = 0;
@@ -38,15 +45,57 @@ public class DogWalkAnimationState {
         float new_speed = this.speedDynamic.update(1/20f, rawDeltaMove * 4);
         setSpeed(new_speed);
         
-        updateRunningValue(rawDeltaMove);
-        updateBankingValue();
-        
         this.position = shouldResetPosition(speed0, runningValue0) ? 
             this.speed : this.position + this.speed;
+        
+        updateRunningValue(rawDeltaMove);
+        updateRunningState(this.runningValue);
+        updateBankingValue();
     }
 
     private boolean shouldResetPosition(float speed0, float running0) {
         return speed0 < Mth.EPSILON && running0 <= this.runningThreshold();
+    }
+
+    private void updateRunningState(float runningValue) {
+        this.walkState = switch (this.walkState) {
+            case WALK -> {
+                if (runningValue >= this.runningThreshold()) {
+                    this.runBlendTick = 0;
+                    yield WalkState.ACCEL;
+                }
+
+                yield this.walkState;
+            }
+            case ACCEL -> {
+                ++this.runBlendTick;
+
+                if (this.runBlendTick >= ACCEL_TIME) {
+                    this.position = 0;
+                    yield WalkState.RUN;
+                }
+                
+                yield this.walkState;
+            }
+            case RUN -> {
+                if (runningValue < this.runningThreshold()) {
+                    this.runBlendTick = 0;
+                    this.runAnimStopAt = this.position;
+                    yield WalkState.RIT;
+                }
+
+                yield this.walkState;
+            }
+            case RIT -> {
+                ++this.runBlendTick;
+                if (this.runBlendTick >= RIT_TIME) {
+                    this.position = 0;
+                    yield WalkState.WALK;
+                }
+
+                yield this.walkState;
+            }
+        };
     }
 
     private void updateRunningValue(float rawDeltaMove) {
@@ -58,6 +107,10 @@ public class DogWalkAnimationState {
         }
 
         this.runningValue = Mth.clamp(this.runningValue, 0, 1);
+    }
+    
+    public static long runAnimTimeMillisFrom(float rawWalkTime) {
+        return Util.tickMayWithPartialToMillis(rawWalkTime * 2.5 / 2);
     }
 
     private void updateBankingValue() {
@@ -107,13 +160,29 @@ public class DogWalkAnimationState {
         return this.position - this.speed * (1.0F - pticks);
     }
 
-    public float runningBlend(float pticks) {
-        float run_val = Mth.lerp(pticks, this.runningValue0, this.runningValue);
-        final float threshold = runningThreshold();
-        if (run_val <= threshold)
+    //public float runningBlend(float pticks) {
+        // float run_val = Mth.lerp(pticks, this.runningValue0, this.runningValue);
+        // final float threshold = runningThreshold();
+        // if (run_val <= threshold)
+        //     return 0;
+        // float ret = (run_val - threshold)/(1 - threshold);
+        // return Mth.clamp(ret, 0, 1);
+        
+    //}
+
+    public WalkState walkState() {
+        return this.walkState;
+    }
+
+    public float runBlend(float pticks) {
+        final boolean do_blend = 
+            this.walkState == WalkState.ACCEL || this.walkState == WalkState.RIT;
+        if (!do_blend)
             return 0;
-        float ret = (run_val - threshold)/(1 - threshold);
-        return Mth.clamp(ret, 0, 1);
+        final int duration = this.walkState == WalkState.ACCEL ? ACCEL_TIME : RIT_TIME;
+        if (duration <= 0 || this.runBlendTick >= duration) return 1.0f;
+        float ret = Mth.clamp((this.runBlendTick + pticks) / (float) duration, 0.0f, 1.0f);
+        return Mth.equal(ret, 1) ? 1 : ret;
     }
 
     private float runningThreshold() {
