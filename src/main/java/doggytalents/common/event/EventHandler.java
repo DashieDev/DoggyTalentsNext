@@ -115,7 +115,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
         DogPromiseManager.forceStop();
-        DTNForcedChunkManager.onServerStop();
+        DTNForcedChunkManager.onServerStop(event.getServer());
         var overworld = event.getServer().getLevel(Level.OVERWORLD);
         if (overworld != null)
             DogLocationStorage.get(overworld).onServerStop(event);
