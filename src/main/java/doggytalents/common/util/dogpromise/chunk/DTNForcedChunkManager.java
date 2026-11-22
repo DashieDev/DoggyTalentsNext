@@ -43,8 +43,10 @@ public class DTNForcedChunkManager {
         if (tickets == null || tickets.isEmpty())
             return;
         tickets.remove(chunkTask);
-        if (tickets.isEmpty())
+        if (tickets.isEmpty()) {
+            accquired_chunks.remove(pos.toLong());
             level.getChunkSource().removeRegionTicket(CHUNK_TASK, pos, 2, Unit.INSTANCE);
+        }
     }
 
     public static final void onServerStop(MinecraftServer server) {
