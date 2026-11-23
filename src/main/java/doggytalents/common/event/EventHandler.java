@@ -114,7 +114,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onServerStop(final ServerStoppingEvent event) {
-        DogPromiseManager.forceStop();
+        DogPromiseManager.onServerStop();
         DTNForcedChunkManager.onServerStop(event.getServer());
         var overworld = event.getServer().getLevel(Level.OVERWORLD);
         if (overworld != null)
