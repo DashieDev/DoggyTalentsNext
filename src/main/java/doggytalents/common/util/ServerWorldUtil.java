@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import doggytalents.common.forward_imitate.ServerLevelUtil_1_20_under;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,11 +18,11 @@ public class ServerWorldUtil {
         String id
     ) {
     
-        final var factory = new SavedData.Factory<TransientObjectWrapper<T>>(
+        final var factory = new ServerLevelUtil_1_20_under.SavedData_Factory<TransientObjectWrapper<T>>(
             () -> new TransientObjectWrapper(creator.get()), 
-            (tag, prov) -> new TransientObjectWrapper(creator.get())
+            (tag) -> new TransientObjectWrapper(creator.get())
         );
-        return level.getDataStorage().computeIfAbsent(factory, id).unwrap();
+        return ServerLevelUtil_1_20_under.wrapStorage(level.getDataStorage()).computeIfAbsent(factory, id).unwrap();
     }
 
     public static <T> Optional<T> getTransientLevelOwnedObject(
@@ -29,11 +30,11 @@ public class ServerWorldUtil {
         Supplier<T> creator,
         String id
     ) {
-        final var factory = new SavedData.Factory<TransientObjectWrapper<T>>(
+        final var factory = new ServerLevelUtil_1_20_under.SavedData_Factory<TransientObjectWrapper<T>>(
             () -> new TransientObjectWrapper(creator.get()), 
-            (tag, prov) -> new TransientObjectWrapper(creator.get())
+            (tag) -> new TransientObjectWrapper(creator.get())
         );
-        return Optional.ofNullable(level.getDataStorage().get(factory, id))
+        return Optional.ofNullable(ServerLevelUtil_1_20_under.wrapStorage(level.getDataStorage()).get(factory, id))
             .map(TransientObjectWrapper::unwrap);
     }
 
@@ -48,7 +49,7 @@ public class ServerWorldUtil {
         }
 
         @Override
-        public CompoundTag save(CompoundTag tag, Provider prov) {
+        public CompoundTag save(CompoundTag tag) {
             return tag;
         }
     }
