@@ -2220,3 +2220,11 @@ Clean up:
 * Fixed old data parsed models persisting after a resource reload instead of invalidating correctly.
 * Fixed potential animation blending bug caused by radians vs. degrees mismatch.
 * Fixed back leg unnecessarily lifting up in neutral sniff animation.
+
+**1.19.2 - 24th November 2026**
+=======
+Dog Walking Animation change: Smoother Trot-to-Gallop Transitions
+# Dogs now cleanly build up momentum when accelerating into a gallop and naturally decelerate when slowing back down to a trot, eliminating awkward mid-speed sliding or jittering.
+# Fixed Hind-Leg Floating Glitch: Resolved a visual issue during walk-to-run transitions where a dog's back legs could sync up awkwardly and hover off the ground as if walking on their front paws.
+=======
+* HOTFIX: Fix potential Resource Leak (Chunk Leak/Object Leak) while the dog teleports to another dimension. 
