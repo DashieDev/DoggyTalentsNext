@@ -3,6 +3,7 @@ package doggytalents.common.util;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import doggytalents.common.fabric_helper.util.FabricServerLevelUtil;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,10 +18,10 @@ public class ServerWorldUtil {
         String id
     ) {
     
-        final var factory = new SavedData.Factory<TransientObjectWrapper<T>>(
+        final var factory = new FabricServerLevelUtil.FabricSavedData_Factory<TransientObjectWrapper<T>>(
             () -> new TransientObjectWrapper(creator.get()), 
             (tag, prov) -> new TransientObjectWrapper(creator.get())
-        );
+        ).unwrapFabric();
         return level.getDataStorage().computeIfAbsent(factory, id).unwrap();
     }
 
@@ -29,10 +30,10 @@ public class ServerWorldUtil {
         Supplier<T> creator,
         String id
     ) {
-        final var factory = new SavedData.Factory<TransientObjectWrapper<T>>(
+        final var factory = new FabricServerLevelUtil.FabricSavedData_Factory<TransientObjectWrapper<T>>(
             () -> new TransientObjectWrapper(creator.get()), 
             (tag, prov) -> new TransientObjectWrapper(creator.get())
-        );
+        ).unwrapFabric();
         return Optional.ofNullable(level.getDataStorage().get(factory, id))
             .map(TransientObjectWrapper::unwrap);
     }
