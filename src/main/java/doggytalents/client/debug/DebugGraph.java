@@ -16,7 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
+//import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 public class DebugGraph {
     public static final DebugGraph COMMON_INSTANCE = new DebugGraph(0, 0, 480, 120);

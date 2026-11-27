@@ -194,10 +194,10 @@ public class ScrollBar extends AbstractWidget {
 
 
     //Fabric
-    public void setHeight(int h) {
+    @Override public void setHeight(int h) {
         this.height = h;
     }
-    public int getHeight() {
+    @Override public int getHeight() {
         return this.height;
     }
 }
