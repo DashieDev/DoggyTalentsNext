@@ -882,8 +882,8 @@ public class ConfigHandler {
 
     }
 
-    public static void onConfigLoad(net.neoforged.fml.config.ModConfig event) {
-        var loaded_config = event.getConfig();
+    public static void onConfigLoad(net.neoforged.fml.config.ModConfig config) {
+        var loaded_config = config;
         if (loaded_config.getSpec() == CONFIG_CUSTOM_SKINS_CLIENT_SPEC) {
             if (CUSTOM_SKINS_CLIENT != null)
                 CUSTOM_SKINS_CLIENT.reloadSets();
