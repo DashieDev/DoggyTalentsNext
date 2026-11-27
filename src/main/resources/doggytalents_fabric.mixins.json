@@ -25,7 +25,8 @@
         "PlayerRendererMixin",
         "HumanoidModelMixin",
         "CameraMixin",
-        "MouseHandlerMixin"
+        "MouseHandlerMixin",
+        "KeyMappingMixinAccessor"
     ],
     "server": [],
     "injectors": {

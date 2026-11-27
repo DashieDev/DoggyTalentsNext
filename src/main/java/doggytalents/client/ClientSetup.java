@@ -198,10 +198,10 @@ public class ClientSetup {
     }
 
     public static void addClientReloadListeners(final RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(DTNModelLoader.INSTANCE);        
+        event.registerReloadListener(DTNModelLoader.INSTANCE, "dtnmodelloader");        
         event.registerReloadListener(DogTextureManager.INSTANCE, "dogskinmanager");
         event.registerReloadListener(DogRandomNameRegistry.getInstance(), "dognamemanager");
-        event.registerReloadListener(DTNAnimationLoader.INSTANCE);
+        event.registerReloadListener(DTNAnimationLoader.INSTANCE, "dtnanimationloader");
     }
 
 

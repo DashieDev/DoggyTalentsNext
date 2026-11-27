@@ -11,6 +11,7 @@ import doggytalents.client.screen.framework.widget.ScrollBar;
 import doggytalents.client.screen.framework.widget.TextOnlyButton;
 import doggytalents.client.screen.framework.widget.ScrollBar.Direction;
 import doggytalents.common.entity.anim.SecondOrderDynamics;
+import doggytalents.common.fabric_helper.client.ClientFabricUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -211,7 +212,7 @@ public class SODTunningScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifier) {
         var sneakKey = this.minecraft.options.keyShift;
-        if (keyCode == sneakKey.getKey().getValue()) {
+        if (keyCode == ClientFabricUtil.getKey(sneakKey).getValue()) {
             this.simpleMode = true;
         }
         return super.keyPressed(keyCode, scanCode, modifier);
@@ -220,7 +221,7 @@ public class SODTunningScreen extends Screen {
     @Override
     public boolean keyReleased(int keyCode, int scanCode, int modifier) {
         var sneakKey = this.minecraft.options.keyShift;
-        if (keyCode == sneakKey.getKey().getValue()) {
+        if (keyCode == ClientFabricUtil.getKey(sneakKey).getValue()) {
             this.simpleMode = false;
         }
         return super.keyReleased(keyCode, scanCode, modifier);
